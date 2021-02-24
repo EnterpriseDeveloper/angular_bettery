@@ -6,7 +6,6 @@ import networkConfiguration from '../config/network.json'
 import configFile from '../config/config.json';
 import MaticWETH from '../config/abi/MaticWETH.json'
 import PublicEventJSON from '../../../build/contracts/PublicEvent.json';
-import PrivateEventJSON from '../../../build/contracts/PrivateEvent.json';
 var sigUtil = require('eth-sig-util')
 import buildPayloadForExit from './withdrawal';
 import RootChainManagerJSON from '../config/abi/RootChainManager.json'
@@ -49,40 +48,6 @@ export default class Contract {
     async getERC20ContractOnMaticChain() {
         let web3 = new Web3(window.biconomy);
         return new web3.eth.Contract(BetteryToken.abi, BetteryToken.networks[networkConfiguration.maticMumbai].address);
-    }
-
-    // PrivateEvent
-
-    async privateEventContract() {
-        let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(PrivateEventJSON.abi,
-            this.privateEventAddress());
-    }
-
-    privateEventAddress() {
-        return PrivateEventJSON.networks[networkConfiguration.maticMumbai].address;
-    }
-
-    async participateOnPrivateEvent(id, answer, userWallet, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let privateEvent = await this.privateEventContract()
-        let functionSignature = await privateEvent.methods.setAnswer(id, answer).encodeABI();
-        let nonce = await privateEvent.methods.getNonce(userWallet).call();
-        let tokenName = "Private_contract";
-        let betteryAddress = this.privateEventAddress()
-        let dataToSign = this.dataToSignFunc(tokenName, betteryAddress, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, privateEvent, functionSignature)
-    }
-
-    async validateOnPrivateEvent(id, answer, userWallet, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let privateEvent = await this.privateEventContract()
-        let functionSignature = await privateEvent.methods.setCorrectAnswer(id, answer).encodeABI();
-        let nonce = await privateEvent.methods.getNonce(userWallet).call();
-        let tokenName = "Private_contract";
-        let betteryAddress = this.privateEventAddress()
-        let dataToSign = this.dataToSignFunc(tokenName, betteryAddress, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, privateEvent, functionSignature)
     }
 
     // PublicEvent

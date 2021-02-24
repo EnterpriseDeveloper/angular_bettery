@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../app.state';
-import Contract from '../../../../../contract/contract';
 import {PostService} from '../../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {PrivEventMobile} from '../../../../../models/PrivEventMobile.model';
@@ -72,51 +71,19 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
     const index = _.findIndex(this.data.answers, (el => {
       return el === answerForm.value.answer;
     }));
-    this.sendToBlockchain(index);
+    this.sendToDb(index);
   }
 
   get f() {
     return this.answerForm.controls;
   }
 
-  async sendToBlockchain(answer) {
+  sendToDb(answer) {
     this.spinnerLoading = true;
-    let id = this.data.id;
-    let wallet = this.userData.wallet;
-    let verifier = this.userData.verifier;
-    let contract = new Contract();
-    let contr = await contract.privateEventContract();
-    let validator = await contr.methods.timeAnswerValidation(id).call();
-    switch (Number(validator)) {
-      case 2:
-        try {
-          let transaction = await contract.validateOnPrivateEvent(id, answer, wallet, verifier);
-          if (transaction.transactionHash !== undefined) {
-            this.sendToDb(transaction.transactionHash, answer);
-          }
-        } catch (error) {
-          this.spinnerLoading = false;
-          console.log(error);
-        }
-        break;
-      case 1:
-        this.spinnerLoading = false;
-        this.errorMessage = 'Event not started yeat.';
-        break;
-      case 0:
-        this.spinnerLoading = false;
-        this.errorMessage = 'Time for validation started yeat';
-        break;
-    }
-  }
-
-  sendToDb(txHash, answer) {
     let data = {
       eventId: this.data.id,
-      date: new Date(),
       answer: this.answerForm.value.answer,
       answerNumber: answer,
-      transactionHash: txHash,
       from: this.userData._id,
     };
     this.postSub = this.postService.post('privateEvents/validate', data).subscribe(async () => {
@@ -125,7 +92,8 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
       this.confirm = true;
     }, (err) => {
       this.spinnerLoading = false;
-      console.log(err);
+      this.errorMessage = err.error
+      console.log(err.error);
     });
   }
 
