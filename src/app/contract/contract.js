@@ -63,17 +63,6 @@ export default class Contract {
         return PrivateEventJSON.networks[networkConfiguration.maticMumbai].address;
     }
 
-    async createPrivateEvent(id, startTime, endTime, winner, looser, questionQuantity, correctAnswerSetter, userWallet, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let privateEvent = await this.privateEventContract();
-        let functionSignature = await privateEvent.methods.createEvent(id, startTime, endTime, winner, looser, questionQuantity, correctAnswerSetter).encodeABI();
-        let nonce = await privateEvent.methods.getNonce(userWallet).call();
-        let tokenName = "Private_contract";
-        let betteryAddress = this.privateEventAddress()
-        let dataToSign = this.dataToSignFunc(tokenName, betteryAddress, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, privateEvent, functionSignature)
-    }
-
     async participateOnPrivateEvent(id, answer, userWallet, from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
         let privateEvent = await this.privateEventContract()
