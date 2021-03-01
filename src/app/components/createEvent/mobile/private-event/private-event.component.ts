@@ -99,8 +99,7 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
     this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)
       .subscribe(
         (x: any) => {
-          console.log(x);
-          this.eventData._id = x.id;
+          this.eventData._id = x.eventId;
           this.spinnerLoading = false;
           this.calculateDate();
           this.spinner = false;
