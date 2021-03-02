@@ -91,7 +91,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.coinsSub = this.store.select('coins').subscribe((x) => {
       if (x.length !== 0) {
         this.coinInfo = x[0];
-        //  this.getMoneyHolder();
       }
     });
   }
@@ -135,19 +134,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async ngOnInit() {
-    // OLD CODE
-    // let interval = setInterval(async () => {
-    //   if (this.userWallet !== undefined && this.verifier === "metamask") {
-    //     let checkSelectedAddress = await window.web3.currentProvider.selectedAddress
-    //     if (checkSelectedAddress !== this.userWallet) {
-    //       this.store.dispatch(new UserActions.RemoveUser(0));
-    //       this.nickName = undefined;
-    //       this.userWallet = undefined;
-    //       clearImmediate(interval);
-    //     }
-    //   }
-    // }, 500)
-
     this.onDocumentClick = this.onDocumentClick.bind(this);
     document.addEventListener('click', this.onDocumentClick);
     await biconomyInit();
@@ -163,57 +149,27 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async updateBalance() {
     let web3 = new Web3(this.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
-    let mainBalance = await web3.eth.getBalance(this.userWallet);
 
     let matic = new maticInit(this.verifier);
-    let MTXToken = await matic.getMTXBalance();
-    let TokenBalance = await matic.getERC20Balance();
+    let BTYToken = await matic.getBTYTokenBalance();
+    let BETToken = await matic.getBETTokenBalance();
+    let MainBETToken = await matic.getBTYTokenOnMainChainBalance();
 
-    let contract = new Contract();
-    let token = await contract.tokenContractMainETH(this.verifier);
-    let avaliableTokens = await token.methods.balanceOf(this.userWallet).call();
+    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
+    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
+    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
 
-    let maticTokenBalanceToEth = web3.utils.fromWei(MTXToken, 'ether');
-    let mainEther = web3.utils.fromWei(mainBalance, 'ether');
-    let tokBal = web3.utils.fromWei(TokenBalance, 'ether');
-    let avalTok = web3.utils.fromWei(avaliableTokens, 'ether');
-
-    this.ERC20Coins.mainNetBalance = avalTok;
-    this.ERC20Coins.loomBalance = tokBal;
+    // todo
+    // this.ERC20Coins.BTYBalance = BTYBalance;
+    // this.ERC20Coins.BETBalance = BETBalance;
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      loomBalance: maticTokenBalanceToEth,
-      mainNetBalance: mainEther,
-      tokenBalance: tokBal
+      MainBTY: MainBTYBalance,
+      BTY: BTYBalance,
+      BET: BETBalance
     }));
     this.amountSpinner = false;
   }
-
-  // OLD CODE
-  // async getMoneyHolder() {
-  //   let matic = new maticInit(this.verifier);
-  //   let userWallet = await matic.getUserAccount()
-
-  //   let contract = new Contract()
-  //   let contr = await contract.publicEventContract();
-  //   let holdBalance = Number(await contr.methods.onHold(userWallet).call());
-  //   if (holdBalance > 0) {
-  //     let web3 = new Web3();
-  //     this.holdBalance = Number(web3.utils.fromWei(String(holdBalance), 'ether')).toFixed(4);
-  //     this.getEthPrice(this.holdBalance);
-  //   } else {
-  //     this.holdBalance = holdBalance;
-  //     this.amountSpinner = false;
-  //   }
-  // }
-
-  // async getEthPrice(_holdBalance) {
-  //   this.getSub = this.getService.get("eth_price").subscribe((price: any) => {
-  //     let priceData = price.price;
-  //     this.holdBalance = (_holdBalance * priceData).toFixed(4);
-  //     this.amountSpinner = false;
-  //   })
-  // }
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});

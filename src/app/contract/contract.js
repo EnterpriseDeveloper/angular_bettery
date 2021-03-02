@@ -1,14 +1,16 @@
 import web3Obj from '../helpers/torus';
 import Web3 from 'web3';
 import BetteryToken from '../../../build/contracts/BetteryToken.json'
-import TokenJSON from '../../../build/contracts/EthERC20Coin.json';
+import BTYTokenMainChain from '../../../build/contracts/EthERC20Coin.json'; //TODO Rename name for tokens
 import networkConfiguration from '../config/network.json'
 import configFile from '../config/config.json';
-import MaticWETH from '../config/abi/MaticWETH.json'
-import PublicEventJSON from '../../../build/contracts/PublicEvent.json';
+//import MaticWETH from '../config/abi/MaticWETH.json'
+import PublicEventsJSON from '../../../build/contracts/PublicEvents.json';
+import BTY from '../../../build/contracts/BTY.json';
+import BET from '../../../build/contracts/BET.json';
 var sigUtil = require('eth-sig-util')
-import buildPayloadForExit from './withdrawal';
-import RootChainManagerJSON from '../config/abi/RootChainManager.json'
+//import buildPayloadForExit from './withdrawal';
+//import RootChainManagerJSON from '../config/abi/RootChainManager.json'
 
 
 export default class Contract {
@@ -27,71 +29,45 @@ export default class Contract {
         ];
     }
 
-    async RootChainManagerContract(from) {
+    async getBTYtokenMainChain(from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
-        let abi = RootChainManagerJSON.abi
-        return new web3.eth.Contract(abi, "0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74")
-    }
-
-    async tokenContractMainETH(from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
-        let abiTokenSale = TokenJSON.abi
+        let abiTokenSale = BTYTokenMainChain.abi
         return new web3.eth.Contract(abiTokenSale,
-            TokenJSON.networks[networkConfiguration.goerli].address)
+            BTYTokenMainChain.networks[networkConfiguration.goerli].address)
     }
 
-    async getWETHContract() {
+    async getBTYTokenContract() {
         let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(MaticWETH.abi, configFile.child.MaticWETH);
+        return new web3.eth.Contract(BTY.abi, BTY.networks[networkConfiguration.maticMumbai].address);
     }
 
-    async getERC20ContractOnMaticChain() {
+    async getBETTokenContract() {
         let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(BetteryToken.abi, BetteryToken.networks[networkConfiguration.maticMumbai].address);
+        return new web3.eth.Contract(BET.abi, BET.networks[networkConfiguration.maticMumbai].address);
     }
 
     publicEventAddress() {
-        return PublicEventJSON.networks[networkConfiguration.maticMumbai].address;
+        return PublicEventsJSON.networks[networkConfiguration.maticMumbai].address;
     }
 
-    async approveWETHToken(userWallet, amount, from) {
+    async approveBTYToken(userWallet, amount, from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let WETHToken = await this.getWETHContract();
-        let functionSignature = await WETHToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
-        let nonce = await WETHToken.methods.getNonce(userWallet).call();
-        const tokenName = await WETHToken.methods.name().call();
-        let dataToSign = this.dataToSignFunc(tokenName, configFile.child.MaticWETH, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, WETHToken, functionSignature)
+        let BTYToken = await this.getBTYTokenContract();
+        let functionSignature = await BTYToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
+        let nonce = await BTYToken.methods.getNonce(userWallet).call();
+        const tokenName = "BTY_token";
+        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
 
     async approveBETToken(userWallet, amount, from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let BETToken = await this.getERC20ContractOnMaticChain();
+        let BETToken = await this.getBETTokenContract();
         let functionSignature = await BETToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BETToken.methods.getNonce(userWallet).call();
-        const tokenName = await BETToken.methods.name().call();
-        let dataToSign = this.dataToSignFunc(tokenName, BetteryToken.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature)
+        const tokenName = "BET_token";
+        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature)
         return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
-    }
-
-    async withdrawalWETHToken(userWallet, amount, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let WETHToken = await this.getWETHContract();
-        let functionSignature = await WETHToken.methods.withdraw(amount).encodeABI();
-        console.log(functionSignature)
-        let nonce = await WETHToken.methods.getNonce(userWallet).call();
-        const tokenName = await WETHToken.methods.name().call();
-        let dataToSign = this.dataToSignFunc(tokenName, configFile.child.MaticWETH, nonce, userWallet, functionSignature)
-        let burnTxHash = await this.setSignPromise(userWallet, dataToSign, web3, WETHToken, functionSignature);
-        console.log(burnTxHash);
-        let burnTx = burnTxHash.transactionHash;
-        let getSing = await buildPayloadForExit(String(burnTx), from, web3);
-        let rootContract = await this.RootChainManagerContract(from)
-        let message = await rootContract.methods.exit(getSing).encodeABI();
-        console.log(message)
-        var signature = await web3.eth.personal.sign(message, userWallet);
-        console.log(signature);
-        return { withdrawal: burnTxHash, sign: signature }
     }
 
     setSignPromise(userWallet, dataToSign, web3, whichContract, functionSignature) {
@@ -172,4 +148,31 @@ export default class Contract {
         };
     };
 
-} 
+}
+
+// OLD CODE
+    // async withdrawalWETHToken(userWallet, amount, from) {
+    //     let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    //     let WETHToken = await this.getWETHContract();
+    //     let functionSignature = await WETHToken.methods.withdraw(amount).encodeABI();
+    //     console.log(functionSignature)
+    //     let nonce = await WETHToken.methods.getNonce(userWallet).call();
+    //     const tokenName = await WETHToken.methods.name().call();
+    //     let dataToSign = this.dataToSignFunc(tokenName, configFile.child.MaticWETH, nonce, userWallet, functionSignature)
+    //     let burnTxHash = await this.setSignPromise(userWallet, dataToSign, web3, WETHToken, functionSignature);
+    //     console.log(burnTxHash);
+    //     let burnTx = burnTxHash.transactionHash;
+    //     let getSing = await buildPayloadForExit(String(burnTx), from, web3);
+    //     let rootContract = await this.RootChainManagerContract(from)
+    //     let message = await rootContract.methods.exit(getSing).encodeABI();
+    //     console.log(message)
+    //     var signature = await web3.eth.personal.sign(message, userWallet);
+    //     console.log(signature);
+    //     return { withdrawal: burnTxHash, sign: signature }
+    // }
+
+    // async RootChainManagerContract(from) {
+    //     let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
+    //     let abi = RootChainManagerJSON.abi
+    //     return new web3.eth.Contract(abi, "0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74")
+    // }

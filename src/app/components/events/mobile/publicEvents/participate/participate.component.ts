@@ -80,10 +80,8 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // TODO add correct token approve and rebuild balance cheking
-    let balance = this.eventData.currencyType == "token" ? this.coinInfo.tokenBalance : this.coinInfo.loomBalance;
-    if (Number(balance) < Number(this.answerForm.value.amount)) {
-      this.errorMessage = "Don't have enough " + this.coinType
+    if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
+      this.errorMessage = "Don't have enough BET tokens"
     } else {
       this.spinnerLoading = true;
       let web3 = new Web3();
@@ -116,22 +114,22 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.userData.verifier === "metamask" ? window.web3.currentProvider : web3Obj.torus.provider);
-    let mainBalance = await web3.eth.getBalance(this.userData.wallet);
+    let web3 = new Web3(this.userData.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
 
     let matic = new maticInit(this.userData.verifier);
-    let MTXToken = await matic.getMTXBalance();
-    let TokenBalance = await matic.getERC20Balance();
+    let BTYToken = await matic.getBTYTokenBalance();
+    let BETToken = await matic.getBETTokenBalance();
+    let MainBETToken = await matic.getBTYTokenOnMainChainBalance();
 
-    let maticTokenBalanceToEth = web3.utils.fromWei(MTXToken, "ether");
-    let mainEther = web3.utils.fromWei(mainBalance, "ether")
-    let tokBal = web3.utils.fromWei(TokenBalance, "ether")
+    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
+    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
+    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      loomBalance: maticTokenBalanceToEth,
-      mainNetBalance: mainEther,
-      tokenBalance: tokBal
-    }))
+      MainBTY: MainBTYBalance,
+      BTY: BTYBalance,
+      BET: BETBalance
+    }));
   }
 
   ngOnDestroy() {

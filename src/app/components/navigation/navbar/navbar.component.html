@@ -20,7 +20,7 @@
 
           <div class="balancePos mr-4">
             <p *ngIf="!amountSpinner" class="balance colorBl" style="font-weight: 500;">
-              <b>{{coinInfo?.tokenBalance | number:'1.0-2'}}</b> BTY
+              <b>{{coinInfo?.BTY | number:'1.0-2'}}</b> BTY
             </p>
             <p *ngIf="amountSpinner" class="balance colorBl" style="font-weight: 400;">Calculating...</p>
             <div class="btyImg btyImgNew"></div>
@@ -28,7 +28,7 @@
 
           <div class="balancePos mr-4">
             <p *ngIf="!amountSpinner" class="balance colorBl" style="font-weight: 500;">
-              <b>{{coinInfo?.loomBalance | number:'1.0-2'}}</b> ETH
+              <b>{{coinInfo?.BET | number:'1.0-2'}}</b> BET
             </p>
             <p *ngIf="amountSpinner" class="balance colorBl" style="font-weight: 400;">Calculating...</p>
             <div class="ethImg btyImgNew"></div>
@@ -71,14 +71,14 @@
       <div class="balanceBox">
         <div class="balancePos">
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
-            <b>{{coinInfo?.loomBalance | number:'1.0-2'}}</b> ETH
+            <b>{{coinInfo?.BET | number:'1.0-2'}}</b> BET
           </p>
           <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
           <div class="ethImg"></div>
         </div>
         <div class="balancePos">
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
-            <b>{{coinInfo?.tokenBalance | number:'1.0-2'}}</b> BTY
+            <b>{{coinInfo?.BTY | number:'1.0-2'}}</b> BTY
           </p>
           <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
           <div class="btyImg"></div>
@@ -118,8 +118,10 @@
         <div class="modal-body">
           <p>Deposit to the Loom network can take between 5 to 10 minutes.</p>
           <hr />
+          // NOT WORKING
           <p>ETH Balance (ETH Mainnet): {{coinInfo?.mainNetBalance | number:'1.0-4'}}</p>
           <p>ETH Balance (Matic Sidechain): {{coinInfo?.loomBalance | number:'1.0-4'}}</p>
+          //
           <div>
             <div class="form-group">
               <div class="input-group">
@@ -173,8 +175,10 @@
         <div class="modal-body">
           <p>Deposit to the Loom network can take between 5 to 10 minutes.</p>
           <hr />
+          // NOT WORKING
           <p>ETH Balance (ETH Mainnet): {{coinInfo?.mainNetBalance | number:'1.0-4'}}</p>
           <p>ETH Balance (Matic Sidechain): {{coinInfo?.loomBalance | number:'1.0-4'}}</p>
+          //
           <div>
             <div class="form-group">
               <div class="input-group">

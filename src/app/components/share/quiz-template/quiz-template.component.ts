@@ -260,16 +260,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   async setToNetwork(answer, dataAnswer) {
-    // TODO add correct token approve and rebuild balance cheking
-    let balance;
 
-    if (dataAnswer.currencyType === 'ether') {
-      balance = this.coinInfo.loomBalance;
-    } else {
-      balance = this.coinInfo.tokenBalance;
-    }
-
-    if (Number(balance) < Number(answer.amount)) {
+    if (Number(this.coinInfo.BET) < Number(answer.amount)) {
       let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
       modalRef.componentInstance.errType = 'error';
       modalRef.componentInstance.title = 'Insufficient BET';
