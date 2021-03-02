@@ -50,41 +50,9 @@ export default class Contract {
         return new web3.eth.Contract(BetteryToken.abi, BetteryToken.networks[networkConfiguration.maticMumbai].address);
     }
 
-    // PublicEvent
-
-
-    async publicEventContract() {
-        let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(PublicEventJSON.abi,
-            this.publicEventAddress())
-    }
-
     publicEventAddress() {
         return PublicEventJSON.networks[networkConfiguration.maticMumbai].address;
     }
-
-    async participateOnPublicEvent(id, answer, amount, userWallet, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let bettery = await this.publicEventContract()
-        let functionSignature = await bettery.methods.setAnswer(id, answer, amount).encodeABI();
-        let nonce = await bettery.methods.getNonce(userWallet).call();
-        let tokenName = "Public_contract";
-        let betteryAddress = this.publicEventAddress()
-        let dataToSign = this.dataToSignFunc(tokenName, betteryAddress, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, bettery, functionSignature)
-    }
-
-    async validateOnPublicEvent(id, answer, userWallet, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let bettery = await this.publicEventContract()
-        let functionSignature = await bettery.methods.setValidator(id, answer).encodeABI();
-        let nonce = await bettery.methods.getNonce(userWallet).call();
-        let tokenName = "Public_contract";
-        let betteryAddress = this.publicEventAddress()
-        let dataToSign = this.dataToSignFunc(tokenName, betteryAddress, nonce, userWallet, functionSignature)
-        return await this.setSignPromise(userWallet, dataToSign, web3, bettery, functionSignature)
-    }
-
 
     async approveWETHToken(userWallet, amount, from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
