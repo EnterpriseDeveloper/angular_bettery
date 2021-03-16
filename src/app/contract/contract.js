@@ -4,12 +4,10 @@ import BetteryToken from '../../../build/contracts/BetteryToken.json'
 import BTYTokenMainChain from '../../../build/contracts/EthERC20Coin.json'; //TODO Rename name for tokens
 import networkConfiguration from '../config/network.json'
 import configFile from '../config/config.json';
-//import MaticWETH from '../config/abi/MaticWETH.json'
 import PublicEventsJSON from '../../../build/contracts/PublicEvents.json';
 import BTY from '../../../build/contracts/BTY.json';
 import BET from '../../../build/contracts/BET.json';
 var sigUtil = require('eth-sig-util')
-//import buildPayloadForExit from './withdrawal';
 //import RootChainManagerJSON from '../config/abi/RootChainManager.json'
 
 

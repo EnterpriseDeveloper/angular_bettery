@@ -9,8 +9,8 @@ const getMaticPOSClient = async (whichProvider) => {
     let accounts = await goerli.eth.getAccounts();
     let MaticPOSClient = matic.MaticPOSClient;
     return new MaticPOSClient({
-        network: 'testnet', // optional, default is testnet
-        version: 'mumbai', // optional, default is mumbai
+        network: 'testnet', 
+        version: 'mumbai', 
         parentProvider: new Web3(whichProvider === "metamask" ? window.web3.currentProvider : web3Obj.torus.provider),
         maticProvider: new Web3(window.biconomy),
         posRootChainManager: config.root.RootChainManagerProxy,

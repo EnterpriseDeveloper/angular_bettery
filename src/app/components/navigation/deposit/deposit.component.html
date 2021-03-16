@@ -15,14 +15,14 @@
       <div class="labelForDeposit">
         <div *ngIf="status === 'withdraw'" class="other-title">amount to withdraw</div>
         <div *ngIf="status === 'deposit'" class="other-title">amount to deposit</div>
-        <div *ngIf="!receiveBTY" style="font-size: 12px">Available : <span class="other-title">{{coinInfo?.tokenBalance}}
+        <div *ngIf="!receiveBTY && avaliableCoins != undefined" style="font-size: 12px">Available : <span class="other-title">{{avaliableCoins}}
         BTY</span></div>
       </div>
       <div style="position: relative">
         <input [(ngModel)]="inputValue" placeholder="Enter Amount" class="withdraw-input"
                [ngClass]=" stillProcessed || receiveBTY ? 'grey' : ''" type="number">
         <div *ngIf="status === 'withdraw' && !receiveBTY" (click)="maxWithdraw()" class="max max-withdraw">Max</div>
-        <div *ngIf="status === 'deposit' && !receiveBTY" class="max max-deposit">Max</div>
+        <div *ngIf="status === 'deposit' && !receiveBTY" (click)="maxDeposit()" class="max max-deposit">Max</div>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
     <div *ngIf="!receiveBTY" class="two_btn">
       <button class="cancel-btn" (click)="activeModal.dismiss('Cross click')">Cancel</button>
       <button *ngIf="status ==='withdraw'" class="withdraw-btn">Withdraw BTY</button>
-      <button *ngIf="status ==='deposit'" class="deposit-btn">Deposit BTY</button>
+      <button *ngIf="status ==='deposit'" class="deposit-btn" (click)="deposit()">Deposit BTY</button>
     </div>
 
     <div *ngIf="receiveBTY" class="receive_btn">

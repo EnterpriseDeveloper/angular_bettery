@@ -2,7 +2,6 @@ import Web3 from "web3";
 import web3Obj from '../helpers/torus'
 import ERC20 from '../../../build/contracts/EthERC20Coin.json';
 import networkConfiguration from '../config/network.json';
-import getMaticPOSClient from './getMaticPOSClient';
 import Contract from "./contract";
 
 
