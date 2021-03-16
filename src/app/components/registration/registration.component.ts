@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
 import { AppState } from '../../app.state';
@@ -23,7 +22,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   @Input() openSpinner = false;
   registerForm: FormGroup;
   submitted: boolean = false;
-  faTimes = faTimes;
   registerError: any = undefined;
   web3: Web3 | undefined = null;
   metamaskError: string = undefined;

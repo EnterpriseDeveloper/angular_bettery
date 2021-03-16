@@ -15,7 +15,6 @@ import * as UserActions from '../../../actions/user.actions';
 import { PostService } from '../../../services/post.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuizErrorsComponent } from './quiz-errors/quiz-errors.component';
 import { Subscription } from 'rxjs';
@@ -30,7 +29,6 @@ import { ClipboardService } from 'ngx-clipboard';
   styleUrls: ['./quiz-template.component.sass']
 })
 export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
-  faCheck = faCheck;
   allUserData: User = undefined;
   amount: number;
   answerSub: Subscription;

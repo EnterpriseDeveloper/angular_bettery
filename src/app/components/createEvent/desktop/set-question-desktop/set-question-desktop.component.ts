@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app.state';
 import { PostService } from '../../../../services/post.service';
@@ -20,7 +19,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   questionForm: FormGroup;
   answesQuantity: number;
-  faPlus = faPlus;
   submitted = false;
   registered = false;
   clicked = false;

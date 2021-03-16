@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -61,7 +60,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         EventsModule,
         BrowserModule,
         HttpClientModule,
-        FontAwesomeModule,
         ReactiveFormsModule,
         NgxTypedJsModule,
         StoreModule.forRoot({

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EventFeedComponent} from './eventFeed/eventFeed.component';
@@ -18,7 +17,6 @@ import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component
     imports: [
         CommonModule,
         BrowserModule,
-        FontAwesomeModule,
         NgbModule,
         FormsModule,
         ReactiveFormsModule,
