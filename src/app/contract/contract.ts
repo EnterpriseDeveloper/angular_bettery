@@ -12,6 +12,8 @@ var sigUtil = require('eth-sig-util')
 
 
 export default class Contract {
+    domainType;
+    metaTransactionType;
     constructor() {
         this.domainType = [
             { name: "name", type: "string" },
@@ -29,19 +31,21 @@ export default class Contract {
 
     async getBTYtokenMainChain(from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
-        let abiTokenSale = BTYTokenMainChain.abi
+        let abiTokenSale: any = BTYTokenMainChain.abi
         return new web3.eth.Contract(abiTokenSale,
             BTYTokenMainChain.networks[networkConfiguration.goerli].address)
     }
 
     async getBTYTokenContract() {
         let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(BTY.abi, BTY.networks[networkConfiguration.maticMumbai].address);
+        let abiBTY: any = BTY.abi;
+        return new web3.eth.Contract(abiBTY, BTY.networks[networkConfiguration.maticMumbai].address);
     }
 
     async getBETTokenContract() {
         let web3 = new Web3(window.biconomy);
-        return new web3.eth.Contract(BET.abi, BET.networks[networkConfiguration.maticMumbai].address);
+        let abiBET: any = BET.abi;
+        return new web3.eth.Contract(abiBET, BET.networks[networkConfiguration.maticMumbai].address);
     }
 
     publicEventAddress() {
@@ -110,7 +114,7 @@ export default class Contract {
             verifyingContract: contractAddress,
         };
 
-        let message = {};
+        let message: any = {};
         message.nonce = parseInt(nonce);
         message.from = userWallet;
         message.functionSignature = functionSignature;
@@ -136,7 +140,7 @@ export default class Contract {
         }
         var r = signature.slice(0, 66);
         var s = "0x".concat(signature.slice(66, 130));
-        var v = "0x".concat(signature.slice(130, 132));
+        var v: any = "0x".concat(signature.slice(130, 132));
         v = web3.utils.hexToNumber(v);
         if (![27, 28].includes(v)) v += 27;
         return {

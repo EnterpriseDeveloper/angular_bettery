@@ -226,5 +226,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
+    modalRef.componentInstance.userId = this.userId; 
   }
 }

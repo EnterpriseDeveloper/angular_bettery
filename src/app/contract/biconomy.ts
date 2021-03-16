@@ -11,7 +11,7 @@ const biconomyInit = async () => {
 }
 
 async function BiconomyReady(biconomy) {
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>((resolve, reject) => {
         return biconomy
             .onEvent(biconomy.READY, async () => {
                 resolve()

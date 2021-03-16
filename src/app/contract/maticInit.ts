@@ -6,6 +6,8 @@ import Contract from "./contract";
 
 
 export default class maticInit {
+    whichProvider;
+    Ropsten_Erc20Address;
 
     constructor(provider) {
         this.whichProvider = provider;
@@ -35,7 +37,7 @@ export default class maticInit {
     async getBTYTokenOnMainChainBalance() {
         let from = await this.getUserAccount();
         let contr = new Contract();
-        let tokenContract = await contr.getBTYtokenMainChain();
+        let tokenContract = await contr.getBTYtokenMainChain("torus");
         return await tokenContract.methods.balanceOf(from).call();
     }
 
