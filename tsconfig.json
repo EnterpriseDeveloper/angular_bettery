@@ -6,10 +6,10 @@
   "compilerOptions": {
     "resolveJsonModule": true,
   //  "esModuleInterop": true,
-    "types": [
-      "node",
-      "mocha"
-    ],
+//    "types": [
+//      "node",
+//      "mocha"
+//    ],
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

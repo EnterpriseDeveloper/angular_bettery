@@ -1,4 +1,5 @@
 <div>
+  <events-template-new [whichEvent]="'setQuestion'"></events-template-new>
     <form [formGroup]="questionForm">
         <div class="box">
             <label for="Question" class="name">
@@ -42,7 +43,7 @@
                 </button>
             </div>
         </div>
-        <div class="border"></div>
+<!--        <div class="border"></div>-->
         <div class="box">
             <label for="Question" class="name" style="margin-top: 24px">
                 <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
@@ -51,7 +52,7 @@
                 placeholder="If result can be checked on the Internet, give source...">
         </div>
         <div class="buttonBox" [ngStyle]="styleButtonBox()">
-            <button type="button" class="cancel" routerLink="/">CANCEL</button>
+            <button type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
             <button type="button" class="next" (click)="onSubmit()">NEXT</button>
         </div>
     </form>

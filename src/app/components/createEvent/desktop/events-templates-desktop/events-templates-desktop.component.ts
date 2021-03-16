@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
-import {NgbActiveModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {User} from "../../../../models/User.model";
 
 const init = {
@@ -76,9 +76,9 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.eventFromLandingSubscr = this.store.select("createEvent").subscribe(a => {
-      if (a.newEvent.trim().length > 0) {
-        this.formData.question = a.newEvent.trim();
+    this.eventFromLandingSubscr = this.store.select('createEvent').subscribe(a => {
+      if (a.formData?.question.trim().length > 0) {
+        this.formData.question = a.formData?.question.trim();
       }
     });
   }

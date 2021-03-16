@@ -33,6 +33,7 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
   year: string | number;
   hour: string | number;
   minutes: string | number;
+  answerIndex: number;
 
   constructor(
     private formBuilder: FormBuilder,

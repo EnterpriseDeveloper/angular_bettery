@@ -2,43 +2,49 @@
 @import "~swiper/swiper"
 
 body
-    margin: 0 !important
-    height: 100%
+  margin: 0 !important
+  height: 100%
+
 html
   height: 100%
 
 .ngb-tp-input
-    font-family: 'Open Sans', sans-serif
-    background: #FFFFFF
-    border-radius: 5px
-    border: 1px solid #CBCBCB
-    font-style: normal
-    font-weight: 600
-    font-size: 14px
-    line-height: 19px
-    color: #0B1511
+  font-family: 'Open Sans', sans-serif
+  background: #FFFFFF
+  border-radius: 5px
+  border: 1px solid #CBCBCB
+  font-style: normal
+  font-weight: 600
+  font-size: 14px
+  line-height: 19px
+  color: #0B1511
+
 .ngb-tp-minute
-    width: 100% !important
+  width: 100% !important
+  height: 48px !important
+
+  > .ngb-tp-input
     height: 48px !important
-    > .ngb-tp-input
-        height: 48px !important
-        width: 90%
+    width: 90%
+
 .ngb-tp-spacer
   color: #FFFFFF
 
 .ngb-tp-hour
-    width: 100% !important
-    height: 48px !important
-    > .ngb-tp-input
-        height: 48px !important
-        width: 90%
+  width: 100% !important
+  height: 48px !important
 
-@media only screen and (max-width: 1366px) //времменно
-  body
-    background-color: #242421
+  > .ngb-tp-input
+    height: 48px !important
+    width: 90%
+
+@media only screen and (max-width: 1366px)
+   body
+     background-color: #242421
 
 .grecaptcha-badge
-    visibility: hidden !important    // recapch need add <a></a>
+  visibility: hidden !important
+// recapch need add <a></a>
 
 .modal-content
   border: none !important
@@ -47,3 +53,8 @@ html
   position: fixed !important
   width: 390px !important
   right: 30px !important
+
+@media (max-width: 420px)
+  .torus-alert--v2
+    width: 95% !important
+    right: 9px !important

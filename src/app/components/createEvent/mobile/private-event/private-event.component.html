@@ -2,25 +2,25 @@
   <p class="comfirm">CONFIRM EVENT</p>
 
   <div class="quizBox">
-    <p class="quizName">{{formData.question}}</p>
+    <p class="quizName">{{formData?.question}}</p>
   </div>
 
   <div class="label">
     <div class="otcomeYellow"></div>
     <p>possible outcomes</p>
   </div>
-  <div *ngFor="let answer of formData.answers">
+  <div *ngFor="let answer of formData?.answers">
     <div class="answerBox">
       <p class="answer">{{answer.name}}</p>
     </div>
   </div>
-  <div *ngIf="formData.resolutionDetalis != ''">
+  <div *ngIf="formData?.resolutionDetalis != ''">
     <div class="label" style="padding-top: 16px;">
       <div class="LightYellow"></div>
       <p class="mt-1">HOW TO VERIFY</p>
     </div>
     <div class="answerBox">
-      <p class="answer">{{formData.resolutionDetalis}}</p>
+      <p class="answer">{{formData?.resolutionDetalis}}</p>
     </div>
   </div>
 
@@ -29,11 +29,11 @@
     <p>What to win or lose</p>
   </div>
   <div class="answerBox tipBox">
-    <p class="answer tipWidth">{{formData.winner}}</p>
+    <p class="answer tipWidth">{{formData?.winner}}</p>
     <p class="tipText">Winners</p>
   </div>
   <div class="answerBox tipBox">
-    <p class="answer tipWidth">{{formData.losers}}</p>
+    <p class="answer tipWidth">{{formData?.losers}}</p>
     <p class="tipText">Losers</p>
   </div>
 
@@ -42,7 +42,7 @@
     <p>BETTING TIME</p>
   </div>
   <div class="answerBox">
-    <p class="answer">{{formData.privateEndTime.name}}</p>
+    <p class="answer">{{formData?.privateEndTime.name}}</p>
   </div>
 
 
@@ -51,7 +51,7 @@
     <p>ROOM</p>
   </div>
   <div class="answerBox">
-    <p class="answer">{{formData.roomName}}</p>
+    <p class="answer">{{formData?.roomName}}</p>
   </div>
 
   <div class="label">
@@ -75,7 +75,7 @@
   <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
   <div class="aboutBox">
     <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
-    <a class="link" href="#">www.bettery.io/private_event/{{eventData._id}}</a>
+    <a class="link" href="#">www.bettery.io/private_event/{{eventData?._id}}</a>
     <div class="imgBox" (click)="copyToClickBoard()">
       <div class="listImg" style="margin-right: 8px"></div>
       <p class="copyToClick">Copy to clipboard</p>
@@ -89,7 +89,7 @@
   <a class="linkYellow" (click)="modalAboutExpert()">How do I manage my event?</a>
 
   <div class="joinBox">
-    <a class="joinButton" routerLink="/private_event/{{eventData._id}}">JOIN EVENT</a>
+    <a class="joinButton" routerLink="/private_event/{{eventData?._id}}">JOIN EVENT</a>
   </div>
 </div>
 

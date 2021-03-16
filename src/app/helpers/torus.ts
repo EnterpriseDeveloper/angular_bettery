@@ -39,7 +39,7 @@ const web3Obj = {
             },
           },
         },
-      }
+      },
     });
     web3Obj.torus.hideTorusButton();
     await web3Obj.torus.login({});

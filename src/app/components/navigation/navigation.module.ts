@@ -9,6 +9,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ShareModule} from '../share/share.module';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReferalsComponent } from './referals/referals.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ReferalsComponent } from './referals/referals.component';
     NavbarComponent,
     SidebarComponent,
     NotificationsComponent,
-    ReferalsComponent
+    ReferalsComponent,
+    DepositComponent
   ],
     exports: [
         NavbarComponent,

@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs';
 import {PostService} from '../../../services/post.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../app.state';
-import {createEventAction} from '../../../actions/newEvent.actions';
+import {formDataAction} from '../../../actions/newEvent.actions';
 import * as _ from 'lodash';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RegistrationComponent} from '../../registration/registration.component';
@@ -41,6 +41,8 @@ export class RoomsComponent implements OnInit, OnDestroy {
   btnMiddleActive = 'showAllRoom';
   showInputFlag: boolean;
   spinner: boolean;
+  formData;
+  formDataSub: Subscription;
 
   constructor(
     private getService: GetService,
@@ -202,6 +204,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   showUsersRoom() {
+    this.activeRoom = undefined;
     this.spinner = false;
     this.pageRoom = 1;
     this.startLength = 0;
@@ -218,15 +221,19 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   showAllRooms() {
+    this.activeRoom = undefined;
     this.btnMiddleActive = 'showAllRoom';
     this.usersRoom = null;
     this.roomsSort = this.allRooms.slice(this.startLength, this.showLength);
   }
 
   sendNewEvent() {
-    const data = this.newCreateEvent;
-    if (data) {
-      this.store.dispatch(createEventAction({data}));
+    this.formDataSub = this.store.select('createEvent').subscribe(x => {
+      this.formData = x.formData;
+    });
+    this.formData.question = this.newCreateEvent;
+    if (this.formData?.question.length) {
+      this.store.dispatch(formDataAction({formData: this.formData}));
       this.openCreateEventModal();
     } else {
       this.openCreateEventModal();
@@ -235,6 +242,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   showJoinedRoom() {
+    this.activeRoom = undefined;
     this.spinner = false;
     this.pageRoom = 1;
     this.startLength = 0;
@@ -327,6 +335,10 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
     if (this.joinedRoomSub) {
       this.joinedRoomSub.unsubscribe();
+    }
+
+    if (this.formDataSub) {
+      this.formDataSub.unsubscribe();
     }
   }
 

@@ -19,6 +19,7 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {RegistrationComponent} from '../../registration/registration.component';
 import biconomyInit from '../../../../app/contract/biconomy';
+import {DepositComponent} from '../deposit/deposit.component';
 
 
 @Component({
@@ -388,5 +389,12 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   toggleLogout() {
     this.logoutBox = !this.logoutBox;
+  }
+
+  openDeposit(str: string) {
+    const modalRef = this.modalService.open(DepositComponent, {centered: true});
+    modalRef.componentInstance.status = str;
+    modalRef.componentInstance.coinInfo = this.coinInfo;
+    modalRef.componentInstance.wallet = this.userWallet;
   }
 }

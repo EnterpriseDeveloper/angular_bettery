@@ -1,24 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { GetService } from '../../../../services/get.service';
-import { PostService } from '../../../../services/post.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { ClipboardService } from 'ngx-clipboard'
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component'
-import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
-import { environment } from '../../../../../environments/environment';
-import { User } from '../../../../models/User.model';
+import {Component, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {GetService} from '../../../../services/get.service';
+import {PostService} from '../../../../services/post.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {ClipboardService} from 'ngx-clipboard'
+import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {InfoModalComponent} from '../../../share/info-modal/info-modal.component'
+import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
+import {environment} from '../../../../../environments/environment';
+import {User} from '../../../../models/User.model';
+import {formDataAction} from "../../../../actions/newEvent.actions";
 
 @Component({
   selector: 'private-event-modile',
   templateUrl: './private-event.component.html',
   styleUrls: ['./private-event.component.sass']
 })
-export class PrivateEventComponent implements OnInit, OnDestroy {
-  @Input() formData;
+export class PrivateEventComponent implements OnDestroy {
+  formData;
   @Output() goBack = new EventEmitter();
   spinner: boolean = false;
   host: User[];
@@ -29,9 +30,9 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
   minutes: number | string;
   seconds: number | string;
   userSub: Subscription;
+  fromDataSubscribe: Subscription;
   createSub: Subscription;
   spinnerLoading: boolean = false;
-
 
 
   constructor(
@@ -43,16 +44,18 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
     private modalService: NgbModal
   ) {
     this.userSub = this.store.select("user").subscribe((x: User[]) => {
-      if (x.length != 0) {
+      if (x?.length != 0) {
         this.host = x;
       }
     });
+
+    this.fromDataSubscribe = this.store.select('createEvent').subscribe(x => {
+      this.formData = x?.formData;
+    });
   }
 
-  ngOnInit(): void { }
-
   cancel() {
-    this.goBack.next();
+    this.router.navigate(['/make-rules']);
   }
 
   copyToClickBoard() {
@@ -104,6 +107,7 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
           this.calculateDate();
           this.spinner = false;
           this.created = true;
+          this.formDataReset();
         },
         (err) => {
           console.log("set qestion error");
@@ -115,9 +119,19 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
         })
   }
 
+  formDataReset() {
+    this.formData.question = '';
+    this.formData.answers = [];
+    this.formData.losers = '';
+    this.formData.winner = '';
+    this.formData.room = '';
+
+    this.store.dispatch(formDataAction({formData: this.formData}));
+  }
+
   calculateDate() {
     let startDate = new Date();
-    let endTime = new Date(this.eventData.endTime * 1000);
+    let endTime = new Date(this.eventData?.endTime * 1000);
     var diffMs = (endTime.getTime() - startDate.getTime());
     this.day = Math.floor(Math.abs(diffMs / 86400000));
     let hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
@@ -141,7 +155,7 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
 
   // TO DO
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
@@ -153,6 +167,9 @@ export class PrivateEventComponent implements OnInit, OnDestroy {
     }
     if (this.createSub) {
       this.createSub.unsubscribe();
+    }
+    if (this.fromDataSubscribe) {
+      this.fromDataSubscribe.unsubscribe();
     }
   }
 }

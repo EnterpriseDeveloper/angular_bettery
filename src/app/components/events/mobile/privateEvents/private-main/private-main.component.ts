@@ -83,6 +83,9 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
       this.id = {
         id: Number(params.id)
       };
+      setTimeout(()=>{
+        console.log(this.data)
+      },5000)
     });
 
     this.letsGetDataFromDB();
@@ -169,7 +172,7 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
   calculateDate() {
     const timeNow = Number((Date.now() / 1000).toFixed(0));
 
-    if (this.data.endTime - timeNow > 0) {
+    if (this.data?.endTime - timeNow > 0) {
       this.expert = true;
       this.condition = true;
     } else {
@@ -178,7 +181,7 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
     }
 
     const startDate = new Date();
-    const endTime = new Date(this.data.endTime * 1000);
+    const endTime = new Date(this.data?.endTime * 1000);
     var diffMs = (endTime.getTime() - startDate.getTime());
     this.allTime.day = Math.floor(Math.abs(diffMs / 86400000));
     const hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
@@ -231,7 +234,7 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
 
   displayTime() {
     const timeNow = Number((Date.now() / 1000).toFixed(0));
-    return this.data.endTime - timeNow > 0;
+    return this.data?.endTime - timeNow > 0;
   }
 
   copyToClickBoard() {

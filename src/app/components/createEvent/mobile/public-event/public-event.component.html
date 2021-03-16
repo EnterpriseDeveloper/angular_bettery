@@ -73,7 +73,7 @@
   <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
   <div class="aboutBox">
     <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
-    <a class="link" href="#">www.bettery.io/public_event/{{quizData._id}}</a>
+    <a class="link" href="#">www.bettery.io/public_event/{{quizData?._id}}</a>
     <div class="imgBox" (click)="copyToClickBoard()">
       <div class="listImg" style="margin-right: 8px"></div>
       <p class="copyToClick">Copy to clipboard</p>
@@ -87,7 +87,7 @@
   <a class="linkYellow mb-3" (click)="modalAboutExpert()">How do I manage my event?</a>
 
   <div class="joinBox">
-    <a class="joinButton" routerLink="/public_event/{{quizData._id}}">JOIN EVENT</a>
+    <a class="joinButton" routerLink="/public_event/{{quizData?._id}}">JOIN EVENT</a>
   </div>
 </div>
 

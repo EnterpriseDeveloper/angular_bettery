@@ -1,4 +1,5 @@
 <div class="box">
+  <events-template-new [whichEvent]="'makeRules'"></events-template-new>
   <div *ngIf="formData.eventType === 'public'">
     <form [formGroup]="publicForm">
       <p class="name">Bet WITH <span (click)="openLearnMore()" class="link">Learn more</span></p>
@@ -85,7 +86,7 @@
             get their bets back.
           </li>
         </ul>
-        <div class="d-flex justify-content-center mb-5" (click)="openHowEventsWorkSocial(content2)">
+        <div class=" d-flex justify-content-center mb-5" (click)="openHowEventsWorkSocial(content2)">
           <div class="question-img"></div>
           <div><p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p></div>
         </div>
