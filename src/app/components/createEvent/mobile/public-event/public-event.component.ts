@@ -115,8 +115,7 @@ export class PublicEventComponent implements OnDestroy {
       host: this.host[0]._id,
       question: this.formData.question,
       hashtags: [], // TODO
-      premium: false, // TODO
-      amount: 0, // TODO
+      amount: 0, // TODO amount on premium event
       answers: this.formData.answers.map((x) => {
         return x.name
       }),
