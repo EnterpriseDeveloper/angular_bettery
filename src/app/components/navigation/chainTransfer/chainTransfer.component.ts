@@ -65,7 +65,7 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
   async deposit() {
     if (this.inputValue > 0) {
       if (Number(this.inputValue) > Number(this.coinInfo.MainBTY)) {
-        this.error = "You don't have enough token for chainTransfer"
+        this.error = "You don't have enough token for deposit"
       } else {
         this.spinner = true;
         let web3 = new Web3()
