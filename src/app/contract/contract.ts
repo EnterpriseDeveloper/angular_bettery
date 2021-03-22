@@ -110,7 +110,7 @@ export default class Contract {
         let domainData = {
             name: tokenName,
             version: "1",
-            chainId: 5,
+            chainId: 5, // TODO switch to the correct networks
             verifyingContract: contractAddress,
         };
 
