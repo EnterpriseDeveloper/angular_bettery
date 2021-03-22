@@ -7,10 +7,10 @@ import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-deposit',
-  templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.sass']
+  templateUrl: './chainTransfer.component.html',
+  styleUrls: ['./chainTransfer.component.sass']
 })
-export class DepositComponent implements OnInit, OnDestroy {
+export class ChainTransferComponent implements OnInit, OnDestroy {
   @Input() status: string;
   @Input() coinInfo: Coins;
   @Input() wallet: string;
@@ -65,7 +65,7 @@ export class DepositComponent implements OnInit, OnDestroy {
   async deposit() {
     if (this.inputValue > 0) {
       if (Number(this.inputValue) > Number(this.coinInfo.MainBTY)) {
-        this.error = "You don't have enough token for deposit"
+        this.error = "You don't have enough token for chainTransfer"
       } else {
         this.spinner = true;
         let web3 = new Web3()

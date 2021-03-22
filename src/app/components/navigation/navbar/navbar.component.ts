@@ -15,7 +15,8 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {RegistrationComponent} from '../../registration/registration.component';
 import biconomyInit from '../../../../app/contract/biconomy';
-import {DepositComponent} from '../deposit/deposit.component';
+import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
+import {SwapBetComponent} from '../swap-bet/swap-bet.component';
 
 
 @Component({
@@ -222,10 +223,15 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openDeposit(str: string) {
-    const modalRef = this.modalService.open(DepositComponent, {centered: true});
+    const modalRef = this.modalService.open(ChainTransferComponent, {centered: true});
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
-    modalRef.componentInstance.userId = this.userId; 
+    modalRef.componentInstance.userId = this.userId;
+  }
+
+  openSwapBetToBTY() {
+    const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
+    modalRef.componentInstance.coinInfo = this.coinInfo;
   }
 }

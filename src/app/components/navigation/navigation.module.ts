@@ -8,7 +8,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ShareModule} from '../share/share.module';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReferalsComponent } from './referals/referals.component';
-import { DepositComponent } from './deposit/deposit.component';
+import { ChainTransferComponent } from './chainTransfer/chainTransfer.component';
+import { SwapBetComponent } from './swap-bet/swap-bet.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DepositComponent } from './deposit/deposit.component';
     SidebarComponent,
     NotificationsComponent,
     ReferalsComponent,
-    DepositComponent
+    ChainTransferComponent,
+    SwapBetComponent
   ],
     exports: [
         NavbarComponent,
@@ -31,7 +33,7 @@ import { DepositComponent } from './deposit/deposit.component';
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'ref/:id', component: ReferalsComponent },
-      
+
     ]),
   ]
 })
