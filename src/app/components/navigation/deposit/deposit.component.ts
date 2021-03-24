@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Web3 from "web3";
 import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
+import Contract from '../../../contract/contract';
 
 @Component({
   selector: 'app-deposit',
@@ -69,19 +70,26 @@ export class DepositComponent implements OnInit, OnDestroy {
       } else {
         this.spinner = true;
         let web3 = new Web3()
-        var value = web3.utils.toWei(this.inputValue.toString(), 'ether')
-        // TODO
-        // let matic = new maticInit(this.verifier);
-        // let response = await matic.depositEth(value);
-        // console.log(response);
-        // if (response.message === undefined) {
-        //   this.activeModal.dismiss('Cross click')
-        //   this.spinner = false;
-        // } else {
-        //   this.spinner = false;
-        //   console.log(response.message);
-        //   this.error = String(response.message);
-        // }
+        var value = web3.utils.toWei(this.inputValue.toString(), 'ether');
+        let contrc = new Contract();
+        let approve: any = await contrc.approveBTYmainToken(this.wallet, value, "torus") // switch "torus" to another wallet if we will use another one
+        console.log(approve);
+        if (approve.message === undefined) {
+          let deposit: any = await contrc.deposit(this.wallet, value, "torus") // switch "torus" to another wallet if we will use another one
+          console.log(deposit);
+          if(deposit.message === undefined) {
+            // this.activeModal.dismiss('Cross click')
+            // this.spinner = false;
+          }else{
+            this.spinner = false;
+            console.log(deposit.message);
+            this.error = String(deposit.message);
+          }
+        } else {
+          this.spinner = false;
+          console.log(approve.message);
+          this.error = String(approve.message);
+        }
       }
     } else {
       this.error = "Amount must be bigger that 0"

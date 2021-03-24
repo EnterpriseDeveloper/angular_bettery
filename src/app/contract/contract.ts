@@ -1,14 +1,15 @@
 import web3Obj from '../helpers/torus';
 import Web3 from 'web3';
-import BetteryToken from '../../../build/contracts/BetteryToken.json'
-import BTYTokenMainChain from '../../../build/contracts/EthERC20Coin.json'; //TODO Rename name for tokens
+import BTYMain from '../../../build/contracts/BTYmain.json';
 import networkConfiguration from '../config/network.json'
 import configFile from '../config/config.json';
+import configMaticMumbai from '../config/matic.json'; // TODO switch to prodaction
 import PublicEventsJSON from '../../../build/contracts/PublicEvents.json';
+import RootChainManagerProxyABI from '../../../build/contracts/RootChainManagerProxy.json';
+import RootChainManager from '../../../build/contracts/RootChainManager.json';
 import BTY from '../../../build/contracts/BTY.json';
 import BET from '../../../build/contracts/BET.json';
 var sigUtil = require('eth-sig-util')
-//import RootChainManagerJSON from '../config/abi/RootChainManager.json'
 
 
 export default class Contract {
@@ -31,9 +32,9 @@ export default class Contract {
 
     async getBTYtokenMainChain(from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
-        let abiTokenSale: any = BTYTokenMainChain.abi
+        let abiTokenSale: any = BTYMain.abi
         return new web3.eth.Contract(abiTokenSale,
-            BTYTokenMainChain.networks[networkConfiguration.goerli].address)
+            BTYMain.networks[networkConfiguration.goerli].address)
     }
 
     async getBTYTokenContract() {
@@ -52,13 +53,52 @@ export default class Contract {
         return PublicEventsJSON.networks[networkConfiguration.maticMumbai].address;
     }
 
+    erc20PredicateAddr() {
+        return configMaticMumbai.Main.Contracts.ERC20Predicate;
+    }
+
+    rootChainManagerProxyAddr(){
+        return configMaticMumbai.Main.POSContracts.RootChainManagerProxy;
+    }
+
+    rootChainManagerAddr(){
+        return configMaticMumbai.Main.POSContracts.RootChainManager;
+    }
+
+    async approveBTYmainToken(userWallet, amount, from) {
+        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+        let BTYMainContr = await this.getBTYtokenMainChain("torus"); // TODO switch if will use more that one wallet
+        let functionSignature = await BTYMainContr.methods.approve(this.erc20PredicateAddr(), amount).encodeABI();
+        let nonce = await BTYMainContr.methods.getNonce(userWallet).call();
+        const tokenName = "BET_main";
+        const chainId = 5; // TODO switch to prodaction
+        let dataToSign = this.dataToSignFunc(tokenName, BTYMain.networks[networkConfiguration.goerli].address, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature)
+    }
+
+    async deposit(userWallet, amount, from) {
+        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+        const depositData = web3.eth.abi.encodeParameter('uint256', amount);
+        const BTYMainAddr = BTYMain.networks[networkConfiguration.goerli].address;
+        const abi: any = RootChainManager.abi;
+        let rCMP = new web3.eth.Contract(abi, this.rootChainManagerProxyAddr());
+        let functionSignature = await rCMP.methods.depositFor(userWallet, BTYMainAddr, amount).encodeABI();
+        let nonce = await rCMP.methods.getNonce(userWallet).call();
+        const tokenName = "RootChainManager";
+        const chainId = 5; // TODO switch to prodaction
+        let dataToSign = this.dataToSignFunc(tokenName, this.rootChainManagerProxyAddr(), nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, rCMP, functionSignature)
+        
+    }
+
     async approveBTYToken(userWallet, amount, from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
         let BTYToken = await this.getBTYTokenContract();
         let functionSignature = await BTYToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
-        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature)
+        const chainId = 80001; // TODO switch to prodaction
+        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
 
@@ -68,7 +108,8 @@ export default class Contract {
         let functionSignature = await BETToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BETToken.methods.getNonce(userWallet).call();
         const tokenName = "BET_token";
-        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature)
+        const chainId = 80001; // TODO switch to prodaction
+        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
     }
 
@@ -106,11 +147,11 @@ export default class Contract {
         })
     }
 
-    dataToSignFunc(tokenName, contractAddress, nonce, userWallet, functionSignature) {
+    dataToSignFunc(tokenName, contractAddress, nonce, userWallet, functionSignature, chainId) {
         let domainData = {
             name: tokenName,
             version: "1",
-            chainId: 5, // TODO switch to the correct networks
+            chainId: chainId, // TODO check chain id network
             verifyingContract: contractAddress,
         };
 

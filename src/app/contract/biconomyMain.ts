@@ -1,14 +1,14 @@
 import Biconomy from "@biconomy/mexa";
 
-const biconomyInit = async () => {
+const biconomyMainInit = async () => {
     // TODO add provider for prodaction
-    let biconomy = new Biconomy("https://rpc-mumbai.matic.today",
+    let biconomy = new Biconomy("wss://goerli.infura.io/ws/v3/2b5ec85db4a74c8d8ed304ff2398690d",
         {
-            apiKey: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
+            apiKey: "fFSHzs4c0.4922e9d7-3091-49c7-b74b-520f368a5d82",
             strictMode: true
         });
     await BiconomyReady(biconomy);
-    window.biconomy = biconomy;
+    window.biconomyMain = biconomy;
 }
 
 async function BiconomyReady(biconomy) {
@@ -23,6 +23,4 @@ async function BiconomyReady(biconomy) {
     });
 }
 
-export default biconomyInit;
-
-
+export default biconomyMainInit;

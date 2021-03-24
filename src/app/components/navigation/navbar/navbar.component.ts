@@ -15,6 +15,7 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {RegistrationComponent} from '../../registration/registration.component';
 import biconomyInit from '../../../../app/contract/biconomy';
+import biconomyMainInit from '../../../../app/contract/biconomyMain';
 import {DepositComponent} from '../deposit/deposit.component';
 
 
@@ -115,6 +116,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   async ngOnInit() {
     this.onDocumentClick = this.onDocumentClick.bind(this);
     document.addEventListener('click', this.onDocumentClick);
+    await biconomyMainInit();
     await biconomyInit();
   }
 
