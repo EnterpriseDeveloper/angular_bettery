@@ -8,10 +8,10 @@ import Contract from '../../../contract/contract';
 
 @Component({
   selector: 'app-deposit',
-  templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.sass']
+  templateUrl: './chainTransfer.component.html',
+  styleUrls: ['./chainTransfer.component.sass']
 })
-export class DepositComponent implements OnInit, OnDestroy {
+export class ChainTransferComponent implements OnInit, OnDestroy {
   @Input() status: string;
   @Input() coinInfo: Coins;
   @Input() wallet: string;
