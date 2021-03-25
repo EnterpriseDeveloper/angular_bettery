@@ -36,6 +36,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   userId: number;
   userSub: Subscription;
   coinsSub: Subscription;
+  depositSub: Subscription;
+  swipeSub: Subscription;
   userHistory: any = [];
   loadMore = false;
   avatar: string;
@@ -205,16 +207,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }, 500);
   }
 
-  ngOnDestroy() {
-    document.removeEventListener('click', this.onDocumentClick);
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-    if (this.coinsSub) {
-      this.coinsSub.unsubscribe();
-    }
-  }
-
   openModal(contentModal) {
     this.modalService.open(contentModal, {size: 'sm', centered: true});
     this.openNavBar = false;
@@ -225,15 +217,40 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openDeposit(str: string) {
+    this.updateBalance() 
     const modalRef = this.modalService.open(ChainTransferComponent, {centered: true});
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
     modalRef.componentInstance.userId = this.userId;
+    this.depositSub = modalRef.componentInstance.updateBalance.subscribe(() => {
+      this.updateBalance() 
+    })
   }
 
   openSwapBetToBTY() {
+    this.updateBalance() 
     const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
     modalRef.componentInstance.coinInfo = this.coinInfo;
+    modalRef.componentInstance.userWallet = this.userWallet;
+    this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {
+      this.updateBalance() 
+    })
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.onDocumentClick);
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.coinsSub) {
+      this.coinsSub.unsubscribe();
+    }
+    if(this.depositSub){
+      this.depositSub.unsubscribe();
+    }
+    if(this.swipeSub){
+      this.swipeSub.unsubscribe();
+    }
   }
 }

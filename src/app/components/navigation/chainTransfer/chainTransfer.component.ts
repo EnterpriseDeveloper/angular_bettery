@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Coins } from '../../../models/Coins.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Web3 from "web3";
@@ -16,6 +16,8 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
   @Input() coinInfo: Coins;
   @Input() wallet: string;
   @Input() userId: number;
+  @Output() updateBalance = new EventEmitter();
+
   inputValue: any = 0;
   error: string = undefined;
   spinner: boolean = false;

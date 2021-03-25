@@ -1,3 +1,4 @@
+import MetaTransaction from './metaTransaction';
 import web3Obj from '../helpers/torus';
 import Web3 from 'web3';
 import BTYMain from '../../../build/contracts/BTYmain.json';
@@ -9,26 +10,8 @@ import RootChainManagerProxyABI from '../../../build/contracts/RootChainManagerP
 import RootChainManager from '../../../build/contracts/RootChainManager.json';
 import BTY from '../../../build/contracts/BTY.json';
 import BET from '../../../build/contracts/BET.json';
-var sigUtil = require('eth-sig-util')
 
-
-export default class Contract {
-    domainType;
-    metaTransactionType;
-    constructor() {
-        this.domainType = [
-            { name: "name", type: "string" },
-            { name: "version", type: "string" },
-            { name: "chainId", type: "uint256" },
-            { name: "verifyingContract", type: "address" },
-        ];
-
-        this.metaTransactionType = [
-            { name: "nonce", type: "uint256" },
-            { name: "from", type: "address" },
-            { name: "functionSignature", type: "bytes" },
-        ];
-    }
+export default class Contract extends MetaTransaction{
 
     async getBTYtokenMainChain(from) {
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
@@ -113,83 +96,16 @@ export default class Contract {
         return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
     }
 
-    setSignPromise(userWallet, dataToSign, web3, whichContract, functionSignature) {
-        return new Promise((resolve, reject) => {
-            web3.eth.currentProvider.send(
-                {
-                    jsonrpc: "2.0",
-                    id: 999999999999,
-                    method: "eth_signTypedData_v4",
-                    params: [userWallet, dataToSign],
-                },
-                async (error, response) => {
-                    if (error) {
-                        console.log(error)
-                        return reject(error)
-                    }
-
-                    let { r, s, v } = this.getSignatureParameters(response.result, web3);
-
-                    const recovered = sigUtil.recoverTypedSignature_v4({
-                        data: JSON.parse(dataToSign),
-                        sig: response.result,
-                    });
-                    console.log(`Recovered ${recovered}`);
-                    let executeMetaTransaction = await whichContract.methods
-                        .executeMetaTransaction(userWallet, functionSignature, r, s, v)
-                        .send({
-                            from: userWallet
-                        });
-
-                    return resolve(executeMetaTransaction);
-                }
-            );
-        })
+    async swipeTokens(userWallet, amount, from) {
+        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+        let BTYToken = await this.getBTYTokenContract();
+        let functionSignature = await BTYToken.methods.swipe(amount).encodeABI();
+        let nonce = await BTYToken.methods.getNonce(userWallet).call();
+        const tokenName = "BTY_token";
+        const chainId = 5; // TODO switch to prodaction
+        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
-
-    dataToSignFunc(tokenName, contractAddress, nonce, userWallet, functionSignature, chainId) {
-        let domainData = {
-            name: tokenName,
-            version: "1",
-            chainId: chainId,
-            verifyingContract: contractAddress,
-        };
-
-        let message: any = {};
-        message.nonce = parseInt(nonce);
-        message.from = userWallet;
-        message.functionSignature = functionSignature;
-        message.network = "Interact with Matic Network";
-
-        return JSON.stringify({
-            types: {
-                EIP712Domain: this.domainType,
-                MetaTransaction: this.metaTransactionType,
-            },
-            domain: domainData,
-            primaryType: "MetaTransaction",
-            message: message,
-        });
-    }
-
-
-    getSignatureParameters(signature, web3) {
-        if (!web3.utils.isHexStrict(signature)) {
-            throw new Error(
-                'Given value "'.concat(signature, '" is not a valid hex string.')
-            );
-        }
-        var r = signature.slice(0, 66);
-        var s = "0x".concat(signature.slice(66, 130));
-        var v: any = "0x".concat(signature.slice(130, 132));
-        v = web3.utils.hexToNumber(v);
-        if (![27, 28].includes(v)) v += 27;
-        return {
-            r: r,
-            s: s,
-            v: v,
-        };
-    };
 
 }
 
