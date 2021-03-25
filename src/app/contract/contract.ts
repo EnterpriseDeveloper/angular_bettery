@@ -97,7 +97,7 @@ export default class Contract {
         let functionSignature = await BTYToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
-        const chainId = 80001; // TODO switch to prodaction
+        const chainId = 5; // TODO switch to prodaction
         let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
@@ -108,7 +108,7 @@ export default class Contract {
         let functionSignature = await BETToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BETToken.methods.getNonce(userWallet).call();
         const tokenName = "BET_token";
-        const chainId = 80001; // TODO switch to prodaction
+        const chainId = 5; // TODO switch to prodaction
         let dataToSign = this.dataToSignFunc(tokenName, BET.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
     }
@@ -151,7 +151,7 @@ export default class Contract {
         let domainData = {
             name: tokenName,
             version: "1",
-            chainId: chainId, // TODO check chain id network
+            chainId: chainId,
             verifyingContract: contractAddress,
         };
 
