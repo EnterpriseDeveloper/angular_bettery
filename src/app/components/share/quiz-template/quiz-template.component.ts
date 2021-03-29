@@ -273,23 +273,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       await contract.approveBETToken(this.allUserData.wallet, _money, this.allUserData.verifier);
 
       this.setToDB(answer);
-
-      // TODO add correct error handel
-      // } else if (Number(validator) === 1) {
-      //   let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
-      //   modalRef.componentInstance.errType = 'time';
-      //   modalRef.componentInstance.title = 'Event not start';
-      //   modalRef.componentInstance.customMessage = 'Betting time for this event is not start.';
-      //   modalRef.componentInstance.description = 'Player can join when event is start.';
-      //   modalRef.componentInstance.nameButton = 'fine';
-      // } else if (Number(validator) === 2) {
-      //   let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
-      //   modalRef.componentInstance.errType = 'time';
-      //   modalRef.componentInstance.title = 'Betting time’s over';
-      //   modalRef.componentInstance.customMessage = 'Betting time for this event is over.';
-      //   modalRef.componentInstance.description = 'No more Players can join now.';
-      //   modalRef.componentInstance.nameButton = 'fine';
-      // }
     }
   }
 
@@ -307,41 +290,38 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     },
       (err) => {
         console.log(err);
-        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
-        modalRef.componentInstance.errType = 'error';
-        modalRef.componentInstance.title = 'Unknown Error';
-        modalRef.componentInstance.customMessage = String(err.error);
-        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
-        modalRef.componentInstance.nameButton = 'report error';
+        if (err.error.includes('not valid time')) {
+          if (this.timePart(this.question)) {
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+            modalRef.componentInstance.errType = 'time';
+            modalRef.componentInstance.title = 'Event not start';
+            modalRef.componentInstance.customMessage = 'Betting time for this event is not start.';
+            modalRef.componentInstance.description = 'Player can join when event is start.';
+            modalRef.componentInstance.nameButton = 'fine';
+          } else if (this.timeValidating(this.question)) {
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+            modalRef.componentInstance.errType = 'time';
+            modalRef.componentInstance.title = 'Betting time’s over';
+            modalRef.componentInstance.customMessage = 'Betting time for this event is over.';
+            modalRef.componentInstance.description = 'No more Players can join now.';
+            modalRef.componentInstance.nameButton = 'fine';
+          }
+
+        } else {
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+          modalRef.componentInstance.errType = 'error';
+          modalRef.componentInstance.title = 'Unknown Error';
+          modalRef.componentInstance.customMessage = String(err.error);
+          modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+          modalRef.componentInstance.nameButton = 'report error';
+        }
+
       });
   }
 
-  async setToNetworkValidation(answer) {
 
-      this.setToDBValidation(answer);
-    // TODO add better error handel
-    // } else if (Number(validator) == 1) {
-    //   let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
-    //   modalRef.componentInstance.errType = 'time';
-    //   modalRef.componentInstance.title = 'Validation time’s not start';
-    //   modalRef.componentInstance.customMessage = 'Validation time for this event not start';
-    //   modalRef.componentInstance.description = 'Expert can join when validating time is start';
-    //   modalRef.componentInstance.nameButton = 'fine';
-    // } else if (Number(validator) == 2) {
-    //   let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
-    //   modalRef.componentInstance.errType = 'time';
-    //   modalRef.componentInstance.title = 'Validation time’s over';
-    //   modalRef.componentInstance.customMessage = 'Validation time for this event is over, ';
-    //   modalRef.componentInstance.description = 'No more Experts can join now.';
-    //   modalRef.componentInstance.nameButton = 'fine';
-    // } else if (Number(validator) == 3) {
-    //   let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
-    //   modalRef.componentInstance.errType = 'error';
-    //   modalRef.componentInstance.title = 'You participated in this event.';
-    //   modalRef.componentInstance.customMessage = 'You have been like the participant in this event. ';
-    //   modalRef.componentInstance.description = 'The participant can\'t be the Experts.';
-    //   modalRef.componentInstance.nameButton = 'fine';
-    // }
+  async setToNetworkValidation(answer) {
+    this.setToDBValidation(answer);
   }
 
   setToDBValidation(answer) {
@@ -357,12 +337,37 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     },
       (err) => {
         console.log(err);
-        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
-        modalRef.componentInstance.errType = 'error';
-        modalRef.componentInstance.title = 'Unknown Error';
-        modalRef.componentInstance.customMessage = String(err.error);
-        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
-        modalRef.componentInstance.nameButton = 'report error';
+        if (err.error.includes('not valid time')) {
+          if (this.timeValidating(this.question)) {
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+            modalRef.componentInstance.errType = 'time';
+            modalRef.componentInstance.title = 'Validation time’s not start';
+            modalRef.componentInstance.customMessage = 'Validation time for this event not start';
+            modalRef.componentInstance.description = 'Expert can join when validating time is start';
+            modalRef.componentInstance.nameButton = 'fine';
+          } else if(!this.timeValidating(this.question)) {
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+            modalRef.componentInstance.errType = 'time';
+            modalRef.componentInstance.title = 'Validation time’s over';
+            modalRef.componentInstance.customMessage = 'Validation time for this event is over, ';
+            modalRef.componentInstance.description = 'No more Experts can join now.';
+            modalRef.componentInstance.nameButton = 'fine';
+          }
+        } else if (err.error.includes('user participate')) {
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+          modalRef.componentInstance.errType = 'error';
+          modalRef.componentInstance.title = 'You participated in this event.';
+          modalRef.componentInstance.customMessage = 'You have been like the participant in this event. ';
+          modalRef.componentInstance.description = 'The participant can\'t be the Experts.';
+          modalRef.componentInstance.nameButton = 'fine';
+        } else {
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+          modalRef.componentInstance.errType = 'error';
+          modalRef.componentInstance.title = 'Unknown Error';
+          modalRef.componentInstance.customMessage = String(err.error);
+          modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+          modalRef.componentInstance.nameButton = 'report error';
+        }
       });
   }
 
@@ -396,6 +401,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     } else {
       return false;
     }
+  }
+
+  timePart(question) {
+    const timeNow = Number((Date.now() / 1000).toFixed(0));
+    return question.startTime - timeNow > 0
   }
 
   timeValidating(question) {

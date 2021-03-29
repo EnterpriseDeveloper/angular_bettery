@@ -14,8 +14,6 @@ import web3Obj from '../../../helpers/torus';
 import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {RegistrationComponent} from '../../registration/registration.component';
-import biconomyInit from '../../../../app/contract/biconomy';
-import biconomyMainInit from '../../../../app/contract/biconomyMain';
 import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
 import {SwapBetComponent} from '../swap-bet/swap-bet.component';
 
@@ -119,8 +117,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   async ngOnInit() {
     this.onDocumentClick = this.onDocumentClick.bind(this);
     document.addEventListener('click', this.onDocumentClick);
-    await biconomyMainInit();
-    await biconomyInit();
   }
 
   depositGuard() {
