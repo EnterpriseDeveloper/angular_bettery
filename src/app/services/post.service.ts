@@ -8,8 +8,8 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  //url = environment.production ? 'https://api.bettery.io' : 'https://13.229.200.135';
-  url = "http://localhost:80"
+  url = environment.production ? 'https://api.bettery.io' : 'https://13.229.200.135';
+  //url = "http://localhost:80"
 
 
   post(path: string, data: Object) {
