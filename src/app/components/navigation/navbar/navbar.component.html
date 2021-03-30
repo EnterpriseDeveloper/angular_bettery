@@ -36,10 +36,10 @@
         </div>
       </li>
       <li class="nav-item">
-        <div (click)="toggleLogout()" class="user_email"> {{nickName}}</div>
+        <div (click)="toggleLogout(true)" class="user_email"> {{nickName}}</div>
       </li>
       <li class="nav-item position-relative">
-        <img  (click)="toggleLogout()" class="circle-img" src="{{avatar}}" alt="avatar">
+        <img  (click)="toggleLogout(true)" class="circle-img" src="{{avatar}}" alt="avatar">
         <div *ngIf="logoutBox" class="logoutBox">
           <ul>
             <li class="profile disabledItem">My profile</li>
@@ -53,7 +53,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <notifications [userId]="userId"></notifications>
+        <notifications [userId]="userId" (click)="toggleLogout(false)"></notifications>
       </li>
     </ul>
   </div>

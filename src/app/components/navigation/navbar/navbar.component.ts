@@ -16,6 +16,7 @@ import {User} from '../../../models/User.model';
 import {RegistrationComponent} from '../../registration/registration.component';
 import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
 import {SwapBetComponent} from '../swap-bet/swap-bet.component';
+import {PostService} from '../../../services/post.service';
 
 
 @Component({
@@ -45,12 +46,14 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   saveUserLocStorage = [];
   logoutBox: boolean;
   copyLinkFlag: boolean;
+  postSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
+    private postService: PostService
   ) {
 
     this.detectPath();
@@ -82,7 +85,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   detectPath() {
     let href = window.location.pathname;
-    if (href == '/' || href == '/tokensale' || href == "/.well-known/pki-validation/fileauth.txt") {
+    if (href == '/' || href == '/tokensale' || href == '/.well-known/pki-validation/fileauth.txt') {
       this.display = false;
     } else {
       this.display = true;
@@ -145,6 +148,21 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
       BET: BETBalance
     }));
     this.amountSpinner = false;
+    this.sendBalanceToDB(BTYBalance, BETBalance);
+  }
+
+  sendBalanceToDB(bty, bet): void {
+    const data = {
+      bty: bty,
+      bet: bet,
+      id: this.userId
+    };
+
+    this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
+      console.log('data send');
+    }, error => {
+      console.log(error);
+    });
   }
 
   open(content) {
@@ -208,30 +226,34 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.openNavBar = false;
   }
 
-  toggleLogout() {
-    this.logoutBox = !this.logoutBox;
+  toggleLogout(param) {
+    if (param) {
+      this.logoutBox = !this.logoutBox;
+      return;
+    }
+    this.logoutBox = false;
   }
 
   openDeposit(str: string) {
-    this.updateBalance() 
+    this.updateBalance();
     const modalRef = this.modalService.open(ChainTransferComponent, {centered: true});
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
     modalRef.componentInstance.userId = this.userId;
     this.depositSub = modalRef.componentInstance.updateBalance.subscribe(() => {
-      this.updateBalance() 
-    })
+      this.updateBalance();
+    });
   }
 
   openSwapBetToBTY() {
-    this.updateBalance() 
+    this.updateBalance();
     const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.userWallet = this.userWallet;
     this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {
-      this.updateBalance() 
-    })
+      this.updateBalance();
+    });
   }
 
   ngOnDestroy() {
@@ -242,11 +264,14 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     if (this.coinsSub) {
       this.coinsSub.unsubscribe();
     }
-    if(this.depositSub){
+    if (this.depositSub) {
       this.depositSub.unsubscribe();
     }
-    if(this.swipeSub){
+    if (this.swipeSub) {
       this.swipeSub.unsubscribe();
+    }
+    if (this.postSub) {
+      this.postSub.unsubscribe();
     }
   }
 }
