@@ -118,7 +118,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
       }),
       startTime: this.getStartTime(),
       endTime: Number(this.getEndTime()),
-      validatorsAmount: this.formData.expertsCount,
+      validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
       calculateExperts: this.formData.expertsCountType,
       currencyType: this.formData.tokenType,
       roomName: this.formData.roomName,

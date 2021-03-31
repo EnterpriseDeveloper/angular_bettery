@@ -1,15 +1,15 @@
-import {Component, Input, Output, EventEmitter, OnDestroy, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../app.state';
-import {ClipboardService} from 'ngx-clipboard'
-import {PostService} from '../../../../services/post.service'
-import {Subscription} from 'rxjs';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
-import {User} from '../../../../models/User.model';
-import {Router} from "@angular/router";
-import {formDataAction} from "../../../../actions/newEvent.actions";
+import { Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../app.state';
+import { ClipboardService } from 'ngx-clipboard'
+import { PostService } from '../../../../services/post.service'
+import { Subscription } from 'rxjs';
+import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { User } from '../../../../models/User.model';
+import { Router } from "@angular/router";
+import { formDataAction } from "../../../../actions/newEvent.actions";
 
 
 @Component({
@@ -129,7 +129,7 @@ export class PublicEventComponent implements OnDestroy {
       }),
       startTime: this.getStartTime(),
       endTime: Number(this.getEndTime()),
-      validatorsAmount: this.formData.expertsCount,
+      validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
       calculateExperts: this.formData.expertsCountType,
       currencyType: this.formData.tokenType,
       roomName: this.formData.roomName,
@@ -165,7 +165,7 @@ export class PublicEventComponent implements OnDestroy {
     this.formData.winner = '';
     this.formData.roomName = '';
 
-    this.store.dispatch(formDataAction({formData: this.formData}));
+    this.store.dispatch(formDataAction({ formData: this.formData }));
   }
 
   calculateDate() {
@@ -190,7 +190,7 @@ export class PublicEventComponent implements OnDestroy {
   }
 
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
+    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
