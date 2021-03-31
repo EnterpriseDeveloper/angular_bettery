@@ -112,6 +112,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
       question: this.formData.question,
       hashtags: [], // TODO
       amount: 0, // TODO amount of premium event
+      premium: false, // TODO premium true or false
       answers: this.formData.answers.map((x) => {
         return x.name
       }),
