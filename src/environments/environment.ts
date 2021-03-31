@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   locales: ['en', 'vn'],
   defaultLocale: 'en',
+  apiUrl: 'https://13.229.200.135'
 };
 
 /*

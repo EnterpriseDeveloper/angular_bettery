@@ -6,11 +6,9 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class PostService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  url = environment.production ? 'https://api.bettery.io' : 'https://13.229.200.135';
-  //url = "http://localhost:80"
-
+  url = environment.apiUrl;
 
   post(path: string, data: Object) {
     return this.http.post(`${this.url}/${path}`, data);

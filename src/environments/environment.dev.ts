@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
+  production: false,
   locales: ['en', 'vn'],
   defaultLocale: 'en',
-  apiUrl: 'https://api.bettery.io'
-};
+  apiUrl: 'http://localhost:80'
+}
