@@ -394,7 +394,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   finalAnswerGuard(question) {
-    if (question.finalAnswer !== null || question.status == 'reverted') {
+    if (question.finalAnswer !== null || question.status.includes('reverted')) {
       return true;
     } else if (this.myAnswers.answer != undefined && this.myAnswers.answered) {
       return true;
@@ -424,7 +424,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       } else {
         return this.backgroundColorEventFinish(data);
       }
-    } else if (data.status == 'reverted') {
+    } else if (data.status.includes('reverted')) {
       return { 'background': '#F4F4F4' };
     } else {
       return { 'background': '#E6FFF2' };
@@ -518,7 +518,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   viewDetails() {
-    if (this.question.status != 'reverted') {
+    if (!this.question.status.includes('reverted')) {
       if (this.openIndex == this.index) {
         this.openIndex = null;
         this.viewEventFinishInfo = false;
