@@ -116,7 +116,6 @@ export class EventFeedComponent implements OnDestroy {
         this.commentResetFlag = false;
       }
       this.pureData = x;
-
       if (from == 0) {
         this.newQuestions = this.pureData.events;
         this.myAnswers = this.getAnswers(this.newQuestions);
