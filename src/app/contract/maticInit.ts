@@ -2,7 +2,6 @@ import Web3 from "web3";
 import web3Obj from '../helpers/torus'
 import Contract from "./contract";
 
-
 export default class maticInit {
     whichProvider;
 
@@ -33,30 +32,8 @@ export default class maticInit {
     async getBTYTokenOnMainChainBalance() {
         let from = await this.getUserAccount();
         let contr = new Contract();
-        let tokenContract = await contr.getBTYtokenMainChain("torus");
+        let network = new Web3(this.whichProvider === "metamask" ? window.web3.currentProvider : web3Obj.torus.provider)
+        let tokenContract = await contr.getBTYtokenMainChain(network);
         return await tokenContract.methods.balanceOf(from).call();
     }
-
-    // OLD CODE
-    // async depositEth(amount) {
-    //     let from = await this.getUserAccount();
-    //     try {
-    //         let maticPOS = await getMaticPOSClient(this.whichProvider);
-    //         return await maticPOS.depositEtherForUser(from, amount, { from, gasPrice: '10000000000' })
-    //     } catch (e) {
-    //         return e
-    //     }
-    // }
-
-    // async depositERC20Token(amount) {
-    //     let from = await this.getUserAccount();
-    //     try {
-    //         let maticPOSClient = await getMaticPOSClient(this.whichProvider);
-    //         let approve = await maticPOSClient.approveERC20ForDeposit(this.Ropsten_Erc20Address, amount, { from })
-    //         console.log(approve);
-    //         return await maticPOSClient.depositERC20ForUser(this.Ropsten_Erc20Address, from, amount, { from, gasPrice: '10000000000' })
-    //     } catch (e) {
-    //         return e
-    //     }
-    // }
 }

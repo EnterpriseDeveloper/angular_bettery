@@ -59,7 +59,7 @@
     </div>
 
     <div *ngIf="!receiveBTY" class="two_btn">
-      <button class="cancel-btn" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+      <button class="cancel-btn" (click)="close()">Cancel</button>
       <button *ngIf="status ==='withdraw'" class="withdraw-btn">Withdraw BTY</button>
       <button *ngIf="status ==='deposit'" class="deposit-btn" (click)="deposit()">Deposit BTY</button>
     </div>

@@ -12,7 +12,6 @@ import web3Obj from '../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { WelcomePageComponent } from '../share/welcome-page/welcome-page.component';
 import biconomyInit from '../../../app/contract/biconomy';
-import biconomyMainInit from '../../../app/contract/biconomyMain';
 
 
 @Component({
@@ -56,7 +55,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   async loginWithTorus() {
     this.spinner = true;
     // this.activeModal.dismiss('Cross click')
-    await biconomyMainInit();
     await biconomyInit();
     try {
       await web3Obj.initialize();

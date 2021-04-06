@@ -4,7 +4,6 @@ declare global {
   interface Window {
     web3: any;
     biconomy: any;
-    biconomyMain: any;
   }
 }
 

@@ -5,6 +5,8 @@ import Web3 from "web3";
 import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
 import Contract from '../../../contract/contract';
+import biconomyMainInit from '../../../contract/biconomyMain';
+import biconomyInit from '../../../contract/biconomy';
 
 @Component({
   selector: 'app-deposit',
@@ -73,21 +75,25 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
         this.spinner = true;
         let web3 = new Web3()
         var value = web3.utils.toWei(this.inputValue.toString(), 'ether');
+        let biconomy_provider = await biconomyMainInit();
         let contrc = new Contract();
-        let approve: any = await contrc.approveBTYmainToken(this.wallet, value, "torus") // switch "torus" to another wallet if we will use another one
+        let approve: any = await contrc.approveBTYmainToken(this.wallet, value, "torus", biconomy_provider) // switch "torus" to another wallet if we will use another one
         console.log(approve);
         if (approve.message === undefined) {
-          let deposit: any = await contrc.deposit(this.wallet, value, "torus") // switch "torus" to another wallet if we will use another one
+          let deposit: any = await contrc.deposit(this.wallet, value, "torus", biconomy_provider) // switch "torus" to another wallet if we will use another one
           console.log(deposit);
-          if(deposit.message === undefined) {
+          if (deposit.message === undefined) {
+            // await biconomyInit;
             // this.activeModal.dismiss('Cross click')
             // this.spinner = false;
-          }else{
+          } else {
+            await biconomyInit();
             this.spinner = false;
             console.log(deposit.message);
             this.error = String(deposit.message);
           }
         } else {
+          await biconomyInit();
           this.spinner = false;
           console.log(approve.message);
           this.error = String(approve.message);
@@ -132,6 +138,12 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
     } else {
       this.error = "Amount must be bigger that 0"
     }
+  }
+
+  async close() {
+    console.log("TEST #$#$")
+    await biconomyInit();
+    this.activeModal.dismiss('Cross click');
   }
 
   ngOnDestroy() {

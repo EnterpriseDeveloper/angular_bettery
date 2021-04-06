@@ -6,17 +6,16 @@ import networkConfiguration from '../config/network.json'
 import configFile from '../config/config.json';
 import configMaticMumbai from '../config/matic.json'; // TODO switch to prodaction
 import PublicEventsJSON from '../../../build/contracts/PublicEvents.json';
-import RootChainManagerProxyABI from '../../../build/contracts/RootChainManagerProxy.json';
 import RootChainManager from '../../../build/contracts/RootChainManager.json';
 import BTY from '../../../build/contracts/BTY.json';
 import BET from '../../../build/contracts/BET.json';
 
-export default class Contract extends MetaTransaction{
+export default class Contract extends MetaTransaction {
 
-    async getBTYtokenMainChain(from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider)
-        let abiTokenSale: any = BTYMain.abi
-        return new web3.eth.Contract(abiTokenSale,
+    async getBTYtokenMainChain(network) {
+        let web3 = new Web3(network);
+        let abi: any = BTYMain.abi
+        return new web3.eth.Contract(abi,
             BTYMain.networks[networkConfiguration.goerli].address)
     }
 
@@ -37,20 +36,22 @@ export default class Contract extends MetaTransaction{
     }
 
     erc20PredicateAddr() {
-        return configMaticMumbai.Main.Contracts.ERC20Predicate;
+        return configMaticMumbai.Main.POSContracts.ERC20PredicateProxy;
     }
 
-    rootChainManagerProxyAddr(){
-        return configMaticMumbai.Main.POSContracts.RootChainManagerProxy;
+    rootChainManagerProxyAddr() {
+        return "0x57823134bc226b2335CA2E6D03c8E59a8314b2A9"
+     //   return configMaticMumbai.Main.POSContracts.RootChainManagerProxy;
     }
 
-    rootChainManagerAddr(){
+    rootChainManagerAddr() {
         return configMaticMumbai.Main.POSContracts.RootChainManager;
     }
 
-    async approveBTYmainToken(userWallet, amount, from) {
+    async approveBTYmainToken(userWallet, amount, from, provider) {
+        console.log(provider)
         let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
-        let BTYMainContr = await this.getBTYtokenMainChain("torus"); // TODO switch if will use more that one wallet
+        let BTYMainContr = await this.getBTYtokenMainChain(provider); // TODO switch if will use more that one wallet
         let functionSignature = await BTYMainContr.methods.approve(this.erc20PredicateAddr(), amount).encodeABI();
         let nonce = await BTYMainContr.methods.getNonce(userWallet).call();
         const tokenName = "BET_main";
@@ -59,19 +60,24 @@ export default class Contract extends MetaTransaction{
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature)
     }
 
-    async deposit(userWallet, amount, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    async deposit(userWallet, amount, from, provider) {
+        console.log(provider)
+        let web3 = new Web3(provider);
+        let web3_2 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
         const depositData = web3.eth.abi.encodeParameter('uint256', amount);
+        console.log(depositData)
         const BTYMainAddr = BTYMain.networks[networkConfiguration.goerli].address;
+        //const BTYMainAddr = "0xf1a5c13e3ED219F705cEf4B4f52492711eaaa08a";
         const abi: any = RootChainManager.abi;
         let rCMP = new web3.eth.Contract(abi, this.rootChainManagerProxyAddr());
-        let functionSignature = await rCMP.methods.depositFor(userWallet, BTYMainAddr, amount).encodeABI();
+        let functionSignature = await rCMP.methods.depositFor(userWallet, BTYMainAddr, depositData).encodeABI();
         let nonce = await rCMP.methods.getNonce(userWallet).call();
+        console.log(nonce)
         const tokenName = "RootChainManager";
         const chainId = 5; // TODO switch to prodaction
         let dataToSign = this.dataToSignFunc(tokenName, this.rootChainManagerProxyAddr(), nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, rCMP, functionSignature)
-        
+        return await this.setSignPromise(userWallet, dataToSign, web3_2, rCMP, functionSignature)
+
     }
 
     async approveBTYToken(userWallet, amount, from) {
@@ -105,6 +111,12 @@ export default class Contract extends MetaTransaction{
         const chainId = 5; // TODO switch to prodaction
         let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
+    }
+
+    async getUserAccount(from) {
+        let goerli = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.torus.provider)
+        let accounts = await goerli.eth.getAccounts();
+        return accounts[0];
     }
 
 }
