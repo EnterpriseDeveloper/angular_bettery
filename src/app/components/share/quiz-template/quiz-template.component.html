@@ -15,7 +15,6 @@
                 <div class="answers">
                   <div *ngIf="!finalAnswerGuard(question)">
                     <div class="d-flex align-items-center" [ngClass]="question.answers.length >= 4 && 'moreThan3'">
-<!--                    <div class="d-flex align-items-center">-->
                       <div (click)="letsRegistration()" class="each_answer" *ngFor="let answer of question.answers; let i = index">
                         <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i)"
                           value="{{i}}" type="radio" name="{{question.id}}">
@@ -100,25 +99,43 @@
                 <p class="validated_text">VALIDATED</p>
               </div>
             </div>
-            <div class="amount_box" style="padding-right: 31px"
+            <div class="amount_box" [ngClass]="question.host.id === userData._id && 'earnedHost'" style="padding-right: 1px"
               *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.betAmount > 0">
-              <div style="display: flex; flex-direction: column; justify-content: center">
+              <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
+                <p class="winner_text">You earned</p>
+                <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{hostEarned(question)}}</p>
+                <p style="text-align: center">As <span style="color: #FFD300">Host</span></p>
+              </div>
+
+              <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'"></div>
+
+              <div class="blockWin" [ngClass]="question.host.id === userData._id && 'wonHost'">
                 <p class="lost_text2">You lost</p>
-                <p class="lost_amount">{{this.myAnswers?.betAmount}} BET</p>
+                <p class="lost_amount">{{getLost(question)}} BET</p>
               </div>
             </div>
-            <div class="amount_box" style="padding-right: 18px"
+            <div class="amount_box"
               *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.from == 'validator' && this.myAnswers?.answered">
-             <div style="display: flex; flex-direction: column; justify-content: center">
+             <div style="display: flex; flex-direction: column; justify-content: center;">
                <p class="lost_text2">You were</p>
                <p class="lost_amount">WRONG</p>
              </div>
             </div>
-            <div class="amount_box" style="width: 100%"
+            <div class="amount_box" [ngClass]="question.host.id === userData._id && 'earnedHost'" style="width: 100%"
               *ngIf="question.finalAnswer !== null && this.myAnswers?.answer == question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.answered">
-              <div style="display: flex; flex-direction: column; justify-content: center">
-                <p class="winner_text">{{actionDetected(question)}}</p>
+              <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
+                <p class="winner_text">You earned</p>
+                <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{hostEarned(question)}}</p>
+                <p style="text-align: center; font-weight: bold">As <span style="color: #FFD300">Host</span></p>
+              </div>
+
+              <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'"></div>
+
+              <div class="blockWin" [ngClass]="question.host.id === userData._id && 'wonHost'">
+                <p class="winner_text">{{actionDetected()}}</p>
                 <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{playerAward(question)}}</p>
+                <p *ngIf="question?.host.id === this.userData?._id && this.myAnswers.from !== 'validator'" style="text-align: center; font-weight: bold">As <span style="color: #34DDDD">Player</span></p>
+                <p *ngIf="question?.host.id === this.userData?._id && this.myAnswers.from == 'validator'" style="text-align: center; font-weight: bold">As <span style="color: #BF94E4">Expert</span></p>
               </div>
             </div>
           </div>
@@ -156,18 +173,28 @@
               <p class="info_text">Refunded</p>
             </div>
           </div>
-          <div *ngIf="question.finalAnswer !== null" class="refund_box_info" style="padding-bottom: 12px;">
+          <div *ngIf="question.finalAnswer !== null" class="refund_box_info justify-content-between" style="padding-bottom: 12px;">
+            <div class="d-flex">
             <div style="margin-left:40px;">
               <div class="yellow-parc-img icon_refund" style="margin-left: 23px;"></div>
               <div class="info_text"><b>{{question?.validated + question?.answerAmount}}</b> Subscribed</div>
             </div>
             <div style="margin-left:40px;">
               <div class="corona-img icon_refund" style="margin-left: 50px;"></div>
-              <div class="info_text"><b>{{biggestWin()}} BET</b> Bigsest Win</div>
+              <div class="info_text"><b>{{biggestWin(question)}} BET</b> Bigsest Win</div>
             </div>
             <div style="margin-left:40px;">
               <div class="prize-pool-img icon_refund" style="margin-left: 35px;"></div>
               <div class="info_text"><b>{{getPool(question)}} BET</b> Prize Pool</div>
+            </div>
+            <div style="margin-left:40px;">
+              <div class="minted-img icon_refund" style="margin-left: 28px;"></div>
+              <div class="info_text"><b>{{getMinted(question)}} BET</b> Minted</div>
+            </div>
+          </div>
+            <div class="mr-5" *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.from == 'validator' && this.myAnswers?.answered">
+              <div class="expertMinus-img icon_refund" style="margin-left: 28px;"></div>
+              <div class="expertMinus_text">-1 Expert Rep</div>
             </div>
           </div>
           <div class="room-comment row">

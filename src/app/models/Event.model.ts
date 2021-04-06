@@ -17,6 +17,10 @@ export interface Event {
     id: number;
     nickName: string;
     wallet: string;
+    mintedAdvisorAmount: number;
+    mintedHostAmount: number;
+    payAdvisorAmount: number;
+    payHostAmount: number;
   };
   id: number;
   lastComment: string;
@@ -41,7 +45,10 @@ interface ValidatorsAnswers {
   avatar: string;
   date: number;
   transactionHash: string;
-  userId: number
+  userId: number;
+  payToken: number | undefined;
+  mintedToken: number | undefined;
+  premiumToken: number | undefined;
 }
 interface ParcipiantAnswers {
   amount: number;
@@ -50,5 +57,8 @@ interface ParcipiantAnswers {
   date: number;
   transactionHash: string;
   userId: number;
+  payToken: number | undefined;
+  mintedToken: number | undefined;
+  premiumToken: number | undefined;
 }
 

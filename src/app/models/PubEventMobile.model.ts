@@ -10,6 +10,10 @@ export interface PubEventMobile {
     nickName: string;
     avatat: string;
     wallet: string;
+    mintedAdvisorAmount: number;
+    mintedHostAmount: number;
+    payAdvisorAmount: number;
+    payHostAmount: number;
   };
   id: number;
   parcipiantAnswers: ParcipiantAnswers[];
@@ -34,6 +38,9 @@ interface ParcipiantAnswers {
   date: number;
   transactionHash: string;
   userId: number;
+  mintedToken: number;
+  payToken: number;
+  premiumToken: number;
 }
 
 interface ValidatorsAnswers {
@@ -42,4 +49,7 @@ interface ValidatorsAnswers {
   date: number;
   transactionHash: string;
   userId: number;
+  mintedToken: number;
+  payToken: number;
+  premiumToken: number;
 }
