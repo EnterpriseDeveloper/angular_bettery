@@ -102,10 +102,10 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
 
   expertAmount() {
     let part = this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length;
-    if (part == 0) {
+    if (part < 11) {
       return 3;
     } else {
-      return (part * 10) / 100 <= 3 ? 3 : Number(((part * 10) / 100).toFixed(0));
+      return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
     }
   }
 

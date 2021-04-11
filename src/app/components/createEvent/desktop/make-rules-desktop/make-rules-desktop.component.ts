@@ -59,6 +59,10 @@ export class MakeRulesDesktopComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
     if (this.formData.privateEndTime !== '') {
       let findTime = _.find(this.times, (x) => {
         return x.value === this.formData.privateEndTime.value;
@@ -96,10 +100,9 @@ export class MakeRulesDesktopComponent implements OnInit {
     this.timeData.hour = this.formData.exactHour;
     this.timeData.minute = this.formData.exactMinutes;
     this.exactTimeBool = this.formData.exactTimeBool;
-
   }
 
-  get f() { return this.publicForm.controls;}
+  get f() {return this.publicForm.controls;}
 
   get pub() {
     return this.publicForm.controls;
@@ -217,4 +220,18 @@ export class MakeRulesDesktopComponent implements OnInit {
     yearfield.options[0] = new Option(today.getFullYear(), today.getFullYear(), true, true); //select today's year
   }
 
+  reinitializeForm(param) {
+    if (param === 'company') {
+      this.formData.expertsCountType = 'company';
+      this.initializeForm();
+      this.publicForm.controls.publicEndTime.setValue(this.times[12]);
+      this.endPublicTime = '';
+    }
+    if (param === 'custom') {
+      this.formData.expertsCountType = 'custom';
+      this.initializeForm();
+      this.publicForm.controls.publicEndTime.setValue(this.times[0]);
+      this.endPublicTime = '5 minutes';
+    }
+  }
 }

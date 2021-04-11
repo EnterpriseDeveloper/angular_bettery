@@ -10,6 +10,7 @@ export class FilterTimelineComponent implements OnInit {
   @Output() closeEmmit = new EventEmitter();
   @Output() filterData = new EventEmitter();
   form: FormGroup;
+  disabled: boolean;
 
   constructor(
     private formBuilder: FormBuilder) {
@@ -26,11 +27,14 @@ export class FilterTimelineComponent implements OnInit {
   }
 
   sendForm(form: FormGroup, $event: any) {
+    if (this.disabled) {
+      return;
+    }
+    this.disabled = true;
     const data = {
       showEnd: form.value.showEnd
     };
     this.filterData.emit(data);
-    this.closeWindow();
   }
 
   stopPropagation(e) {

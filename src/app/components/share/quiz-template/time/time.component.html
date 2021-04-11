@@ -4,7 +4,7 @@
   <span class="timeStyle" [ngStyle]="styleTime('green')">{{day}} days</span>
 </p>
 
-<p style="margin-left: 49px" *ngIf="statusTime === 'yellow'" class="time_style">{{future}}
+<p *ngIf="statusTime === 'yellow'" class="time_style">{{future}}
   <span  class="time_Style" [ngStyle]="styleTime('yellow')">{{hour}}:{{minutes}}:{{seconds}}</span>
 </p>
 

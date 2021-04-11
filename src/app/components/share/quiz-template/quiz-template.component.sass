@@ -79,11 +79,9 @@
 .answers_box
   display: flex
   justify-content: center
-    //padding-top: 15px
 
 .answers
   min-width: 200px
-  max-width: 600px
   padding-right: 10px
 
 .validators_box
@@ -111,7 +109,7 @@
 
 .checkbox_answer
   margin-right: 5px
-  width: 14px
+  min-width: 14px
   height: 14px
   cursor: pointer
 
@@ -128,7 +126,6 @@
   padding-bottom: 10px
   display: flex
   justify-content: end
-  white-space: nowrap
 
 .answered
   display: inline
@@ -252,8 +249,8 @@
   line-height: 16px
   color: #0B1511
   overflow: hidden
-  text-overflow: ellipsis
-  max-width: 150px
+  //text-overflow: ellipsis
+  //max-width: 150px
 
 .questions-box
   display: flex
@@ -277,10 +274,14 @@
   font-weight: 800
   font-size: 14px
   line-height: 19px
-  color: #34DDDD
+  color: rgba(52, 221, 221, 1)
   text-transform: uppercase
   margin-left: 8px
   cursor: pointer
+
+.quickBetDisabled
+  color: rgba(52, 221, 221, 0.5)
+  cursor: not-allowed
 
 .bet-style
   margin-left: 4px
@@ -313,6 +314,7 @@
   background-size: contain
   width: 30px
   height: 14px
+  min-width: 30px
 
 .yellow-parc-img
   background: url("../../../../assets/rooms/desc-parcip.png") center center no-repeat
@@ -391,7 +393,6 @@
   background-size: contain
   width: 17px
   height: 17px
-  margin-left: 7px
   margin-bottom: 4px
   margin-left: auto
   margin-right: auto
@@ -404,6 +405,7 @@
   color: #34DDDD
   margin-bottom: 0px
   text-align: center
+  margin: auto
 
 .win_img
   background: url("../../../../assets/quiz-template/win.png") center center no-repeat
@@ -558,7 +560,6 @@
 
 .moreThan3
   flex-direction: column !important
-  max-width: 300px
   align-items: normal !important
 
 .name

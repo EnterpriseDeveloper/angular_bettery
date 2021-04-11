@@ -54,6 +54,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Output() commentIdEmmit = new EventEmitter<number>();
   @ViewChild('div') div: ElementRef;
   heightBlock: number;
+  disable: number = null;
 
   constructor(
     private postService: PostService,
@@ -218,6 +219,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   async setAnswer(dataAnswer, from) {
+    if (this.disable === this.index) {
+      return;
+    }
     let answer = this.myAnswers;
     if (this.allUserData != undefined) {
       if (answer.answer === undefined) {
@@ -237,6 +241,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.description = 'Amount must be bigger than 0';
             modalRef.componentInstance.nameButton = 'fine';
           } else {
+            this.isDisabled();
             this.setToNetwork(answer, dataAnswer);
           }
         }
@@ -244,6 +249,14 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     } else {
       const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
       modalRef.componentInstance.openSpinner = true;
+    }
+  }
+
+  isDisabled() {
+    if (this.disable == this.index) {
+      this.disable = null;
+    } else {
+      this.disable = this.index;
     }
   }
 
@@ -277,6 +290,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.myAnswers.answered = true;
         this.updateUser();
         this.callGetData.next();
+        this.disable = null;
       },
       (err) => {
         console.log(err);
@@ -543,11 +557,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   expertAmount(eventData) {
     let part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
-    if (part == 0) {
-      return 3;
-    } else {
-      return (part * 10) / 100 <= 3 ? 3 : Number(((part * 10) / 100).toFixed(0));
-    }
+    if (part < 11) {
+          return 3;
+        } else {
+          return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
+        }
   }
 
   copyToClickBoard(eventId) {

@@ -8,7 +8,7 @@
     <div class="body_card" [ngStyle]="roomCardBottom()" id="{{question.id}}">
       <div>
         <div class="room-card-top" [ngStyle]="cardColorBackGround(question)">
-          <div>
+          <div style="max-width: 70%">
             <h2>{{question?.question}}</h2>
             <div class="questions-box" *ngIf="!joinPlayer && !becomeExpert">
               <div class="answers_box">
@@ -78,28 +78,30 @@
               <div style="margin-top: 34px" *ngIf="!finalAnswerGuard(question)">
                 <div *ngIf="timeValidating(question)">
                   BET <input [(ngModel)]="myAnswers.amount" class="bet-style" /> <span
-                    (click)="this.setAnswer(question, 'participate')" class="quickBet">QUICK BET</span>
+                    (click)="this.setAnswer(question, 'participate')" class="quickBet"
+                    [ngClass]="this.disable == this.index && 'quickBetDisabled'"
+                >QUICK BET</span>
                 </div>
               </div>
             </div>
             <div *ngIf="question.status.includes('reverted')" class="clear">
               <p class="notExperts">{{question.status}}</p>
             </div>
-            <div class="amount_box" style="padding-right: 40px"
+            <div class="amount_box " style="align-items: flex-end"
               *ngIf="this.myAnswers?.answered && this.myAnswers?.betAmount > 0 && question.finalAnswer === null && !question.status.includes('reverted')">
-              <div style="display: flex; flex-direction: column; justify-content: center">
+              <div style="display: flex; flex-direction: column; align-items: flex-end; width: 100px">
                 <div class="amount_img"></div>
                 <p class="amountText">{{this.myAnswers?.betAmount}} BET</p>
               </div>
             </div>
-            <div class="amount_box" style="padding-right: 24px"
+            <div class="amount_box" style="align-items: flex-end"
               *ngIf="this.myAnswers?.answered && this.myAnswers?.from == 'validator' && question.finalAnswer === null && !question.status.includes('reverted')">
-              <div style="display: flex; flex-direction: column; justify-content: center">
+              <div style="display: flex; flex-direction: column; justify-content: center; width: 100px">
                 <div class="validated"></div>
                 <p class="validated_text">VALIDATED</p>
               </div>
             </div>
-            <div class="amount_box" [ngClass]="question.host.id === userData._id && 'earnedHost'" style="padding-right: 1px"
+            <div class="amount_box" [ngClass]="question?.host.id === userData?._id && 'earnedHost'" style="padding-right: 1px"
               *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.betAmount > 0">
               <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
                 <p class="winner_text">You earned</p>
@@ -109,20 +111,20 @@
 
               <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'"></div>
 
-              <div class="blockWin" [ngClass]="question.host.id === userData._id && 'wonHost'">
+              <div class="blockWin" [ngClass]="question?.host.id === userData?._id && 'wonHost'">
                 <p class="lost_text2">You lost</p>
                 <p class="lost_amount">{{getLost(question)}} BET</p>
               </div>
             </div>
             <div class="amount_box"
-              *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.from == 'validator' && this.myAnswers?.answered">
+              *ngIf="question?.finalAnswer !== null && this.myAnswers?.answer != question?.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.from == 'validator' && this.myAnswers?.answered">
              <div style="display: flex; flex-direction: column; justify-content: center;">
                <p class="lost_text2">You were</p>
                <p class="lost_amount">WRONG</p>
              </div>
             </div>
-            <div class="amount_box" [ngClass]="question.host.id === userData._id && 'earnedHost'" style="width: 100%"
-              *ngIf="question.finalAnswer !== null && this.myAnswers?.answer == question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.answered">
+            <div class="amount_box" [ngClass]="question?.host.id === userData?._id && 'earnedHost'" style="width: 100%"
+              *ngIf="question?.finalAnswer !== null && this.myAnswers?.answer == question?.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.answered">
               <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
                 <p class="winner_text">You earned</p>
                 <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{hostEarned(question)}}</p>
@@ -143,7 +145,7 @@
         </div>
 
         <div class="room-card-bottom" *ngIf="!joinPlayer && !becomeExpert">
-          <div class="room-info-list" *ngIf="question.finalAnswer === null && !question.status.includes('reverted')">
+          <div class="room-info-list" *ngIf="question?.finalAnswer === null && !question?.status.includes('reverted')">
             <div *ngIf="!joinRoom" class="info-item">
               <div class="avatar mr-2">
                 <img src="{{question?.host.avatat}}" alt="avatar">

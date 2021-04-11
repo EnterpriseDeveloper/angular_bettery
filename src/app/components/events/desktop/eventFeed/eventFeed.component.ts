@@ -123,6 +123,9 @@ export class EventFeedComponent implements OnDestroy {
         this.pureData.events.forEach(el => this.newQuestions.push(el));
         this.myAnswers = this.getAnswers(this.newQuestions);
       }
+      if (this.timelineActive) {
+        this.timelineActive = false;
+      }
       this.spinner = false;
     }, (err) => {
       this.spinner = false;
