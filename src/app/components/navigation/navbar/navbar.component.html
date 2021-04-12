@@ -39,7 +39,7 @@
         <div (click)="toggleLogout(true)" class="user_email"> {{nickName}}</div>
       </li>
       <li class="nav-item position-relative">
-        <img  (click)="toggleLogout(true)" class="circle-img" src="{{avatar}}" alt="avatar">
+        <img  (click)="toggleLogout(true)" class="circle-img" src="{{avatar}}" alt="avatar" referrerpolicy="no-referrer">
         <div *ngIf="logoutBox" class="logoutBox">
           <ul>
             <li class="profile disabledItem">My profile</li>

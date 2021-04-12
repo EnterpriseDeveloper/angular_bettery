@@ -133,7 +133,7 @@
 
               <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'"></div>
 
-              <div class="blockWin" [ngClass]="question.host.id === userData._id && 'wonHost'">
+              <div class="blockWin" [ngClass]="question.host.id === userData?._id && 'wonHost'">
                 <p class="winner_text">{{actionDetected()}}</p>
                 <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{playerAward(question)}}</p>
                 <p *ngIf="question?.host.id === this.userData?._id && this.myAnswers.from !== 'validator'" style="text-align: center; font-weight: bold">As <span style="color: #34DDDD">Player</span></p>
