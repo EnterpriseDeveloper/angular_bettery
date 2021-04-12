@@ -31,7 +31,6 @@
             <select (change)="chosePublicEndTime()" [ngClass]="{ 'is_invalid': submitted && pub.publicEndTime.errors }"
                     formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
               <option *ngFor="let time of times, let i = index"
-                      [selected]="this.pub.expertsCountType.value !== 'custom' && i == 12"
                       [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
                 {{time.name}}</option>
             </select>

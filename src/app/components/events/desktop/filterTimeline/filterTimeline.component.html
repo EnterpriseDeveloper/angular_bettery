@@ -11,7 +11,7 @@
 
     <div class="endOrJoin">
       <div class="form-check mr-4">
-        <input formControlName="showEnd" name="showEnd" class="form-check-input checkBoxClass" type="checkbox" id="blankCheckbox" value="showEnd">
+        <input [(ngModel)]="value" formControlName="showEnd" name="showEnd" class="form-check-input checkBoxClass" type="checkbox" id="blankCheckbox" value="showEnd">
         <label for="blankCheckbox">Show ended Events</label>
       </div>
       <div class="form-check">
