@@ -141,7 +141,6 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
   }
 
   async close() {
-    console.log("TEST #$#$")
     await biconomyInit();
     this.activeModal.dismiss('Cross click');
   }

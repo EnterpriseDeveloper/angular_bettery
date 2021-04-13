@@ -38,9 +38,9 @@
         <span class="show-short" [ngClass]="detectPathForActive('friends') && 'active'">Friends</span>
       </li>
 
-      <li routerLink="/help">
-        <div  class="help-img" [ngClass]="detectPathForActive('help') && 'help-yellow'"></div>
-        <span class="show-short" [ngClass]="detectPathForActive('help') && 'active'">Help</span>
+      <li>
+        <div  class="help-img"></div>
+        <a href="https://bettery.helpsite.com/" target="_blank" class="show-short">Help</a>
       </li>
     </ul>
   </div>
@@ -49,7 +49,7 @@
     <ul>
       <li>
         <div class="mail-img"></div>
-        <a href="#" class="show-short">Email</a>
+        <a href="mailto:hello@bettery.io" class="show-short" target="_blank">Email</a>
       </li>
       <li>
         <div class="telegram-img"></div>
@@ -57,7 +57,7 @@
       </li>
       <li>
         <div class="letter-img"></div>
-        <a href="#" class="show-short">Blog</a>
+        <a href="https://friendlybets.medium.com/" class="show-short" target="_blank">Blog</a>
       </li>
     </ul>
   </div>

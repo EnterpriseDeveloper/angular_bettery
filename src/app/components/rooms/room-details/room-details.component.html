@@ -1,4 +1,4 @@
-<div class="main-bg">
+<div class="main-bg" [ngClass]="spinner && 'main-bg-spinner'">
   <div id="top" class="container containerFor1920">
     <div *ngIf="!spinner" routerLink="/rooms" class="back">
       << Back to Rooms </div>
