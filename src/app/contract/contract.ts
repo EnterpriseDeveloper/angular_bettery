@@ -40,8 +40,8 @@ export default class Contract extends MetaTransaction {
     }
 
     rootChainManagerProxyAddr() {
-        return "0x57823134bc226b2335CA2E6D03c8E59a8314b2A9"
-     //   return configMaticMumbai.Main.POSContracts.RootChainManagerProxy;
+    //    return "0x57823134bc226b2335CA2E6D03c8E59a8314b2A9"
+        return configMaticMumbai.Main.POSContracts.RootChainManagerProxy;
     }
 
     rootChainManagerAddr() {
