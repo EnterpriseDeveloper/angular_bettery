@@ -14,7 +14,7 @@
               <div class="answers_box">
                 <div class="answers">
                   <div *ngIf="!finalAnswerGuard(question)">
-                    <div class="d-flex align-items-center" [ngClass]="question.answers.length >= 4 && 'moreThan3'">
+                    <div class="d-flex align-items-center" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
                       <div (click)="letsRegistration()" class="each_answer" *ngFor="let answer of question.answers; let i = index">
                         <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i)"
                           value="{{i}}" type="radio" name="{{question.id}}">
@@ -23,13 +23,13 @@
                     </div>
                   </div>
                   <div *ngIf="finalAnswerGuard(question)">
-                    <div class="d-flex align-items-center" *ngIf="question.status.includes('reverted')" [ngClass]="question.answers.length >= 4 && 'moreThan3'">
+                    <div class="d-flex align-items-center" *ngIf="question.status.includes('reverted')" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
                       <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
                         <div class="cycle"></div>
                         <div class="label answer-checkbox">{{answer}}</div>
                       </div>
                     </div>
-                    <div class="d-flex" *ngIf="question.finalAnswer !== null" [ngClass]="question.answers.length >= 4 && 'moreThan3'">
+                    <div class="d-flex" *ngIf="question.finalAnswer !== null" [ngClass]="question.answers.length >=3 && 'moreThan3'">
                       <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
                         <div>
                           <div [ngClass]="{'win_img': question.finalAnswer == i}"></div>
@@ -45,7 +45,7 @@
                       </div>
                     </div>
                     <div class="d-flex align-items-center "
-                      *ngIf="this.myAnswers?.answer !== undefined && question.finalAnswer == null && !question.status.includes('reverted')" [ngClass]="question.answers.length >= 4 && 'moreThan3'">
+                      *ngIf="this.myAnswers?.answer !== undefined && question.finalAnswer == null && !question.status.includes('reverted')" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
                       <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
                         <div class="cycle">
                           <div *ngIf="this.myAnswers?.answer == i"

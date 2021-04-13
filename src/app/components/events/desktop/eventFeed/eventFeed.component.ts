@@ -282,7 +282,7 @@ export class EventFeedComponent implements OnDestroy {
     this.showEnd = data.showEnd;
 
     this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
-    this.filterMode = !this.filterMode;
+    this.filterMode = data.showEnd;
   }
 
   openCreateEventModal() {
