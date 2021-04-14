@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  OnDestroy, ViewChild, ElementRef, AfterViewInit
+  OnDestroy, ViewChild, ElementRef, AfterViewInit, HostListener
 } from '@angular/core';
 import {User} from '../../../models/User.model';
 import {Answer} from '../../../models/Answer.model';
@@ -55,6 +55,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @ViewChild('div') div: ElementRef;
   heightBlock: number;
   disable: number = null;
+  windowWidth: number;
 
   constructor(
     private postService: PostService,
@@ -62,6 +63,13 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     private modalService: NgbModal,
     private _clipboardService: ClipboardService,
   ) {
+    this.windowWidth = document.documentElement.clientWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  listenScroll() {
+    this.windowWidth = document.documentElement.clientWidth;
+    this.heightBlock = this.div.nativeElement.clientHeight;
   }
 
   ngAfterViewInit() {
@@ -72,6 +80,84 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   ngOnInit() {
     this.allUserData = this.userData;
+  }
+
+  findSum(count, to: number, from: number) {
+    let sum = 0;
+    for (let i = from; i < to; i++) {
+      sum += count[i].length;
+    }
+    return sum;
+  }
+
+  answersStructure() {
+    const length = this.question.answers.length;
+    let limit;
+    if (this.windowWidth >= 1650) {
+      limit = 60;
+    } else {
+      limit = 50;
+    }
+
+
+    if (this.question) {
+      if (this.question.answers.length === 2) {
+        const sum = this.findSum(this.question.answers, this.question.answers.length, 0);
+        return sum <= limit ? 'in_row' : 'in_column';
+      }
+
+      const allSum = this.findSum(this.question.answers, this.question.answers.length, 0);
+      if (length !== 2 && length !== 3 &&  length !== 4) {
+        if (allSum <= limit) {
+          return 'in_row_6';
+        }
+      }
+      const first3 = this.findSum(this.question.answers, 3, 0);
+      const first2 = this.findSum(this.question.answers, 2, 0);
+      if (length === 3) {
+        if (allSum <= limit) {
+          return 'for_1';
+        }
+        if (first3 <= limit) {
+          return 'for_2';
+        }
+        return first2 <= 60 ? 'for_2' : 'in_column';
+      }
+
+      const second2 = this.findSum(this.question.answers, 4, 2);
+      if (length === 4) {
+        if (allSum <= limit) {
+          return 'for_1';
+        }
+        return (first2 <= 60 && second2 <= 60) ? 'for_3' : 'in_column';
+      }
+      if (length === 5) {
+        const last2 = this.findSum(this.question.answers, 2, 3);
+        if (first3 <= limit && last2 <= limit) {
+          return 'for_3';
+        } else if (first2 <= limit && second2 <= limit) {
+          return 'for_2';
+        } else {
+          return 'in_column';
+        }
+      }
+
+      if (length === 6) {
+        const second3 = this.findSum(this.question.answers, 6, 3);
+        const third2 = this.findSum(this.question.answers, 6, 4);
+        if (first3 <= limit && second3 <= limit) {
+          return 'for_2';
+        } else if (first2 <= 60 && second2 <= 60 && third2 <= 60) {
+          return 'for_3';
+        } else {
+          return 'in_column';
+        }
+      }
+    }
+  }
+
+  makeShortenStr(str: string, howMuch: number): string {
+    return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
   }
 
   ngOnChanges(changes) {
@@ -118,7 +204,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   actionDetected() {
     if (this.userData != undefined) {
-     if (this.myAnswers.from == 'validator') {
+      if (this.myAnswers.from == 'validator') {
         return 'You earned';
       } else {
         return 'You won';
@@ -130,13 +216,13 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   hostEarned(data) {
     if (data.host.id === this.userData._id) {
-      return Number(data.host.payHostAmount) + Number(data.host.mintedHostAmount) + ' BET'
+      return Number(data.host.payHostAmount) + Number(data.host.mintedHostAmount) + ' BET';
     }
   }
 
   playerAward(data) {
     if (this.userData != undefined) {
-     if (this.myAnswers.from == 'validator') {
+      if (this.myAnswers.from == 'validator') {
         const findValid = data.validatorsAnswers.filter((x) => {
           return x.userId == this.userData._id;
         });
@@ -269,6 +355,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       modalRef.componentInstance.description = 'You don\'t have enough BET tokens to make this bet. Please lower your bet or get more BET tokens by:';
       modalRef.componentInstance.editionDescription = ['- Hosting a successful event', '- Validating event results as an Expert', '- Giving others topics to host events as an Advisor'];
       modalRef.componentInstance.nameButton = 'fine';
+      this.disable = null;
     } else {
       let web3 = new Web3();
       let contract = new Contract();
@@ -302,6 +389,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.customMessage = 'Betting time for this event is not start.';
             modalRef.componentInstance.description = 'Player can join when event is start.';
             modalRef.componentInstance.nameButton = 'fine';
+            this.disable = null;
           } else if (this.timeValidating(this.question)) {
             let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
             modalRef.componentInstance.errType = 'time';
@@ -309,6 +397,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.customMessage = 'Betting time for this event is over.';
             modalRef.componentInstance.description = 'No more Players can join now.';
             modalRef.componentInstance.nameButton = 'fine';
+            this.disable = null;
           }
 
         } else {
@@ -318,6 +407,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           modalRef.componentInstance.customMessage = String(err.error);
           modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
           modalRef.componentInstance.nameButton = 'report error';
+          this.disable = null;
         }
 
       });
@@ -558,10 +648,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   expertAmount(eventData) {
     let part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
     if (part < 11) {
-          return 3;
-        } else {
-          return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
-        }
+      return 3;
+    } else {
+      return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
+    }
   }
 
   copyToClickBoard(eventId) {

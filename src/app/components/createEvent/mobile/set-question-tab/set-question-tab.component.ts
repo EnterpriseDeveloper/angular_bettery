@@ -91,6 +91,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   }
 
   oneMoreAnswer() {
+    if (this.t.length >= 6) {
+      return;
+    }
     this.t.push(this.formBuilder.group({
       name: ['', Validators.required],
     }));
