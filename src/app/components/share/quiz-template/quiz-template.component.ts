@@ -355,6 +355,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       modalRef.componentInstance.description = 'You don\'t have enough BET tokens to make this bet. Please lower your bet or get more BET tokens by:';
       modalRef.componentInstance.editionDescription = ['- Hosting a successful event', '- Validating event results as an Expert', '- Giving others topics to host events as an Advisor'];
       modalRef.componentInstance.nameButton = 'fine';
+      this.disable = null;
     } else {
       let web3 = new Web3();
       let contract = new Contract();
@@ -388,6 +389,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.customMessage = 'Betting time for this event is not start.';
             modalRef.componentInstance.description = 'Player can join when event is start.';
             modalRef.componentInstance.nameButton = 'fine';
+            this.disable = null;
           } else if (this.timeValidating(this.question)) {
             let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
             modalRef.componentInstance.errType = 'time';
@@ -395,6 +397,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.customMessage = 'Betting time for this event is over.';
             modalRef.componentInstance.description = 'No more Players can join now.';
             modalRef.componentInstance.nameButton = 'fine';
+            this.disable = null;
           }
 
         } else {
@@ -404,6 +407,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           modalRef.componentInstance.customMessage = String(err.error);
           modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
           modalRef.componentInstance.nameButton = 'report error';
+          this.disable = null;
         }
 
       });

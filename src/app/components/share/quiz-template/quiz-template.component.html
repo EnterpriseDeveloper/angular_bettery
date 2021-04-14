@@ -77,7 +77,7 @@
             <div *ngIf="!joinPlayer && !becomeExpert">
               <div style="margin-top: 34px" *ngIf="!finalAnswerGuard(question)">
                 <div *ngIf="timeValidating(question)">
-                  BET <input type="number" [(ngModel)]="myAnswers.amount" class="bet-style" /> <span
+                  BET <input min="0" type="number" [(ngModel)]="myAnswers.amount" class="bet-style" /> <span
                     (click)="this.setAnswer(question, 'participate')" class="quickBet"
                     [ngClass]="this.disable == this.index && 'quickBetDisabled'"
                 >QUICK BET</span>
