@@ -14,8 +14,8 @@
               <div class="answers_box">
                 <div class="answers">
                   <div *ngIf="!finalAnswerGuard(question)">
-                    <div class="d-flex align-items-center" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
-                      <div (click)="letsRegistration()" class="each_answer" *ngFor="let answer of question.answers; let i = index">
+                    <div class="d-flex align-items-center" [ngClass]="answersStructure()">
+                      <div (click)="letsRegistration()" class="each_answer" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'" *ngFor="let answer of question.answers; let i = index">
                         <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i)"
                           value="{{i}}" type="radio" name="{{question.id}}">
                         <label for="{{question.id}}{{i}}" class="label answer-checkbox" style="cursor: pointer">{{answer}}</label>
@@ -23,14 +23,14 @@
                     </div>
                   </div>
                   <div *ngIf="finalAnswerGuard(question)">
-                    <div class="d-flex align-items-center" *ngIf="question.status.includes('reverted')" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
-                      <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
+                    <div class="d-flex align-items-center" *ngIf="question.status.includes('reverted')" [ngClass]="answersStructure()">
+                      <div class="each_answer" *ngFor="let answer of question.answers; let i = index" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'">
                         <div class="cycle"></div>
                         <div class="label answer-checkbox">{{answer}}</div>
                       </div>
                     </div>
-                    <div class="d-flex" *ngIf="question.finalAnswer !== null" [ngClass]="question.answers.length >=3 && 'moreThan3'">
-                      <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
+                    <div class="d-flex" *ngIf="question.finalAnswer !== null" [ngClass]="answersStructure()">
+                      <div class="each_answer" *ngFor="let answer of question.answers; let i = index" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'">
                         <div>
                           <div [ngClass]="{'win_img': question.finalAnswer == i}"></div>
                           <div [ngClass]="{'cycle': question.finalAnswer != i && this.myAnswers?.answer != i}"></div>
@@ -44,9 +44,9 @@
                           {{answer}}</div>
                       </div>
                     </div>
-                    <div class="d-flex align-items-center "
-                      *ngIf="this.myAnswers?.answer !== undefined && question.finalAnswer == null && !question.status.includes('reverted')" [ngClass]="question.answers.length >= 3 && 'moreThan3'">
-                      <div class="each_answer" *ngFor="let answer of question.answers; let i = index">
+                    <div class="d-flex align-items-center"
+                      *ngIf="this.myAnswers?.answer !== undefined && question.finalAnswer == null && !question.status.includes('reverted')" [ngClass]="answersStructure()">
+                      <div class="each_answer" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'" *ngFor="let answer of question.answers; let i = index">
                         <div class="cycle">
                           <div *ngIf="this.myAnswers?.answer == i"
                             [ngClass]="{'cyclePart': this.myAnswers?.from == 'participant', 'cycleValid': this.myAnswers?.from == 'validator'}">
@@ -77,7 +77,7 @@
             <div *ngIf="!joinPlayer && !becomeExpert">
               <div style="margin-top: 34px" *ngIf="!finalAnswerGuard(question)">
                 <div *ngIf="timeValidating(question)">
-                  BET <input [(ngModel)]="myAnswers.amount" class="bet-style" /> <span
+                  BET <input type="number" [(ngModel)]="myAnswers.amount" class="bet-style" /> <span
                     (click)="this.setAnswer(question, 'participate')" class="quickBet"
                     [ngClass]="this.disable == this.index && 'quickBetDisabled'"
                 >QUICK BET</span>
@@ -150,7 +150,7 @@
               <div class="avatar mr-2">
                 <img src="{{question?.host.avatat}}" alt="avatar">
               </div>
-              <div class="hostName" style="color: #54DD96;">{{question?.host.nickName}}</div>
+              <div class="hostName" style="color: #54DD96;">{{makeShortenStr(question?.host.nickName, 16)}}</div>
             </div>
             <div class="info-item">
               <div class="yellow-parc-img mr-2 ml-3"></div>
@@ -162,7 +162,7 @@
             </div>
             <div style="cursor: pointer" routerLink="/room/{{question?.room.id}}" *ngIf="!joinRoom" class="info-item">
               <div class="colorRoom mr-2 ml-3 " [ngStyle]="colorForRoom()"></div>
-              <div><span>{{question?.room.name}}</span> ({{question?.room.eventAmount}})</div>
+              <div><span>{{makeShortenStr(question?.room.name, 16)}}</span> ({{question?.room.eventAmount}})</div>
             </div>
           </div>
           <div *ngIf="question.status.includes('reverted')" class="refund_box_info">
