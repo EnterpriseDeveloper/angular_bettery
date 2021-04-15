@@ -1,11 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { EventsTemplatesDesktopComponent } from "../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component";
 
 @Component({
-  selector: 'app-spinner-loading',
-  templateUrl: './spinner-loading.component.html',
-  styleUrls: ['./spinner-loading.component.sass']
+  selector: 'spinner-load-more',
+  templateUrl: './spinner-load-more.component.html',
+  styleUrls: ['./spinner-load-more.component.sass']
 })
-export class SpinnerLoadingComponent implements OnInit {
+export class SpinnerLoadMoreComponent {
+  @Input() finishLoading: boolean
+
   activated = [
     'active1',
     'active2',
@@ -13,10 +17,11 @@ export class SpinnerLoadingComponent implements OnInit {
     'active4'
   ];
 
-  @Input() withoutSpinner: boolean;
-  @Input() desktop: boolean;
-
-  constructor() {
+  constructor(
+    private modalService: NgbModal,
+    config: NgbModalConfig) {
+    config.keyboard = false;
+    config.backdrop = 'static';
     this.forActiveAll();
     setInterval(() => {
       this.forActiveAll();
@@ -45,16 +50,8 @@ export class SpinnerLoadingComponent implements OnInit {
     this.forActive(3, 'active4', 'active1', 'active2', 'active3');
   }
 
-  styleDesktop() {
-    if (this.desktop) {
-      return {
-        'position': 'relative',
-        'background': 'none'
-      };
-    }
-  }
-
-  ngOnInit(): void {
+  openCreateEventModal() {
+    this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
   }
 
 }

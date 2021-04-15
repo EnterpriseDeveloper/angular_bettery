@@ -52,6 +52,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   roomData: any;
   disabledButton: boolean = false;
   sessionStorageValue: string;
+  loadMore = false;
+  finishLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -182,6 +184,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         this.commentResetFlag = false;
       }
       this.spinner = false;
+      this.loadMore = false;
+      this.finishLoading = this.roomEvents.length == this.pureData.amount ? true : false;
       if (this.sessionStorageValue) {
         this.scrollTo();
       }
@@ -246,10 +250,12 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       if (this.scrollDistanceTo >= this.pureData?.amount) {
         this.scrollDistanceTo = this.pureData?.amount;
         if (!this.bottom) {
+          this.loadMore = true;
           this.bottom = true;
           this.getRoomEvent(this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord);
         }
       } else {
+        this.loadMore = true;
         this.getRoomEvent(this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord);
       }
     }

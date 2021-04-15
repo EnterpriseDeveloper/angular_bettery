@@ -19,6 +19,7 @@ import { QuizActionComponent } from './quiz-template/quiz-action/quiz-action.com
 import { QuizEventFinishComponent } from './quiz-template/quiz-event-finish/quiz-event-finish.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { JustANoteModalComponent } from './just-note-modal/just-anote-modal.component';
+import { SpinnerLoadMoreComponent } from './spinner-load-more/spinner-load-more.component';
 
 
 
@@ -39,7 +40,8 @@ import { JustANoteModalComponent } from './just-note-modal/just-anote-modal.comp
     QuizActionComponent,
     QuizEventFinishComponent,
     ComingSoonComponent,
-    JustANoteModalComponent
+    JustANoteModalComponent,
+    SpinnerLoadMoreComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { JustANoteModalComponent } from './just-note-modal/just-anote-modal.comp
     ]),
   ],
   exports: [
+    SpinnerLoadMoreComponent,
     SpinnerLoadingComponent,
     CommentComponent,
     QuizTemplateComponent,

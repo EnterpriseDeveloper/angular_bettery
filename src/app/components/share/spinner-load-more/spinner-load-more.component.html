@@ -1,0 +1,35 @@
+<div *ngIf="!finishLoading">
+    <div class="main1">
+        <div class="div all" [ngClass]="activated[0]"></div>
+        <div class="div2 all" [ngClass]="activated[0]"></div>
+        <div class="div3 all" [ngClass]="activated[0]"></div>
+
+        <div class="div4 all" [ngClass]="activated[1]"></div>
+        <div class="div5 all" [ngClass]="activated[1]"></div>
+        <div class="div6 all" [ngClass]="activated[1]"></div>
+
+        <div class="div7 all" [ngClass]="activated[2]"></div>
+        <div class="div8 all" [ngClass]="activated[2]"></div>
+        <div class="div9 all" [ngClass]="activated[2]"></div>
+
+        <div class="div10 all" [ngClass]="activated[3]"></div>
+        <div class="div11 all" [ngClass]="activated[3]"></div>
+        <div class="div12 all" [ngClass]="activated[3]"></div>
+    </div>
+    <div class="text">
+        <h4>The future is loading....</h4>
+    </div>
+</div>
+
+
+<div *ngIf="finishLoading" style="padding-bottom: 40px;">
+    <p class="createMore">No more Events right noW. Why not create one?</p>
+    <div style="text-align: center;">
+        <button class="createBut" (click)="openCreateEventModal()">
+            <div class="button_box">
+                <img class="img_size" src="../../../../assets/sidebar/plus.png" alt="+">
+                <span class="btn-creat-text">CREATE EVENT</span>
+            </div>
+        </button>
+    </div>
+</div>
