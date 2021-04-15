@@ -85,7 +85,7 @@
               </div>
             </div>
             <div *ngIf="question.status.includes('reverted')" class="clear">
-              <p class="notExperts">{{question.status}}</p>
+              <p class="notExperts">{{statusReverted(question)}}</p>
             </div>
             <div class="amount_box " style="align-items: flex-end"
               *ngIf="this.myAnswers?.answered && this.myAnswers?.betAmount > 0 && question.finalAnswer === null && !question.status.includes('reverted')">
