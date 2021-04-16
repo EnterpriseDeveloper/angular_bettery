@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && loadMore"></spinner-load-more>
+        <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner"></spinner-load-more>
 
 
         <div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"><a pageScroll href="#top"><img
