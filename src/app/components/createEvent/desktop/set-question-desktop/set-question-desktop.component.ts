@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app.state';
@@ -23,6 +23,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   registered = false;
   clicked = false;
   userSub: Subscription;
+  isLimit: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +44,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       }
     });
     this.questionForm = this.formBuilder.group({
-      question: [this.formData.question, Validators.required],
+      question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
       details: [this.formData.resolutionDetalis]
     });
@@ -72,9 +73,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   oneMoreAnswer() {
-    if (this.t.length >= 6) {
-      return;
-    }
     this.t.push(this.formBuilder.group({
       name: ['', Validators.required],
     }));
@@ -117,6 +115,23 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
+    }
+  }
+
+  limitError(param, i) {
+    if (param == 'question'){
+      const length = this.questionForm.controls.question.value.length;
+      this.isLimit = length >= 120;
+    }
+    if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 60) {
+      return 'answer' + i;
+    }
+  }
+  styleLimitError() {
+    if (this.isLimit) {
+      return {
+        'color': '#FF3232'
+      };
     }
   }
 }
