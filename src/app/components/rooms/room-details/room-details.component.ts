@@ -82,7 +82,6 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getAllData();
     this.sessionStorageSub = this.sessionStorageService.eventIdValue.subscribe(e => {
       this.sessionStorageValue = e;
       if (this.sessionStorageValue) {

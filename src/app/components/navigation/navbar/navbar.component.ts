@@ -159,7 +159,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     };
 
     this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
-      console.log('data send');
     }, error => {
       console.log(error);
     });

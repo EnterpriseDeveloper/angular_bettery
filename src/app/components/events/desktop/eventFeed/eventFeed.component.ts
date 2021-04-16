@@ -58,7 +58,6 @@ export class EventFeedComponent implements OnDestroy {
   ) {
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
       if (x.length === 0) {
-        this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
         this.userId = null;
         this.userData = undefined;
         this.activeBtn = 'trending';
