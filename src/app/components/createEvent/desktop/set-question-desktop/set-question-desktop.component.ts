@@ -24,6 +24,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   clicked = false;
   userSub: Subscription;
   isLimit: boolean;
+  @ViewChild('textarea') textarea: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,11 +55,11 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     for (let i = this.t.length; i < this.answesQuantity; i++) {
       if (this.formData.answers.length != 0) {
         this.t.push(this.formBuilder.group({
-          name: [this.formData.answers[i].name, Validators.required],
+          name: [this.formData.answers[i].name, Validators.compose([Validators.required, Validators.maxLength(60)])],
         }));
       } else {
         this.t.push(this.formBuilder.group({
-          name: ['', Validators.required],
+          name: ['', Validators.compose([Validators.required, Validators.maxLength(60)])],
         }));
       }
     }
@@ -108,7 +109,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   async loginWithTorus() {
     this.clicked = true;
-    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+    const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
     modalRef.componentInstance.openSpinner = true;
   }
 
@@ -119,20 +120,47 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   limitError(param, i) {
-    if (param == 'question'){
+    if (param == 'question') {
       const length = this.questionForm.controls.question.value.length;
-      this.isLimit = length >= 120;
+      this.isLimit = length > 120;
     }
     if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 60) {
       return 'answer' + i;
     }
   }
-  styleLimitError() {
-    if (this.isLimit) {
-      return {
-        'color': '#FF3232'
-      };
+
+  textareaGrow(): void {
+    const el = document.getElementById('Question');
+
+    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
+    this.textarea.nativeElement.rows = 1;
+
+    const innerHeight = this.textarea.nativeElement.scrollHeight - paddingTop - paddingBottom;
+
+    this.textarea.nativeElement.rows = innerHeight / lineHeight;
+
+  }
+
+  textareaGrowAnswer(i): void {
+    const el = document.getElementById('Question' + i);
+
+    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
+
+    el.setAttribute('rows', '1');
+    const innerHeight = el.scrollHeight - paddingTop - paddingBottom;
+    const value = (innerHeight / lineHeight).toString();
+    el.setAttribute('rows', value);
+  }
+
+  letsSlice(control, start, finish) {
+    if (finish === null) {
+      return control.slice(start);
     }
+    return control.slice(start, finish);
   }
 }
 

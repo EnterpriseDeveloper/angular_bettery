@@ -9,9 +9,25 @@
           <span class="inSpan">{{questionForm?.controls.question.value.length}} /</span> 120
         </div>
       </div>
-      <input (keydown)="limitError('question', null)" type="text" formControlName="question" class="question" id="Question"
-             placeholder="Enter topic..."
-             [ngClass]="{ 'is_invalid': submitted && f.question.errors }" [ngStyle]="styleLimitError()">
+      <div>
+        <div style="position: relative">
+          <div class="__htmlarea questionTextarea">
+            {{letsSlice(this.questionForm.controls.question.value, 0, 120)}}<span *ngIf="this.questionForm.controls.question.value.length > 120" class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, null)}}</span>
+          </div>
+          <textarea
+            type="text"
+            (keydown)="limitError('question', null)"
+            #textarea
+            class="__textarea questionTextarea"
+            formControlName="question"
+            rows="1"
+            id="Question"
+            (input)="textareaGrow()"
+            placeholder="Enter topic..."
+            [ngClass]="{ 'is_invalid': submitted && f.question.errors }"
+          ></textarea>
+        </div>
+      </div>
 
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
@@ -28,9 +44,26 @@
           <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit" style="width: 100%; display: flex; justify-content: flex-end">
             <div class="limitText"><span class="inSpan">{{f.answers.value[i].name.length}} /</span> 60</div>
           </div>
-          <input [ngStyle]="limitError('answer', i) == 'answer' + i && {'color': '#FF3232'}" (keyup)="limitError('answer', i)" [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }" type="text"
-                 formControlName="name" class="answer" id="Question {{i}}"
-                 placeholder="Outcome {{i+1}}">
+
+          <div class="wrap">
+            <div style="position: relative">
+              <div class="__htmlarea questionTextarea __answer">
+                {{this.questionForm.controls.answers.value[i].name | slice : 0 : 60}}<span class="spanBg">{{this.questionForm.controls.answers.value[i].name | slice : 60}}</span>
+              </div>
+              <textarea
+                type="text"
+                (keydown)="limitError('answer', i)"
+                class="__textarea questionTextarea __answer"
+                formControlName="name"
+                rows="1"
+                id="Question{{i}}"
+                (input)="textareaGrowAnswer(i)"
+                placeholder="Outcome {{i+1}}"
+                [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }"
+              ></textarea>
+            </div>
+          </div>
+
           <div *ngIf='answesQuantity >= 3' class="deleteButtonPos" [ngStyle]="limitError('answer', i) == 'answer' + i && {'top': '30px'}">
             <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
               <div class="trashImg"></div>
