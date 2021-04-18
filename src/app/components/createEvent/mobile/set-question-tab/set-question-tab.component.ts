@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
@@ -29,7 +29,8 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   spinnerLoading: boolean;
   saveUserLocStorage = [];
-
+  isLimit: boolean;
+  @ViewChild('textarea') textarea: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,7 +57,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
       }
     });
     this.questionForm = this.formBuilder.group({
-      question: [this.formData?.question, Validators.required],
+      question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
       details: [this.formData?.resolutionDetalis]
     });
@@ -66,11 +67,11 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     for (let i = this.t.length; i < this.answesQuantity; i++) {
       if (this.formData.answers.length != 0) {
         this.t.push(this.formBuilder.group({
-          name: [this.formData.answers[i].name, Validators.required],
+          name: [this.formData.answers[i].name, Validators.compose([Validators.required, Validators.maxLength(60)])],
         }));
       } else {
         this.t.push(this.formBuilder.group({
-          name: ['', Validators.required],
+          name: ['', Validators.compose([Validators.required, Validators.maxLength(60)])],
         }));
       }
     }
@@ -80,6 +81,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     //     this.formData.question = a.newEvent.trim();
     //   }
     // });
+    setTimeout(() => {
+      this.textareaGrow();
+    });
   }
 
   get f() {
@@ -142,6 +146,63 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     this.formData.answers = [];
     this.store.dispatch(formDataAction({formData: this.formData}));
     this.router.navigate(['/']);
+  }
+
+  limitError(param, i) {
+    if (param == 'question') {
+      const length = this.questionForm.controls.question.value.length;
+      this.isLimit = length > 115;
+    }
+    if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 55) {
+      return 'answer' + i;
+    }
+  }
+
+  textareaGrow(): void {
+    const el = document.getElementById('Question');
+
+    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
+    this.textarea.nativeElement.rows = 1;
+
+    const innerHeight = this.textarea.nativeElement.scrollHeight - paddingTop - paddingBottom;
+
+    this.textarea.nativeElement.rows = innerHeight / lineHeight;
+
+  }
+
+  textareaGrowAnswer(i): void {
+    const el = document.getElementById('Question' + i);
+
+    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
+
+    el.setAttribute('rows', '1');
+    const innerHeight = el.scrollHeight - paddingTop - paddingBottom;
+    const value = (innerHeight / lineHeight).toString();
+    el.setAttribute('rows', value);
+  }
+
+  letsSlice(control, start, finish) {
+    if (finish === null) {
+      return control.slice(start);
+    }
+    return control.slice(start, finish);
+  }
+
+  colorError(length, numYel, numMain) {
+    if (length > numYel && length <= numMain) {
+      return {
+        'color': '#7d7d7d'
+      };
+    }
+    if (length > numMain) {
+      return {
+        'color': '#FF3232'
+      };
+    }
   }
 
   ngOnDestroy() {

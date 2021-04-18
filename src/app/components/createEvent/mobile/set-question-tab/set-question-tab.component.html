@@ -2,27 +2,67 @@
   <events-template-new [whichEvent]="'setQuestion'"></events-template-new>
     <form [formGroup]="questionForm">
         <div class="box">
+          <div class="lableBox">
             <label for="Question" class="name">
-                <span class="text">Set topic</span>
+              <span class="text">Set topic</span>
             </label>
-            <textarea maxlength="120" type="text" formControlName="question" class="question" id="Question"
-                placeholder="Enter the question..."
-                [ngClass]="{ 'is_invalid': submitted && f.question.errors }"></textarea>
-            <div *ngIf="submitted && f.question.errors">
-                <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
-                    question</small>
+            <div class="limitText" *ngIf="isLimit">
+              <span [ngStyle]="colorError(questionForm?.controls.question.value.length, 115,120)">{{questionForm?.controls.question.value.length}} /</span> 120
+            </div>
+          </div>
+          <div>
+            <div style="position: relative">
+              <div class="__htmlarea questionTextarea">
+                {{letsSlice(this.questionForm.controls.question.value, 0, 120)}}<span *ngIf="this.questionForm.controls.question.value.length > 120" class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, null)}}</span>
+              </div>
+              <textarea
+                type="text"
+                (keydown)="limitError('question', null)"
+                #textarea
+                class="__textarea questionTextarea"
+                formControlName="question"
+                rows="1"
+                id="Question"
+                (input)="textareaGrow()"
+                placeholder="Enter topic..."
+                [ngClass]="{ 'is_invalid': submitted && f.question.errors }"
+              ></textarea>
             </div>
         </div>
 
-        <div class="box" style="margin-top:25px;">
+        <div class="box mx-0" style="margin-top:25px">
             <label class="name">
                 <span class="text">SET OUTCOMES</span>
             </label>
             <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
                 <div [formGroup]="answer" class="input-group inputBox">
-                    <input maxlength="60" [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }" type="text"
-                        formControlName="name" class="answer" id="Question {{i}}"
-                        placeholder="Possible outcome {{i+1}}">
+                  <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit" style="width: 100%; display: flex; justify-content: flex-end">
+                    <div class="limitText"><span [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}} /</span> 60</div>
+                  </div>
+
+                  <div class="wrap">
+                    <div style="position: relative">
+                      <div class="__htmlarea questionTextarea __answer">
+                        {{letsSlice(this.questionForm.controls.answers.value[i].name, 0 , 60)}}
+                        <span class="spanBg">
+                          {{letsSlice(this.questionForm.controls.answers.value[i].name, 60 , null)}}
+                        </span>
+                      </div>
+                      <textarea
+                        type="text"
+                        (keydown)="limitError('answer', i)"
+                        class="__textarea questionTextarea __answer"
+                        formControlName="name"
+                        rows="1"
+                        id="Question{{i}}"
+                        (input)="textareaGrowAnswer(i)"
+                        placeholder="Outcome {{i+1}}"
+                        [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }"
+                      ></textarea>
+                    </div>
+                  </div>
+
+
                     <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
                         <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
                             <div class="trashImg"></div>
@@ -44,7 +84,7 @@
             </div>
         </div>
 <!--        <div class="border"></div>-->
-        <div class="box">
+        <div class="box mx-0">
             <label for="Question" class="name" style="margin-top: 24px">
                 <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
             </label>
@@ -54,6 +94,7 @@
         <div class="buttonBox" [ngStyle]="styleButtonBox()">
             <button type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
             <button type="button" class="next" (click)="onSubmit()">NEXT</button>
+        </div>
         </div>
     </form>
 </div>

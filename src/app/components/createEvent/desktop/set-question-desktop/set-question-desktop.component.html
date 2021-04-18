@@ -6,7 +6,7 @@
           <span class="text">Set topic</span>
         </label>
         <div class="limitText" *ngIf="isLimit">
-          <span class="inSpan">{{questionForm?.controls.question.value.length}} /</span> 120
+          <span [ngStyle]="colorError(questionForm?.controls.question.value.length, 115,120)">{{questionForm?.controls.question.value.length}} /</span> 120
         </div>
       </div>
       <div>
@@ -42,13 +42,16 @@
       <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
         <div [formGroup]="answer" class="input-group inputBox">
           <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit" style="width: 100%; display: flex; justify-content: flex-end">
-            <div class="limitText"><span class="inSpan">{{f.answers.value[i].name.length}} /</span> 60</div>
+            <div class="limitText"><span [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}} /</span> 60</div>
           </div>
 
           <div class="wrap">
             <div style="position: relative">
               <div class="__htmlarea questionTextarea __answer">
-                {{this.questionForm.controls.answers.value[i].name | slice : 0 : 60}}<span class="spanBg">{{this.questionForm.controls.answers.value[i].name | slice : 60}}</span>
+                {{letsSlice(this.questionForm.controls.answers.value[i].name, 0 , 60)}}
+                <span class="spanBg">
+                  {{letsSlice(this.questionForm.controls.answers.value[i].name, 60 , null)}}
+                </span>
               </div>
               <textarea
                 type="text"

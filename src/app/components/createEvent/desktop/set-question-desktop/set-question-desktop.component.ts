@@ -1,12 +1,21 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { PostService } from '../../../../services/post.service';
-import { Subscription } from 'rxjs';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '../../../../models/User.model';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {PostService} from '../../../../services/post.service';
+import {Subscription} from 'rxjs';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '../../../../models/User.model';
+import {RegistrationComponent} from '../../../registration/registration.component';
 
 @Component({
   selector: 'set-question-desktop',
@@ -63,6 +72,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
         }));
       }
     }
+    setTimeout(() => {
+      this.textareaGrow();
+    });
   }
 
   get f() {
@@ -113,18 +125,12 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.openSpinner = true;
   }
 
-  ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-  }
-
   limitError(param, i) {
     if (param == 'question') {
       const length = this.questionForm.controls.question.value.length;
-      this.isLimit = length > 120;
+      this.isLimit = length > 115;
     }
-    if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 60) {
+    if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 55) {
       return 'answer' + i;
     }
   }
@@ -161,6 +167,25 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       return control.slice(start);
     }
     return control.slice(start, finish);
+  }
+
+  colorError(length, numYel, numMain) {
+    if (length > numYel && length <= numMain) {
+      return {
+        'color': '#7d7d7d'
+      };
+    }
+    if (length > numMain) {
+      return {
+        'color': '#FF3232'
+      };
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
   }
 }
 
