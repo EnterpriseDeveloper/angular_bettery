@@ -34,6 +34,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   isLimit: boolean;
   @ViewChild('textarea') textarea: ElementRef;
+  isDuplicate: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -109,7 +110,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.registered) {
       this.submitted = true;
-      if (this.questionForm.invalid) {
+      if (this.questionForm.invalid || this.checkingSameAnswers(null, null)) {
         return;
       }
       this.getData.next(this.questionForm.value);
@@ -187,5 +188,20 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       this.userSub.unsubscribe();
     }
   }
+
+  checkingSameAnswers(arg1, arg2) {
+    const valueArr = this.f.answers.value.map((item) => {
+      return item.name;
+    });
+    this.isDuplicate = valueArr.some((item, idx) => {
+      return valueArr.indexOf(item) !== idx;
+    });
+    if (arg1 == null && arg2 == null) {
+      return this.isDuplicate;
+    } else {
+      return !!(arg1 && arg2 || arg1 && this.isDuplicate);
+    }
+  }
 }
+
 

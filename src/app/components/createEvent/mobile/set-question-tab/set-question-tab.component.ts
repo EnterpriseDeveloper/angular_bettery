@@ -31,6 +31,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   saveUserLocStorage = [];
   isLimit: boolean;
   @ViewChild('textarea') textarea: ElementRef;
+  isDuplicate: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -121,7 +122,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.registered) {
       this.submitted = true;
-      if (this.questionForm.invalid) {
+      if (this.questionForm.invalid || this.checkingSameAnswers(null, null)) {
         return;
       }
       this.formData.question = this.questionForm.value.question;
@@ -211,6 +212,20 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     }
     if (this.formDataSubscribe) {
       this.formDataSubscribe.unsubscribe();
+    }
+  }
+
+  checkingSameAnswers(arg1, arg2) {
+    const valueArr = this.f.answers.value.map((item) => {
+      return item.name;
+    });
+    this.isDuplicate = valueArr.some((item, idx) => {
+      return valueArr.indexOf(item) !== idx;
+    });
+    if (arg1 == null && arg2 == null) {
+      return this.isDuplicate;
+    } else {
+      return !!(arg1 && arg2 || arg1 && this.isDuplicate);
     }
   }
 }

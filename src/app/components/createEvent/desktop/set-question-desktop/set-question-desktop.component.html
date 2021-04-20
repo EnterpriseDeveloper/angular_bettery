@@ -6,29 +6,31 @@
           <span class="text">Set topic</span>
         </label>
         <div class="limitText" *ngIf="isLimit">
-          <span [ngStyle]="colorError(questionForm?.controls.question.value.length, 115,120)">{{questionForm?.controls.question.value.length}} /</span> 120
+          <span
+            [ngStyle]="colorError(questionForm?.controls.question.value.length, 115,120)">{{questionForm?.controls.question.value.length}}
+            /</span> 120
         </div>
       </div>
       <div>
         <div style="position: relative">
-          <div class="__htmlarea questionTextarea">
-            {{letsSlice(this.questionForm.controls.question.value, 0, 120)}}<span *ngIf="this.questionForm.controls.question.value.length > 120" class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, null)}}</span>
+          <div class="__htmlarea questionTextarea __answer">
+            <span>{{letsSlice(this.questionForm.controls.question.value, 0, 120)}}</span>
+            <span *ngIf="this.questionForm.controls.question.value.length > 120"
+                  class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, null)}}</span>
           </div>
           <textarea
-            type="text"
             (keydown)="limitError('question', null)"
             #textarea
-            class="__textarea questionTextarea"
+            class="__textarea questionTextarea __answer"
             formControlName="question"
             rows="1"
             id="Question"
             (input)="textareaGrow()"
             placeholder="Enter topic..."
-            [ngClass]="{ 'is_invalid': submitted && f.question.errors }"
+            [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, f.question.errors) }"
           ></textarea>
         </div>
       </div>
-
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
           question</small>
@@ -36,21 +38,25 @@
     </div>
 
     <div class="box" style="margin-top:25px;">
-        <label class="name">
-          <span class="text">SET OUTCOMES</span>
-        </label>
+      <label class="name">
+        <span class="text">SET OUTCOMES</span>
+      </label>
       <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
         <div [formGroup]="answer" class="input-group inputBox">
-          <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit" style="width: 100%; display: flex; justify-content: flex-end">
-            <div class="limitText"><span [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}} /</span> 60</div>
+          <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit"
+               style="width: 100%; display: flex; justify-content: flex-end">
+            <div class="limitText"><span
+              [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}}/</span>
+              60
+            </div>
           </div>
 
           <div class="wrap">
             <div style="position: relative">
               <div class="__htmlarea questionTextarea __answer">
-                {{letsSlice(this.questionForm.controls.answers.value[i].name, 0 , 60)}}
-                <span class="spanBg">
-                  {{letsSlice(this.questionForm.controls.answers.value[i].name, 60 , null)}}
+                <span>{{letsSlice(this.questionForm.controls.answers.value[i].name, 0, 60)}}</span>
+                <span *ngIf="this.questionForm.controls.answers.value[i].name.length > 55"
+                      class="spanBg">{{letsSlice(this.questionForm.controls.answers.value[i].name, 60, null)}}
                 </span>
               </div>
               <textarea
@@ -62,12 +68,12 @@
                 id="Question{{i}}"
                 (input)="textareaGrowAnswer(i)"
                 placeholder="Outcome {{i+1}}"
-                [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }"
+                [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, answer.controls.name.errors) }"
               ></textarea>
             </div>
           </div>
-
-          <div *ngIf='answesQuantity >= 3' class="deleteButtonPos" [ngStyle]="limitError('answer', i) == 'answer' + i && {'top': '30px'}">
+          <div *ngIf='answesQuantity >= 3' class="deleteButtonPos"
+               [ngStyle]="limitError('answer', i) == 'answer' + i && {'top': '30px'}">
             <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
               <div class="trashImg"></div>
             </button>
