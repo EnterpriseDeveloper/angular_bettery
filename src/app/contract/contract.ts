@@ -56,7 +56,7 @@ export default class Contract extends MetaTransaction {
         const tokenName = "BET_main";
         const chainId = environment.etherId
         let dataToSign = this.dataToSignFunc(tokenName, BTYMain.networks[networkConfiguration.goerli].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature) 
     }
 
     async deposit(userWallet, amount, from, provider) {
@@ -86,7 +86,7 @@ export default class Contract extends MetaTransaction {
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
         const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
+        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
 
@@ -97,7 +97,7 @@ export default class Contract extends MetaTransaction {
         let nonce = await BETToken.methods.getNonce(userWallet).call();
         const tokenName = "BET_token";
         const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
+        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
     }
 
@@ -108,7 +108,7 @@ export default class Contract extends MetaTransaction {
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
         const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[networkConfiguration.maticMumbai].address, nonce, userWallet, functionSignature, chainId)
+        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
         return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
     }
 
