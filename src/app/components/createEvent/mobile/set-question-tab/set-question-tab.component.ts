@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, ViewChildren, QueryList} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
@@ -31,6 +31,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   saveUserLocStorage = [];
   isLimit: boolean;
   @ViewChild('textarea') textarea: ElementRef;
+  @ViewChildren('answers') answers: QueryList<any>;
   isDuplicate: boolean;
 
   constructor(
@@ -150,46 +151,34 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   limitError(param, i) {
     if (param == 'question') {
-      const length = this.questionForm.controls.question.value.length;
+      const length = this.f.question.value.length;
       this.isLimit = length > 115;
     }
-    if (param === 'answer' && this.questionForm.controls.answers.value[i].name.length >= 55) {
+    if (param === 'answer' && this.f.answers.value[i].name.length >= 55) {
       return 'answer' + i;
     }
   }
 
   textareaGrow(): void {
-    const el = document.getElementById('Question');
-
-    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
-    this.textarea.nativeElement.rows = 1;
-
-    const innerHeight = this.textarea.nativeElement.scrollHeight - paddingTop - paddingBottom;
-
-    this.textarea.nativeElement.rows = innerHeight / lineHeight;
-
+    this.calculateRows(this.textarea);
   }
 
   textareaGrowAnswer(i): void {
-    const el = document.getElementById('Question' + i);
+    const el = this.answers.toArray()[i];
+    this.calculateRows(el);
+  }
 
-    const paddingTop = parseInt(getComputedStyle(el).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el).lineHeight, 10);
-
-    el.setAttribute('rows', '1');
-    const innerHeight = el.scrollHeight - paddingTop - paddingBottom;
-    const value = (innerHeight / lineHeight).toString();
-    el.setAttribute('rows', value);
+  calculateRows(el) {
+    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
+    el.nativeElement.rows = 1;
+    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
+    el.nativeElement.rows = innerHeight / lineHeight;
   }
 
   letsSlice(control, start, finish) {
-    if (finish === null) {
-      return control.slice(start);
-    }
-    return control.slice(start, finish);
+    return finish === null ? control.slice(start) : control.slice(start, finish);
   }
 
   colorError(length, numYel, numMain) {
@@ -202,15 +191,6 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
       return {
         'color': '#FF3232'
       };
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-    if (this.formDataSubscribe) {
-      this.formDataSubscribe.unsubscribe();
     }
   }
 
@@ -227,6 +207,15 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
       return !!(arg1 && arg2);
     } else {
       return !!(arg1 && arg2 || arg1 && this.isDuplicate);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.formDataSubscribe) {
+      this.formDataSubscribe.unsubscribe();
     }
   }
 }

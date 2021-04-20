@@ -7,7 +7,7 @@
         </label>
         <div class="limitText" *ngIf="isLimit">
           <span
-            [ngStyle]="colorError(questionForm?.controls.question.value.length, 115,120)">{{questionForm?.controls.question.value.length}}
+            [ngStyle]="colorError(f.question.value.length, 115,120)">{{f.question.value.length}}
             /</span> 120
         </div>
       </div>
@@ -60,7 +60,7 @@
                 </span>
               </div>
               <textarea
-                type="text"
+                #answers
                 (keydown)="limitError('answer', i)"
                 class="__textarea questionTextarea __answer"
                 formControlName="name"
