@@ -108,7 +108,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
       return;
     }
     this.t.push(this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(60)]],
     }));
     this.answesQuantity = this.answesQuantity + 1;
   }
@@ -206,7 +206,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
       return item.name;
     });
     const arr = valueArr.filter((el) => {
-      return el === value && value !== '';
+      return el.trim() === value.trim() && value.trim().length !== 0;
     });
     this.isDuplicate = arr.length > 1;
     return this.submitted && this.isDuplicate;
