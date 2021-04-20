@@ -28,7 +28,7 @@
             id="Question"
             (input)="textareaGrow()"
             placeholder="Enter topic..."
-            [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, f.question.errors, 'question') }"
+            [ngClass]="  { 'is_invalid': submitted && f.question.errors}"
           ></textarea>
         </div>
       </div>
@@ -43,21 +43,20 @@
         <span class="text">SET OUTCOMES</span>
       </label>
       <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
-        <div [formGroup]="answer" class="input-group inputBox">
-          <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit"
-               style="width: 100%; display: flex; justify-content: flex-end">
-            <div class="limitText"><span
-              [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}}/</span>
-              60
-            </div>
+        <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit"
+             style="width: 100%; display: flex; justify-content: flex-end">
+          <div class="limitText"><span
+            [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}}/</span>
+            60
           </div>
-
+        </div>
+        <div [formGroup]="answer" class="input-group inputBox">
           <div class="wrap">
             <div style="position: relative">
               <div class="__htmlarea questionTextarea __answer">
-                <span>{{letsSlice(this.questionForm.controls.answers.value[i].name, 0, 60)}}</span>
-                <span *ngIf="this.questionForm.controls.answers.value[i].name.length > 55"
-                      class="spanBg">{{letsSlice(this.questionForm.controls.answers.value[i].name, 60, 100)}}
+                <span>{{letsSlice(f.answers.value[i].name, 0, 60)}}</span>
+                <span *ngIf="f.answers.value[i].name.length > 55"
+                      class="spanBg">{{letsSlice(f.answers.value[i].name, 60, 100)}}
                 </span>
               </div>
               <textarea
@@ -70,12 +69,13 @@
                 id="Question{{i}}"
                 (input)="textareaGrowAnswer(i)"
                 placeholder="Outcome {{i+1}}"
-                [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, answer.controls.name.errors, null) }"
+                [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
+                || submitted && checkingEqual(answer.controls.name.value)
+                || submitted && f.answers.value[i].name.length > 60}"
               ></textarea>
             </div>
           </div>
-          <div *ngIf='answesQuantity >= 3' class="deleteButtonPos"
-               [ngStyle]="limitError('answer', i) == 'answer' + i && {'top': '30px'}">
+          <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
             <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
               <div class="trashImg"></div>
             </button>
@@ -85,9 +85,13 @@
           <small style="padding-bottom: 10px" *ngIf="answer.controls.name.errors.required"
                  class="form-text quize_validation_error">Please enter the question</small>
         </div>
+        <div>
+          <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value)"
+                 class="form-text quize_validation_error">Answers can't be equal</small>
+        </div>
       </div>
       <div>
-        <button type="button" (click)="oneMoreAnswer()" class="add" [ngStyle]="t.length >= 6 && {'display': 'none'}">
+        <button *ngIf="t.length < 6" type="button" (click)="oneMoreAnswer()" class="add">
           <div class="iconBox"></div>
           <span class="addText">Add possible outcome</span>
         </button>

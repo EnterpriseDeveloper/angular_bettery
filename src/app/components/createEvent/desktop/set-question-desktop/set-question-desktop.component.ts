@@ -75,8 +75,15 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       }
     }
     setTimeout(() => {
-      this.textareaGrow();
+      this.updateTextarea();
     });
+  }
+
+  updateTextarea() {
+    this.textareaGrow();
+    for (let i = 0; i < this.f.answers.value.length; i++) {
+      this.textareaGrowAnswer(i);
+    }
   }
 
   get f() {
@@ -110,7 +117,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.checkingSameAnswers(null, null, null)) {
+    if (this.questionForm.invalid || this.isDuplicate) {
       return;
     }
     if (this.registered) {
@@ -171,20 +178,15 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkingSameAnswers(arg1, arg2, status) {
+  checkingEqual(value) {
     const valueArr = this.f.answers.value.map((item) => {
       return item.name;
     });
-    this.isDuplicate = valueArr.some((item, idx) => {
-      return valueArr.indexOf(item) !== idx;
+    const arr = valueArr.filter((el) => {
+      return el === value && value !== '';
     });
-    if (arg1 == null && arg2 == null) {
-      return this.isDuplicate;
-    } else if ( status === 'question') {
-      return !!(arg1 && arg2);
-    } else {
-      return !!(arg1 && arg2 || arg1 && this.isDuplicate);
-    }
+    this.isDuplicate = arr.length > 1;
+    return this.submitted &&  this.isDuplicate;
   }
 
   ngOnDestroy() {

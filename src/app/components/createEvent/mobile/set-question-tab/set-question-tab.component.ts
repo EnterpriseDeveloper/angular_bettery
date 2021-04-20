@@ -7,8 +7,8 @@ import {Subscription} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../../../models/User.model';
 import {RegistrationComponent} from '../../../registration/registration.component';
-import {Router} from "@angular/router";
-import {formDataAction} from "../../../../actions/newEvent.actions";
+import {Router} from '@angular/router';
+import {formDataAction} from '../../../../actions/newEvent.actions';
 
 @Component({
   selector: 'set-question-tab',
@@ -84,8 +84,15 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     //   }
     // });
     setTimeout(() => {
-      this.textareaGrow();
+      this.updateTextarea();
     });
+  }
+
+  updateTextarea() {
+    this.textareaGrow();
+    for (let i = 0; i < this.f.answers.value.length; i++) {
+      this.textareaGrowAnswer(i);
+    }
   }
 
   get f() {
@@ -122,9 +129,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.checkingSameAnswers(null, null, null)) {
+    if (this.questionForm.invalid || this.isDuplicate) {
       return;
-      }
+    }
     if (this.registered) {
       this.formData.question = this.questionForm.value.question;
       this.formData.answers = this.questionForm.value.answers;
@@ -194,20 +201,15 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkingSameAnswers(arg1, arg2, status) {
+  checkingEqual(value) {
     const valueArr = this.f.answers.value.map((item) => {
       return item.name;
     });
-    this.isDuplicate = valueArr.some((item, idx) => {
-      return valueArr.indexOf(item) !== idx;
+    const arr = valueArr.filter((el) => {
+      return el === value && value !== '';
     });
-    if (arg1 == null && arg2 == null) {
-      return this.isDuplicate;
-    } else if ( status === 'question') {
-      return !!(arg1 && arg2);
-    } else {
-      return !!(arg1 && arg2 || arg1 && this.isDuplicate);
-    }
+    this.isDuplicate = arr.length > 1;
+    return this.submitted && this.isDuplicate;
   }
 
   ngOnDestroy() {
