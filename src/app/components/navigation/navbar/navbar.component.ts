@@ -48,6 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   logoutBox: boolean;
   copyLinkFlag: boolean;
   postSub: Subscription;
+  environments = environment;
 
   constructor(
     private store: Store<AppState>,
@@ -55,7 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
     private postService: PostService
-  ) {
+    ) {
 
     this.detectPath();
 
