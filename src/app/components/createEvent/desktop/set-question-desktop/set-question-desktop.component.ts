@@ -155,7 +155,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   letsSlice(control, start, finish) {
-    return finish === null ? control.slice(start) : control.slice(start, finish);
+    return control.slice(start, finish);
   }
 
   colorError(length, numYel, numMain) {

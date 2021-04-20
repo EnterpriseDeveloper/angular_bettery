@@ -16,9 +16,10 @@
           <div class="__htmlarea questionTextarea __answer">
             <span>{{letsSlice(this.questionForm.controls.question.value, 0, 120)}}</span>
             <span *ngIf="this.questionForm.controls.question.value.length > 120"
-                  class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, null)}}</span>
+                  class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, 200)}}</span>
           </div>
           <textarea
+            maxlength="200"
             (keydown)="limitError('question', null)"
             #textarea
             class="__textarea questionTextarea __answer"
@@ -56,10 +57,11 @@
               <div class="__htmlarea questionTextarea __answer">
                 <span>{{letsSlice(this.questionForm.controls.answers.value[i].name, 0, 60)}}</span>
                 <span *ngIf="this.questionForm.controls.answers.value[i].name.length > 55"
-                      class="spanBg">{{letsSlice(this.questionForm.controls.answers.value[i].name, 60, null)}}
+                      class="spanBg">{{letsSlice(this.questionForm.controls.answers.value[i].name, 60, 100)}}
                 </span>
               </div>
               <textarea
+                maxlength="100"
                 #answers
                 (keydown)="limitError('answer', i)"
                 class="__textarea questionTextarea __answer"
