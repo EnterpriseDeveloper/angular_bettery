@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import Torus from '@toruslabs/torus-embed';
+import { environment } from '../../environments/environment';
 
 const web3Obj = {
   web3: new Web3(),
@@ -13,8 +14,8 @@ const web3Obj = {
       showTorusButton: true,
       buildEnv: 'production',
       network: {
-        host: 'goerli',
-        chainId: 5
+        host: environment.torusHost,
+        chainId: environment.etherId
       },
       whiteLabel: {
         theme: {

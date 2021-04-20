@@ -1,10 +1,10 @@
 import Biconomy from "@biconomy/mexa";
+import { environment } from '../../environments/environment';
 
-const biconomyInit = async () => {
-    // TODO add provider for prodaction
-    let biconomy = new Biconomy("https://rpc-mumbai.matic.today",
+const biconomyInit = async () => {    
+    let biconomy = new Biconomy(environment.maticUrl,
         {
-            apiKey: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
+            apiKey: environment.biconomy,
             strictMode: true
         });
     await BiconomyReady(biconomy);
