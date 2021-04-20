@@ -28,8 +28,12 @@
             id="Question"
             (input)="textareaGrow()"
             placeholder="Enter topic..."
-            [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, f.question.errors) }"
+            [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, f.question.errors, 'question') }"
           ></textarea>
+        </div>
+        <div *ngIf="submitted && f.question.errors">
+          <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
+            question</small>
         </div>
       </div>
 
@@ -63,7 +67,7 @@
                   id="Question{{i}}"
                   (input)="textareaGrowAnswer(i)"
                   placeholder="Outcome {{i+1}}"
-                  [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, answer.controls.name.errors) }"
+                  [ngClass]="{ 'is_invalid': checkingSameAnswers(submitted, answer.controls.name.errors, null) }"
                 ></textarea>
               </div>
             </div>

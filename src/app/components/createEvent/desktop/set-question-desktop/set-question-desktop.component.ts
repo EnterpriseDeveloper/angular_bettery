@@ -108,16 +108,15 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.submitted = true;
+    if (this.questionForm.invalid || this.checkingSameAnswers(null, null, null)) {
+      return;
+    }
     if (this.registered) {
-      this.submitted = true;
-      if (this.questionForm.invalid || this.checkingSameAnswers(null, null)) {
-        return;
-      }
       this.getData.next(this.questionForm.value);
     } else {
       this.loginWithTorus();
     }
-
   }
 
   async loginWithTorus() {
@@ -189,7 +188,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkingSameAnswers(arg1, arg2) {
+  checkingSameAnswers(arg1, arg2, status) {
     const valueArr = this.f.answers.value.map((item) => {
       return item.name;
     });
@@ -198,6 +197,8 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     });
     if (arg1 == null && arg2 == null) {
       return this.isDuplicate;
+    } else if ( status === 'question') {
+      return !!(arg1 && arg2);
     } else {
       return !!(arg1 && arg2 || arg1 && this.isDuplicate);
     }

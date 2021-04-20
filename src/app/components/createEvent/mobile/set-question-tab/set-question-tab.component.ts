@@ -120,11 +120,11 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.registered) {
-      this.submitted = true;
-      if (this.questionForm.invalid || this.checkingSameAnswers(null, null)) {
-        return;
+    this.submitted = true;
+    if (this.questionForm.invalid || this.checkingSameAnswers(null, null, null)) {
+      return;
       }
+    if (this.registered) {
       this.formData.question = this.questionForm.value.question;
       this.formData.answers = this.questionForm.value.answers;
       this.formData.resolutionDetalis = this.questionForm.value.details;
@@ -133,7 +133,6 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     } else {
       this.loginWithTorus();
     }
-
   }
 
   async loginWithTorus() {
@@ -215,7 +214,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkingSameAnswers(arg1, arg2) {
+  checkingSameAnswers(arg1, arg2, status) {
     const valueArr = this.f.answers.value.map((item) => {
       return item.name;
     });
@@ -224,6 +223,8 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     });
     if (arg1 == null && arg2 == null) {
       return this.isDuplicate;
+    } else if ( status === 'question') {
+      return !!(arg1 && arg2);
     } else {
       return !!(arg1 && arg2 || arg1 && this.isDuplicate);
     }
