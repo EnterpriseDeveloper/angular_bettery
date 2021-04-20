@@ -20,7 +20,7 @@
 
           <div class="balancePos mr-4">
             <p *ngIf="!amountSpinner" class="balance colorBl" style="font-weight: 500;">
-              <b>{{coinInfo?.tokenBalance | number:'1.0-2'}}</b> BTY
+              <b>{{coinInfo?.BTY | number:'1.0-2'}}</b> BTY
             </p>
             <p *ngIf="amountSpinner" class="balance colorBl" style="font-weight: 400;">Calculating...</p>
             <div class="btyImg btyImgNew"></div>
@@ -28,7 +28,7 @@
 
           <div class="balancePos mr-4">
             <p *ngIf="!amountSpinner" class="balance colorBl" style="font-weight: 500;">
-              <b>{{coinInfo?.loomBalance | number:'1.0-2'}}</b> ETH
+              <b>{{coinInfo?.BET | number:'1.0-2'}}</b> BET
             </p>
             <p *ngIf="amountSpinner" class="balance colorBl" style="font-weight: 400;">Calculating...</p>
             <div class="ethImg btyImgNew"></div>
@@ -36,20 +36,24 @@
         </div>
       </li>
       <li class="nav-item">
-        <div (click)="toggleLogout()" class="user_email"> {{nickName}}</div>
+        <div (click)="toggleLogout(true)" class="user_email"> {{nickName}}</div>
       </li>
       <li class="nav-item position-relative">
-        <img  (click)="toggleLogout()" class="circle-img" src="{{avatar}}" alt="avatar">
+        <img  (click)="toggleLogout(true)" class="circle-img" src="{{avatar}}" alt="avatar" referrerpolicy="no-referrer">
         <div *ngIf="logoutBox" class="logoutBox">
           <ul>
             <li class="profile disabledItem">My profile</li>
             <li class="refLink refImg" (click)="copyRefLink()">Referral Link <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div></li>
+            <li class="profile no-wrap" (click)="openDeposit('deposit')">Deposit BTY</li>
+            <li class="profile no-wrap" (click)="openDeposit('withdraw')">Withdraw BTY</li>
+            <li class="profile no-wrap" (click)="openSwapBetToBTY()">Swap BET to BTY</li>
+            <li class="profile disabledItem no-wrap">My Torus Wallet</li>
             <li class="Logout" (click)="logOut()">Logout</li>
           </ul>
         </div>
       </li>
       <li class="nav-item">
-        <notifications [userId]="userId"></notifications>
+        <notifications [userId]="userId" (click)="toggleLogout(false)"></notifications>
       </li>
     </ul>
   </div>
@@ -71,14 +75,14 @@
       <div class="balanceBox">
         <div class="balancePos">
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
-            <b>{{coinInfo?.loomBalance | number:'1.0-2'}}</b> ETH
+            <b>{{coinInfo?.BET | number:'1.0-2'}}</b> BET
           </p>
           <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
           <div class="ethImg"></div>
         </div>
         <div class="balancePos">
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
-            <b>{{coinInfo?.tokenBalance | number:'1.0-2'}}</b> BTY
+            <b>{{coinInfo?.BTY | number:'1.0-2'}}</b> BTY
           </p>
           <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
           <div class="btyImg"></div>
@@ -104,158 +108,6 @@
 
   </div>
 </div>
-<!-- OLD CODE -->
-<!-- <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Deposit and Withdrawal</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <ngb-tabset>
-    <ngb-tab title="Deposit">
-      <ng-template ngbTabContent>
-        <div class="modal-body">
-          <p>Deposit to the Loom network can take between 5 to 10 minutes.</p>
-          <hr />
-          <p>ETH Balance (ETH Mainnet): {{coinInfo?.mainNetBalance | number:'1.0-4'}}</p>
-          <p>ETH Balance (Matic Sidechain): {{coinInfo?.loomBalance | number:'1.0-4'}}</p>
-          <div>
-            <div class="form-group">
-              <div class="input-group">
-                <label class="amount_deposit_label">ETH deposit:</label>
-                <input min="0" class="form-control deposit_input" [(ngModel)]="depositAmount"
-                  (ngModelChange)="changeInput()" placeholder="Amount of ETH" type="number">
-                <span class="input-group-btn">
-                  <button *ngIf="!depositSpinner" type="button" class="btn btn-outline-dark"
-                    (click)="deposit()">Deposit</button>
-                  <div *ngIf="depositSpinner">
-                    <div class="lds-ripple-small">
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-                </span>
-              </div>
-            </div>
-            <p *ngIf="depositError !== undefined" class="deposit_error">{{depositError}}</p>
-          </div>
-
-          <hr />
-          <p>QUIZE Balance (ETH Mainnet): {{ERC20Coins?.mainNetBalance | number:'1.0-4'}}</p>
-          <p>QUIZE Balance (Matic Sidechain): {{ERC20Coins?.loomBalance | number:'1.0-4'}}</p>
-
-          <div>
-            <div class="form-group">
-              <div class="input-group">
-                <label class="amount_deposit_label">QUIZE deposit:</label>
-                <input min="0" class="form-control deposit_input" [(ngModel)]="ERC20depositAmount"
-                  (ngModelChange)="changeInput()" placeholder="Amount of QUIZE" type="number">
-                <span class="input-group-btn">
-                  <button *ngIf="!depositSpinner" type="button" class="btn btn-outline-dark"
-                    (click)="depositERC20()">Deposit</button>
-                  <div *ngIf="depositSpinner">
-                    <div class="lds-ripple-small">
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-                </span>
-              </div>
-            </div>
-            <p *ngIf="ERC20depositError !== undefined" class="deposit_error">{{ERC20depositError}}</p>
-          </div>
-        </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Withdrawal">
-      <ng-template ngbTabContent>
-        <div class="modal-body">
-          <p>Deposit to the Loom network can take between 5 to 10 minutes.</p>
-          <hr />
-          <p>ETH Balance (ETH Mainnet): {{coinInfo?.mainNetBalance | number:'1.0-4'}}</p>
-          <p>ETH Balance (Matic Sidechain): {{coinInfo?.loomBalance | number:'1.0-4'}}</p>
-          <div>
-            <div class="form-group">
-              <div class="input-group">
-                <label class="amount_deposit_label">ETH withdrawal: </label>
-                <input min="0" class="form-control deposit_input" [(ngModel)]="withdrawalAmount"
-                  (ngModelChange)="changeWithdrawal()" placeholder="Amount of ETH" type="number">
-                <span class="input-group-btn">
-                  <button *ngIf="!withdrawalSpinner" type="button" class="btn btn-outline-dark"
-                    (click)="withdrawal()">Withdrawal</button>
-                  <div *ngIf="withdrawalSpinner">
-                    <div class="lds-ripple-small">
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-                </span>
-              </div>
-            </div>
-            <p *ngIf="withdrawalError !== undefined" class="deposit_error">{{withdrawalError}}</p>
-          </div>
-          <hr />
-          <p>QUIZE Balance (ETH Mainnet): {{ERC20Coins?.mainNetBalance | number:'1.0-4'}}</p>
-          <p>QUIZE Balance (Matic Sidechain): {{ERC20Coins?.loomBalance | number:'1.0-4'}}</p>
-          <div>
-            <div class="form-group">
-              <div class="input-group">
-                <label class="amount_deposit_label">QUIZE withdrawal: </label>
-                <input min="0" class="form-control deposit_input" [(ngModel)]="ERC20withdrawalAmount"
-                  (ngModelChange)="changeWithdrawal()" placeholder="Amount of ETH" type="number">
-                <span class="input-group-btn">
-                  <button *ngIf="!withdrawalSpinner" type="button" class="btn btn-outline-dark"
-                    (click)="withdrawalERC20()">Withdrawal</button>
-                  <div *ngIf="withdrawalSpinner">
-                    <div class="lds-ripple-small">
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-                </span>
-              </div>
-            </div>
-            <p *ngIf="ERC20withdrawalError !== undefined" class="deposit_error">{{ERC20withdrawalError}}</p>
-          </div>
-        </div>
-
-      </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
-</ng-template>
-
-<ng-template #popTitle>History transaction in Matic</ng-template>
-<ng-template #popContent>
-  <div *ngIf="userHistory.length !== 0">
-    <div *ngFor="let history of userHistory; let i = index">
-      <div class="historyBox">
-        <p>{{history.date | date:'short'}} / </p>
-        <p>{{history.amount}} <span>{{history.currencyType}}</span></p>
-        <div *ngIf="history.eventId !=='Deleted'">
-          <a *ngIf="history.paymentWay === 'send'" [routerLink]="['question', history.eventId]">
-            <fa-icon class="historyIconSend" [icon]="faReply"></fa-icon>
-          </a>
-          <a *ngIf="history.paymentWay === 'receive'" [routerLink]="['question', history.eventId]">
-            <fa-icon class="historyIconReceive" [icon]="faShare"></fa-icon>
-          </a>
-        </div>
-        <div *ngIf="history.eventId ==='Deleted'">
-          <fa-icon *ngIf="history.paymentWay === 'send'" class="historyIconSend" [icon]="faReply"></fa-icon>
-          <fa-icon *ngIf="history.paymentWay === 'receive'" class="historyIconReceive" [icon]="faShare">
-          </fa-icon>
-        </div>
-
-      </div>
-    </div>
-    <div *ngIf="loadMore === true" class="showAll">
-      <button routerLink="history" class="btn btn-primary btn-sm">Show All</button>
-    </div>
-  </div>
-  <div *ngIf="userHistory.length === 0">
-    <p class="noneHistory">Do not have any transaction in Matic network.</p>
-  </div>
-</ng-template> -->
 
 <ng-template #contentModal let-modal>
   <div class="modal-header p-2 pb-0">

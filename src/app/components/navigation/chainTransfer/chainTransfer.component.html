@@ -1,0 +1,71 @@
+<div class="main">
+  <div class="modal-header my-modal-header">
+    <div class="title-box">
+      <h1 *ngIf="status === 'withdraw' || receiveBTY" class="title-withdraw">WITHDRAW BTY</h1>
+      <h1 *ngIf="status === 'deposit' && !receiveBTY" class="title-deposit">DEPOSIT BTY</h1>
+    </div>
+    <div class="wallet">
+      <p *ngIf="status === 'withdraw'" class="other-title">WITHDRAWING to </p>
+      <p *ngIf="status === 'deposit'" class="other-title">DEPOSITing from</p>
+      <p>{{wallet}}</p>
+    </div>
+  </div>
+  <div class="modal-body p-0">
+    <div>
+      <div class="labelForDeposit">
+        <div *ngIf="status === 'withdraw'" class="other-title">amount to withdraw</div>
+        <div *ngIf="status === 'deposit'" class="other-title">amount to deposit</div>
+        <div *ngIf="!receiveBTY && avaliableCoins != undefined" style="font-size: 12px">Available : <span class="other-title">{{avaliableCoins}}
+        BTY</span></div>
+      </div>
+      <div style="position: relative">
+        <input [(ngModel)]="inputValue" placeholder="Enter Amount" class="withdraw-input"
+               [ngClass]=" stillProcessed || receiveBTY ? 'grey' : ''" type="number">
+        <div *ngIf="status === 'withdraw' && !receiveBTY" (click)="maxWithdraw()" class="max max-withdraw">Max</div>
+        <div *ngIf="status === 'deposit' && !receiveBTY" (click)="maxDeposit()" class="max max-deposit">Max</div>
+      </div>
+    </div>
+
+    <div *ngIf="status === 'withdraw' && !receiveBTY && !stillProcessed" class="text px-50">
+      <p>
+        <span>Important:</span> You’re re-allocating your BTY from your Bettery account into your Torus wallet. Click
+        “Withdraw BTY”
+        and come back here after 30 minutes to receive your BTY.
+        <br>
+        <span><a href="https://t.me/bettery_io" target="_blank">Questions? Ask us on Telegram!</a></span>
+      </p>
+    </div>
+
+    <div *ngIf="status === 'deposit' && !receiveBTY && !stillProcessed" class="text px-30">
+      <p>
+        <span style="color: #FFD300">Important:</span> You’re allocating BTY from your Torus wallet into your Bettery
+        account. Your Torus private
+        key stays with you - Bettery can never control this fund.
+        <br>
+        <span><a style="color: #FFD300" href="https://t.me/bettery_io" target="_blank">Questions? Ask us on Telegram!</a></span>
+      </p>
+    </div>
+
+    <div *ngIf="receiveBTY && !stillProcessed" class="text">
+      <p>
+        Click “Receive BTY” to get your BTY back in your Torus wallet.
+      </p>
+    </div>
+    <div *ngIf="stillProcessed" class="text">
+      <p>Your withdrawal is still being processed by the blockchain. Come back later.
+        <br>
+        <span><a href="https://t.me/bettery_io" target="_blank">Questions? Ask us on Telegram!</a></span>
+      </p>
+    </div>
+
+    <div *ngIf="!receiveBTY" class="two_btn">
+      <button class="cancel-btn" (click)="close()">Cancel</button>
+      <button *ngIf="status ==='withdraw'" class="withdraw-btn">Withdraw BTY</button>
+      <button *ngIf="status ==='deposit'" class="deposit-btn" (click)="deposit()">Deposit BTY</button>
+    </div>
+
+    <div *ngIf="receiveBTY" class="receive_btn">
+      <button class="withdraw-btn" [ngClass]=" stillProcessed ? 'still' : ''">Receive BTY</button>
+    </div>
+  </div>
+</div>

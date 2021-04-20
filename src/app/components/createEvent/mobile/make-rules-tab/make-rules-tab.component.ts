@@ -3,11 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash';
 import {NgbModal, NgbTimepickerConfig, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
 import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
-import {Store} from "@ngrx/store";
-import {AppState} from "../../../../app.state";
-import {formDataAction} from "../../../../actions/newEvent.actions";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {formDataAction} from '../../../../actions/newEvent.actions';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 type Time = { name: string, date: any, value: number };
 
@@ -65,6 +65,10 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
     if (this.formData && this.formData.privateEndTime !== '') {
       let findTime = _.find(this.times, (x) => {
         return x.value === this.formData.privateEndTime.value;
@@ -255,6 +259,21 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.formDataSubscribe) {
       this.formDataSubscribe.unsubscribe();
+    }
+  }
+
+  reinitializeForm(param) {
+    if (param === 'company') {
+      this.formData.expertsCountType = 'company';
+      this.initializeForm();
+      this.publicForm.controls.publicEndTime.setValue('');
+      this.endPublicTime = '';
+    }
+    if (param === 'custom') {
+      this.formData.expertsCountType = 'custom';
+      this.initializeForm();
+      this.publicForm.controls.publicEndTime.setValue('');
+      this.endPublicTime = '';
     }
   }
 

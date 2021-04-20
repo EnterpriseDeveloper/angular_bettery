@@ -42,7 +42,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
           this.eventFinish = true;
         }
 
-        if (x.status === 'reverted') {
+        if (x.status.includes('reverted')) {
           this.isReverted = true;
         }
 

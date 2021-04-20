@@ -6,6 +6,12 @@ export const environment = {
   production: false,
   locales: ['en', 'vn'],
   defaultLocale: 'en',
+  apiUrl: 'https://13.229.200.135',
+  biconomy: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
+  maticUrl: "https://rpc-mumbai.matic.today",
+  maticId: 80001,
+  etherId: 5,
+  torusHost: "goerli"
 };
 
 /*

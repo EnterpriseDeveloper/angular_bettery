@@ -11,9 +11,9 @@ import web3Obj from '../../../../../helpers/torus'
 import maticInit from '../../../../../contract/maticInit.js'
 import * as CoinsActios from '../../../../../actions/coins.actions';
 import { Subscription } from 'rxjs';
-import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
-import {User} from '../../../../../models/User.model';
-import {Coins} from '../../../../../models/Coins.model';
+import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
+import { User } from '../../../../../models/User.model';
+import { Coins } from '../../../../../models/Coins.model';
 
 @Component({
   selector: 'participate',
@@ -80,49 +80,25 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let balance = this.eventData.currencyType == "token" ? this.coinInfo.tokenBalance : this.coinInfo.loomBalance;
-    if (Number(balance) < Number(this.answerForm.value.amount)) {
-      this.errorMessage = "Don't have enough " + this.coinType
+    if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
+      this.errorMessage = "Don't have enough BET tokens"
     } else {
       this.spinnerLoading = true;
       let web3 = new Web3();
       let contract = new Contract();
-      var _question_id = this.eventData.id;
-      var _whichAnswer = _.findIndex(this.eventData.answers, (o) => { return o == this.answerForm.value.answer; });
       var _money = web3.utils.toWei(String(this.answerForm.value.amount), 'ether')
-      let contr = await contract.publicEventContract()
-      let validator = await contr.methods.setTimeAnswer(_question_id).call();
-      if (Number(validator) === 0) {
-        if (this.eventData.currencyType == "token") {
-          await contract.approveBETToken(this.userData.wallet, _money, this.userData.verifier)
-        } else {
-          await contract.approveWETHToken(this.userData.wallet, _money, this.userData.verifier)
-        }
-        let sendToContract = await contract.participateOnPublicEvent(_question_id, _whichAnswer, _money, this.userData.wallet, this.userData.verifier)
-        if (sendToContract.transactionHash !== undefined) {
-          this.setToDB(_whichAnswer, this.eventData, sendToContract.transactionHash, _money)
-        }
-      } else if (Number(validator) === 1) {
-        this.spinnerLoading = false;
-        this.errorMessage = "Event not started yeat."
-      } else if (Number(validator) === 2) {
-        this.spinnerLoading = false;
-        this.errorMessage = "Event is finished"
-      }
+      await contract.approveBETToken(this.userData.wallet, _money, this.userData.verifier)
+      this.setToDB(this.eventData)
     }
   }
 
-  setToDB(answer, dataAnswer, transactionHash, amount) {
-    let web3 = new Web3();
-    var _money = web3.utils.fromWei(String(amount), 'ether')
+  setToDB(dataAnswer) {
+    var _whichAnswer = _.findIndex(dataAnswer.answers, (o) => { return o == this.answerForm.value.answer; });
     let data = {
       event_id: dataAnswer.id,
-      date: new Date(),
-      answer: answer,
-      transactionHash: transactionHash,
+      answerIndex: _whichAnswer,
       userId: this.userData._id,
-      currencyType: dataAnswer.currencyType,
-      amount: Number(_money)
+      amount: Number(this.answerForm.value.amount)
     }
     this.postSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
       await this.updateBalance();
@@ -132,27 +108,28 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     },
       (err) => {
         this.spinnerLoading = false
+        this.errorMessage = String(err.error)
         console.log(err)
       })
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.userData.verifier === "metamask" ? window.web3.currentProvider : web3Obj.torus.provider);
-    let mainBalance = await web3.eth.getBalance(this.userData.wallet);
+    let web3 = new Web3(this.userData.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
 
     let matic = new maticInit(this.userData.verifier);
-    let MTXToken = await matic.getMTXBalance();
-    let TokenBalance = await matic.getERC20Balance();
+    let BTYToken = await matic.getBTYTokenBalance();
+    let BETToken = await matic.getBETTokenBalance();
+    let MainBETToken = await matic.getBTYTokenOnMainChainBalance();
 
-    let maticTokenBalanceToEth = web3.utils.fromWei(MTXToken, "ether");
-    let mainEther = web3.utils.fromWei(mainBalance, "ether")
-    let tokBal = web3.utils.fromWei(TokenBalance, "ether")
+    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
+    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
+    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      loomBalance: maticTokenBalanceToEth,
-      mainNetBalance: mainEther,
-      tokenBalance: tokBal
-    }))
+      MainBTY: MainBTYBalance,
+      BTY: BTYBalance,
+      BET: BETBalance
+    }));
   }
 
   ngOnDestroy() {

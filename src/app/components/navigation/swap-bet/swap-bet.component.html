@@ -1,0 +1,49 @@
+<div class="main">
+  <div class="modal-header my-modal-header">
+    <div class="title-box">
+      <h1 class="title">SWAP BET TO BTY</h1>
+    </div>
+  </div>
+  <div class="modal-body pb-0 px-0">
+    <div>
+      <div class="labelForDeposit">
+        <div class="other-title">BET AMOUNT TO SWAP</div>
+        <div style="font-size: 12px">Available : <span class="other-title">{{coinInfo?.BET}}
+          BET</span></div>
+      </div>
+      <div style="position: relative">
+        <input [(ngModel)]="inputValue" placeholder="Enter Amount" class="withdraw-input" type="number">
+        <div class="max max-deposit">Max</div>
+      </div>
+      <div *ngIf="error">{{error}}</div> <!-- TODO ANDREY (style)-->
+    </div>
+
+    <div class="d-flex justify-content-center mt-2">
+      <div class="circle"></div>
+    </div>
+    <div class="receive-box">
+      <div class="title-rec">
+        <p>YOU WILL RECEIVE</p>
+      </div>
+      <div class="receive-bty">
+        <div class="bettery6-img"></div>
+        <p>{{inputValue}} BTY</p>
+      </div>
+
+    </div>
+
+    <div class="text px-50">
+      <p>
+        <span>Important:</span> This is a one-way transaction. You cannot swap your BTY tokens back to BET again.
+        <br>
+        <span><a href="https://t.me/bettery_io" target="_blank">Questions? Ask us on Telegram!</a></span>
+      </p>
+    </div>
+  </div>
+
+  <div class="two_btn">
+    <button class="cancel-btn" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+    <button class="deposit-btn" (click)="swipe()">Swap</button>
+  </div>
+</div>
+

@@ -1,5 +1,5 @@
 <div *ngIf="!spinner">
-  <div  class="pb-3" *ngIf="!loginWithMetamsk && !openSpinner">
+  <div  class="pb-3" *ngIf="!openSpinner">
     <div  style="padding: 0 40px; border: none">
       <div>
         <button type="button" class=" soonClose close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
@@ -20,60 +20,5 @@
   </div>
 </div>
 <app-spinner-loading *ngIf="spinner"></app-spinner-loading>
-
-<div *ngIf="loginWithMetamsk">
-    <div *ngIf="spinner">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-    <div *ngIf="!spinner">
-        <div>
-            <div>
-                <h4 class="registration_title">Registration</h4>
-                <fa-icon (click)="closeModal()" class="modal_close" [icon]="faTimes"></fa-icon>
-            </div>
-            <div *ngIf="metamaskError !== undefined">
-                <p class="metamask_error">{{metamaskError}}</p>
-            </div>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="metamaskError === undefined ">
-                <div>
-                    <p class="user_wallet"><b>Wallet:</b> {{userWallet}}</p>
-                </div>
-
-                <div class="form_container">
-                    <div class="form-group">
-                        <label for="emailForm">Email <b style="font-size: 12px">*required</b></label>
-                        <input type="text" formControlName="email" class="form-control" id="emailForm"
-                            placeholder="Enter email">
-                        <div *ngIf="submitted && f.email.errors">
-                            <small *ngIf="f.email.errors.email" class="form-text error-feedback ">Email must be a valid
-                                email address</small>
-                            <small *ngIf="f.email.errors.required" class="form-text error-feedback ">Email is
-                                required</small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nickNameForm">Nick Name <b style="font-size: 12px">*optional</b></label>
-                        <input type="text" formControlName="nickName" class="form-control" id="nickNameForm"
-                            placeholder="Enter nick name">
-                        <div *ngIf="submitted && f.nickName.errors">
-                            <small *ngIf="f.nickName.errors?.minlength" class="form-text error-feedback ">
-                                Nick Name must be at least 6 characters</small>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="registerError !== undefined" class="register_error">
-                    <p>{{registerError}}</p>
-                </div>
-                <div class="form_container button_pos">
-                    <button type="reset" class="btn btn-danger regist_button_box" (click)="onReset()">Cancel</button>
-                    <button class="btn btn-success regist_button_box">Regist</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 

@@ -62,8 +62,8 @@
     padding-left: 19px
 
 .adapting::placeholder
-  font-size: 10px
-  font-weight: 500
+    font-size: 10px
+    font-weight: 500
 
 .iconBox
     background-color: #3B3B3B
@@ -71,6 +71,8 @@
     height: 25px !important
     border-radius: 50%
     display: inline-flex
+    position: relative
+    top: 7px
 
 .add
     background-color: transparent
@@ -155,30 +157,31 @@
     background-color: transparent
     border: none
 
+.plus
+    background: url("../../../../../assets/create-event/desktop/greenPl.png") center center no-repeat
+    background-size: contain
+    width: 24px
+    height: 24px
 
 @media (max-height: 1024px)
-  .buttonBox
+.buttonBox
     position: absolute
     bottom: 0
     width: 100%
     padding: 0 15px 10px 15px
 
 @media (max-height: 800px)
-  .buttonBox
+.buttonBox
     position: relative
     margin: 23px auto 0 auto
     width: 100%
     padding: 0 15px 10px 15px
 
-
 @media (min-width: 1024px) and (min-height: 667px)
-  .buttonBox
+.buttonBox
     position: relative !important
 
 @media (max-height: 568px)
-  .buttonBox
+.buttonBox
     width: 100%
     padding: 0 15px 10px 15px
-
-
-

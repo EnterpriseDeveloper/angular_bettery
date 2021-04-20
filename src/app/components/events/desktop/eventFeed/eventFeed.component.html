@@ -31,7 +31,8 @@
                                [index]="index"
                                [myAnswers]="myAnswers[index]"
                                [userData]="userData"
-                               [question]="newQuestion" [fromComponent]="fromComponent"
+                               [question]="newQuestion"
+                               [fromComponent]="fromComponent"
                                (callGetData)="getData(queryPath,0, scrollDistanceTo, '', activeBtn)"></quiz-template>
               </div>
             </div>
@@ -105,6 +106,8 @@
       </div>
     </div>
 
+    <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && activeBtn != 'pro'"></spinner-load-more>
+
     <div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"><a pageScroll href="#top"><img
       src="../../../../../assets/descEvent/topBTN.png" alt="Top"></a></div>
   </div>
@@ -113,4 +116,5 @@
 <filterTimeline *ngIf="timelineActive"
               (closeEmmit)="openTimeline($event)"
               (filterData)="letsFilterData($event)"
+               [statusMode]="filterMode"
 ></filterTimeline>

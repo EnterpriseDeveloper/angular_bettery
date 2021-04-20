@@ -273,10 +273,10 @@
     margin-bottom: 12px
 
 .ethImg
-    background: url(../../../../assets/share/ETH.png) left center no-repeat
+    background: url(../../../../assets/share/betIcon.png) left center no-repeat
     background-size: contain
-    width: 18px
-    height: 30px
+    width: 32px
+    height: 32px
     position: relative
     left: 8px
     top: 5px
@@ -305,7 +305,8 @@
 
 .balanceBox
     display: flex
-    justify-content: space-between
+    justify-content: space-around
+    flex-direction: row-reverse
 
 .balance
     font-family: 'Open Sans', sans-serif
@@ -437,7 +438,7 @@
   line-height: 22px
   color: #4E4E4E
   position: absolute
-  left: -119px
+  left: -79px
   top: 70px
   & ul
     list-style: none
@@ -482,3 +483,6 @@
 .showLink
   opacity: 1
   display: block
+
+.no-wrap
+  white-space: nowrap

@@ -3,12 +3,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../app.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClipboardService } from 'ngx-clipboard'
-import Contract from '../../../../../contract/contract';
 import { PostService } from '../../../../../services/post.service';
 import _ from "lodash";
 import { Subscription } from 'rxjs';
-import {User} from '../../../../../models/User.model';
-import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
+import { User } from '../../../../../models/User.model';
+import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
 
 @Component({
   selector: 'validate',
@@ -106,10 +105,10 @@ export class ValidateComponent implements OnInit, OnDestroy {
 
   expertAmount() {
     let part = this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length;
-    if (part == 0) {
+    if (part < 11) {
       return 3;
     } else {
-      return (part * 10) / 100 <= 3 ? 3 : Number(((part * 10) / 100).toFixed(0));
+      return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
     }
   }
 
@@ -118,49 +117,16 @@ export class ValidateComponent implements OnInit, OnDestroy {
     if (this.answerForm.invalid) {
       return
     }
-    this.setValidation()
+    this.setToDBValidation(this.eventData)
   }
 
-  async setValidation() {
+  setToDBValidation(dataAnswer) {
     this.spinnerLoading = true;
-
-    let contract = new Contract();
-    var _question_id = this.eventData.id;
     var _whichAnswer = _.findIndex(this.eventData.answers, (o) => { return o == this.answerForm.value.answer; });
-    let contr = await contract.publicEventContract()
-    let validator = await contr.methods.setTimeValidator(_question_id).call();
-
-    switch (Number(validator)) {
-      case 0:
-        let sendToContract = await contract.validateOnPublicEvent(_question_id, _whichAnswer, this.userData.wallet, this.userData.verifier)
-        if (sendToContract.transactionHash !== undefined) {
-          this.setToDBValidation(_whichAnswer, this.eventData, sendToContract.transactionHash)
-        }
-        break;
-      case 1:
-        this.spinnerLoading = false;
-        this.errorMessage = "Event not started yeat."
-        break;
-      case 2:
-        this.spinnerLoading = false;
-        this.errorMessage = "Event is finished."
-        break;
-      case 3:
-        this.spinnerLoading = false;
-        this.errorMessage = "You have been like the participant in this event. The participant can't be the validator."
-        break;
-    }
-  }
-
-  setToDBValidation(answer, dataAnswer, transactionHash) {
     let data = {
       event_id: dataAnswer.id,
-      date: new Date(),
-      answer: answer,
-      transactionHash: transactionHash,
-      userId: this.userData._id,
-      currencyType: dataAnswer.currencyType,
-      validated: dataAnswer.validated + 1
+      answer: _whichAnswer,
+      userId: this.userData._id
     }
     this.postSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.errorMessage = undefined;
@@ -169,6 +135,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     },
       (err) => {
         this.spinnerLoading = false;
+        this.errorMessage = String(err.error);
         console.log(err)
       })
   }

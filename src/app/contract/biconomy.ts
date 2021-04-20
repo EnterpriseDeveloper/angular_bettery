@@ -1,9 +1,10 @@
 import Biconomy from "@biconomy/mexa";
+import { environment } from '../../environments/environment';
 
-const biconomyInit = async () => {
-    let biconomy = new Biconomy("https://rpc-mumbai.matic.today",
+const biconomyInit = async () => {    
+    let biconomy = new Biconomy(environment.maticUrl,
         {
-            apiKey: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
+            apiKey: environment.biconomy,
             strictMode: true
         });
     await BiconomyReady(biconomy);
@@ -11,7 +12,7 @@ const biconomyInit = async () => {
 }
 
 async function BiconomyReady(biconomy) {
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>((resolve, reject) => {
         return biconomy
             .onEvent(biconomy.READY, async () => {
                 resolve()

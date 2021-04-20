@@ -5,7 +5,7 @@
             <label for="Question" class="name">
                 <span class="text">Set topic</span>
             </label>
-            <textarea type="text" formControlName="question" class="question" id="Question"
+            <textarea maxlength="120" type="text" formControlName="question" class="question" id="Question"
                 placeholder="Enter the question..."
                 [ngClass]="{ 'is_invalid': submitted && f.question.errors }"></textarea>
             <div *ngIf="submitted && f.question.errors">
@@ -20,7 +20,7 @@
             </label>
             <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
                 <div [formGroup]="answer" class="input-group inputBox">
-                    <input [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }" type="text"
+                    <input maxlength="60" [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors }" type="text"
                         formControlName="name" class="answer" id="Question {{i}}"
                         placeholder="Possible outcome {{i+1}}">
                     <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
@@ -37,7 +37,7 @@
             <div>
                 <button type="button" (click)="oneMoreAnswer()" class="add">
                     <div class="iconBox">
-                        <fa-icon size="xs" [icon]="faPlus" class="iconPlus"></fa-icon>
+                        <div class="plus"></div>
                     </div>
                     <span class="addText">Add possible outcome</span>
                 </button>

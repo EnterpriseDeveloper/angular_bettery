@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
 import { AppState } from '../../app.state';
@@ -12,6 +11,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import web3Obj from '../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { WelcomePageComponent } from '../share/welcome-page/welcome-page.component';
+import biconomyInit from '../../../app/contract/biconomy';
 
 
 @Component({
@@ -23,15 +23,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   @Input() openSpinner = false;
   registerForm: FormGroup;
   submitted: boolean = false;
-  faTimes = faTimes;
   registerError: any = undefined;
   web3: Web3 | undefined = null;
   metamaskError: string = undefined;
   userWallet: string = undefined;
   validateSubscribe: Subscription;
   torusRegistSub: Subscription;
-  registSub: Subscription;
-  loginWithMetamsk = false;
   spinner: boolean;
   saveUserLocStorage = [];
 
@@ -58,6 +55,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   async loginWithTorus() {
     this.spinner = true;
     // this.activeModal.dismiss('Cross click')
+    await biconomyInit();
     try {
       await web3Obj.initialize();
       this.setTorusInfoToDB();
@@ -111,74 +109,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         });
   }
 
-  async loginMetamask() {
-    this.loginWithMetamsk = true;
-    // Check if MetaMask is installed
-    if (!(window as any).ethereum) {
-      this.spinner = false;
-      this.metamaskError = 'For registration you must have Metamask installed.';
-    } else {
-
-      if (!this.web3) {
-        try {
-          await (window as any).ethereum.enable();
-          window.web3 = new Web3(window.web3.currentProvider);
-          this.web3 = new Web3(window.web3.currentProvider);
-        } catch (error) {
-          this.spinner = false;
-          this.metamaskError = 'You need to allow MetaMask.';
-        }
-      }
-
-      const coinbase = await this.web3.eth.getCoinbase();
-      if (!coinbase) {
-        this.spinner = false;
-        this.metamaskError = 'Please activate MetaMask first.';
-        return;
-      } else {
-        this.detectWalletInDB(coinbase, this.web3);
-      }
-    }
-  }
-
-  async detectWalletInDB(wallet: string, web3) {
-    let checkNetwork = await web3._provider.networkVersion;
-    if (checkNetwork !== '5') {
-      this.spinner = false;
-      this.metamaskError = 'Plaese switch your network in MetaMask to the Goerli network.';
-    } else {
-      let data = {
-        wallet: wallet
-      };
-      this.validateSubscribe = this.http.post('user/validate', data)
-        .subscribe(
-          (x: User) => {
-            console.log(x);
-            this.spinner = false;
-            console.log(x);
-            if (x.wallet === undefined) {
-              this.userWallet = wallet;
-            } else {
-              this.addUser(
-                x.email,
-                x.nickName,
-                x.wallet,
-                x.listHostEvents,
-                x.listParticipantEvents,
-                x.listValidatorEvents,
-                x.historyTransaction,
-                x.avatar,
-                x._id,
-                x.verifier);
-            }
-          },
-          (err) => {
-            console.log('validate user error');
-            console.log(err);
-          });
-    }
-  }
-
   closeModal() {
     this.activeModal.dismiss('Cross click');
   }
@@ -194,50 +124,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-
-
-  onSubmit() {
-    this.submitted = true;
-    let color = this.getRandomColor();
-
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    let data: Object = {
-      _id: null,
-      nickName: this.registerForm.value.nickName,
-      email: this.registerForm.value.email,
-      wallet: this.userWallet,
-      avatar: color,
-    };
-
-
-    this.registSub = this.http.post('user/regist', data)
-      .subscribe(
-        (x: any) => {
-          this.addUser(
-            this.registerForm.value.email,
-            this.registerForm.value.nickName,
-            this.userWallet,
-            [],
-            [],
-            [],
-            [],
-            color,
-            x._id,
-            x.verifier
-          );
-          let getLocation = document.location.href;
-          let gurd = getLocation.search('question');
-          if (gurd === -1) {
-            this.router.navigate(['eventFeed']);
-          }
-        },
-        (err) => {
-          this.registerError = err.error;
-        });
   }
 
   addUser(
@@ -289,14 +175,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.validateSubscribe) {
-      this.validateSubscribe.unsubscribe();
-    }
     if (this.torusRegistSub) {
       this.torusRegistSub.unsubscribe();
-    }
-    if (this.registSub) {
-      this.registSub.unsubscribe();
     }
   }
 

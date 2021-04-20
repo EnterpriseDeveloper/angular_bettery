@@ -38,7 +38,7 @@
                 </div>
                 <div class="totalImg"></div>
                 <p class="name">Total Bet</p>
-                <p class="number">{{pool}} {{coinType}}</p>
+                <p class="number">{{getPool()}} {{coinType}}</p>
             </div>
         </div>
         <div class="boxInfo">
@@ -48,9 +48,9 @@
                 </div>
                 <div class="minedImg"></div>
                 <p class="name">Minted</p>
-                <a class="comingSoon"
-                    (click)="openInfoModal('Tokens Minted - Coming soon!', 'Each event on Bettery platform generates a certain amount of BTY depending on how many participants joined, given back to the Host, Players, Experts, and other roles (if any).', 'Learn more about how Bettery works')">Coming
-                    soon!</a>
+                <p class="number">
+                  {{getMinted()}}
+                </p>
             </div>
             <div class="boxBig">
                 <div class="infoImg"

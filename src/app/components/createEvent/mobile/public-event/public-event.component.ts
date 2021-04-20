@@ -1,19 +1,15 @@
-import {Component, Input, Output, EventEmitter, OnDestroy, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../app.state';
-import {ClipboardService} from 'ngx-clipboard'
-import {GetService} from '../../../../services/get.service';
-import {PostService} from '../../../../services/post.service'
-import maticInit from '../../../../contract/maticInit.js'
-import Contract from '../../../../contract/contract';
-import {Subscription} from 'rxjs';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
-import {environment} from '../../../../../environments/environment';
-import {User} from '../../../../models/User.model';
-import {Router} from "@angular/router";
-import {formDataAction} from "../../../../actions/newEvent.actions";
+import { Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../app.state';
+import { ClipboardService } from 'ngx-clipboard'
+import { PostService } from '../../../../services/post.service'
+import { Subscription } from 'rxjs';
+import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { User } from '../../../../models/User.model';
+import { Router } from "@angular/router";
+import { formDataAction } from "../../../../actions/newEvent.actions";
 
 
 @Component({
@@ -33,16 +29,13 @@ export class PublicEventComponent implements OnDestroy {
   host: User[];
   quizData: any;
   userSub: Subscription;
-  idSub: Subscription;
   postSub: Subscription;
-  createSub: Subscription;
   fromDataSubscribe: Subscription;
   spinnerLoading: boolean = false;
 
   constructor(
     private store: Store<AppState>,
     private _clipboardService: ClipboardService,
-    private getSevice: GetService,
     private PostService: PostService,
     private modalService: NgbModal,
     private router: Router
@@ -100,14 +93,6 @@ export class PublicEventComponent implements OnDestroy {
     this._clipboardService.copy(`${path}/public_event/${this.quizData._id}`)
   }
 
-  generateID() {
-    let data = {
-      id: this.host[0]._id,
-      prodDev: environment.production
-    }
-    return this.PostService.post("publicEvents/createId", data);
-  }
-
   getStartTime() {
     return Number((new Date().getTime() / 1000).toFixed(0));
   }
@@ -132,14 +117,45 @@ export class PublicEventComponent implements OnDestroy {
 
   createEvent() {
     this.spinnerLoading = true;
-    let id = this.generateID()
-    this.idSub = id.subscribe((x: any) => {
-      this.sendToContract(x._id);
-    }, (err) => {
-      this.spinnerLoading = false;
-      this.modalService.open(ErrorLimitModalComponent, {centered: true});
-      console.log(err)
-    })
+
+    this.quizData = {
+      host: this.host[0]._id,
+      question: this.formData.question,
+      hashtags: [], // TODO
+      amount: 0, // TODO amount on premium event
+      premium: false, // TODO premium true or false
+      answers: this.formData.answers.map((x) => {
+        return x.name
+      }),
+      startTime: this.getStartTime(),
+      endTime: Number(this.getEndTime()),
+      validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
+      calculateExperts: this.formData.expertsCountType,
+      currencyType: this.formData.tokenType,
+      roomName: this.formData.roomName,
+      roomColor: this.formData.roomColor,
+      whichRoom: this.formData.whichRoom,
+      roomId: this.formData.roomId
+    }
+
+    this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
+      .subscribe(
+        (x: any) => {
+          this.quizData._id = x.eventId;
+          this.spinnerLoading = false;
+          this.created = true;
+          this.calculateDate()
+          this.formDataReset()
+          console.log("set to db DONE")
+        },
+        (err) => {
+          this.spinnerLoading = false;
+          if (err.error == "Limit is reached") {
+            this.modalService.open(ErrorLimitModalComponent, { centered: true });
+          }
+          console.log("set qestion error");
+          console.log(err);
+        })
   }
 
   formDataReset() {
@@ -149,102 +165,7 @@ export class PublicEventComponent implements OnDestroy {
     this.formData.winner = '';
     this.formData.roomName = '';
 
-    this.store.dispatch(formDataAction({formData: this.formData}));
-  }
-
-  async sendToContract(id) {
-    let matic = new maticInit(this.host[0].verifier);
-    let userWallet = await matic.getUserAccount()
-    let contract = new Contract()
-
-    let payEther = this.formData.tokenType === "token" ? false : true;
-    let startTime = this.getStartTime();
-    let endTime = Number(this.getEndTime());
-    let percentHost = 0;
-    let percentValidator = 0;
-    let questionQuantity = this.formData.answers.length;
-    let validatorsAmount = this.formData.expertsCountType === "company" ? 0 : this.formData.expertsCount;
-    let validatorsQuantityWay = this.formData.expertsCountType === "company" ? true : false
-
-    try {
-      let sendToContract = await contract.createPublicEvent(
-        id,
-        startTime,
-        endTime,
-        percentHost,
-        percentValidator,
-        questionQuantity,
-        validatorsAmount,
-        true, //_pathHoldMoney
-        payEther,
-        validatorsQuantityWay,
-        userWallet,
-        this.host[0].verifier
-      )
-      if (sendToContract.transactionHash !== undefined) {
-        this.setToDb(id, sendToContract.transactionHash);
-      }
-    } catch (error) {
-      this.spinnerLoading = false;
-      console.log(error);
-      this.deleteEvent(id)
-    }
-  }
-
-  setToDb(id, transactionHash) {
-    // think about status
-
-    this.quizData = {
-      _id: id,
-      status: "deployed",
-      host: this.host[0]._id,
-      question: this.formData.question,
-      hashtags: [], // TO DO
-      answers: this.formData.answers.map((x) => {
-        return x.name
-      }),
-      startTime: this.getStartTime(),
-      endTime: Number(this.getEndTime()),
-      private: false, // TO DO
-      validated: 0,
-      validatorsAmount: this.formData.expertsCountType === "company" ? 0 : this.formData.expertsCount, // TO DO
-      finalAnswer: undefined,
-      transactionHash: transactionHash,
-      getCoinsForHold: 0, // TO DO
-      currencyType: this.formData.tokenType,
-      roomName: this.formData.roomName,
-      roomColor: this.formData.roomColor,
-      whichRoom: this.formData.whichRoom,
-      roomId: this.formData.roomId
-    }
-
-    this.postSub = this.PostService.post("publicEvents/set", this.quizData)
-      .subscribe(
-        () => {
-          this.spinnerLoading = false;
-          this.created = true;
-          this.calculateDate()
-          this.formDataReset()
-          console.log("set to db DONE")
-        },
-        (err) => {
-          this.spinnerLoading = false;
-          console.log("set qestion error");
-          console.log(err);
-        })
-  }
-
-  deleteEvent(id) {
-    let data = {
-      id: id
-    }
-    this.createSub = this.PostService.post("delete_event_id", data)
-      .subscribe(() => {
-        },
-        (err) => {
-          console.log("from delete wallet")
-          console.log(err)
-        })
+    this.store.dispatch(formDataAction({ formData: this.formData }));
   }
 
   calculateDate() {
@@ -269,7 +190,7 @@ export class PublicEventComponent implements OnDestroy {
   }
 
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
+    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
@@ -278,19 +199,13 @@ export class PublicEventComponent implements OnDestroy {
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
-    }
-    if (this.idSub) {
-      this.idSub.unsubscribe();
-    }
+    };
     if (this.postSub) {
       this.postSub.unsubscribe();
-    }
-    if (this.createSub) {
-      this.createSub.unsubscribe();
-    }
+    };
     if (this.fromDataSubscribe) {
       this.fromDataSubscribe.unsubscribe();
-    }
+    };
   }
 
 

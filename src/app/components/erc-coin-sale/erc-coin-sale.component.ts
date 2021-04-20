@@ -107,7 +107,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
       let approve = await usdtContract.methods.approve(tokenSaleAddress, approveAmount).send();
       console.log(approve);
 
-      let tokenSaleContract = await this.connectToContract(wallet, TokenSale, tokenSaleAddress);
+      let tokenSaleContract = await this.connectToContract(wallet, TokenSale.abi, tokenSaleAddress);
       let tokensAmount = this.web3.utils.toWei(String(this.numberOfTokens), 'ether');
       let buy = await tokenSaleContract.methods.buyTokens(tokensAmount).send();
       console.log(buy);
@@ -122,8 +122,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
   }
 
   async connectToContract(account, contract, address) {
-    let abi: any = contract.abi;
-    return new this.web3.eth.Contract(abi, address, { from: account });
+    return new this.web3.eth.Contract(contract, address, { from: account });
   }
 
   ngOnDestroy() {

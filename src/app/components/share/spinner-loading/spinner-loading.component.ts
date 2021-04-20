@@ -17,8 +17,6 @@ export class SpinnerLoadingComponent implements OnInit {
   @Input() desktop: boolean;
 
   constructor() {
-
-
     this.forActiveAll();
     setInterval(() => {
       this.forActiveAll();

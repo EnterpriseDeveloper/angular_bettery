@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 declare global {
   interface Window {
     web3: any;
-    biconomy: any
+    biconomy: any;
   }
 }
 

@@ -1,8 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
-import {User} from '../../../../../models/User.model';
-import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
+import { User } from '../../../../../models/User.model';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reverted-public',
@@ -31,6 +31,15 @@ export class RevertedPublicComponent implements OnInit, OnDestroy {
         this.userData = undefined;
       }
     });
+  }
+
+  statusReverted(data) {
+    let x = data.status.replace("reverted: ", "")
+    if (x.search("not enough experts") != -1) {
+      return x + " (" + data.validatorsAnswers.length + "/" + data.validatorsAmount + ")"
+    } else {
+      return x;
+    }
   }
 
   ngOnDestroy() {

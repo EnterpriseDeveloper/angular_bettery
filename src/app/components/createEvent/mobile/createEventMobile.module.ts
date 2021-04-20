@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,7 +21,6 @@ import {AuthGuard} from "./guards/auth.guard";
         AvatarModule,
         CommonModule,
         BrowserModule,
-        FontAwesomeModule,
         NgbModule,
         FormsModule,
         ReactiveFormsModule,

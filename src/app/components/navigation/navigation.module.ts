@@ -5,10 +5,11 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ShareModule} from '../share/share.module';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReferalsComponent } from './referals/referals.component';
+import { ChainTransferComponent } from './chainTransfer/chainTransfer.component';
+import { SwapBetComponent } from './swap-bet/swap-bet.component';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import { ReferalsComponent } from './referals/referals.component';
     NavbarComponent,
     SidebarComponent,
     NotificationsComponent,
-    ReferalsComponent
+    ReferalsComponent,
+    ChainTransferComponent,
+    SwapBetComponent
   ],
     exports: [
         NavbarComponent,
@@ -26,12 +29,11 @@ import { ReferalsComponent } from './referals/referals.component';
     CommonModule,
     NgbModule,
     FormsModule,
-    FontAwesomeModule,
     ShareModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'ref/:id', component: ReferalsComponent },
-      
+
     ]),
   ]
 })

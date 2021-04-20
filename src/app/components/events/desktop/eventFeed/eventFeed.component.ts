@@ -1,16 +1,16 @@
-import {Component, HostListener, OnChanges, OnDestroy} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../app.state';
-import {Answer} from '../../../../models/Answer.model';
-import {User} from '../../../../models/User.model';
+import { Component, HostListener, OnChanges, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../app.state';
+import { Answer } from '../../../../models/Answer.model';
+import { User } from '../../../../models/User.model';
 import _ from 'lodash';
-import {PostService} from '../../../../services/post.service';
-import {Subscription} from 'rxjs';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RegistrationComponent} from '../../../registration/registration.component';
-import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
-import {Coins} from '../../../../models/Coins.model';
-import {EventModel} from '../../../../models/Event.model';
+import { PostService } from '../../../../services/post.service';
+import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegistrationComponent } from '../../../registration/registration.component';
+import { EventsTemplatesDesktopComponent } from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
+import { Coins } from '../../../../models/Coins.model';
+import { EventModel } from '../../../../models/Event.model';
 
 @Component({
   selector: 'eventFeed',
@@ -48,6 +48,8 @@ export class EventFeedComponent implements OnDestroy {
 
   timelineActive: boolean;
   showEnd = true;
+  filterMode = true;
+  finishLoading = false;
 
   constructor(
     private store: Store<AppState>,
@@ -56,7 +58,6 @@ export class EventFeedComponent implements OnDestroy {
   ) {
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
       if (x.length === 0) {
-        this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
         this.userId = null;
         this.userData = undefined;
         this.activeBtn = 'trending';
@@ -116,7 +117,6 @@ export class EventFeedComponent implements OnDestroy {
         this.commentResetFlag = false;
       }
       this.pureData = x;
-
       if (from == 0) {
         this.newQuestions = this.pureData.events;
         this.myAnswers = this.getAnswers(this.newQuestions);
@@ -124,7 +124,12 @@ export class EventFeedComponent implements OnDestroy {
         this.pureData.events.forEach(el => this.newQuestions.push(el));
         this.myAnswers = this.getAnswers(this.newQuestions);
       }
+      if (this.timelineActive) {
+        this.timelineActive = false;
+      }
       this.spinner = false;
+      this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
+
     }, (err) => {
       this.spinner = false;
       console.log(err);
@@ -145,9 +150,9 @@ export class EventFeedComponent implements OnDestroy {
   }
 
   findAnswer(data) {
-    let findParticipiant = _.findIndex(data.parcipiantAnswers, {'userId': this.userId});
+    let findParticipiant = _.findIndex(data.parcipiantAnswers, { 'userId': this.userId });
     if (findParticipiant === -1) {
-      let findValidators = _.findIndex(data.validatorsAnswers, {'userId': this.userId});
+      let findValidators = _.findIndex(data.validatorsAnswers, { 'userId': this.userId });
       return {
         answer: findValidators != -1 ? data.validatorsAnswers[findValidators].answer : undefined,
         from: 'validator',
@@ -183,9 +188,9 @@ export class EventFeedComponent implements OnDestroy {
 
   commentTopPosition() {
     if (document.documentElement.scrollTop < 278) {
-      return {'top': (278 - this.scrollTop) + 'px'};
+      return { 'top': (278 - this.scrollTop) + 'px' };
     } else {
-      return {'top': 0};
+      return { 'top': 0 };
     }
   }
 
@@ -198,12 +203,10 @@ export class EventFeedComponent implements OnDestroy {
     if (this.scrollDistanceTo < this.pureData?.amount) {
       this.scrollDistanceFrom = this.scrollDistanceFrom + 5;
       this.scrollDistanceTo = this.scrollDistanceTo + 5;
-
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
     } else if (this.pureData?.amount / 5 !== 0 && (this.scrollDistanceTo + this.pureData?.amount % 5 <= this.pureData?.amount)) {
       this.scrollDistanceFrom = this.scrollDistanceTo + this.pureData?.amount % 5;
       this.scrollDistanceTo = this.scrollDistanceTo + this.pureData?.amount % 5;
-
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo + this.pureData?.amount % 5, this.searchWord, this.activeBtn);
     } else {
       return;
@@ -258,7 +261,7 @@ export class EventFeedComponent implements OnDestroy {
 
     if (this.activeBtn === 'following') {
       if (!this.userData) {
-        this.modalService.open(RegistrationComponent, {centered: true});
+        this.modalService.open(RegistrationComponent, { centered: true });
       } else {
         this.queryPath = 'user/event_activites';
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
@@ -279,9 +282,10 @@ export class EventFeedComponent implements OnDestroy {
     this.showEnd = data.showEnd;
 
     this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
+    this.filterMode = data.showEnd;
   }
 
   openCreateEventModal() {
-    this.modalService.open(EventsTemplatesDesktopComponent, {centered: true });
+    this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
   }
 }

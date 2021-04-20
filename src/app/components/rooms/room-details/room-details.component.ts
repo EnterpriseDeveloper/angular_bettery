@@ -52,6 +52,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   roomData: any;
   disabledButton: boolean = false;
   sessionStorageValue: string;
+  finishLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,7 +82,6 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getAllData();
     this.sessionStorageSub = this.sessionStorageService.eventIdValue.subscribe(e => {
       this.sessionStorageValue = e;
       if (this.sessionStorageValue) {
@@ -182,6 +182,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         this.commentResetFlag = false;
       }
       this.spinner = false;
+      this.finishLoading = this.roomEvents.length == this.pureData.amount ? true : false;
       if (this.sessionStorageValue) {
         this.scrollTo();
       }
