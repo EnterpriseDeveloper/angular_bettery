@@ -17,6 +17,7 @@ import {RegistrationComponent} from '../../registration/registration.component';
 import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
 import {SwapBetComponent} from '../swap-bet/swap-bet.component';
 import {PostService} from '../../../services/post.service';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -136,7 +137,12 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     let matic = new maticInit(this.verifier);
     let BTYToken = await matic.getBTYTokenBalance();
     let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = await matic.getBTYTokenOnMainChainBalance();
+    let MainBETToken = "0";
+
+    if (!environment.production) {
+      // TODO
+      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
+    }
 
     let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
     let BETBalance = web3.utils.fromWei(BETToken, 'ether');

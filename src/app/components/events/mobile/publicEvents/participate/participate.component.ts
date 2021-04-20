@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
 import { User } from '../../../../../models/User.model';
 import { Coins } from '../../../../../models/Coins.model';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'participate',
@@ -119,7 +120,11 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     let matic = new maticInit(this.userData.verifier);
     let BTYToken = await matic.getBTYTokenBalance();
     let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = await matic.getBTYTokenOnMainChainBalance();
+    let MainBETToken = "0";
+    if (!environment.production) {
+      // TODO
+      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
+    }
 
     let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
     let BETBalance = web3.utils.fromWei(BETToken, 'ether');
