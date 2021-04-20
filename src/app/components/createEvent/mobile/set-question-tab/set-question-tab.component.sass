@@ -145,7 +145,7 @@
 .deleteButtonPos
     position: absolute
     right: 10px
-    top: 13px
+    height: 100%
 
 .trashImg
     width: 16px
@@ -156,6 +156,7 @@
 .deleteButton
     background-color: transparent
     border: none
+    height: 100%
 
 .plus
     background: url("../../../../../assets/create-event/desktop/greenPl.png") center center no-repeat
@@ -184,4 +185,91 @@
 @media (max-height: 568px)
 .buttonBox
     width: 100%
-    padding: 0 15px 10px 15px
+    padding: 0 0 10px 0
+
+.showLimit
+  font-style: normal
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  text-transform: uppercase
+  color: #7d7d7d
+
+
+.inSpan
+  color: #FF3232
+
+.limitText
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  text-transform: uppercase
+  color: #FFFFFF
+
+
+.lableBox
+  display: flex
+  justify-content: space-between
+
+/*============= error letter setting (start) =========================*/
+.wrap
+  width: 100%
+
+.questionTextarea::placeholder
+  font-style: normal
+  font-weight: bold
+  text-align: left
+  color: #7D7D7D
+  padding-left: 19px
+  font-size: 16px
+
+.__htmlarea
+  padding: 1em
+  width: 100%
+  line-height: 1.25
+  border: 1px solid transparent
+  border-radius: 0.5em
+  font-size: 16px
+  font-weight: bold
+
+.__textarea
+  padding: 1em
+  width: 100%
+  line-height: 1.25
+  border: 1px solid transparent
+  border-radius: 0.5em
+  font-size: 16px
+  font-weight: bold
+
+.__htmlarea
+  position: absolute
+  height: 100%
+  background-color: rgba(50, 58, 64, 0.96)
+  color: #FFFFFF
+  white-space: pre-wrap
+  word-wrap: break-word
+
+.__textarea
+  display: block
+  position: relative
+  border-color: #ccd6dd
+  color: transparent
+  caret-color: #FFFFFF
+  outline: 0
+  background-color: transparent
+  resize: none
+
+.__textarea:focus
+  border-color: #00A3C7
+
+.spanBg
+  color: #FF3232
+  font-style: normal
+  font-size: 16px
+  font-weight: bold
+
+.__quest
+  padding-right: 30px
+.__answer
+  padding-right: 3em
+/*============= error letter setting (end) =========================*/

@@ -216,7 +216,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   hostEarned(data) {
     if (data.host.id === this.userData._id) {
-      return Number(data.host.payHostAmount) + Number(data.host.mintedHostAmount) + ' BET';
+      return this.checkFractionalNumb(data.host.payHostAmount, data.host.mintedHostAmount, '+') + 'BET';
     }
   }
 
@@ -660,7 +660,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (part < 11) {
       return 3;
     } else {
-      return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
+      return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
   }
 
