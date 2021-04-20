@@ -108,7 +108,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     if (part < 11) {
       return 3;
     } else {
-      return part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5)));
+      return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
   }
 
