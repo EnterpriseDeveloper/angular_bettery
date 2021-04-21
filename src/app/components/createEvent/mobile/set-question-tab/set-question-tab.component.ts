@@ -32,7 +32,6 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   isLimit: boolean;
   @ViewChild('textarea') textarea: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
-  isDuplicate: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -129,7 +128,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.isDuplicate) {
+    if (this.questionForm.invalid || this.checkingEqual(null, 'check')) {
       return;
     }
     if (this.registered) {
@@ -201,15 +200,20 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkingEqual(value) {
+  checkingEqual(value, status) {
     const valueArr = this.f.answers.value.map((item) => {
-      return item.name;
+      return item.name.trim();
     });
-    const arr = valueArr.filter((el) => {
-      return el.trim() === value.trim() && value.trim().length !== 0;
-    });
-    this.isDuplicate = arr.length > 1;
-    return this.submitted && this.isDuplicate;
+    const result = (valueArr.filter((item, index) => valueArr.indexOf(item) != index));
+    if (status === 'check') {
+      return result.length !== 0;
+    }
+    if (value !== null) {
+      const arr = valueArr.filter((el) => {
+        return el.trim() === value.trim() && value.trim().length !== 0;
+      });
+      return this.submitted && result.length !== 0 && arr.length > 1;
+    }
   }
 
   ngOnDestroy() {

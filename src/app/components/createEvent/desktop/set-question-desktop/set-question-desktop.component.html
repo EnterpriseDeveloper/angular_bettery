@@ -70,7 +70,7 @@
                 (input)="textareaGrowAnswer(i)"
                 placeholder="Outcome {{i+1}}"
                 [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
-                || submitted && checkingEqual(answer.controls.name.value)
+                || submitted && checkingEqual(answer.controls.name.value, '')
                 || submitted && f.answers.value[i].name.length > 60}"
               ></textarea>
             </div>
@@ -86,7 +86,7 @@
                  class="form-text quize_validation_error">Please enter the question</small>
         </div>
         <div>
-          <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value)"
+          <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value, '')"
                  class="form-text quize_validation_error">Answers can't be equal</small>
         </div>
       </div>
