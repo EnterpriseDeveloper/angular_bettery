@@ -14,16 +14,20 @@
               <a href="#getStarted" (click)="styleHideMen()" pageScroll>{{'NAVBAR.ITEM_2' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' | translate}}</a>
+              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100"
+                 pageScroll>{{'NAVBAR.ITEM_3' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' | translate}}</a>
+              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100"
+                 pageScroll>{{'NAVBAR.ITEM_4' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' | translate}}</a>
+              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100"
+                 pageScroll>{{'NAVBAR.ITEM_5' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' | translate}}</a>
+              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100"
+                 pageScroll>{{'NAVBAR.ITEM_6' | translate}}</a>
             </li>
             <li class="nav_bar_item">
               <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
@@ -89,7 +93,8 @@
                   <div class="dropdown-divider"></div>
                   <a href="#BusinessDemo" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_7' | translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="https://friendlybets.medium.com/" target="_blank" ngbDropdownItem>{{'NAVBAR.ITEM_8' | translate}}</a>
+                  <a href="https://friendlybets.medium.com/" target="_blank"
+                     ngbDropdownItem>{{'NAVBAR.ITEM_8' | translate}}</a>
                 </div>
               </div>
             </div>
@@ -127,7 +132,7 @@
               >
                 <div class="pencil">
                   <div class="text">
-                    <span class="typing" (mouseenter)="showPopover()"></span>
+                    <span class="typing a" (mouseenter)="showPopover()"></span>
                   </div>
                   <div class="popover" [ngClass]=" triggerPopover && 'open'">
                     <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
@@ -146,7 +151,7 @@
               >
                 <div class="pencil">
                   <div class="text">
-                    <span class="typing" (mouseenter)="showPopover()"></span>
+                    <span class="typing" (mouseenter)="showPopover($event)" (mouseleave)="hidePopover()"></span>
                   </div>
                 </div>
 
@@ -170,7 +175,7 @@
                           (click)="sendEventDesktop()" routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
                   </button>
                 </div>
-                <div class="dropText col-lg-5 col-12 px-0">
+                <div *ngIf="eventData && eventData?.length != 0" class="dropText col-lg-5 col-12 px-0">
                   <p (click)="dropDown()">{{'HEADER.OR_JOIN.1' | translate}}
                     ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})<img class="ml-1"
                                                                                    src="{{dropDownSwitch ? '../../../assets/landingPage/triangle-open.png' : '../../../assets/landingPage/triangle-close.png'}}"
@@ -181,8 +186,10 @@
                 <ul class="dropdown_list ">
                   <li *ngFor="let event of eventData">
                     <p>{{event['publicEvents/question']}}</p>
-                    <button *ngIf="isMobile" class="btn" routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' | translate}}</button>
-                    <button *ngIf="!isMobile" class="btn"(click)="getSaveId(event?._id)" routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
+                    <button *ngIf="isMobile" class="btn"
+                            routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' | translate}}</button>
+                    <button *ngIf="!isMobile" class="btn" (click)="getSaveId(event?._id)"
+                            routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
                   </li>
                 </ul>
               </div>
@@ -264,34 +271,34 @@
               <div class="phone-img"></div>
             </div>
 
-              <swiper class="slide-bg" (slideChange)="onSwiper($event)">
-                <ng-template swiperSlide>
-                  <div class="d-flex justify-content-center">
-                    <div class="phone1-img"></div>
-                  </div>
-                </ng-template>
+            <swiper class="slide-bg" (slideChange)="onSwiper($event)">
+              <ng-template swiperSlide>
+                <div class="d-flex justify-content-center">
+                  <div class="phone1-img"></div>
+                </div>
+              </ng-template>
 
-                <ng-template swiperSlide>
-                  <div class="d-flex justify-content-center">
-                    <div class="phone2-img"></div>
-                  </div>
-                </ng-template>
+              <ng-template swiperSlide>
+                <div class="d-flex justify-content-center">
+                  <div class="phone2-img"></div>
+                </div>
+              </ng-template>
 
-                <ng-template swiperSlide>
-                  <div class="d-flex justify-content-center">
-                    <div class="phone3-img"></div>
-                  </div>
-                </ng-template>
+              <ng-template swiperSlide>
+                <div class="d-flex justify-content-center">
+                  <div class="phone3-img"></div>
+                </div>
+              </ng-template>
 
-              </swiper>
+            </swiper>
 
-              <div class="pagin">
-                <ul>
-                  <li [ngClass]="slideIndex === 0 ? 'activeSlide' : ''"></li>
-                  <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>
-                  <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>
-                </ul>
-              </div>
+            <div class="pagin">
+              <ul>
+                <li [ngClass]="slideIndex === 0 ? 'activeSlide' : ''"></li>
+                <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>
+                <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>
+              </ul>
+            </div>
 
           </div>
         </div>
@@ -406,7 +413,9 @@
               </div>
               <div class="tokenSale-btn">
                 <button routerLink="/tokensale">{{'TOKEN_SALE.JOIN_TOKEN_SALE' | translate}}</button>
-                <a class="mt-1" href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb" target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
+                <a class="mt-1"
+                   href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
+                   target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
               </div>
             </div>
             <div class="col-lg-5 col-xs-12 tokenSale-right">
@@ -438,7 +447,10 @@
               <h2>{{'ROADMAP.TITLE' | translate}}</h2>
             </div>
             <div class="px-lg-5">
-              <p>{{'ROADMAP.TEXT' | translate}}</p>
+              <p>{{'ROADMAP.TEXT_1' | translate}}<a style="color: inherit; text-decoration: underline"
+                                                    href="https://trello.com/b/ttywM11r/bettery-roadmap"
+                                                    target="_blank">{{'ROADMAP.TEXT_2' | translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
+              </p>
             </div>
           </div>
         </div>
@@ -447,7 +459,9 @@
 
             <div class="col-lg-3 col-xs-12 col-sm-6">
               <div class="img-yellow_5 mb-2">
-                <div class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</div>
+                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+                </a>
               </div>
               <div class="text-center"><p><span>{{'ROADMAP.DATE_1' | translate}}</span></p></div>
               <div class="green-box before-correct"
@@ -456,7 +470,9 @@
 
             <div class="col-lg-3 col-xs-12 col-sm-6">
               <div class="img-yellow_5 mb-2">
-                <div class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</div>
+                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
+                </a>
               </div>
               <div class="text-center"><p>{{'ROADMAP.DATE_2' | translate}}</p></div>
               <div class="green-box before-correct">{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</div>
@@ -464,7 +480,9 @@
 
             <div class="col-lg-3 col-xs-12 col-sm-6">
               <div class="img-yellow_5 mb-2">
-                <div class="pr-3 pl-2">{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</div>
+                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <p class="pr-3 pl-2">{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
+                </a>
               </div>
               <div class="text-center"><p>{{'ROADMAP.DATE_3' | translate}}</p></div>
               <div class="green-box">{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</div>
@@ -472,7 +490,9 @@
 
             <div class="col-lg-3 col-xs-12 col-sm-6">
               <div class="img-yellow_5 mb-2">
-                <div class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</div>
+                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p>
+                </a>
               </div>
               <div class="text-center"><p>{{'ROADMAP.DATE_4' | translate}}</p></div>
               <div class="green-box">{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</div>
@@ -490,56 +510,64 @@
         <div class="container road-map-mobile">
           <div class="row">
             <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <div class="card-date pt-2 pb-2 acti">
-                <span>{{'ROADMAP.DATE_1' | translate}}</span>
-              </div>
-              <div class="card-mob-text pt-4  pb-1">
-                <div>
-                  <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p></b>
+              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                <div class="card-date pt-2 pb-2 acti">
+                  <span>{{'ROADMAP.DATE_1' | translate}}</span>
                 </div>
-                <div class="p-3 ">
-                  <p>{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</p>
+                <div class="card-mob-text pt-4  pb-1">
+                  <div>
+                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p></b>
+                  </div>
+                  <div class="p-3 ">
+                    <p>{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
             <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <div class="card-date pt-2 pb-2">
-                <span>{{'ROADMAP.DATE_2' | translate}}</span>
-              </div>
-              <div class="card-mob-text pt-4  pb-1">
-                <div>
-                  <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p></b>
+              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                <div class="card-date pt-2 pb-2">
+                  <span>{{'ROADMAP.DATE_2' | translate}}</span>
                 </div>
-                <div class="p-3 ">
-                  <p>{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</p>
+                <div class="card-mob-text pt-4  pb-1">
+                  <div>
+                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p></b>
+                  </div>
+                  <div class="p-3 ">
+                    <p>{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
             <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <div class="card-date pt-2 pb-2">
-                <span>{{'ROADMAP.DATE_3' | translate}}</span>
-              </div>
-              <div class="card-mob-text pt-4  pb-1">
-                <div>
-                  <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p></b>
+              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                <div class="card-date pt-2 pb-2">
+                  <span>{{'ROADMAP.DATE_3' | translate}}</span>
                 </div>
-                <div class="p-3 ">
-                  <p>{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</p>
+                <div class="card-mob-text pt-4  pb-1">
+                  <div>
+                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p></b>
+                  </div>
+                  <div class="p-3 ">
+                    <p>{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
             <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <div class="card-date pt-2 pb-2">
-                <span>{{'ROADMAP.DATE_4' | translate}}</span>
-              </div>
-              <div class="card-mob-text pt-4  pb-1">
-                <div>
-                  <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p></b>
+              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                <div class="card-date pt-2 pb-2">
+                  <span>{{'ROADMAP.DATE_4' | translate}}</span>
                 </div>
-                <div class="p-3 ">
-                  <p>{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</p>
+                <div class="card-mob-text pt-4  pb-1">
+                  <div>
+                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p></b>
+                  </div>
+                  <div class="p-3 ">
+                    <p>{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -693,7 +721,7 @@
               <p>{{'FOOTER.TEXT_2' | translate}}</p>
             </div>
             <form [formGroup]="form" (ngSubmit)="subscribe()">
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 focus">
                 <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
                        formControlName="email"
                        [ngClass]="submitted && f.email.errors && 'subscibeError'"
@@ -701,7 +729,10 @@
                        aria-describedby="basic-addon2">
                 <div class="input-group-append">
                   <button [disabled]="subscribed" class="btn btn-outline-secondary"
-                          type="submit">{{'FOOTER.BUTTON_TEXT' | translate}}</button>
+                          type="submit">
+                    <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
+                    <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
+                  </button>
                 </div>
               </div>
               <div *ngIf="submitted && f.email.errors">

@@ -60,8 +60,8 @@
             <div class="col-12">
               <button type="submit">{{'FORM.BUTTON_TEXT' | translate}}</button>
             </div>
-            <div class="col-12 mt-4 sendMessage">
-              <p *ngIf="sendMessage">The demo is booked. We will contact you soon.</p>
+            <div *ngIf="sendMessage" class="col-12 mt-4 sendMessage">
+              <p>The demo is booked. We will contact you soon.</p>
             </div>
           </div>
         </form>

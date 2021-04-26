@@ -216,7 +216,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   hostEarned(data) {
     if (data.host.id === this.userData._id) {
-      return this.checkFractionalNumb(data.host.payHostAmount, data.host.mintedHostAmount, '+') + 'BET';
+      return this.checkFractionalNumb(data.host.payHostAmount, data.host.mintedHostAmount, '+') + ' BET';
     }
   }
 

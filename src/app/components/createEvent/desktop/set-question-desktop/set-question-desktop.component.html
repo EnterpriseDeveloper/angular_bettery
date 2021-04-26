@@ -13,22 +13,23 @@
       </div>
       <div>
         <div style="position: relative">
-          <div class="__htmlarea questionTextarea __answer">
+          <div class="__htmlarea questionTextarea __answer" style="font-size: 14px">
             <span>{{letsSlice(this.questionForm.controls.question.value, 0, 120)}}</span>
             <span *ngIf="this.questionForm.controls.question.value.length > 120"
-                  class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, 200)}}</span>
+                  class="spanBg" style="font-size: 14px">{{letsSlice(this.questionForm.controls.question.value, 120, 200)}}</span>
           </div>
           <textarea
             maxlength="200"
             (keydown)="limitError('question', null)"
             #textarea
-            class="__textarea questionTextarea __answer"
+            class="__textarea questionTextarea __answer placeH"
             formControlName="question"
             rows="1"
             id="Question"
             (input)="textareaGrow()"
             placeholder="Enter topic..."
             [ngClass]="  { 'is_invalid': submitted && f.question.errors}"
+            style="font-size: 14px"
           ></textarea>
         </div>
       </div>
@@ -53,7 +54,7 @@
         <div [formGroup]="answer" class="input-group inputBox">
           <div class="wrap">
             <div style="position: relative">
-              <div class="__htmlarea questionTextarea __answer">
+              <div class="__htmlarea questionTextarea __answer paddSetting">
                 <span>{{letsSlice(f.answers.value[i].name, 0, 60)}}</span>
                 <span *ngIf="f.answers.value[i].name.length > 55"
                       class="spanBg">{{letsSlice(f.answers.value[i].name, 60, 100)}}
@@ -63,7 +64,7 @@
                 maxlength="100"
                 #answers
                 (keydown)="limitError('answer', i)"
-                class="__textarea questionTextarea __answer"
+                class="__textarea questionTextarea __answer paddSetting"
                 formControlName="name"
                 rows="1"
                 id="Question{{i}}"

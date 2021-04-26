@@ -48,9 +48,11 @@
     border-radius: 8px
     border: 0px
     color: #FFFFFF
+    font-weight: bold
     width: 100%
     min-height: 48px
     height: auto
+    padding-left: 16px
 
 .answer::placeholder
     font-family: 'Open Sans', sans-serif
@@ -59,7 +61,11 @@
     font-size: 14px
     line-height: 19px
     color: #7D7D7D
-    padding-left: 19px
+    //padding-left: 19px
+
+.answer:focus
+  outline: none
+  border-color: #2B3059
 
 .adapting::placeholder
     font-size: 10px
@@ -220,14 +226,13 @@
   font-weight: bold
   text-align: left
   color: #7D7D7D
-  padding-left: 19px
   font-size: 16px
 
 .__htmlarea
   padding: 1em
   width: 100%
   line-height: 1.25
-  border: 1px solid transparent
+  border: 0px solid transparent
   border-radius: 0.5em
   font-size: 16px
   font-weight: bold
@@ -236,7 +241,7 @@
   padding: 1em
   width: 100%
   line-height: 1.25
-  border: 1px solid transparent
+  border: 0px solid transparent
   border-radius: 0.5em
   font-size: 16px
   font-weight: bold
@@ -260,7 +265,7 @@
   resize: none
 
 .__textarea:focus
-  border-color: #00A3C7
+  //outline: none
 
 .spanBg
   color: #FF3232

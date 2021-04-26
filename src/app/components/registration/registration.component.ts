@@ -170,7 +170,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       const array = JSON.parse(localStorage.getItem('userBettery'));
       array.push(userInfo.email);
       localStorage.setItem('userBettery', JSON.stringify(array));
-      this.modalService.open(WelcomePageComponent);
+      this.modalService.open(WelcomePageComponent, { centered: true });
     }
   }
 

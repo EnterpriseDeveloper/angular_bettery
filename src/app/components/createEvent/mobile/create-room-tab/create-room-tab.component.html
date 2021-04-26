@@ -26,7 +26,6 @@
       <p class="name">CHOOSE ROOM</p>
       <select [ngClass]="{ 'is_invalid': submitted && e.roomId.errors }"
         formControlName="roomId" class="btn" name="roomId" id="roomId">
-        <option selected = 'selected' value="">choose room</option>
         <option *ngFor="let room of allRooms;" value="{{room.id}}">{{room.name}}</option>
       </select>
       <div *ngIf="submitted && e.roomId.errors">
@@ -43,7 +42,7 @@
     <p class="name">ROOM NAME AND COLOR</p>
     <form [formGroup]="roomForm">
       <div class="form-group position-relative">
-        <input type="text" formControlName="roomName" class="answer" id="roomName" placeholder="Tony Stark’s room"
+        <input type="text" formControlName="roomName" class="answer" id="roomName" placeholder="{{nickName}}’s room"
           [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }">
         <div>
           <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">

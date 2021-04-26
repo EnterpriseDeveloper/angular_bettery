@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isMobile: boolean;
   fromData;
   formDataSub: Subscription;
+  afterSubType: boolean = false;
 
   @ViewChild(NgxTypedJsComponent, {static: true}) typed: NgxTypedJsComponent;
 
@@ -203,16 +204,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  showPopover() {
+  showPopover($event) {
     this.triggerPopover = true;
+  }
 
-    if (this.timerPopover) {
-      clearTimeout(this.timerPopover);
-    }
-
-    this.timerPopover = setTimeout(() => {
+  hidePopover() {
+    setTimeout(() => {
       this.triggerPopover = false;
-    }, 5000);
+    }, 200);
   }
 
   updateClock(endTime) {
@@ -240,7 +239,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getZero = (num) => {
     return num >= 0 && num < 10 ? '0' + num : num.toString();
-  };
+  }
 
   get f() {
     return this.form.controls;
@@ -251,12 +250,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.form.status === 'INVALID') {
       return;
     }
+    this.afterSubType = true;
     let data = {
       email: this.form.value.email,
       from: 'landing'
     };
     this.subscribedPost = this.postService.post('subscribe', data).subscribe((x) => {
-      this.form.controls.email.setValue('');
       this.submitted = false;
       this.subscribed = true;
     }, (err) => {

@@ -75,7 +75,9 @@
 
   "ROADMAP": {
     "TITLE": "Roadmap",
-    "TEXT": "Bettery is designed to be a digital playground for people and brands to build genuine relationships with one another in an exciting, highly personalized way. All our development activities - past, present, and future - are always available to the public.",
+    "TEXT_1": "Bettery is designed to be a digital playground for people and brands to build genuine relationships with one another in an exciting, highly personalized way. All our development activities - past, present, and future - are always",
+    "TEXT_2": " available ",
+    "TEXT_3": "to the public.",
     "DATE_1": "FEB - 2021",
     "DATE_2": "Q2 - 2021",
     "DATE_3": "Q3 - 2021",
@@ -153,6 +155,7 @@
     "TEXT_1": "Bettery is a social pool betting platform for friends and online communities to have fun on what matters to you. Through betting events, collective social knowledge is created for businesses, influencers, and advertisers, while users earn from their opinions.",
     "TEXT_2": "Subscribe to our monthly newsletter. No spam. No ads. Just valuable content that’s a pleasure to read.",
     "BUTTON_TEXT": "Subscribe",
+    "BUTTON_TEXT_2": "You're in!",
     "PLACE_HOLDER": "Enter email address"
   },
 

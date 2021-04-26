@@ -32,6 +32,7 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
   allRooms: RoomModel[];
   roomError: string;
   userId: number;
+  nickName: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,8 +57,10 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
     this.userSub = this.store.select("user").subscribe((x: User[]) => {
       if (x.length != 0) {
+        console.log(x[0]);
         this.userId = x[0]._id;
-        this.getUserRooms(this.userId)
+        this.nickName = x[0].nickName.split(' ')[0];
+        this.getUserRooms(this.userId);
       }
     });
   }
@@ -71,11 +74,17 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
         this.createRoomForm.controls.createNewRoom.setValue("exist");
       }
       this.allRooms = x;
-    }, (err) => {
+      this.setValueExist();
+      }, (err) => {
       console.log(err)
     })
   }
 
+  setValueExist(): void {
+    if (this.r.createNewRoom.value === 'exist' && this.formData.roomId.length === 0) {
+      this.existRoom.controls.roomId.setValue(this.allRooms[0].id);
+    }
+  }
   get r() { return this.createRoomForm.controls; }
   get f() { return this.roomForm.controls; }
   get e() { return this.existRoom.controls; }
@@ -90,7 +99,7 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
   modalAboutExpert() {
     const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
     modalRef.componentInstance.name = "- Event for Friends is private and they can bet with anything like pizza or promise of a favor. The result will be validated by one Expert, which can be the Host or another friend.";
-    modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BTY tokens. The result will be validated by several Experts to ensure fairness.";
+    modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BET tokens. The result will be validated by several Experts to ensure fairness.";
     modalRef.componentInstance.boldName = 'Friends vs Social Media';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
   }
