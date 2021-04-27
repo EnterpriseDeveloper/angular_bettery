@@ -24,8 +24,8 @@ const web3Obj = {
             torusBrand1: '#FFD300',
           },
         },
-        logoDark: 'https://matic-network.d2f172wsk4mtv2.amplifyapp.com/bettery6.f2c637f980b2224fc627.png', // dark logo for light background
-        logoLight: 'https://matic-network.d2f172wsk4mtv2.amplifyapp.com/bettery6.f2c637f980b2224fc627.png',
+        logoDark: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png', // dark logo for light background
+        logoLight: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png',
         customTranslations: {
           en: {
             embed: {

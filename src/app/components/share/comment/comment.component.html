@@ -17,11 +17,11 @@
     <div id="{{comment?.id}}" class="commentBox" [ngClass]="allComments?.length <= showLength && 'commentBoxChange'"
          *ngFor="let comment of showOnScreen">
       <div class="commentHeader">
-        <div class="senderBox">
+        <div class="senderBox" style="width: 80%">
           <div><img class="commentImg" src="{{comment?.user.avatar}}" alt="ava" referrerpolicy="no-referrer"></div>
-          <p class="commentName">{{comment?.user.nickName}}</p>
+          <div style="overflow-wrap: anywhere; padding: 3px"><p class="commentName">{{comment?.user.nickName}}</p></div>
         </div>
-        <div class="timeBox">{{comment?.date | timeAgo | async}}</div>
+        <div style="width: 20%" class="timeBox">{{comment?.date | timeAgo | async}}</div>
       </div>
       <div>
         <p class="comment">

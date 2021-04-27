@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import GradientJSON from '../../../../../assets/gradients.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,8 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
   @Input() formData;
   @Output() goBack = new EventEmitter<Object[]>();
   @Output() goNext = new EventEmitter<Object[]>();
+  @ViewChild('textarea') textarea: ElementRef;
+  isLimit: boolean;
 
   submitted: boolean = false;
   roomForm: FormGroup;
@@ -159,6 +161,28 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
     if (this.postSubscribe) {
       this.postSubscribe.unsubscribe();
     }
+  }
+
+  letsSlice(control, start, finish) {
+    return control.slice(start, finish);
+  }
+
+  textareaGrow(): void {
+    this.calculateRows(this.textarea);
+  }
+
+  calculateRows(el) {
+    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
+    el.nativeElement.rows = 1;
+    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
+    el.nativeElement.rows = innerHeight / lineHeight;
+  }
+
+  limitError() {
+      const length = this.f.roomName.value.length;
+      this.isLimit = length > 115;
   }
 }
 

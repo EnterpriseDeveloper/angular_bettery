@@ -1,9 +1,7 @@
 <div style="background: #323231; margin-top: -20px; width: 100%">
   <div class="test-bg2" style="width: 100%">
     <nav>
-      <div class="logo">
-        <a class="logoLink" href="https://www.bettery.io" target="_blank"></a>
-      </div>
+      <div class="logo" routerLink="/"></div>
       <div class="nav-list">
         <ul>
           <li><a href="#usage" pageScrollOffset="200" pageScroll>Token Usage</a></li>
@@ -11,7 +9,7 @@
           <li><a href="#Buy" pageScrollOffset="200" pageScroll>Buy BTY</a></li>
           <li><a href="#Roadmap" pageScrollOffset="200" pageScroll>Roadmap</a></li>
           <li class="mr-5"><a href="#Resources" pageScroll>Bettery Resources</a></li>
-          <li class=" ar-img position-relative"><a href="https://www.bettery.io/join">Bettery Platform</a></li>
+          <li class=" ar-img position-relative"><a routerLink="/join">Bettery Platform</a></li>
         </ul>
       </div>
       <div class="nav-icon">
@@ -59,7 +57,7 @@
             <a class="mb-4" pageScrollOffset="100" pageScroll href="#Resources" pageScroll
                ngbDropdownItem>Bettery Resources</a>
 
-            <a class="mb-4 mob-platform"  href="https://www.bettery.io/join"
+            <a class="mb-4 mob-platform" routerLink="/join"
                ngbDropdownItem>Bettery Platform</a>
           </div>
         </div>
@@ -436,7 +434,7 @@
                   <div class="res-icon-wrap row">
                     <div class="icon-set col-6 col-md-3">
                       <div class="group-world-img"></div>
-                      <a href="https://www.bettery.io/join">Platform</a>
+                      <a routerLink="/join">Platform</a>
                     </div>
                     <div class="icon-set col-6 col-md-3">
                       <div class="group-letter-img"></div>

@@ -41,8 +41,26 @@
     <p class="name">ROOM NAME AND COLOR</p>
     <form [formGroup]="roomForm">
       <div class="form-group position-relative">
-        <input type="text" formControlName="roomName" class="answer" id="roomName" placeholder="{{nickName}}’s room"
-               [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }">
+        <div style="position: relative">
+          <div class="__htmlarea questionTextarea __answer" style="font-size: 14px">
+            <span>{{letsSlice(f?.roomName.value, 0, 32)}}</span>
+            <span *ngIf="f.roomName.value.length > 32"
+                  class="spanBg" style="font-size: 14px">{{letsSlice(f?.roomName.value, 32, 40)}}</span>
+          </div>
+          <textarea
+            maxlength="40"
+            (keydown)="limitError()"
+            #textarea
+            class="__textarea questionTextarea __answer placeH"
+            formControlName="roomName"
+            rows="1"
+            id="roomName"
+            (input)="textareaGrow()"
+            placeholder="{{nickName}}’s room"
+            [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }"
+            style="font-size: 14px"
+          ></textarea>
+        </div>
         <div>
           <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">
             <div class="reloadImg" (click)="generateGradient()"></div>
