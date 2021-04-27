@@ -57,7 +57,6 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
     this.userSub = this.store.select("user").subscribe((x: User[]) => {
       if (x.length != 0) {
-        console.log(x[0]);
         this.userId = x[0]._id;
         this.nickName = x[0].nickName.split(' ')[0];
         this.getUserRooms(this.userId);
