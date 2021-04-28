@@ -41,7 +41,7 @@
     border-bottom: 0.5px solid #B6B6B6 !important
 
 .name
-    padding-top: 24px
+    margin: 0
     font-family: 'Open Sans', sans-serif
     font-style: normal
     font-weight: 600
@@ -103,9 +103,15 @@
     border-radius: 8px
     width: 38px
     height: 36px
-    position: absolute
-    top: 13%
-    right: 2%
+    position: relative
+
+.gradientPOs
+  position: absolute
+  top: 0
+  right: 5px
+  height: 100%
+  display: flex
+  align-items: center
 
 .reloadImg
     background: url(../../../../../assets/create-event/Reload.png) left center no-repeat
@@ -205,3 +211,87 @@
     -webkit-appearance: none
     -moz-appearance: none
     appearance: none
+
+/*============= error letter setting (start) =========================*/
+
+.wrap
+  width: 100%
+
+.questionTextarea::placeholder
+  font-style: normal
+  font-weight: bold
+  text-align: left
+  color: #ffffff
+  font-size: 16px
+
+.__htmlarea
+  padding: 1em
+  width: 100%
+  line-height: 1.25
+  border: 0 solid transparent
+  border-radius: 0.5em
+  font-size: 16px
+  font-weight: bold
+  color: #FFFFFF
+
+.__textarea
+  padding: 1em
+  width: 100%
+  line-height: 1.25
+  border: 0 solid transparent
+  border-radius: 0.5em
+  font-size: 16px
+  font-weight: bold
+  color: #FFFFFF
+
+.__htmlarea
+  position: absolute
+  height: 100%
+  background-color: rgba(50, 58, 64, 0.96)
+  white-space: pre-wrap
+  word-wrap: break-word
+
+.__textarea
+  display: block
+  position: relative
+  border-color: #ccd6dd
+  color: transparent
+  caret-color: #ffffff
+  outline: 0
+  background-color: transparent
+  resize: none
+
+.__textarea:focus
+  border: 0 solid transparent
+
+.spanBg
+  color: #FF3232
+  font-style: normal
+  font-size: 16px
+  font-weight: bold
+
+.__answer
+  padding-right: 50px
+
+.placeH::placeholder
+  font-size: 16px
+
+.paddSetting
+  padding-top: 15px
+  padding-bottom: 15px
+
+.is_invalid
+  border: 1px solid red
+
+.limitText
+  font-style: normal
+  font-size: 14px
+  line-height: 16px
+  color: #FFFFFF
+
+.lableBox
+  display: flex
+  justify-content: space-between
+  padding: 24px 0 8px 0
+
+/*============= error letter setting (end) =========================*/

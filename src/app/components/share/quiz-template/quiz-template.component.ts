@@ -80,6 +80,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   ngOnInit() {
     this.allUserData = this.userData;
+
+    this.myAnswers.amount = this.avgBet(this.question);
   }
 
   findSum(count, to: number, from: number) {
@@ -184,7 +186,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         amount = amount + e.amount;
       });
     }
-    return amount;
+    return this.checkFractionalNumb(amount, q.parcipiantAnswers.length, '/');
   }
 
   biggestWin(data) {
@@ -265,6 +267,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (action === '-') {
       const difference = Number(num1) - Number(num2);
       return difference.toString().includes('.') ? difference.toFixed(1) : difference;
+    }
+    if (action === '/') {
+      const avg = Number(num1) / Number(num2);
+      return avg.toString().includes('.') ? avg.toFixed(1) : avg;
     }
   }
 
