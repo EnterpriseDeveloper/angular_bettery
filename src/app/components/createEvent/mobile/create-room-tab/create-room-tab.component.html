@@ -23,7 +23,9 @@
 
   <div *ngIf="r.createNewRoom.value == 'exist'">
     <form [formGroup]="existRoom">
-      <p class="name">CHOOSE ROOM</p>
+      <div class="lableBox">
+        <p class="name">CHOOSE ROOM</p>
+      </div>
       <select [ngClass]="{ 'is_invalid': submitted && e.roomId.errors }"
         formControlName="roomId" class="btn" name="roomId" id="roomId">
         <option *ngFor="let room of allRooms;" value="{{room.id}}">{{room.name}}</option>
@@ -39,15 +41,39 @@
     </form>
   </div>
   <div *ngIf="r.createNewRoom.value == 'new'">
-    <p class="name">ROOM NAME AND COLOR</p>
+    <div class="lableBox">
+      <div><p class="name">ROOM NAME AND COLOR</p></div>
+      <div class="limitText" *ngIf="isLimit">
+          <span
+            [ngStyle]="colorError(f.roomName.value.length, 25,32)">{{f.roomName.value.length}}/</span> 32
+      </div>
+    </div>
     <form [formGroup]="roomForm">
       <div class="form-group position-relative">
-        <input type="text" formControlName="roomName" class="answer" id="roomName" placeholder="{{nickName}}’s room"
-          [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }">
-        <div>
-          <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">
-            <div class="reloadImg" (click)="generateGradient()"></div>
+        <div style="position: relative">
+          <div class="__htmlarea questionTextarea __answer">
+            <span>{{letsSlice(f?.roomName.value, 0, 32)}}</span>
+            <span *ngIf="f.roomName.value.length > 32"
+                  class="spanBg">{{letsSlice(f?.roomName.value, 32, 42)}}</span>
           </div>
+          <textarea
+            maxlength="42"
+            (keydown)="limitError()"
+            #textarea
+            class="__textarea questionTextarea __answer placeH"
+            formControlName="roomName"
+            id="roomName"
+            rows="1"
+            placeholder="{{nickName}}’s room"
+            (input)="textareaGrow()"
+            [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }"
+          ></textarea>
+
+       <div class="gradientPOs">
+         <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">
+           <div class="reloadImg" (click)="generateGradient()"></div>
+         </div>
+       </div>
         </div>
         <div *ngIf="submitted && f.roomName.errors">
           <small *ngIf="f.roomName.errors.required" class="form-text quize_validation_error">Room name is

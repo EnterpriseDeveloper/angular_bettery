@@ -1,15 +1,15 @@
 import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import GradientJSON from '../../../../../assets/gradients.json';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component'
-import { PostService } from '../../../../services/post.service';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import _ from "lodash";
-import {RoomModel} from "../../../../models/Room.model";
-import {User} from "../../../../models/User.model";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
+import {PostService} from '../../../../services/post.service';
+import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import _ from 'lodash';
+import {RoomModel} from '../../../../models/Room.model';
+import {User} from '../../../../models/User.model';
 
 @Component({
   selector: 'create-room-desktop',
@@ -47,17 +47,17 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.createRoomForm = this.formBuilder.group({
       createNewRoom: this.formData.whichRoom
-    })
+    });
     this.roomForm = this.formBuilder.group({
-      roomName: [this.formData.roomName, Validators.required],
+      roomName: [this.formData.roomName, Validators.compose([Validators.required, Validators.maxLength(32)])],
       roomColor: [this.formData.roomColor, Validators.required],
       eventType: this.formData.eventType
-    })
+    });
     this.existRoom = this.formBuilder.group({
       roomId: [this.formData.roomId, Validators.required]
-    })
+    });
 
-    this.userSub = this.store.select("user").subscribe((x: User[]) => {
+    this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
         this.userId = x[0]._id;
         this.nickName = x[0].nickName.split(' ')[0];
@@ -69,16 +69,16 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
   getUserRooms(id) {
     let data = {
       id: id
-    }
+    };
     this.postSubscribe = this.postService.post('room/get_by_user_id', data).subscribe((x: RoomModel[]) => {
       if (x.length !== 0 && this.formData.roomName == '') {
-        this.createRoomForm.controls.createNewRoom.setValue("exist");
+        this.createRoomForm.controls.createNewRoom.setValue('exist');
       }
       this.allRooms = x;
       this.setValueExist();
-      }, (err) => {
-      console.log(err)
-    })
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   setValueExist(): void {
@@ -86,9 +86,18 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
       this.existRoom.controls.roomId.setValue(this.allRooms[0].id);
     }
   }
-  get r() { return this.createRoomForm.controls; }
-  get f() { return this.roomForm.controls; }
-  get e() { return this.existRoom.controls; }
+
+  get r() {
+    return this.createRoomForm.controls;
+  }
+
+  get f() {
+    return this.roomForm.controls;
+  }
+
+  get e() {
+    return this.existRoom.controls;
+  }
 
 
   generateGradient() {
@@ -98,9 +107,9 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
   // TO DO
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
-    modalRef.componentInstance.name = "- Event for Friends is private and they can bet with anything like pizza or promise of a favor. The result will be validated by one Expert, which can be the Host or another friend.";
-    modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BET tokens. The result will be validated by several Experts to ensure fairness.";
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
+    modalRef.componentInstance.name = '- Event for Friends is private and they can bet with anything like pizza or promise of a favor. The result will be validated by one Expert, which can be the Host or another friend.';
+    modalRef.componentInstance.name1 = 'Event for Social Media is for betting with online communities using BET tokens. The result will be validated by several Experts to ensure fairness.';
     modalRef.componentInstance.boldName = 'Friends vs Social Media';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
   }
@@ -110,10 +119,12 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
     if (this.existRoom.invalid) {
       return;
     }
-    let searchRoom = _.find(this.allRooms, (x) => { return x.id == this.existRoom.value.roomId })
-    let roomType = searchRoom.privateEventsId.length == 0 ? "public" : "private"
-    this.roomForm.controls.eventType.setValue(roomType)
-    this.roomForm.controls.roomName.setValue(searchRoom.name)
+    let searchRoom = _.find(this.allRooms, (x) => {
+      return x.id == this.existRoom.value.roomId;
+    });
+    let roomType = searchRoom.privateEventsId.length == 0 ? 'public' : 'private';
+    this.roomForm.controls.eventType.setValue(roomType);
+    this.roomForm.controls.roomName.setValue(searchRoom.name);
     let data = {
       ...this.roomForm.value,
       ...this.createRoomForm.value,
@@ -124,14 +135,15 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
   createRoom() {
     this.submitted = true;
+    console.log(this.roomForm);
     if (this.roomForm.invalid) {
       return;
     }
     let x = {
       name: this.roomForm.value.roomName,
       userId: this.userId
-    }
-    this.postValidation = this.postService.post("room/validation", x).subscribe((z) => {
+    };
+    this.postValidation = this.postService.post('room/validation', x).subscribe((z) => {
       this.roomError = undefined;
       let data = {
         ...this.roomForm.value,
@@ -151,38 +163,39 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
       ...this.createRoomForm.value,
       ...this.existRoom.value
     };
-    this.goBack.next(data)
-  }
-
-  ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe()
-    };
-    if (this.postSubscribe) {
-      this.postSubscribe.unsubscribe();
-    }
+    this.goBack.next(data);
   }
 
   letsSlice(control, start, finish) {
     return control.slice(start, finish);
   }
 
-  textareaGrow(): void {
-    this.calculateRows(this.textarea);
-  }
-
-  calculateRows(el) {
-    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
-    el.nativeElement.rows = 1;
-    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
-    el.nativeElement.rows = innerHeight / lineHeight;
-  }
-
   limitError() {
-      const length = this.f.roomName.value.length;
-      this.isLimit = length > 115;
+    const length = this.f.roomName.value.length;
+    this.isLimit = length >= 26;
+  }
+
+  colorError(length, numYel, numMain) {
+    if (length >= numYel && length <= numMain) {
+      return {
+        'color': '#7d7d7d'
+      };
+    }
+    if (length > numMain) {
+      return {
+        'font-weight': 'bold',
+        'color': '#FF3232'
+      };
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.postSubscribe) {
+      this.postSubscribe.unsubscribe();
+    }
   }
 }
 
