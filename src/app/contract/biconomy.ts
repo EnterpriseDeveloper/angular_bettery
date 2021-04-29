@@ -1,9 +1,8 @@
-import { Biconomy } from "@biconomy/mexa";
+import Biconomy from "@biconomy/mexa";
 import { environment } from '../../environments/environment';
-import Web3 from "web3";
 
 const biconomyInit = async () => {
-    let biconomy = new Biconomy(new Web3.providers.HttpProvider(environment.maticUrl),
+    let biconomy = new Biconomy(environment.maticUrl,
         {
             apiKey: environment.biconomy,
             strictMode: true

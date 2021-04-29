@@ -1,5 +1,4 @@
-import { Biconomy } from "@biconomy/mexa";
-import web3Obj from '../helpers/torus'
+import Biconomy from "@biconomy/mexa";
 import Web3 from 'web3';
 
 const biconomyMainInit = async () => {
