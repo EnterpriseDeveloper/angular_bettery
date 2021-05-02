@@ -105,7 +105,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
 
   getHostWin() {
     if (this.userData && this.eventData.host.id == this.userData._id) {
-      return this.eventData.host.payHostAmount + this.eventData.host.mintedHostAmount;
+      return this.checkFractionalNumb(this.eventData.host.payHostAmount, this.eventData.host.mintedHostAmount, '+' );
     }
   }
 

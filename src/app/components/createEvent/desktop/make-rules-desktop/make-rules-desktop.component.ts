@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -57,7 +57,6 @@ export class MakeRulesDesktopComponent implements OnInit {
     config.seconds = false;
     config.spinners = false;
   }
-
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -102,7 +101,9 @@ export class MakeRulesDesktopComponent implements OnInit {
     this.exactTimeBool = this.formData.exactTimeBool;
   }
 
-  get f() {return this.publicForm.controls;}
+  get f() {
+    return this.publicForm.controls;
+  }
 
   get pub() {
     return this.publicForm.controls;
@@ -178,6 +179,16 @@ export class MakeRulesDesktopComponent implements OnInit {
   }
 
   saveExactTime(modal) {
+    const monthtext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    const today = new Date();
+    const indexMonth = monthtext.findIndex(el => {
+      return el === this.exactTime.value.month;
+    });
+    if (this.exactTime.value.year == today.getFullYear() && indexMonth == today.getMonth() && today.getDate() == this.exactTime.value.day) {
+      if (this.timeData.hour < today.getHours() || this.timeData.hour == today.getHours()  && this.timeData.minute <= today.getMinutes()){
+        return;
+      }
+    }
     this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year}, ${this.timeData.hour} : ${this.timeData.minute}`;
     this.exactTimeBool = true;
     this.publicForm.controls.publicEndTime.setValue({hour: 0, minute: 0, second: 0});
@@ -195,29 +206,67 @@ export class MakeRulesDesktopComponent implements OnInit {
     this.goBack.next(data);
   }
 
+  daysInMonth(iMonth, iYear) {
+    return 32 - new Date(iYear, iMonth, 32).getDate();
+  }
+
+  dataForCalendar() {
+    const monthtext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    const today: any = new Date();
+    const month = this.exactTime.controls.month.value;
+    const year = this.exactTime.controls.year.value;
+    const indexMonth = monthtext.findIndex(el => {
+      return el === month;
+    });
+    return {monthtext, today, month, year, indexMonth};
+  }
+
+  dayCalc() {
+    const {monthtext, today, month, year, indexMonth} = this.dataForCalendar();
+    const dayfield: any = document.getElementById('daydropdown');
+    const daysLength = this.daysInMonth(indexMonth, year);
+
+    for (let i = 0; i < dayfield.options.length; i++) {
+      dayfield.options[i].remove();
+    }
+    for (let i = 0; i < daysLength; i++) {
+      dayfield.options[i] = new Option(String(i + 1), String(i));
+      if (today.getMonth() === indexMonth && today.getFullYear() === year) {
+        dayfield.options[i].value < today.getDate() ? dayfield.options[i].disabled = true : dayfield.options[i].disabled = false;
+        dayfield.options[today.getDate() - 1] = new Option(today.getDate(), today.getDate(), true, true);
+      }
+    }
+  }
+
+  monthCalc() {
+    const {monthtext, today, month, year, indexMonth} = this.dataForCalendar();
+    const monthfield: any = document.getElementById('monthdropdown');
+
+    for (let m = 0; m < 12; m++) {
+      monthfield.options[m] = new Option(monthtext[m], monthtext[m]);
+      if (year === today.getFullYear()) {
+        m < indexMonth ? monthfield.options[m].disabled = true : monthfield.options[m].disabled = false;
+        monthfield.options[today.getMonth()] = new Option(monthtext[today.getMonth()], monthtext[today.getMonth()], true, true);
+      }
+    }
+  }
+
+  updateAllDate() {
+    this.dayCalc();
+    this.monthCalc();
+  }
 
   populatedropdown(dayfield, monthfield, yearfield) {
-
-    var monthtext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-
-    var today: any = new Date();
-    var dayfield: any = document.getElementById(dayfield);
-    var monthfield: any = document.getElementById(monthfield);
-    var yearfield: any = document.getElementById(yearfield);
-    for (var i = 0; i < 31; i++) {
-      dayfield.options[i] = new Option(String(i), String(i + 1));
-      dayfield.options[today.getDate()] = new Option(today.getDate(), today.getDate(), true, true); //select today's day
+    const today: any = new Date();
+    const yearField: any = document.getElementById(yearfield);
+    this.dayCalc();
+    this.monthCalc();
+    let thisYear = today.getFullYear();
+    for (let y = 0; y < 20; y++) {
+      yearField.options[y] = new Option(thisYear, thisYear);
+      thisYear += 1;
     }
-    for (var m = 0; m < 12; m++) {
-      monthfield.options[m] = new Option(monthtext[m], monthtext[m]);
-      monthfield.options[today.getMonth()] = new Option(monthtext[today.getMonth()], monthtext[today.getMonth()], true, true); //select today's month
-    }
-    var thisyear = today.getFullYear();
-    for (var y = 0; y < 20; y++) {
-      yearfield.options[y] = new Option(thisyear, thisyear);
-      thisyear += 1;
-    }
-    yearfield.options[0] = new Option(today.getFullYear(), today.getFullYear(), true, true); //select today's year
+    yearField.options[0] = new Option(today.getFullYear(), today.getFullYear(), true, true);
   }
 
   reinitializeForm(param) {

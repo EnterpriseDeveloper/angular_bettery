@@ -10,7 +10,7 @@
 
     <div class="bet_box" *ngIf="joinPlayer">
         <p class="yourBet">YOUR BET</p>
-        <input class="yourBetInput" [(ngModel)]="amount">
+        <input type="number" min="0" class="yourBetInput" [(ngModel)]="amount">
     </div>
 
     <div class="buttonBox">
