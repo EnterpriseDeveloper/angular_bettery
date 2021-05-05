@@ -1,7 +1,7 @@
 import Biconomy from "@biconomy/mexa";
 import { environment } from '../../environments/environment';
 
-const biconomyInit = async () => {    
+const biconomyInit = async () => {
     let biconomy = new Biconomy(environment.maticUrl,
         {
             apiKey: environment.biconomy,
