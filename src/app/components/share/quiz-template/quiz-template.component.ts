@@ -80,7 +80,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   ngOnInit() {
     this.allUserData = this.userData;
-
     this.myAnswers.amount = this.avgBet(this.question);
   }
 
@@ -556,7 +555,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   statusReverted(data) {
-    let x = data.status.replace("reverted: ", "")
+    let x = data.status.replace("reverted:", "")
     if (x.search("not enough experts") != -1) {
       return x + " (" + this.getValidatorsAmount(data) + "/" + this.getValidatorsAmountLeft(data) + ")"
     } else {

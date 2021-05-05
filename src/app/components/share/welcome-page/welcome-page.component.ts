@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, HostListener, OnDestroy} from '@angular/core';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from 'rxjs';
 import { PostService } from '../../../services/post.service';
@@ -32,6 +32,10 @@ export class WelcomePageComponent implements OnDestroy {
       }
     }
 
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    this.activeModal.close();
   }
 
   ngOnDestroy() {

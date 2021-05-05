@@ -174,14 +174,14 @@
     <form [formGroup]="exactTime" class="formPicker">
       <select id="daydropdown" class="datePicker" formControlName="day">
       </select>
-      <select id="monthdropdown" class="datePicker" formControlName="month">
+      <select id="monthdropdown" class="datePicker" formControlName="month" (change)="dayCalc()">
       </select>
-      <select id="yeardropdown" class="datePicker" formControlName="year">
+      <select id="yeardropdown" class="datePicker" formControlName="year" (change)="updateAllDate()">
       </select>
     </form>
     <div class="borderVector"></div>
     <p class="date" style="margin-top: 24px;">TIME</p>
-    <ngb-timepicker id="timePicker" [(ngModel)]="timeData"></ngb-timepicker>
+    <ngb-timepicker  id="timePicker" [(ngModel)]="timeData"></ngb-timepicker>
   </div>
   <div class="modal-footer update">
     <button type="button" class="greyModalCancel" (click)="modal.dismiss('Cross click')">Cancel</button>
