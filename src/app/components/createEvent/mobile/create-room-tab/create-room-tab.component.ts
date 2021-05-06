@@ -216,7 +216,9 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
   }
 
   textareaGrow(): void {
-    this.calculateRows(this.textarea);
+    if (this.textarea) {
+      this.calculateRows(this.textarea);
+    }
   }
 
   calculateRows(el) {
@@ -224,7 +226,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
     const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
     el.nativeElement.rows = 1;
-    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
+    const innerHeight = el?.nativeElement.scrollHeight - paddingTop - paddingBottom;
     el.nativeElement.rows = innerHeight / lineHeight;
   }
 

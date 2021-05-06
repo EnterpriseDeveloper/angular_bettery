@@ -32,6 +32,7 @@ export class PublicEventComponent implements OnDestroy {
   postSub: Subscription;
   fromDataSubscribe: Subscription;
   spinnerLoading: boolean = false;
+  pastTime: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -73,7 +74,7 @@ export class PublicEventComponent implements OnDestroy {
 
   betWith() {
     if (this.formData.tokenType === "token") {
-      return "BTY (Minimum bet is 1 BTY)"
+      return "BET (Minimum bet is 0.01 BET)"
     } else {
       return "ETH (Minimum bet is 0.001 ETH)"
     }
@@ -116,6 +117,12 @@ export class PublicEventComponent implements OnDestroy {
   }
 
   createEvent() {
+    if (Number(this.getEndTime()) <= Number((Date.now() / 1000).toFixed(0))) {
+      this.pastTime = true;
+      return;
+    } else {
+      this.pastTime = false;
+    }
     this.spinnerLoading = true;
 
     this.quizData = {

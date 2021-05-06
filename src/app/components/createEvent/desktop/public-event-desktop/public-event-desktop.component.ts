@@ -69,7 +69,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
 
   betWith() {
     if (this.formData.tokenType === 'token') {
-      return 'BTY (Minimum bet is 1 BTY)';
+      return 'BET (Minimum bet is 0.01 BET)';
     } else {
       return 'ETH (Minimum bet is 0.001 ETH)';
     }
