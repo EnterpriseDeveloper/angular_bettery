@@ -1,5 +1,5 @@
 import {Component, HostListener, OnDestroy} from '@angular/core';
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../../services/post.service';
 
