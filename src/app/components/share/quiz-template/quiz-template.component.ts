@@ -697,4 +697,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       modalRef.componentInstance.openSpinner = true;
     }
   }
+
+  filterKeyCode(event) {
+    return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
+  }
 }

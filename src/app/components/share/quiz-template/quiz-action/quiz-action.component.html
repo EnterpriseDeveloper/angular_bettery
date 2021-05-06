@@ -10,8 +10,11 @@
 
     <div class="bet_box" *ngIf="joinPlayer">
         <p class="yourBet">YOUR BET</p>
-        <input type="number" min="0" class="yourBetInput" [(ngModel)]="amount">
+        <input (keydown)="filterKeyCode($event)" type="number"  min="0" step=".01" class="yourBetInput" [ngStyle]="limitAmount && {'border': '1px solid red'}" [(ngModel)]="amount">
     </div>
+  <div *ngIf="limitAmount" class="pastTime_err_text">
+    <p>Minimum amount is 0.01 BET</p>
+  </div>
 
     <div class="buttonBox">
         <div *ngIf="joinPlayer && !becomeExpert">

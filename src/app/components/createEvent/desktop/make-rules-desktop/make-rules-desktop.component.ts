@@ -48,6 +48,7 @@ export class MakeRulesDesktopComponent implements OnInit {
   timeData: NgbTimeStruct = {hour: 0, minute: 0, second: 0};
   exactTimeBool: boolean;
   modalTrigger: boolean;
+  pastTime: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -186,8 +187,11 @@ export class MakeRulesDesktopComponent implements OnInit {
     });
     if (this.exactTime.value.year == today.getFullYear() && indexMonth == today.getMonth() && today.getDate() == this.exactTime.value.day) {
       if (this.timeData.hour < today.getHours() || this.timeData.hour == today.getHours()  && this.timeData.minute <= today.getMinutes()){
+        this.pastTime = true;
         return;
       }
+    } else {
+      this.pastTime = false;
     }
     this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year}, ${this.timeData.hour} : ${this.timeData.minute}`;
     this.exactTimeBool = true;
@@ -230,12 +234,13 @@ export class MakeRulesDesktopComponent implements OnInit {
       dayfield.options[i].remove();
     }
     for (let i = 0; i < daysLength; i++) {
-      dayfield.options[i] = new Option(String(i + 1), String(i));
+      dayfield.options[i] = new Option(String(i + 1), String(i + 1));
       if (today.getMonth() === indexMonth && today.getFullYear() === year) {
         dayfield.options[i].value < today.getDate() ? dayfield.options[i].disabled = true : dayfield.options[i].disabled = false;
         dayfield.options[today.getDate() - 1] = new Option(today.getDate(), today.getDate(), true, true);
       }
     }
+
   }
 
   monthCalc() {

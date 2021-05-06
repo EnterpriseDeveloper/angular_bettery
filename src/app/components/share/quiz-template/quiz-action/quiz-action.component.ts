@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { QuizErrorsComponent } from '../quiz-errors/quiz-errors.component';
-import { Subscription } from 'rxjs';
-import { User } from '../../../../models/User.model';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {QuizErrorsComponent} from '../quiz-errors/quiz-errors.component';
+import {Subscription} from 'rxjs';
+import {User} from '../../../../models/User.model';
+import {RegistrationComponent} from '../../../registration/registration.component';
 
 
 @Component({
@@ -23,18 +23,26 @@ export class QuizActionComponent {
   answerNumber: number = null;
   amount: number = 0;
 
-  torusSub: Subscription
+  torusSub: Subscription;
   storeUserSubscribe: Subscription;
+  limitAmount: boolean;
 
   constructor(
     private modalService: NgbModal,
-  ) {}
+  ) {
+  }
 
   async makeAnswer(i) {
     this.answerNumber = i;
   }
 
   async participate() {
+    if (this.amount < 0.01) {
+      this.limitAmount =  true;
+      return;
+    } else {
+      this.limitAmount = false;
+    }
     if (this.allUserData != undefined) {
       if (this.answerNumber === null) {
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
@@ -67,37 +75,41 @@ export class QuizActionComponent {
   async validate() {
     if (this.allUserData != undefined) {
       if (this.answerNumber === null) {
-        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+        let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
         modalRef.componentInstance.errType = 'error';
-        modalRef.componentInstance.title = "Choose anwer";
-        modalRef.componentInstance.description = "Choose at leas one answer";
-        modalRef.componentInstance.nameButton = "fine";
+        modalRef.componentInstance.title = 'Choose anwer';
+        modalRef.componentInstance.description = 'Choose at leas one answer';
+        modalRef.componentInstance.nameButton = 'fine';
       } else {
         let data: any = {
           answer: this.answerNumber
-        }
-        this.validateEvent.next(data)
+        };
+        this.validateEvent.next(data);
       }
     } else {
-      const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+      const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
       modalRef.componentInstance.openSpinner = true;
     }
   }
 
   cancel() {
-    this.goBack.next()
+    this.goBack.next();
   }
 
   getBackground(i) {
     if (this.joinPlayer) {
       return {
         'background': this.answerNumber == i ? '#34DDDD' : '#EBEBEB'
-      }
+      };
     } else {
       return {
         'background': this.answerNumber == i ? '#BF94E4' : '#EBEBEB'
-      }
+      };
     }
   }
 
+  filterKeyCode(event) {
+    this.limitAmount = false;
+    return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
+  }
 }

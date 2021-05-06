@@ -21,15 +21,15 @@
             <div>
                 <p class="event">YOUR BET</p>
                 <div class="inputBox">
-                    <input type="number" formControlName="amount" class="answer" id="amount"
-                        min="coinType == 'BTY' ? 1 : 0.01" placeholder="1 {{coinType}}"
+                    <input (keydown)="filterKeyCode($event)" type="number" formControlName="amount" class="answer" id="amount"
+                        min="coinType == 'BET' ? 0.01 : 0.01" placeholder="0.01 {{coinType}}"
                         [ngClass]="{ 'is_invalid': submitted && f.amount.errors }">
                 </div>
                 <div *ngIf="submitted && f.amount.errors">
                     <small *ngIf="f.amount.errors.required" class="form-text quize_validation_error">Amount is
                         required</small>
                     <small *ngIf="f.amount.errors.min" class="form-text quize_validation_error">Minimum amount is
-                        {{coinType == 'BTY' ? 1 : 0.01}}</small>
+                        {{coinType == 'BET' ? 0.01 : 0.01}}</small>
                 </div>
             </div>
             <p class="infoEmial">We’ll notify the results to your email</p>

@@ -59,6 +59,7 @@
   <div class="answerBox">
     <p class="answer">{{formData.roomName}}</p>
   </div>
+  <div *ngIf="pastTime"class="pastTime_err_text">You chose past time</div>
 
   <p class="info mt-3">The event ends after all Experts validate.</p>
 
