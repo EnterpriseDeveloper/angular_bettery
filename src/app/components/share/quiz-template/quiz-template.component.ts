@@ -325,11 +325,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (from === 'validate') {
           this.setToNetworkValidation(answer);
         } else {
-          if (Number(answer.amount) <= 0) {
+          if (Number(answer.amount) < 0.01) {
             const modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'error';
             modalRef.componentInstance.title = 'Low amount';
-            modalRef.componentInstance.description = 'Amount must be bigger than 0';
+            modalRef.componentInstance.description = 'Amount must be bigger than 0.01';
             modalRef.componentInstance.nameButton = 'fine';
           } else {
             this.isDisabled();

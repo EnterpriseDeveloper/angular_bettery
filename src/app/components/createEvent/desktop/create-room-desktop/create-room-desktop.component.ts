@@ -135,7 +135,6 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
   createRoom() {
     this.submitted = true;
-    console.log(this.roomForm);
     if (this.roomForm.invalid) {
       return;
     }
