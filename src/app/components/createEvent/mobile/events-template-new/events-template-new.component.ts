@@ -6,8 +6,10 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./events-template-new.component.sass']
 })
 export class EventsTemplateNewComponent implements OnInit {
-@Input() whichEvent;
-  constructor() { }
+  @Input() whichEvent;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

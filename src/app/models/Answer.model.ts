@@ -3,6 +3,6 @@ export interface Answer {
   answer: number;
   from: string;
   answered: boolean;
-  amount: number;
+  amount: number | string;
   betAmount: number;
 }

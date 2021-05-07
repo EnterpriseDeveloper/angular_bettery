@@ -91,6 +91,7 @@ ul
   padding-left: 16px
   padding-bottom: 0px
   margin-bottom: 0px
+
   & span
     color: #0B1511
     font-weight: 800
@@ -115,6 +116,12 @@ ul
   font-weight: bold
   font-size: 16px
   line-height: 22px
+
+.cancel:active
+  outline: none
+
+.next:active
+  outline: none
 
 .buttonBox
   //margin-top: 0px
@@ -468,6 +475,7 @@ ul
     font-weight: 800
     font-size: 16px
     line-height: 22px
+
   & li
     font-style: normal
     font-weight: normal
@@ -475,6 +483,7 @@ ul
     line-height: 16px
     color: #0B1511
     position: relative
+
   & li:before
     content: url("../../../../../assets/create-event/greenElipse.png")
     width: 4px
@@ -486,6 +495,7 @@ ul
 
 .a-learn-more
   text-align: center
+
   & a
     font-style: normal
     font-weight: bold
@@ -496,6 +506,7 @@ ul
 
 .border-none
   border: none
+
 .modal-btn
   & button
     font-style: normal
@@ -554,6 +565,7 @@ ul
   top: 12px
   left: 15px
   z-index: 1
+
 #labelC2
   position: absolute
   top: 12px
@@ -562,3 +574,20 @@ ul
 
 .dark-modal
   background-color: #FFFFFF
+
+
+ngb-timepicker::ng-deep
+  input:focus
+    box-shadow: none !important
+
+.pastTime::ng-deep
+  input
+    border: 2px #FF3232 solid
+
+.pastTime_err_text
+  font-size: 12px
+  color: #FF3232
+  text-align: right
+  padding: 0 1em
+  font-weight: bold
+

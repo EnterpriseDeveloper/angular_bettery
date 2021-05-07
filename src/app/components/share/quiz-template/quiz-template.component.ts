@@ -80,6 +80,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   ngOnInit() {
     this.allUserData = this.userData;
+    this.myAnswers.amount = this.avgBet(this.question);
   }
 
   findSum(count, to: number, from: number) {
@@ -184,7 +185,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         amount = amount + e.amount;
       });
     }
-    return amount;
+    return this.checkFractionalNumb(amount, q.parcipiantAnswers.length, '/');
   }
 
   biggestWin(data) {
@@ -216,7 +217,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   hostEarned(data) {
     if (data.host.id === this.userData._id) {
-      return this.checkFractionalNumb(data.host.payHostAmount, data.host.mintedHostAmount, '+') + 'BET';
+      return this.checkFractionalNumb(data.host.payHostAmount, data.host.mintedHostAmount, '+') + ' BET';
     }
   }
 
@@ -265,6 +266,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (action === '-') {
       const difference = Number(num1) - Number(num2);
       return difference.toString().includes('.') ? difference.toFixed(1) : difference;
+    }
+    if (action === '/') {
+      const avg = Number(num1) / Number(num2);
+      return avg.toString().includes('.') ? avg.toFixed(1) : avg;
     }
   }
 
@@ -320,11 +325,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (from === 'validate') {
           this.setToNetworkValidation(answer);
         } else {
-          if (Number(answer.amount) <= 0) {
+          if (Number(answer.amount) < 0.01) {
             const modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'error';
             modalRef.componentInstance.title = 'Low amount';
-            modalRef.componentInstance.description = 'Amount must be bigger than 0';
+            modalRef.componentInstance.description = 'Amount must be bigger than 0.01';
             modalRef.componentInstance.nameButton = 'fine';
           } else {
             this.isDisabled();
@@ -550,7 +555,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   statusReverted(data) {
-    let x = data.status.replace("reverted: ", "")
+    let x = data.status.replace("reverted:", "")
     if (x.search("not enough experts") != -1) {
       return x + " (" + this.getValidatorsAmount(data) + "/" + this.getValidatorsAmountLeft(data) + ")"
     } else {
@@ -691,5 +696,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
       modalRef.componentInstance.openSpinner = true;
     }
+  }
+
+  filterKeyCode(event) {
+    return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
   }
 }

@@ -33,6 +33,7 @@ export class PrivateEventComponent implements OnDestroy {
   fromDataSubscribe: Subscription;
   createSub: Subscription;
   spinnerLoading: boolean = false;
+  pastTime: boolean;
 
 
   constructor(
@@ -81,6 +82,12 @@ export class PrivateEventComponent implements OnDestroy {
   }
 
   createEvent() {
+    if (Number(this.getEndTime()) <= Number((Date.now() / 1000).toFixed(0))) {
+      this.pastTime = true;
+      return;
+    } else {
+      this.pastTime = false;
+    }
     this.spinnerLoading = true;
     this.eventData = {
       host: this.host[0]._id,
@@ -102,7 +109,7 @@ export class PrivateEventComponent implements OnDestroy {
     this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)
       .subscribe(
         (x: any) => {
-          this.eventData._id = x.eventId;
+          this.eventData._id = x.id;
           this.spinnerLoading = false;
           this.calculateDate();
           this.spinner = false;

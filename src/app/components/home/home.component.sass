@@ -8,7 +8,8 @@ p, h1, h2, h3
 
 .main
   color: #0B1511
-  max-width: 1440px
+  //max-width: 1440px
+  max-width: 1920px
   margin: -20px auto 0 auto
   background: white
   position: relative
@@ -17,7 +18,8 @@ p, h1, h2, h3
 
 nav
   display: flex
-  max-width: 1440px
+  max-width: 1920px
+  //max-width: 1440px
   position: fixed
   transition: all 0.3s
   z-index: 99
@@ -168,12 +170,17 @@ header
 .title_text
   margin-bottom: 64px
   font-family: 'Source Sans Pro', sans-serif
-  padding-right: 300px
+  //padding-right: 300px
+  padding-right: 400px
 
   & p
     font-weight: normal
     font-size: 18px
     line-height: 28px
+
+@media (max-width: 1440px)
+  .title_text
+    padding-right: 300px
 
 .btn_title
   display: flex
@@ -225,6 +232,7 @@ header
   opacity: 1 !important
 
 .dropdown_box
+  min-height: 250px
   font-family: 'Source Sans Pro', sans-serif
   background: #FFFFFF
   border: 0.25px solid rgba(0, 0, 0, 0.28)
@@ -1381,3 +1389,39 @@ footer
     padding-bottom: 95px
   .pagin
     display: block
+
+.linkRoadmap
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  font-weight: bold
+  font-size: 16px
+  line-height: 20px
+  text-align: center
+  color: black
+
+.linkRoadmap:hover
+  text-decoration: none
+
+.linkRoadmapMob
+  font-size: 16px
+  line-height: 20px
+  text-align: center
+  color: black
+  &:hover
+    text-decoration: none
+
+.focus
+  & button
+    border: 1px solid #FDD92A
+    min-width: 93px
+  & input:focus
+    box-shadow: none
+    outline: none
+  & button:focus
+    box-shadow: none
+    outline: none
+  & button:active
+    box-shadow: none
+    outline: none

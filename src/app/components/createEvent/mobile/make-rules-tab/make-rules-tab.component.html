@@ -177,14 +177,15 @@
     <form [formGroup]="exactTime" class="formPicker">
       <select id="daydropdown" class="datePicker" formControlName="day">
       </select>
-      <select id="monthdropdown" class="datePicker" formControlName="month">
+      <select id="monthdropdown" class="datePicker" formControlName="month" (change)="dayCalc()">
       </select>
-      <select id="yeardropdown" class="datePicker" formControlName="year">
+      <select id="yeardropdown" class="datePicker" formControlName="year" (change)="updateAllDate()">
       </select>
     </form>
     <div class="borderVector"></div>
     <p class="date" style="margin-top: 24px;">TIME</p>
-    <ngb-timepicker id="timePicker" [(ngModel)]="timeData"></ngb-timepicker>
+    <ngb-timepicker id="timePicker" [(ngModel)]="timeData" [ngClass]="pastTime ? 'pastTime' : ''" (input)="this.pastTime = false;"></ngb-timepicker>
+    <div *ngIf="pastTime"class="pastTime_err_text">You chose past time</div>
     <div class="borderVector"></div>
   </div>
   <div class="modal-footer update">
@@ -249,7 +250,7 @@
         </li>
       </ul>
     </div>
-    <div class="a-learn-more"><a href="#">Learn more about how Bettery works</a></div>
+    <div class="a-learn-more"><a href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-1-why-your-opinion-matters-cf0cd384def8" target="_blank">Learn more about how Bettery works</a></div>
   </div>
   <div class="modal-footer border-none modal-btn">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">OK</button>

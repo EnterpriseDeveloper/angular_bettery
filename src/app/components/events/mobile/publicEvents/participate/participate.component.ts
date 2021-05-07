@@ -36,7 +36,6 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   coinsSub: Subscription;
   postSub: Subscription;
 
-
   constructor(
     private store: Store<AppState>,
     private formBuilder: FormBuilder,
@@ -56,10 +55,10 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.coinType = this.eventData.currencyType == "token" ? "BTY" : "ETH"
+    this.coinType = this.eventData.currencyType == "token" ? "BET" : "ETH"
     this.answerForm = this.formBuilder.group({
       answer: ["", Validators.required],
-      amount: ["", [Validators.required, Validators.min(this.coinType == 'BTY' ? 1 : 0.01)]]
+      amount: ["", [Validators.required, Validators.min(this.coinType == 'BET' ? 0.01 : 0.01)]]
     })
   }
 
@@ -135,6 +134,10 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       BTY: BTYBalance,
       BET: BETBalance
     }));
+  }
+
+  filterKeyCode(event) {
+    return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import GradientJSON from '../../../../../assets/gradients.json';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +32,9 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
   allRooms: RoomModel[];
   roomError: string;
   userId: number;
+  nickName: string;
+  @ViewChild('textarea') textarea: ElementRef;
+  isLimit: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +53,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
       createNewRoom: this.formData.whichRoom
     })
     this.roomForm = this.formBuilder.group({
-      roomName: [this.formData.roomName, Validators.required],
+      roomName: [this.formData.roomName, Validators.compose([Validators.required, Validators.maxLength(32)])],
       roomColor: [this.formData.roomColor, Validators.required],
       eventType: this.formData.eventType
     });
@@ -61,8 +64,12 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     this.userSub = this.store.select("user").subscribe((x: User[]) => {
       if (x && x?.length != 0) {
         this.userId = x[0]._id;
+        this.nickName = x[0].nickName.split(' ')[0];
         this.getUserRooms(this.userId)
       }
+    });
+    setTimeout(() => {
+      this.textareaGrow();
     });
   }
 
@@ -75,9 +82,16 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
         this.createRoomForm.controls.createNewRoom.setValue("exist");
       }
       this.allRooms = x;
+      this.setValueExist();
     }, (err) => {
       console.log(err);
     });
+  }
+
+  setValueExist(): void {
+    if (this.r.createNewRoom.value === 'exist' && this.formData.roomId.length === 0) {
+      this.existRoom.controls.roomId.setValue(this.allRooms[0].id);
+    }
   }
 
   get r() {
@@ -102,7 +116,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
   modalAboutExpert() {
     const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = "- Event for Friends is private and they can bet with anything like pizza or promise of a favor. The result will be validated by one Expert, which can be the Host or another friend.";
-    modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BTY tokens. The result will be validated by several Experts to ensure fairness.";
+    modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BET tokens. The result will be validated by several Experts to ensure fairness.";
     modalRef.componentInstance.boldName = 'Friends vs Social Media';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
   }
@@ -176,6 +190,44 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(formDataAction({formData: this.formData}));
     this.router.navigate(['/create-event']);
+  }
+
+  letsSlice(control, start, finish) {
+    return control.slice(start, finish);
+  }
+
+  limitError() {
+    const length = this.f.roomName.value.length;
+    this.isLimit = length >= 26;
+  }
+
+  colorError(length, numYel, numMain) {
+    if (length >= numYel && length <= numMain) {
+      return {
+        'color': '#FFFFFF'
+      };
+    }
+    if (length > numMain) {
+      return {
+        'font-weight': 'bold',
+        'color': '#FF3232'
+      };
+    }
+  }
+
+  textareaGrow(): void {
+    if (this.textarea) {
+      this.calculateRows(this.textarea);
+    }
+  }
+
+  calculateRows(el) {
+    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
+    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
+    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
+    el.nativeElement.rows = 1;
+    const innerHeight = el?.nativeElement.scrollHeight - paddingTop - paddingBottom;
+    el.nativeElement.rows = innerHeight / lineHeight;
   }
 
   ngOnDestroy() {

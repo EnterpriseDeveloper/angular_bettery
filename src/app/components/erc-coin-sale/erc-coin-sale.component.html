@@ -1,7 +1,7 @@
 <div style="background: #323231; margin-top: -20px; width: 100%">
   <div class="test-bg2" style="width: 100%">
     <nav>
-      <div class="logo"></div>
+      <div class="logo" routerLink="/"></div>
       <div class="nav-list">
         <ul>
           <li><a href="#usage" pageScrollOffset="200" pageScroll>Token Usage</a></li>
@@ -9,7 +9,7 @@
           <li><a href="#Buy" pageScrollOffset="200" pageScroll>Buy BTY</a></li>
           <li><a href="#Roadmap" pageScrollOffset="200" pageScroll>Roadmap</a></li>
           <li class="mr-5"><a href="#Resources" pageScroll>Bettery Resources</a></li>
-          <li routerLink="/" class=" ar-img position-relative"><a href="">Bettery Platform</a></li>
+          <li class=" ar-img position-relative"><a routerLink="/join">Bettery Platform</a></li>
         </ul>
       </div>
       <div class="nav-icon">
@@ -57,7 +57,7 @@
             <a class="mb-4" pageScrollOffset="100" pageScroll href="#Resources" pageScroll
                ngbDropdownItem>Bettery Resources</a>
 
-            <a class="mb-4 mob-platform"  href="" routerLink="/"
+            <a class="mb-4 mob-platform" routerLink="/join"
                ngbDropdownItem>Bettery Platform</a>
           </div>
         </div>
@@ -416,7 +416,7 @@
 
 
               <div class="road-details">
-                <a href="#">Detailed Roadmap >></a>
+                <a href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">Detailed Roadmap >></a>
               </div>
             </section>
             <section id="Resources" class="resources-footer bg-square">
@@ -434,7 +434,7 @@
                   <div class="res-icon-wrap row">
                     <div class="icon-set col-6 col-md-3">
                       <div class="group-world-img"></div>
-                      <p>Platform</p>
+                      <a routerLink="/join">Platform</a>
                     </div>
                     <div class="icon-set col-6 col-md-3">
                       <div class="group-letter-img"></div>
@@ -479,7 +479,9 @@
                 </div>
               </div>
               <div class="footer row">
-                <div class="footer-logo-img col-12 col-md-2"></div>
+                <div class="footer-logo-img col-12 col-md-2">
+                  <a class="logoLink" href="https://www.bettery.io" target="_blank"></a>
+                </div>
                 <div class="footer-middle col-12 col-md-4">
                   <h4>About Us</h4>
                   <p>Bettery is a social pool betting platform for friends and online communities to have fun on what
@@ -495,14 +497,14 @@
 
                   <form [formGroup]="form" (ngSubmit)="subscribe()">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control subscribe-input" placeholder="Enter email address"
+                      <input id="subscribe-input" type="text" class="form-control subscribe-input" placeholder="Enter email address"
                              aria-label="Recipient's username"
                              formControlName="email"
                              [ngClass]="submitted && f.email.errors && 'subscibeError'"
                              aria-describedby="basic-addon2">
                       <div class="input-group-append btn-sub">
-                        <button class="btn btn-outline-secondary" type="submit" [disabled]="subscribed">Subscribe
-                        </button>
+                        <button *ngIf="!afterSubType" class="btn btn-outline-secondary" type="submit" [disabled]="subscribed">Subscribe</button>
+                        <button *ngIf="afterSubType" class="btn btn-outline-secondary" type="submit" [disabled]="subscribed">You're in!</button>
                       </div>
                     </div>
                     <div *ngIf="submitted && f.email.errors">

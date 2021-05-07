@@ -3,12 +3,13 @@ import {Injectable} from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import {observable, Observable} from 'rxjs';
 import { CommentModel } from '../model/сomment.model';
+import {environment} from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentSocketService {
-  url = 'https://13.229.200.135';
+  url = environment.apiUrl;
 
   private socket;
 

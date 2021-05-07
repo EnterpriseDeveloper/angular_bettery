@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
@@ -40,6 +40,7 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
   eventFromLandingSubscr: Subscription;
   userSub: Subscription
   formData = init;
+  // modalIsOpen: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -81,6 +82,12 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
         this.formData.question = a.formData?.question.trim();
       }
     });
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (this.whichEvent == 'setQuestion') {
+      this.activeModal.close();
+    }
   }
 
   swithToSetQuestion(data) {

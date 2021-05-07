@@ -8,7 +8,7 @@
           <div class="state p-success-o checkPos">
             <label class="pos"> </label>
           </div>
-          <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'token' }">BTY Token</p>
+          <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'token' }">BET Token</p>
         </div>
 
         <div class="pretty p-default p-round inline">
@@ -29,9 +29,9 @@
           <div class="dropBox arowMarker">
             <label for="startPublicTime" id="labelC2">{{endPublicTime}}</label>
             <select (change)="chosePublicEndTime()" [ngClass]="{ 'is_invalid': submitted && pub.publicEndTime.errors }"
-                    formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
+              formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
               <option *ngFor="let time of times, let i = index"
-                      [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
+                [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
                 {{time.name}}</option>
             </select>
             <div class="calendarPosition">
@@ -51,7 +51,8 @@
           <p style="margin-bottom: 8px; margin-top: 32px">NUMBER OF EXPERTS</p>
         </div>
         <div class="pretty p-default p-round inline expertsCheckWrapper" style="margin-bottom: 8px">
-          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType" checked>
+          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType"
+            checked>
           <div class="state p-warning-o checkBoxPosition">
             <label class="pos"> </label>
           </div>
@@ -59,7 +60,7 @@
         </div>
         <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
           <div class="pretty p-default p-round inline expertsCheckWrapper"
-               [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
+            [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
             <input (click)="reinitializeForm('custom')" type="radio" value="custom" formControlName="expertsCountType">
             <div class="state p-warning-o checkBoxPosition">
               <label class="pos"> </label>
@@ -68,30 +69,33 @@
             </p>
           </div>
           <div *ngIf="pub.expertsCountType.value == 'custom'"
-               [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
+            [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
             <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount"
-                     class="answer" [ngClass]="{
+              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount" min="0"
+                class="answer" [ngClass]="{
                                     'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
                                     'nguyen4': pub.expertsCountType.value == 'custom'
-                                }"/>
+                                }" />
             </div>
           </div>
         </div>
         <div *ngIf="submitted && pub.expertsCountType.value == 'custom'">
           <small *ngIf="pub.expertsCount.value == '' || pub.expertsCount.value == 0"
-                 class="form-text quize_validation_error">Experts number is required</small>
+            class="form-text quize_validation_error">Experts number is required and must be bigger than 0</small>
         </div>
       </div>
       <div>
         <ul style="padding-top: 32px">
-          <li class="infoGrey">Bets from losers is distributed to <span>Experts (5%), Host (3%), Bettery (2%), and Winners (90%) </span>who
+          <li class="infoGrey">Bets from losers is distributed to <span>Experts (5%), Host (3%), Bettery (2%), and
+              Winners (90%) </span>who
             get their bets back.
           </li>
         </ul>
         <div class="d-flex justify-content-center mb-5" (click)="openHowEventsWorkSocial(content2)">
           <div class="question-img"></div>
-          <div><p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p></div>
+          <div>
+            <p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p>
+          </div>
         </div>
       </div>
       <div class="buttonBox">
@@ -109,8 +113,7 @@
       <div class="form-group">
         <div class="inputBox">
           <input type="text" formControlName="winner" class="answer fixBordRadius" id="winner"
-                 placeholder="Get free dinner"
-                 [ngClass]="{ 'is_invalid': submitted && priv.winner.errors }">
+            placeholder="Get free dinner" [ngClass]="{ 'is_invalid': submitted && priv.winner.errors }">
           <div class="tip">
             <p class="posOne">Winners</p>
           </div>
@@ -123,8 +126,7 @@
       <div class="form-group">
         <div class="inputBox">
           <input type="text" formControlName="losers" class="answer fixBordRadius" id="losers"
-                 placeholder="Share the bill"
-                 [ngClass]="{ 'is_invalid': submitted && priv.losers.errors }">
+            placeholder="Share the bill" [ngClass]="{ 'is_invalid': submitted && priv.losers.errors }">
           <div class="tip">
             <p class="posTwo">Losers</p>
           </div>
@@ -141,8 +143,9 @@
 
       <div class="dropBox correctMB label">
         <label for="startTime" id="labelC">{{endPrivateTime}}</label>
-        <select (change)="chosePrivateEndTime()" formControlName="privateEndTime" class=" pl-2 dropBox startTime" [ngClass]="{ 'is_invalid': submitted && priv.privateEndTime.errors }" name="startTime" id="startTime">
-          <option *ngFor="let time of times"   value="{{time.name}}">{{time.name}}</option>
+        <select (change)="chosePrivateEndTime()" formControlName="privateEndTime" class=" pl-2 dropBox startTime"
+          [ngClass]="{ 'is_invalid': submitted && priv.privateEndTime.errors }" name="startTime" id="startTime">
+          <option *ngFor="let time of times" value="{{time.name}}">{{time.name}}</option>
         </select>
         <div *ngIf="submitted && priv.privateEndTime.errors">
           <small *ngIf="priv.privateEndTime.errors.required" class="form-text quize_validation_error">End time is
@@ -153,7 +156,9 @@
 
       <div class="d-flex justify-content-center mb-3" (click)="openHowEventsWorkFriend(content2)">
         <div class="question-img"></div>
-        <div><p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p></div>
+        <div>
+          <p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p>
+        </div>
       </div>
 
       <div class="buttonBox">
@@ -174,14 +179,16 @@
     <form [formGroup]="exactTime" class="formPicker">
       <select id="daydropdown" class="datePicker" formControlName="day">
       </select>
-      <select id="monthdropdown" class="datePicker" formControlName="month">
+      <select id="monthdropdown" class="datePicker" formControlName="month" (change)="dayCalc()">
       </select>
-      <select id="yeardropdown" class="datePicker" formControlName="year">
+      <select id="yeardropdown" class="datePicker" formControlName="year" (change)="updateAllDate()">
       </select>
     </form>
     <div class="borderVector"></div>
     <p class="date" style="margin-top: 24px;">TIME</p>
-    <ngb-timepicker id="timePicker" [(ngModel)]="timeData"></ngb-timepicker>
+    <ngb-timepicker id="timePicker" [(ngModel)]="timeData" [ngClass]="pastTime ? 'pastTime' : ''"
+      (input)="this.pastTime = false;"></ngb-timepicker>
+    <div *ngIf="pastTime" class="pastTime_err_text">You chose past time</div>
   </div>
   <div class="modal-footer update">
     <button type="button" class="greyModalCancel" (click)="modal.dismiss('Cross click')">Cancel</button>
@@ -195,7 +202,9 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="text-center"><h4 class="modal-title h4-modal">HOW EVENTS WORK</h4></div>
+  <div class="text-center">
+    <h4 class="modal-title h4-modal">HOW EVENTS WORK</h4>
+  </div>
   <div class="modal-body">
     <div class="modal-text-new">
       <h5>Who can join my event?</h5>
@@ -203,14 +212,16 @@
         <li>
           <p>
             Anyone can choose to join as a Player to bet, or as an Expert to validate the result after betting time.
-            Minimum bet is 1 BTY. Experts can’t bet.</p>
+            Minimum bet is 1 BET. Experts can’t bet.</p>
         </li>
         <li>
           <p>The event is cancelled if no Players join within betting time, or if there aren’t enough Experts (10% of
             total Players by default or custom, minimum 3).
           </p>
         </li>
-        <li><p>The event ends when all Experts validate.</p></li>
+        <li>
+          <p>The event ends when all Experts validate.</p>
+        </li>
       </ul>
 
       <ul *ngIf="modalTrigger">
@@ -224,7 +235,9 @@
             result within 24 hours after betting ends.
           </p>
         </li>
-        <li><p>The event ends after the Expert validates.</p></li>
+        <li>
+          <p>The event ends after the Expert validates.</p>
+        </li>
       </ul>
     </div>
     <div class="modal-text-new">
@@ -246,10 +259,11 @@
         </li>
       </ul>
     </div>
-    <div class="a-learn-more"><a href="#">Learn more about how Bettery works</a></div>
+    <div class="a-learn-more"><a
+        href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-1-why-your-opinion-matters-cf0cd384def8"
+        target="_blank">Learn more about how Bettery works</a></div>
   </div>
   <div class="modal-footer border-none modal-btn">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">OK</button>
   </div>
 </ng-template>
-

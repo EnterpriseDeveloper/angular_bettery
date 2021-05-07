@@ -1,14 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { ClipboardService } from 'ngx-clipboard'
-import { PostService } from '../../../../services/post.service'
-import { Subscription } from 'rxjs';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
-import { User } from '../../../../models/User.model';
-import { Router } from "@angular/router";
+import {Component, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {ClipboardService} from 'ngx-clipboard';
+import {PostService} from '../../../../services/post.service';
+import {Subscription} from 'rxjs';
+import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
+import {User} from '../../../../models/User.model';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -30,6 +30,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
   userSub: Subscription;
   postSub: Subscription;
   spinnerLoading: boolean = false;
+  pastTime: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -38,7 +39,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
     private modalService: NgbModal,
     private router: Router,
   ) {
-    this.userSub = this.store.select("user").subscribe((x: User[]) => {
+    this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length !== 0) {
         this.nickName = x[0].nickName;
         this.host = x;
@@ -54,31 +55,31 @@ export class PublicEventDesktopComponent implements OnDestroy {
     if (this.formData.exactTimeBool) {
       return `${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour} : ${this.formData.exactMinutes}`;
     } else {
-      return this.formData.publicEndTime.name
+      return this.formData.publicEndTime.name;
     }
   }
 
   expertsName() {
-    if (this.formData.expertsCountType === "company") {
-      return "10% of Players"
+    if (this.formData.expertsCountType === 'company') {
+      return '10% of Players';
     } else {
-      return this.formData.expertsCount
+      return this.formData.expertsCount;
     }
   }
 
   betWith() {
-    if (this.formData.tokenType === "token") {
-      return "BTY (Minimum bet is 1 BTY)"
+    if (this.formData.tokenType === 'token') {
+      return 'BET (Minimum bet is 0.01 BET)';
     } else {
-      return "ETH (Minimum bet is 0.001 ETH)"
+      return 'ETH (Minimum bet is 0.001 ETH)';
     }
   }
 
   tokenCharacter() {
-    if (this.formData.tokenType === "token") {
-      return "BTY"
+    if (this.formData.tokenType === 'token') {
+      return 'BTY';
     } else {
-      return "ETH"
+      return 'ETH';
     }
   }
 
@@ -100,11 +101,18 @@ export class PublicEventDesktopComponent implements OnDestroy {
       let hour = this.formData.exactHour;
       let minute = this.formData.exactMinutes;
       let second = 0;
-      return this.getTimeStamp(`${month}/${day}/${year} ${hour}:${minute}:${second}`)
+      return this.getTimeStamp(`${month}/${day}/${year} ${hour}:${minute}:${second}`);
     }
   }
 
   createEvent() {
+    if (Number(this.getEndTime()) <= Number((Date.now() / 1000).toFixed(0))) {
+      this.pastTime = true;
+      return;
+    } else {
+      this.pastTime = false;
+    }
+
     this.spinnerLoading = true;
 
     this.quizData = {
@@ -156,20 +164,20 @@ export class PublicEventDesktopComponent implements OnDestroy {
     let minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
     let second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
 
-    this.hour = Number(hour) > 9 ? hour : "0" + hour;
-    this.minutes = Number(minutes) > 9 ? minutes : "0" + minutes;
+    this.hour = Number(hour) > 9 ? hour : '0' + hour;
+    this.minutes = Number(minutes) > 9 ? minutes : '0' + minutes;
     if (second === 60) {
-      this.seconds = "00"
+      this.seconds = '00';
     } else {
-      this.seconds = second > 9 ? second : "0" + second;
+      this.seconds = second > 9 ? second : '0' + second;
     }
     setTimeout(() => {
-      this.calculateDate()
+      this.calculateDate();
     }, 1000);
   }
 
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';

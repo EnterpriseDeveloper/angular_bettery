@@ -18,6 +18,8 @@
   background-color: #F0F0F0
   color: #0B1511
 
+.addCommentBoxWhite:focus
+  outline: none
 
 .addCommentBox::placeholder
   font-style: normal
@@ -56,6 +58,8 @@
     padding: 11px 0
     border-radius: 8px
     cursor: pointer
+  & button:active
+    outline: none
 
 .sendImg
   background: url(../../../../assets/share/send.png) left center no-repeat
@@ -78,6 +82,7 @@
 
 .senderBox
   display: flex
+  width: 80%
 
 .commentImg
   width: 28px
@@ -97,33 +102,23 @@
   font-weight: 600
   font-size: 14px
   line-height: 19px
-  display: flex
+  //display: flex
   align-items: center
   color: #FFFFFF
   margin-left: 8px
   margin-bottom: 0px
 
-//.commentNameWhite
-//  font-style: normal
-//  font-weight: 600
-//  font-size: 12px
-//  line-height: 16px
-//  color: #0B1511
-
 .timeBox
   font-family: 'Open Sans', sans-serif
   font-style: normal
   font-weight: normal
-  font-size: 12px
-  line-height: 16px
+  font-size: 9px
+  line-height: 10px
   display: flex
   align-items: center
+  justify-content: flex-end
   color: #979797
-
-//.timeBoxWhite
-//  font-size: 10px
-//  line-height: 14px
-
+  text-align: right
 
 .comment
   font-style: normal
@@ -268,7 +263,7 @@
 .replyDark
   font-style: normal
   font-weight: bold
-  font-size: 12px
+  font-size: 10px
   line-height: 16px
   display: flex
   align-items: center

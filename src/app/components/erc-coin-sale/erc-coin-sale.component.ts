@@ -33,6 +33,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
   subscribed: boolean = false;
   subscribedPost: Subscription;
   slideIndex = 0;
+  afterSubType: boolean = false;
 
   constructor(
     public postService: PostService,
@@ -45,7 +46,6 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    console.log(environment.production);
     this.getDataFromDb();
     this.setClock(1617235200);
   }
@@ -205,12 +205,12 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
     if (this.form.status === 'INVALID') {
       return;
     }
+    this.afterSubType = true;
     let data = {
       email: this.form.value.email,
       from: "tokensale"
     }
     this.subscribedPost = this.postService.post("subscribe", data).subscribe((x) => {
-      this.form.controls.email.setValue("")
       this.submitted = false;
       this.subscribed = true;
     }, (err) => {

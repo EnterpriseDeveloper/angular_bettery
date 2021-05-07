@@ -75,7 +75,9 @@
 
   "ROADMAP": {
     "TITLE": "Дорожная карта",
-    "TEXT": "Товарищи! дальнейшее развитие различных форм деятельности играет важную роль в формировании соответствующий условий активизации. Таким образом укрепление ",
+    "TEXT_1": "Bettery is designed to be a digital playground for people and brands to build genuine relationships with one another in an exciting, highly personalized way. All our development activities - past, present, and future - are always",
+    "TEXT_2": " available ",
+    "TEXT_3": "to the public.",
     "DATE_1": "Июнь 2020",
     "DATE_2": "Сентябрь 2020",
     "DATE_3": "Октрябрь 2020",
@@ -153,6 +155,7 @@
     "TEXT_1": "Чтобы быть достойным старания, придут, прочные и легкие в полет, все подарки,",
     "TEXT_2": "Чтобы быть достойным старания, придут,",
     "BUTTON_TEXT": "Подписаться",
+    "BUTTON_TEXT_2": "You're in!",
     "PLACE_HOLDER": "Введите адрес электронной почты"
   },
 
