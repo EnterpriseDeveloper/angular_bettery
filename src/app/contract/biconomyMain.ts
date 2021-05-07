@@ -1,4 +1,4 @@
-import Biconomy from "@biconomy/mexa";
+import { Biconomy } from "@biconomy/mexa";
 import Web3 from 'web3';
 
 const biconomyMainInit = async () => {

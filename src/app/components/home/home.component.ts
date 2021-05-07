@@ -204,7 +204,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  showPopover($event) {
+  showPopover() {
     this.triggerPopover = true;
   }
 
