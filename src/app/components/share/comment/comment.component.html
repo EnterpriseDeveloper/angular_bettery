@@ -92,7 +92,7 @@
 
     <div *ngIf="!hideInput">
       <div id="sendBox" class="sendCommentBox" *ngIf="!showAuthButton">
-      <textarea id="textarea" (keyup)="typingEffect()" [(ngModel)]="newComment" class="addCommentBox"
+      <textarea id="textarea" (keyup)="typingEffect()" maxlength="1024" [(ngModel)]="newComment" class="addCommentBox"
                 [ngClass]="checkTheme() && 'addCommentBoxWhite'" type="text" name="newComment"
                 placeholder="Add a comment..."></textarea>
         <div (click)="sendComment()" class="sendImg" [ngClass]="checkTheme() && 'sendImg-blue'"></div>

@@ -106,7 +106,7 @@
       </div>
     </div>
 
-    <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length >= 5"></spinner-load-more>
+    <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more>
 
     <div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"><a pageScroll href="#top"><img
       src="../../../../../assets/descEvent/topBTN.png" alt="Top"></a></div>
