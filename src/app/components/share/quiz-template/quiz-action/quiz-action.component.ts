@@ -16,13 +16,14 @@ export class QuizActionComponent {
   @Input() joinPlayer: boolean;
   @Input() becomeExpert: boolean;
   @Input() allUserData: User;
+  @Input()  isDisableValid: boolean;
+  @Input()  isDisableBet: boolean;
   @Output() goBack = new EventEmitter();
   @Output() betEvent = new EventEmitter<Array<any>>();
   @Output() validateEvent = new EventEmitter<Array<any>>();
 
   answerNumber: number = null;
   amount: number = 0;
-
   torusSub: Subscription;
   storeUserSubscribe: Subscription;
   limitAmount: boolean;
@@ -37,6 +38,9 @@ export class QuizActionComponent {
   }
 
   async participate() {
+    if (this.isDisableBet) {
+      return;
+    }
     if (this.amount < 0.01) {
       this.limitAmount =  true;
       return;
@@ -62,6 +66,7 @@ export class QuizActionComponent {
             amount: this.amount,
             answer: this.answerNumber
           }
+          this.isDisableBet = true;
           this.betEvent.next(data);
         }
 
@@ -73,6 +78,9 @@ export class QuizActionComponent {
   }
 
   async validate() {
+    if (this.isDisableValid) {
+      return;
+    }
     if (this.allUserData != undefined) {
       if (this.answerNumber === null) {
         let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
@@ -84,6 +92,7 @@ export class QuizActionComponent {
         let data: any = {
           answer: this.answerNumber
         };
+        this.isDisableValid = true;
         this.validateEvent.next(data);
       }
     } else {

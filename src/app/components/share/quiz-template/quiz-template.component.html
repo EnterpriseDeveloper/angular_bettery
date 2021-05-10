@@ -220,7 +220,7 @@
                   [ngClass]="{arrow_up_yellow: this.openIndex == this.index, arrow_down_yellow: this.openIndex != this.index}">
                 </div>
               </div>
-              <div *ngIf="!timeValidating(question)" class="validateNow" (click)="this.openDetails()"
+              <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow" (click)="this.openDetails()"
                 style="display: flex;">
                 VALIDATE NOW <div
                   [ngClass]="{arrow_up_purple: this.openIndex == this.index, arrow_down_purple: this.openIndex != this.index}">
@@ -244,7 +244,7 @@
             [becomeExpert]="becomeExpert"></quiz-info>
           <quiz-action [allUserData]="allUserData" (goBack)="goToInfo()" (betEvent)="betEvent($event)"
             (validateEvent)="validateEvent($event)" [joinPlayer]="joinPlayer" [becomeExpert]="becomeExpert"
-            *ngIf="!details && letsBet" [question]="question">
+            *ngIf="!details && letsBet" [question]="question" [isDisableValid]="validDisable" [isDisableBet]="betDisable">
           </quiz-action>
         </div>
         <quiz-event-finish *ngIf="viewEventFinishInfo" [question]="question" [userData]="userData"

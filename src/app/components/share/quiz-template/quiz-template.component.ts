@@ -55,6 +55,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @ViewChild('div') div: ElementRef;
   heightBlock: number;
   disable: number = null;
+  validDisable = false;
+  betDisable = false;
   windowWidth: number;
 
   constructor(
@@ -319,7 +321,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = 'Choose anwer';
-        modalRef.componentInstance.description = 'Choose at leas one answer';
+        modalRef.componentInstance.description = 'Choose at least one answer';
         modalRef.componentInstance.nameButton = 'fine';
       } else {
         if (from === 'validate') {
@@ -383,6 +385,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.updateUser();
       this.callGetData.next();
       this.disable = null;
+      this.betDisable = false;
     },
       (err) => {
         console.log(err);
@@ -433,6 +436,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.myAnswers.answered = true;
       this.updateUser();
       this.callGetData.next();
+      this.validDisable = false;
     },
       (err) => {
         console.log(err);

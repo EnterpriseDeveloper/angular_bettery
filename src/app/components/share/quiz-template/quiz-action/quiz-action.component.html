@@ -19,7 +19,7 @@
     <div class="buttonBox">
         <div *ngIf="joinPlayer && !becomeExpert">
             <button (click)="this.participate()" style="background: #34DDDD"
-                class="joinAsPlayer agreeButton">BET</button>
+                class="joinAsPlayer agreeButton" [ngClass]="isDisableBet && 'betDisabled'">BET</button>
         </div>
         <div>
             <button (click)="this.cancel()" style="background: #C4C4C4;"
@@ -27,7 +27,7 @@
         </div>
         <div *ngIf="!joinPlayer && becomeExpert">
             <button (click)="this.validate()" style="background: #BF94E4; margin-left: 24px;"
-                class="joinAsPlayer agreeButtonTwo">CONFIRM</button>
+                class="joinAsPlayer agreeButtonTwo" [ngClass]="isDisableValid && 'validDisabled'">CONFIRM</button>
         </div>
     </div>
 </div>
