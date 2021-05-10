@@ -58,7 +58,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   validDisable = false;
   betDisable = false;
   windowWidth: number;
-
   constructor(
     private postService: PostService,
     private store: Store<AppState>,
