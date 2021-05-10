@@ -52,7 +52,7 @@ export class QuizActionComponent {
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = "Choose anwer";
-        modalRef.componentInstance.description = "Choose at leas one answer";
+        modalRef.componentInstance.description = "Choose at least one answer";
         modalRef.componentInstance.nameButton = "fine";
       } else {
         if (Number(this.amount) <= 0) {
@@ -86,7 +86,7 @@ export class QuizActionComponent {
         let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = 'Choose anwer';
-        modalRef.componentInstance.description = 'Choose at leas one answer';
+        modalRef.componentInstance.description = 'Choose at least one answer';
         modalRef.componentInstance.nameButton = 'fine';
       } else {
         let data: any = {
