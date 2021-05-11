@@ -21,7 +21,7 @@
             <div>
                 <p class="event">YOUR BET</p>
                 <div class="inputBox">
-                    <input (keydown)="filterKeyCode($event)" type="number" formControlName="amount" class="answer" id="amount"
+                    <input (keydown)="filterKeyCode($event)" (input)="updateValue()" type="number" formControlName="amount" class="answer" id="amount"
                         min="coinType == 'BET' ? 0.01 : 0.01" placeholder="0.01 {{coinType}}"
                         [ngClass]="{ 'is_invalid': submitted && f.amount.errors }">
                 </div>

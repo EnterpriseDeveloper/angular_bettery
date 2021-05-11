@@ -78,6 +78,7 @@
     <div class="imgBox" (click)="copyToClickBoard()">
       <div class="listImg" style="margin-right: 8px"></div>
       <p class="copyToClick">Copy to clipboard</p>
+      <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
     </div>
   </div>
   <ul class="listBox">

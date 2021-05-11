@@ -121,15 +121,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     return this.registerForm.controls;
   }
 
-  getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   addUser(
     email: string,
     nickName: string,
@@ -138,7 +129,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     listParticipantEvents: Object,
     listValidatorEvents: Object,
     historyTransaction: Object,
-    color: string,
+    avatar: string,
     _id: number,
     verifier: string
   ) {
@@ -152,7 +143,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       listParticipantEvents: listParticipantEvents,
       listValidatorEvents: listValidatorEvents,
       historyTransaction: historyTransaction,
-      avatar: color,
+      avatar: avatar == "" ? 'assets/users/avatar.png' : avatar,
       verifier: verifier
     }));
     this.onReset();

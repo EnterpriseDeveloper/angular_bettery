@@ -140,6 +140,17 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
   }
 
+  updateValue() {
+    let value = this.answerForm.controls.amount.value;
+    if (value) {
+      value = value.toString();
+      if (value.indexOf('.') != '-1') {
+        value = value.substring(0, value.indexOf('.') + 3);
+        this.answerForm.controls.amount.setValue(value);
+      }
+    }
+  }
+
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -151,6 +162,5 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       this.postSub.unsubscribe();
     }
   }
-
 
 }

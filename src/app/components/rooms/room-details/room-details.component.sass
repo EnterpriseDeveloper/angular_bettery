@@ -128,7 +128,7 @@
     .sortHead-item-dark
       padding: 5px 12px
     .whiteClass
-      max-height: 600px
+      max-height: 700px
     .bgWhite
       border-bottom-right-radius: 20px
       border-bottom-left-radius: 20px
@@ -156,6 +156,18 @@
       padding-bottom: 15px
     .commentBoxChange:nth-last-child(n+2)
       border-bottom: 0.5px solid #DDDDDD
+    .addCommentBox
+      font-size: 10px
+      line-height: 14px
+      max-height: 160px
+    .addCommentBox::-webkit-scrollbar
+      width: 6px
+    .addCommentBox::-webkit-scrollbar-track
+      background: #f1f1f1
+      border-radius: 3px
+    .addCommentBox::-webkit-scrollbar-thumb
+      background: #0094FF
+      border-radius: 3px
     .addCommentBox::placeholder
       font-size: 10px
       color: #0B1511
@@ -176,9 +188,11 @@
     .darkSize
       width: 13px
       height: 13px
-    @media (max-height: 600px)
+    @media (max-height: 780px)
       .comment-warp
-        max-height: 300px
+        max-height: 250px
+      .addCommentBox
+        max-height: 90px
 
 @media (min-width: 1600px)
 

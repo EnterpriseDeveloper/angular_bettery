@@ -1,14 +1,14 @@
-import {Component, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../app.state';
-import {ClipboardService} from 'ngx-clipboard';
-import {PostService} from '../../../../services/post.service';
-import {Subscription} from 'rxjs';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
-import {User} from '../../../../models/User.model';
-import {Router} from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../app.state';
+import { ClipboardService } from 'ngx-clipboard';
+import { PostService } from '../../../../services/post.service';
+import { Subscription } from 'rxjs';
+import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { User } from '../../../../models/User.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -143,7 +143,9 @@ export class PublicEventDesktopComponent implements OnDestroy {
           this.created = true;
           this.calculateDate()
           this.modalService.dismissAll();
-          this.router.navigate([`room/${x.roomId}`]);
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+            this.router.navigate([`room/${x.roomId}`]));
+
         },
         (err) => {
           this.spinnerLoading = false;
@@ -177,7 +179,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
   }
 
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
+    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';

@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizErrorsComponent} from '../quiz-errors/quiz-errors.component';
 import {Subscription} from 'rxjs';
 import {User} from '../../../../models/User.model';
 import {RegistrationComponent} from '../../../registration/registration.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -11,25 +12,33 @@ import {RegistrationComponent} from '../../../registration/registration.componen
   templateUrl: './quiz-action.component.html',
   styleUrls: ['./quiz-action.component.sass']
 })
-export class QuizActionComponent {
+export class QuizActionComponent implements OnInit{
   @Input() question: any;
   @Input() joinPlayer: boolean;
   @Input() becomeExpert: boolean;
   @Input() allUserData: User;
+  @Input()  isDisableValid: boolean;
+  @Input()  isDisableBet: boolean;
   @Output() goBack = new EventEmitter();
   @Output() betEvent = new EventEmitter<Array<any>>();
   @Output() validateEvent = new EventEmitter<Array<any>>();
 
   answerNumber: number = null;
-  amount: number = 0;
-
+  // amount: number = 0;
   torusSub: Subscription;
   storeUserSubscribe: Subscription;
   limitAmount: boolean;
+  form: FormGroup;
 
   constructor(
     private modalService: NgbModal,
+    private formBuilder: FormBuilder,
   ) {
+  }
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      amount: [0],
+    });
   }
 
   async makeAnswer(i) {
@@ -37,7 +46,10 @@ export class QuizActionComponent {
   }
 
   async participate() {
-    if (this.amount < 0.01) {
+    if (this.isDisableBet) {
+      return;
+    }
+    if (Number(this.form.controls.amount.value) < 0.01) {
       this.limitAmount =  true;
       return;
     } else {
@@ -48,10 +60,10 @@ export class QuizActionComponent {
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = "Choose anwer";
-        modalRef.componentInstance.description = "Choose at leas one answer";
+        modalRef.componentInstance.description = "Choose at least one answer";
         modalRef.componentInstance.nameButton = "fine";
       } else {
-        if (Number(this.amount) <= 0) {
+        if (Number(this.form.controls.amount.value) <= 0) {
           const modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
           modalRef.componentInstance.errType = 'error';
           modalRef.componentInstance.title = "Low amount";
@@ -59,9 +71,10 @@ export class QuizActionComponent {
           modalRef.componentInstance.nameButton = "fine";
         } else {
           let data: any = {
-            amount: this.amount,
+            amount: this.form.controls.amount.value,
             answer: this.answerNumber
           }
+          this.isDisableBet = true;
           this.betEvent.next(data);
         }
 
@@ -73,17 +86,21 @@ export class QuizActionComponent {
   }
 
   async validate() {
+    if (this.isDisableValid) {
+      return;
+    }
     if (this.allUserData != undefined) {
       if (this.answerNumber === null) {
         let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = 'Choose anwer';
-        modalRef.componentInstance.description = 'Choose at leas one answer';
+        modalRef.componentInstance.description = 'Choose at least one answer';
         modalRef.componentInstance.nameButton = 'fine';
       } else {
         let data: any = {
           answer: this.answerNumber
         };
+        this.isDisableValid = true;
         this.validateEvent.next(data);
       }
     } else {
@@ -111,5 +128,16 @@ export class QuizActionComponent {
   filterKeyCode(event) {
     this.limitAmount = false;
     return event.keyCode !== 69 && event.keyCode !== 189 && event.keyCode !== 187;
+  }
+
+  updateValue() {
+    let value = this.form.controls.amount.value;
+    if (value) {
+      value = value.toString();
+      if (value.indexOf('.') != '-1') {
+        value = value.substring(0, value.indexOf('.') + 3);
+        this.form.controls.amount.setValue(value);
+      }
+    }
   }
 }

@@ -115,6 +115,7 @@
           <div class="imgBox" (click)="copyToClickBoard()">
             <div class="listImg" style="margin-right: 8px"></div>
             <p class="copyToClick">Copy to clipboard</p>
+            <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
           </div>
         </div>
 
@@ -124,10 +125,10 @@
         <div *ngIf="!validation">
           <button class="buttonBecome buttonColorPlayer" (click)="joinAsPlayer()">JOIN AS PLAYER</button>
           <a class="linkInfo colorLinkPlayer" (click)="modalAboutPlayers()">What is a Player?</a>
-          <button class="buttonBecome buttonColorExpert" (click)="joinAsExpert()">BECOME AN EXPERT</button>
-          <a class="linkInfo colorLinkExpert" (click)="modalAboutExpert()">What is an Expert?</a>
+          <button *ngIf="userData?._id != eventData?.host.id" class="buttonBecome buttonColorExpert" (click)="joinAsExpert()">BECOME AN EXPERT</button>
+          <a *ngIf="userData?._id != eventData?.host.id" class="linkInfo colorLinkExpert" (click)="modalAboutExpert()">What is an Expert?</a>
         </div>
-        <div *ngIf="validation">
+        <div *ngIf="validation && userData?._id != eventData?.host.id">
           <button class="buttonBecome buttonColorExpert" (click)="joinAsExpert()">JOIN AS EXPERT</button>
           <a class="linkInfo colorLinkExpert" (click)="modalAboutExpert()">What is an Expert?</a>
         </div>
