@@ -4,7 +4,7 @@ import { SpinnerLoadingComponent } from './spinner-loading/spinner-loading.compo
 import { InfoModalComponent } from './info-modal/info-modal.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { CommentComponent } from './comment/comment.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TimeAgoPipe } from './comment/pipe/time-ago.pipe';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { MetaMaskModalComponent } from './meta-mask-modal/meta-mask-modal.component';
@@ -43,18 +43,19 @@ import { SpinnerLoadMoreComponent } from './spinner-load-more/spinner-load-more.
     JustANoteModalComponent,
     SpinnerLoadMoreComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgxPageScrollModule,
-    RouterModule.forChild([
-      { path: 'host', component: ComingSoonComponent },
-      { path: 'my-events', component: ComingSoonComponent },
-      { path: 'achievements', component: ComingSoonComponent },
-      { path: 'friends', component: ComingSoonComponent },
-      { path: 'help', component: ComingSoonComponent },
-    ]),
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgxPageScrollModule,
+        RouterModule.forChild([
+            {path: 'host', component: ComingSoonComponent},
+            {path: 'my-events', component: ComingSoonComponent},
+            {path: 'achievements', component: ComingSoonComponent},
+            {path: 'friends', component: ComingSoonComponent},
+            {path: 'help', component: ComingSoonComponent},
+        ]),
+        ReactiveFormsModule,
+    ],
   exports: [
     SpinnerLoadMoreComponent,
     SpinnerLoadingComponent,
