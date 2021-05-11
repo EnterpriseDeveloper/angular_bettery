@@ -71,7 +71,7 @@
           <div *ngIf="pub.expertsCountType.value == 'custom'"
             [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
             <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-              <input type="number" placeholder="Enter number of experts1" formControlName="expertsCount" min="0"
+              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount" min="0"
                 class="answer placeHol" [ngClass]="{
                                     'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
                                     'nguyen4': pub.expertsCountType.value == 'custom'
