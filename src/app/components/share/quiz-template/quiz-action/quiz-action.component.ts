@@ -39,6 +39,23 @@ export class QuizActionComponent implements OnInit{
     this.form = this.formBuilder.group({
       amount: [0],
     });
+
+    let valid = this.question.validatorsAnswers == undefined ? 0 : this.question.validatorsAnswers.length;
+    let validLeft = this.getValidatorsAmountLeft(this.question);
+    this.isDisableValid = validLeft == valid;
+  }
+
+  getValidatorsAmountLeft(eventData) {
+    return eventData.validatorsAmount == 0 ? this.expertAmount(eventData) : eventData.validatorsAmount;
+  }
+
+  expertAmount(eventData) {
+    let part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
+    if (part < 11) {
+      return 3;
+    } else {
+      return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
+    }
   }
 
   async makeAnswer(i) {
