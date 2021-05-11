@@ -3,15 +3,15 @@ import {GetService} from '../../../../services/get.service';
 import {PostService} from '../../../../services/post.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
-import {ClipboardService} from 'ngx-clipboard'
+import {ClipboardService} from 'ngx-clipboard';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component'
+import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
 import {ErrorLimitModalComponent} from '../../../share/error-limit-modal/error-limit-modal.component';
 import {environment} from '../../../../../environments/environment';
 import {User} from '../../../../models/User.model';
-import {formDataAction} from "../../../../actions/newEvent.actions";
+import {formDataAction} from '../../../../actions/newEvent.actions';
 
 @Component({
   selector: 'private-event-modile',
@@ -34,6 +34,7 @@ export class PrivateEventComponent implements OnDestroy {
   createSub: Subscription;
   spinnerLoading: boolean = false;
   pastTime: boolean;
+  copyLinkFlag: boolean;
 
 
   constructor(
@@ -44,7 +45,7 @@ export class PrivateEventComponent implements OnDestroy {
     private router: Router,
     private modalService: NgbModal
   ) {
-    this.userSub = this.store.select("user").subscribe((x: User[]) => {
+    this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x?.length != 0) {
         this.host = x;
       }
@@ -60,17 +61,21 @@ export class PrivateEventComponent implements OnDestroy {
   }
 
   copyToClickBoard() {
-    let href = window.location.hostname
-    let path = href == "localhost" ? 'http://localhost:4200' : href;
+    this.copyLinkFlag = true;
+    let href = window.location.hostname;
+    let path = href == 'localhost' ? 'http://localhost:4200' : href;
     this._clipboardService.copy(`${path}/private_event/${this.eventData._id}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
   }
 
   generateID() {
     let data = {
       id: this.host[0]._id,
       prodDev: environment.production
-    }
-    return this.postService.post("privateEvents/createId", data)
+    };
+    return this.postService.post('privateEvents/createId', data);
   }
 
   getStartTime() {
@@ -93,7 +98,7 @@ export class PrivateEventComponent implements OnDestroy {
       host: this.host[0]._id,
       prodDev: environment.production,
       answers: this.formData.answers.map((x) => {
-        return x.name
+        return x.name;
       }),
       question: this.formData.question,
       startTime: this.getStartTime(),
@@ -104,9 +109,9 @@ export class PrivateEventComponent implements OnDestroy {
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
       roomId: this.formData.roomId
-    }
+    };
 
-    this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)
+    this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)
       .subscribe(
         (x: any) => {
           this.eventData._id = x.id;
@@ -117,13 +122,13 @@ export class PrivateEventComponent implements OnDestroy {
           this.formDataReset();
         },
         (err) => {
-          console.log("set qestion error");
+          console.log('set qestion error');
           console.log(err);
-          if (err.error == "Limit is reached") {
-            this.modalService.open(ErrorLimitModalComponent, { centered: true });
+          if (err.error == 'Limit is reached') {
+            this.modalService.open(ErrorLimitModalComponent, {centered: true});
             this.spinnerLoading = false;
           }
-        })
+        });
   }
 
   formDataReset() {
@@ -145,18 +150,18 @@ export class PrivateEventComponent implements OnDestroy {
     let minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
     let second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
 
-    this.hour = Number(hour) > 9 ? hour : "0" + hour;
-    this.minutes = Number(minutes) > 9 ? minutes : "0" + minutes;
+    this.hour = Number(hour) > 9 ? hour : '0' + hour;
+    this.minutes = Number(minutes) > 9 ? minutes : '0' + minutes;
     if (second === 60) {
-      this.seconds = "00"
+      this.seconds = '00';
     } else {
-      this.seconds = second > 9 ? second : "0" + second;
+      this.seconds = second > 9 ? second : '0' + second;
 
     }
 
 
     setTimeout(() => {
-      this.calculateDate()
+      this.calculateDate();
     }, 1000);
   }
 

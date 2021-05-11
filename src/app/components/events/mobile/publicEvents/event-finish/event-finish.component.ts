@@ -30,6 +30,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   role: string = undefined;
   winner: boolean = false;
   playerIndex: number;
+  copyLinkFlag: boolean;
 
   constructor(
     private modalService: NgbModal,
@@ -321,8 +322,12 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   }
 
   copyToClickBoard() {
+    this.copyLinkFlag = true;
     let href = window.location.hostname;
     let path = href == 'localhost' ? 'http://localhost:4200' : href;
     this._clipboardService.copy(`${path}/public_event/${this.eventData.id}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
   }
 }

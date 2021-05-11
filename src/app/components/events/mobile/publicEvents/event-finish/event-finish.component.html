@@ -156,6 +156,7 @@
         </p>
         <p style="text-align: center;"><a class="linkWrap" href="#">www.bettery.io/public_event/{{eventData.id}}</a></p>
         <div class="share_img" (click)="copyToClickBoard()"></div>
+        <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
     </div>
 
     <a routerLink="/create-event" class="becomeHost">{{createEventText()}}</a>

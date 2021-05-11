@@ -414,12 +414,31 @@
     border-radius: 8px
     margin-top: 23px
     margin-bottom: 15px
+    position: relative
     & a
         color: #54A3DD
         font-size: 18px
         line-height: 25px
         text-align: center
         font-family: 'Open Sans', sans-serif
+
+.copied
+  font-weight: 400
+  font-size: 10px
+  color: white
+  white-space: nowrap
+  position: absolute
+  top: 50%
+  z-index: 1
+  left: 50%
+  opacity: 0
+  display: none
+  transform: translate(-50%, 50%)
+  transition: all 0.5s
+
+.showLink
+  opacity: 1
+  display: block
 
 .shate_event_info
     font-family: 'Open Sans', sans-serif

@@ -41,6 +41,7 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   storeSub: Subscription;
   postSub: Subscription;
   themeChat = 'dark';
+  copyLinkFlag: boolean;
 
 
   constructor(
@@ -57,7 +58,6 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
 
   getUsers() {
     this.storeSub = this.store.select("user").subscribe((x: User[]) => {
-      console.log(x)
       if (x.length != 0) {
         this.currentPool = 0;
         this.playersJoinde = 0;
@@ -260,9 +260,13 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   copyToClickBoard() {
+    this.copyLinkFlag = true;
     let href = window.location.hostname
     let path = href == "localhost" ? 'http://localhost:4200' : href
     this._clipboardService.copy(`${path}/public_event/${this.eventData.id}`)
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
   }
 
   modalAboutExpert() {

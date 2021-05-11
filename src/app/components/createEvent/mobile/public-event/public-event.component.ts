@@ -33,6 +33,7 @@ export class PublicEventComponent implements OnDestroy {
   fromDataSubscribe: Subscription;
   spinnerLoading: boolean = false;
   pastTime: boolean;
+  copyLinkFlag: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -89,9 +90,13 @@ export class PublicEventComponent implements OnDestroy {
   }
 
   copyToClickBoard() {
+    this.copyLinkFlag = true;
     let href = window.location.hostname
     let path = href == "localhost" ? 'http://localhost:4200' : href
-    this._clipboardService.copy(`${path}/public_event/${this.quizData._id}`)
+    this._clipboardService.copy(`${path}/public_event/${this.quizData._id}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
   }
 
   getStartTime() {
