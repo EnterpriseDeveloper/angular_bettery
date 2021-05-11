@@ -233,6 +233,7 @@
     display: flex
     justify-content: center
     margin-bottom: 23px
+    position: relative
 
 .list
     font-family: 'Open Sans', sans-serif
@@ -315,6 +316,24 @@ ul li::before
     color: #FFFFFF
     top: 4px
     position: relative
+
+.copied
+  font-weight: 400
+  font-size: 10px
+  color: white
+  white-space: nowrap
+  position: absolute
+  top: 50%
+  z-index: 1
+  left: 50%
+  opacity: 0
+  display: none
+  transform: translate(-50%, 50%)
+  transition: all 0.5s
+
+.showLink
+  opacity: 1
+  display: block
 
 .bg-img-private
   background: url("../../../../../assets/share/backg_5_big.png") 80% 68% no-repeat,url("../../../../../assets/share/backg_5_small.png") 17% 70% no-repeat,url("../../../../../assets/share/backg_5_small.png") 78% 47% no-repeat,url("../../../../../assets/share/backg_5_big.png") 66px 28% no-repeat #242521

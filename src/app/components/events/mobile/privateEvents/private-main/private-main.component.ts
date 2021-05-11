@@ -46,6 +46,7 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
     minutes: '',
     seconds: '',
   };
+  copyLinkFlag: boolean;
 
   constructor(
     private postService: PostService,
@@ -238,9 +239,13 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
   }
 
   copyToClickBoard() {
+    this.copyLinkFlag = true;
     const href = window.location.hostname;
     const path = href === 'localhost' ? 'http://localhost:4200' : href;
     this._clipboardService.copy(`${path}/private_event/${this.data.id}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
   }
 
   openSoonModal(content) {

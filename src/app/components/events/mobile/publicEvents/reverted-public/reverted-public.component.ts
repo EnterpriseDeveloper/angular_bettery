@@ -34,7 +34,7 @@ export class RevertedPublicComponent implements OnInit, OnDestroy {
   }
 
   statusReverted(data) {
-    let x = data.status.replace("reverted: ", "")
+    let x = data.status.replace("reverted:", " ")
     if (x.search("not enough experts") != -1) {
       return x + " (" + data.validatorsAnswers.length + "/" + data.validatorsAmount + ")"
     } else {
