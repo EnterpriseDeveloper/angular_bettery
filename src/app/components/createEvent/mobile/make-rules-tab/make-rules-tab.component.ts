@@ -66,6 +66,9 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if ( this.formData.publicEndTime.length == 0) {
+      this.formData.publicEndTime = this.times[12];
+    }
     this.initializeForm();
   }
 
@@ -89,7 +92,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
       tokenType: [this.formData?.tokenType],
       publicEndTime: [this.formData?.publicEndTime, Validators.required],
       expertsCountType: [this.formData?.expertsCountType],
-      expertsCount: [this.formData?.expertsCount, this.formData?.expertsCountType == 'custom' ? Validators.required : '']
+      expertsCount: [this.formData?.expertsCount, this.formData?.expertsCountType == 'custom' ? (Validators.compose([Validators.required, Validators.min(1)])) : '']
     });
     this.privateForm = this.formBuilder.group({
       winner: [this.formData?.winner, Validators.required],
@@ -319,15 +322,13 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   reinitializeForm(param) {
     if (param === 'company') {
       this.formData.expertsCountType = 'company';
+      this.formData.publicEndTime = this.times[12];
       this.initializeForm();
-      this.publicForm.controls.publicEndTime.setValue('');
-      this.endPublicTime = '';
+
     }
     if (param === 'custom') {
       this.formData.expertsCountType = 'custom';
       this.initializeForm();
-      this.publicForm.controls.publicEndTime.setValue('');
-      this.endPublicTime = '';
     }
   }
 

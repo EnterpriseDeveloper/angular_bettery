@@ -55,7 +55,7 @@
           <div class="state p-warning-o checkBoxPosition">
             <label class="pos"> </label>
           </div>
-          <p class="tab tabPosTwo">Default</p>
+          <p class="tab tabPosTwo">Event will mint BET</p>
         </div>
         <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
           <div class="pretty p-default p-round inline expertsCheckWrapper"
@@ -64,14 +64,14 @@
             <div class="state p-warning-o checkBoxPosition">
               <label class="pos"> </label>
             </div>
-            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Custom
+            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Event won't mint BET
             </p>
           </div>
           <div *ngIf="pub.expertsCountType.value == 'custom'"
                [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
             <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
               <input type="number" placeholder="Enter number of experts" formControlName="expertsCount"
-                     class="answer" [ngClass]="{
+                     class="answer placeHol" [ngClass]="{
                                     'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
                                     'nguyen4': pub.expertsCountType.value == 'custom'
                                 }"/>
