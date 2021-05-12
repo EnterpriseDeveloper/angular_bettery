@@ -85,7 +85,7 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
         id: Number(params.id)
       };
       setTimeout(()=>{
-        console.log(this.data)
+        console.log(this.data.resolutionDetalis.length)
       },5000)
     });
 

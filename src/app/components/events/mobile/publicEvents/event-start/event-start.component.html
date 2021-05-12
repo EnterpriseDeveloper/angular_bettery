@@ -61,8 +61,8 @@
         </div>
       </div>
 
-      <div class="answerBoxResolution">
-        <p class="resolutionText">How to verify: <b>www.cnn.com</b></p>
+      <div class="answerBoxResolution" *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+        <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
       </div>
 
       <div class="arrow"></div>

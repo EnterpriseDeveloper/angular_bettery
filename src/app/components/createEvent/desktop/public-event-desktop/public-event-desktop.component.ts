@@ -132,7 +132,8 @@ export class PublicEventDesktopComponent implements OnDestroy {
       roomName: this.formData.roomName,
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
-      roomId: this.formData.roomId
+      roomId: this.formData.roomId,
+      resolutionDetalis: this.formData.resolutionDetalis
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)

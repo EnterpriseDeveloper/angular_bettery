@@ -75,7 +75,8 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
       roomName: this.formData.roomName,
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
-      roomId: this.formData.roomId
+      roomId: this.formData.roomId,
+      resolutionDetalis: this.formData.resolutionDetalis
     }
 
     this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)

@@ -97,8 +97,8 @@
                 </li>
               </div>
             </ng-container>
-            <div class="resolution_details">
-              How to verify: <span>www.cnn.com</span>
+            <div class="resolution_details" *ngIf="data?.resolutionDetalis != 'undefined' && data?.resolutionDetalis.length != 0">
+              How to verify: <span>{{data?.resolutionDetalis}}</span>
             </div>
             <div>
               <div class="winner_get">

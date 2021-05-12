@@ -14,13 +14,13 @@
             <p class="answer">{{answer.name}}</p>
         </div>
     </div>
-    <div *ngIf="formData.resolutionDetalis != ''">
+    <div *ngIf="formData?.resolutionDetalis != ''">
         <div class="label" style="padding-top: 16px;">
             <div class="LightYellow"></div>
             <p class="mt-1">HOW TO VERIFY</p>
         </div>
         <div class="answerBox">
-            <p class="answer">{{formData.resolutionDetalis}}</p>
+            <p class="answer">{{formData?.resolutionDetalis}}</p>
         </div>
     </div>
     <div class="label" style="padding-top: 16px;">

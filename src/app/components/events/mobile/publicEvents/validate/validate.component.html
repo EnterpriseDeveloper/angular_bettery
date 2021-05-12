@@ -11,8 +11,8 @@
             <p class="answerCreated">{{answer}}</p>
         </div>
     </div>
-    <div class="answerBoxResolution">
-        <p class="resolutionText">How to verify: <b>www.cnn.com</b></p>
+    <div class="answerBoxResolution" *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+        <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
     </div>
     <p class="playersAmount"><b>{{playersAmount()}} Players</b> placed their bet so far.</p>
 
@@ -41,8 +41,8 @@
                     required</small>
             </div>
         </form>
-        <div class="resolutionBox">
-            <p class="resolution">How to verify: <b> www.cnn.com</b></p>
+        <div class="resolutionBox" *ngIf="eventData?.resolutionDetalis != 'undefined' || eventData?.resolutionDetalis.length != 0">
+            <p class="resolution">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
         </div>
         <div *ngIf="errorMessage">
             <div class="errorImg"></div>
