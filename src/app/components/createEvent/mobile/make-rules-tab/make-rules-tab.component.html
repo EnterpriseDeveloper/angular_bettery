@@ -55,7 +55,7 @@
           <div class="state p-warning-o checkBoxPosition">
             <label class="pos"> </label>
           </div>
-          <p class="tab tabPosTwo">Event will mint BET</p>
+          <p class="tab tabPosTwo">Default - Event will mint BET</p>
         </div>
         <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
           <div class="pretty p-default p-round inline expertsCheckWrapper"
@@ -64,7 +64,7 @@
             <div class="state p-warning-o checkBoxPosition">
               <label class="pos"> </label>
             </div>
-            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Event won't mint BET
+            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Custom - Event won't mint BET
             </p>
           </div>
           <div *ngIf="pub.expertsCountType.value == 'custom'"

@@ -1,4 +1,4 @@
-<div class="main-bg">
+<div *ngIf="!isMobile" class="main-bg">
   <app-search-bar class="main-warp  container"
                   (activeItemEmit)="activeBtnFromSearchBar($event)"
                   (searchWordEmit)="letsFindNewQuestion($event)"
@@ -118,3 +118,5 @@
               (filterData)="letsFilterData($event)"
                [statusMode]="filterMode"
 ></filterTimeline>
+
+<app-mobile-plug-page *ngIf="isMobile"></app-mobile-plug-page>

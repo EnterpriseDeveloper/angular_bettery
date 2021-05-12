@@ -40,7 +40,10 @@
         <div class="tutorial">
           <h3>how to participate ?</h3>
           <div class="tutorials-place">
-            <p>Gif Tutorials</p>
+            <div>
+              <p class="mb-0" style="font-size: 22px">Gif Tutorials</p>
+              <p class="mb-0">(coming soon)</p>
+            </div>
           </div>
         </div>
         <div class="btn_join pb-2">
@@ -70,7 +73,8 @@
               Betting is over. Waiting for Expert...
             </div>
 
-            <div *ngIf="!displayTime() && !hideBtn">Time left to validate <b>{{allTime.day}}:{{allTime.hour}}:{{allTime.minutes}}:{{allTime.seconds}}</b></div>
+            <div *ngIf="!displayTime() && !hideBtn">Time left to validate <b>{{allTime.day}}:{{allTime.hour}}
+              :{{allTime.minutes}}:{{allTime.seconds}}</b></div>
           </div>
           <div class="question_second">
             <div class="question_text">
@@ -86,9 +90,9 @@
                }">
                   <div>{{a}}</div>
 
-                  <div  class="partBoxAvatar">
+                  <div class="partBoxAvatar">
                     <div *ngIf="participatedIndex == i">
-                      <div  class="top-7px ">
+                      <div class="top-7px ">
                         <img class="partImg" referrerpolicy="no-referrer" src="{{userData?.avatar}}">
                       </div>
                     </div>
@@ -190,7 +194,8 @@
               </div>
             </div>
 
-            <app-comment class="deep-comment" *ngIf="data" [mobile]="true" [theme] = themeChat [userData] = userData [id] = "data?.id"></app-comment>
+            <app-comment class="deep-comment" *ngIf="data" [mobile]="true" [theme]=themeChat [userData]=userData
+                         [id]="data?.id"></app-comment>
 
           </div>
         </ng-container>

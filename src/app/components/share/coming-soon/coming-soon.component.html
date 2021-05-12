@@ -1,4 +1,4 @@
-<div class="main-bg">
+<div *ngIf="!isMobile" class="main-bg">
   <div class="container second-bg">
     <div *ngIf="currentPath === '/host'" class="host_img"></div>
     <div *ngIf="currentPath === '/my-events'" class="myEvent_img"></div>
@@ -37,3 +37,4 @@
     </div>
   </div>
 </div>
+<app-mobile-plug-page *ngIf="isMobile"></app-mobile-plug-page>

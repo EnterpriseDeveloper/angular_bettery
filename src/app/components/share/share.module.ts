@@ -20,6 +20,7 @@ import { QuizEventFinishComponent } from './quiz-template/quiz-event-finish/quiz
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { JustANoteModalComponent } from './just-note-modal/just-anote-modal.component';
 import { SpinnerLoadMoreComponent } from './spinner-load-more/spinner-load-more.component';
+import { MobilePlugPageComponent } from './mobile-plug-page/mobile-plug-page.component';
 
 
 
@@ -41,7 +42,8 @@ import { SpinnerLoadMoreComponent } from './spinner-load-more/spinner-load-more.
     QuizEventFinishComponent,
     ComingSoonComponent,
     JustANoteModalComponent,
-    SpinnerLoadMoreComponent
+    SpinnerLoadMoreComponent,
+    MobilePlugPageComponent
   ],
     imports: [
         CommonModule,
@@ -56,14 +58,15 @@ import { SpinnerLoadMoreComponent } from './spinner-load-more/spinner-load-more.
         ]),
         ReactiveFormsModule,
     ],
-  exports: [
-    SpinnerLoadMoreComponent,
-    SpinnerLoadingComponent,
-    CommentComponent,
-    QuizTemplateComponent,
-    TimeComponent,
-    JustANoteModalComponent
-  ]
+    exports: [
+        SpinnerLoadMoreComponent,
+        SpinnerLoadingComponent,
+        CommentComponent,
+        QuizTemplateComponent,
+        TimeComponent,
+        JustANoteModalComponent,
+        MobilePlugPageComponent
+    ]
 })
 
 export class ShareModule {
