@@ -43,6 +43,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   spinner: boolean;
   formData;
   formDataSub: Subscription;
+  isMobile: boolean;
 
   constructor(
     private getService: GetService,
@@ -51,6 +52,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
   ) {
     this.findCurrentUser();
+    this.mobileCheck();
   }
 
   ngOnInit(): void {
@@ -344,5 +346,18 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
   openCreateEventModal() {
     this.modalService.open(EventsTemplatesDesktopComponent, {centered: true});
+  }
+
+  mobileCheck() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)) {
+
+      this.isMobile = true;
+    }
   }
 }

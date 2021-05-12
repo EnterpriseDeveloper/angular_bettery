@@ -84,9 +84,6 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
       this.id = {
         id: Number(params.id)
       };
-      setTimeout(()=>{
-        console.log(this.data)
-      },5000)
     });
 
     this.letsGetDataFromDB();

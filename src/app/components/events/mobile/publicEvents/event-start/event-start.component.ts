@@ -308,7 +308,6 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
       || navigator.userAgent.match(/iPod/i)
       || navigator.userAgent.match(/BlackBerry/i)
       || navigator.userAgent.match(/Windows Phone/i)) {
-      console.log('isMobile');
     } else {
       this.modalService.open(JustANoteModalComponent, { centered: true});
     }
