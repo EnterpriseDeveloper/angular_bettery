@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash';
 import {NgbModal, NgbTimepickerConfig, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component';
+import {InfoModalComponent} from '../../../share/modals/info-modal/info-modal.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
 import {formDataAction} from '../../../../actions/newEvent.actions';

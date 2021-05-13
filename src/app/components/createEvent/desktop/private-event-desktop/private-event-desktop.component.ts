@@ -5,8 +5,8 @@ import { AppState } from '../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard'
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component'
-import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component'
+import { ErrorLimitModalComponent } from '../../../share/modals/error-limit-modal/error-limit-modal.component';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/User.model';
 

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {InfoModalComponent} from '../../../../share/info-modal/info-modal.component';
+import {InfoModalComponent} from '../../../../share/modals/info-modal/info-modal.component';
 
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../app.state';

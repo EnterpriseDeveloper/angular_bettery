@@ -8,7 +8,7 @@ import { ClipboardService } from 'ngx-clipboard';
 import { AppState } from '../../../../../app.state';
 import _ from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../../share/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../../share/modals/info-modal/info-modal.component';
 import { User } from '../../../../../models/User.model';
 import { PrivEventMobile } from '../../../../../models/PrivEventMobile.model';
 import { RegistrationComponent } from '../../../../registration/registration.component';
