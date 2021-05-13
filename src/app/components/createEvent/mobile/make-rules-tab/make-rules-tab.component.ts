@@ -328,6 +328,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
     }
     if (param === 'custom') {
       this.formData.expertsCountType = 'custom';
+      this.formData.publicEndTime = this.times[0];
       this.initializeForm();
     }
   }

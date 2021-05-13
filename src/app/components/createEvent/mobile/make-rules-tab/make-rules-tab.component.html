@@ -21,6 +21,45 @@
 
         </div>
       </div>
+      <div>
+        <div class="labelTime">
+          <p style="margin-bottom: 8px; margin-top: 32px">NUMBER OF EXPERTS</p>
+        </div>
+        <div class="pretty p-default p-round inline expertsCheckWrapper" style="margin-bottom: 8px">
+          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType" checked>
+          <div class="state p-warning-o checkBoxPosition">
+            <label class="pos"> </label>
+          </div>
+          <p class="tab tabPosTwo">Default. BET minted.</p>
+        </div>
+
+        <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
+          <div class="pretty p-default p-round inline expertsCheckWrapper"
+               [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
+            <input (click)="reinitializeForm('custom')" type="radio" value="custom" formControlName="expertsCountType">
+            <div class="state p-warning-o checkBoxPosition">
+              <label class="pos"> </label>
+            </div>
+            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Custom. No BET minted.
+            </p>
+          </div>
+          <div *ngIf="pub.expertsCountType.value == 'custom'"
+               [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
+            <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
+              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount"
+                     class="answer placeHol" [ngClass]="{
+                                    'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
+                                    'nguyen4': pub.expertsCountType.value == 'custom'
+                                }"/>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="submitted && pub.expertsCountType.value == 'custom'">
+          <small *ngIf="pub.expertsCount.value == '' || pub.expertsCount.value <= 0"
+                 class="form-text quize_validation_error">Experts number is required</small>
+        </div>
+      </div>
+
       <div class="timeBox">
         <div>
           <div class="labelTime">
@@ -46,50 +85,13 @@
           </div>
         </div>
       </div>
-      <div>
-        <div class="labelTime">
-          <p style="margin-bottom: 8px; margin-top: 32px">NUMBER OF EXPERTS</p>
-        </div>
-        <div class="pretty p-default p-round inline expertsCheckWrapper" style="margin-bottom: 8px">
-          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType" checked>
-          <div class="state p-warning-o checkBoxPosition">
-            <label class="pos"> </label>
-          </div>
-          <p class="tab tabPosTwo">Default - Event will mint BET</p>
-        </div>
-        <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
-          <div class="pretty p-default p-round inline expertsCheckWrapper"
-               [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
-            <input (click)="reinitializeForm('custom')" type="radio" value="custom" formControlName="expertsCountType">
-            <div class="state p-warning-o checkBoxPosition">
-              <label class="pos"> </label>
-            </div>
-            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo">Custom - Event won't mint BET
-            </p>
-          </div>
-          <div *ngIf="pub.expertsCountType.value == 'custom'"
-               [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-            <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount"
-                     class="answer placeHol" [ngClass]="{
-                                    'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
-                                    'nguyen4': pub.expertsCountType.value == 'custom'
-                                }"/>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="submitted && pub.expertsCountType.value == 'custom'">
-          <small *ngIf="pub.expertsCount.value == '' || pub.expertsCount.value == 0"
-                 class="form-text quize_validation_error">Experts number is required</small>
-        </div>
-      </div>
+
       <div>
         <ul style="padding-top: 32px">
-          <li class="infoGrey">Bets from losers is distributed to <span>Experts (5%), Host (3%), Bettery (2%), and Winners (90%) </span>who
-            get their bets back.
+          <li class="infoGrey">Loser bets are distributed to <span>Winners, Host and Experts. </span>Default no. of Experts is based on no. of Players joined.
           </li>
         </ul>
-        <div class=" d-flex justify-content-center mb-5" (click)="openHowEventsWorkSocial(content2)">
+        <div class=" d-flex justify-content-center mb-4" (click)="openHowEventsWorkSocial(content2)">
           <div class="question-img"></div>
           <div><p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p></div>
         </div>

@@ -3,24 +3,67 @@
     <form [formGroup]="publicForm">
       <p class="name">Bet WITH</p>
       <div class="checkBox">
-        <div class="pretty p-default p-round inline">
-          <input type="radio" value="token" formControlName="tokenType" checked>
-          <div class="state p-success-o checkPos">
-            <label class="pos"> </label>
-          </div>
-          <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'token' }">BET Token</p>
-        </div>
+ <div>
+   <div class="pretty p-default p-round inline">
+     <input type="radio" value="token" formControlName="tokenType" checked>
+     <div class="state p-success-o checkPos">
+       <label class="pos"> </label>
+     </div>
+     <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'token' }">BET Token</p>
+   </div>
 
-        <div class="pretty p-default p-round inline">
-          <input type="radio" value="ether" formControlName="tokenType">
-          <div class="state p-success-o checkPos">
-            <label class="pos"> </label>
-          </div>
-          <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'ether' }">ETH (Ethereum)</p>
+   <div class="pretty p-default p-round inline">
+     <input type="radio" value="ether" formControlName="tokenType">
+     <div class="state p-success-o checkPos">
+       <label class="pos"> </label>
+     </div>
+     <p class="tab" [ngClass]="{ 'tab_active': f.tokenType.value == 'ether' }">Ethereum</p>
 
+   </div>
+ </div>
+        <div>
+          <span (click)="openLearnMore()" class="link">Learn more</span>
         </div>
-        <span (click)="openLearnMore()" class="link">Learn more</span>
       </div>
+      <div>
+        <div class="labelTime">
+          <p style="margin-bottom: 8px; margin-top: 32px">NUMBER OF EXPERTS</p>
+        </div>
+        <div class="pretty p-default p-round inline expertsCheckWrapper" style="margin-bottom: 8px">
+          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType"
+                 checked>
+          <div class="state p-success-o checkBoxPosition">
+            <label class="pos"> </label>
+          </div>
+          <p class="tab tabPosTwo colorT">Default. BET Minted.</p>
+        </div>
+        <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
+          <div class="pretty p-default p-round inline expertsCheckWrapper"
+            [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
+            <input (click)="reinitializeForm('custom')" type="radio" value="custom" formControlName="expertsCountType">
+            <div class="state p-success-o checkBoxPosition">
+              <label class="pos"> </label>
+            </div>
+            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo colorT">Custom. No BET Minted.</p>
+          </div>
+          <div *ngIf="pub.expertsCountType.value == 'custom'"
+            [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
+            <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
+              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount" min="0"
+                class="answer placeHol" [ngClass]="{
+                                    'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
+                                    'nguyen4': pub.expertsCountType.value == 'custom'
+                                }" />
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="submitted && pub.expertsCountType.value == 'custom'">
+          <small *ngIf="pub.expertsCount.value == null || pub.expertsCount.value <= 0"
+            class="form-text quize_validation_error">Experts number is required and must be bigger than 0</small>
+        </div>
+      </div>
+
       <div class="timeBox">
         <div>
           <div class="labelTime">
@@ -29,9 +72,9 @@
           <div class="dropBox arowMarker">
             <label for="startPublicTime" id="labelC2">{{endPublicTime}}</label>
             <select (change)="chosePublicEndTime()" [ngClass]="{ 'is_invalid': submitted && pub.publicEndTime.errors }"
-              formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
+                    formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
               <option *ngFor="let time of times, let i = index"
-                [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
+                      [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
                 {{time.name}}</option>
             </select>
             <div class="calendarPosition">
@@ -47,51 +90,11 @@
         </div>
       </div>
       <div>
-        <div class="labelTime">
-          <p style="margin-bottom: 8px; margin-top: 32px">NUMBER OF EXPERTS</p>
-        </div>
-        <div class="pretty p-default p-round inline expertsCheckWrapper" style="margin-bottom: 8px">
-          <input (click)="reinitializeForm('company')" type="radio" value="company" formControlName="expertsCountType"
-            checked>
-          <div class="state p-warning-o checkBoxPosition">
-            <label class="pos"> </label>
-          </div>
-          <p class="tab tabPosTwo colorT">Default - Event will mint BET</p>
-        </div>
-        <div [ngClass]="{ 'nguyen': pub.expertsCountType.value == 'custom'}">
-          <div class="pretty p-default p-round inline expertsCheckWrapper"
-            [ngClass]="{ 'nguyen2': pub.expertsCountType.value == 'custom'}">
-            <input (click)="reinitializeForm('custom')" type="radio" value="custom" formControlName="expertsCountType">
-            <div class="state p-warning-o checkBoxPosition">
-              <label class="pos"> </label>
-            </div>
-            <p *ngIf="pub.expertsCountType.value != 'custom'" class="tab tabPosTwo colorT">Custom - Event won't mint BET
-            </p>
-          </div>
-          <div *ngIf="pub.expertsCountType.value == 'custom'"
-            [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-            <div [ngClass]="{ 'nguyen3': pub.expertsCountType.value == 'custom'}">
-              <input type="number" placeholder="Enter number of experts" formControlName="expertsCount" min="0"
-                class="answer placeHol" [ngClass]="{
-                                    'is_invalid': submitted && (pub.expertsCount.value == '' || pub.expertsCount.value == 0),
-                                    'nguyen4': pub.expertsCountType.value == 'custom'
-                                }" />
-            </div>
-          </div>
-        </div>
-        <div *ngIf="submitted && pub.expertsCountType.value == 'custom'">
-          <small *ngIf="pub.expertsCount.value == '' || pub.expertsCount.value == 0"
-            class="form-text quize_validation_error">Experts number is required and must be bigger than 0</small>
-        </div>
-      </div>
-      <div>
-        <ul style="padding-top: 32px">
-          <li class="infoGrey">Bets from losers is distributed to <span>Experts (5%), Host (3%), Bettery (2%), and
-              Winners (90%) </span>who
-            get their bets back.
+        <ul style="padding-top: 15px">
+          <li class="infoGrey">Loser bets are distributed to<span> Winners, Host</span>, and <span>Experts.</span> Default no. of Experts is based on no. of Players joined.
           </li>
         </ul>
-        <div class="d-flex justify-content-center mb-5" (click)="openHowEventsWorkSocial(content2)">
+        <div class="d-flex justify-content-center mb-2" (click)="openHowEventsWorkSocial(content2)">
           <div class="question-img"></div>
           <div>
             <p class="infoYellow" style="margin-top: 1px;">HOW EVENTS WORK</p>

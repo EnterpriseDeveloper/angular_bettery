@@ -285,6 +285,7 @@ export class MakeRulesDesktopComponent implements OnInit {
     }
     if (param === 'custom') {
       this.formData.expertsCountType = 'custom';
+      this.formData.publicEndTime = this.times[0];
       this.initializeForm();
     }
   }
