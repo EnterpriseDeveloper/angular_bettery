@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { EventsTemplatesDesktopComponent } from "../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component";
+import { EventsTemplatesDesktopComponent } from "../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component";
 
 @Component({
   selector: 'spinner-load-more',

@@ -6,11 +6,11 @@ import { ClipboardService } from 'ngx-clipboard';
 import _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../../share/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../../share/modals/info-modal/info-modal.component';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 import {User} from '../../../../../models/User.model';
 import { RegistrationComponent } from '../../../../registration/registration.component';
-import {JustANoteModalComponent} from '../../../../share/just-note-modal/just-anote-modal.component';
+import {JustANoteModalComponent} from '../../../../share/modals/just-note-modal/just-anote-modal.component';
 
 
 @Component({
@@ -308,7 +308,6 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
       || navigator.userAgent.match(/iPod/i)
       || navigator.userAgent.match(/BlackBerry/i)
       || navigator.userAgent.match(/Windows Phone/i)) {
-      console.log('isMobile');
     } else {
       this.modalService.open(JustANoteModalComponent, { centered: true});
     }

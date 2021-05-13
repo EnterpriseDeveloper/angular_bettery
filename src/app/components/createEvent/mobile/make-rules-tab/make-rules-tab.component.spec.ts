@@ -7,7 +7,7 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
-import {InfoModalComponent} from "../../../share/info-modal/info-modal.component";
+import {InfoModalComponent} from "../../../share/modals/info-modal/info-modal.component";
 import {of} from "rxjs";
 import {AppState} from "../../../../app.state";
 import {formDataAction} from "../../../../actions/newEvent.actions";

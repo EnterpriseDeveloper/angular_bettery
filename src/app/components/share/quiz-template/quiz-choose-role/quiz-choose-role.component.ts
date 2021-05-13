@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { InfoModalComponent } from '../../info-modal/info-modal.component'
+import { InfoModalComponent } from '../../modals/info-modal/info-modal.component'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

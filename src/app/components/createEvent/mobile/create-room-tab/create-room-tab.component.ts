@@ -2,7 +2,7 @@ import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, El
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import GradientJSON from '../../../../../assets/gradients.json';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {InfoModalComponent} from '../../../share/info-modal/info-modal.component'
+import {InfoModalComponent} from '../../../share/modals/info-modal/info-modal.component'
 import {PostService} from '../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';

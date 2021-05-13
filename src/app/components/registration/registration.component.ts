@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import web3Obj from '../../helpers/torus';
 import { Subscription } from 'rxjs';
-import { WelcomePageComponent } from '../share/welcome-page/welcome-page.component';
+import { WelcomePageComponent } from '../share/modals/welcome-page/welcome-page.component';
 import biconomyInit from '../../../app/contract/biconomy';
 
 

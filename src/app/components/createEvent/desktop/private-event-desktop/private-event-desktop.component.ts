@@ -5,8 +5,8 @@ import { AppState } from '../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard'
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component'
-import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component'
+import { ErrorLimitModalComponent } from '../../../share/modals/error-limit-modal/error-limit-modal.component';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/User.model';
 
@@ -75,7 +75,8 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
       roomName: this.formData.roomName,
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
-      roomId: this.formData.roomId
+      roomId: this.formData.roomId,
+      resolutionDetalis: this.formData.resolutionDetalis
     }
 
     this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)

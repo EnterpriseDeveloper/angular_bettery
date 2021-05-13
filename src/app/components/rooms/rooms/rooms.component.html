@@ -1,4 +1,4 @@
-<div class="main">
+<div *ngIf="!isMobile" class="main">
   <div class="top">
     <div class="top-box">
       <div class="question-title">
@@ -42,7 +42,7 @@
       <div class="pagination">
         <div class="filter">Filter by subject ({{forFilterBySubject()}}/{{allRooms?.length}})</div>
         <div (click)="prevRooms()" class="left-img-1"></div>
-        <div class="ml-3 mr-3 count">{{pageRoom}} / <span>{{letsFindRoomsLength()}}</span></div>
+        <div class="ml-2 mr-2 count">{{pageRoom}} / <span>{{letsFindRoomsLength()}}</span></div>
         <div (click)="nextRooms()" class="right-img-1"></div>
       </div>
     </div>
@@ -149,3 +149,5 @@
     </div>
   </div>
 </div>
+
+<app-mobile-plug-page *ngIf="isMobile"></app-mobile-plug-page>

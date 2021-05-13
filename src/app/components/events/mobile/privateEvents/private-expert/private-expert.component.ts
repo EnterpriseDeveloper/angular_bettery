@@ -40,6 +40,7 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private postService: PostService,
   ) {
+    console.log(this.data)
     this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
         this.userData = x[0];
@@ -88,6 +89,7 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
       from: this.userData._id,
     };
     this.postSub = this.postService.post('privateEvents/validate', data).subscribe(async () => {
+      this.answerIndex = answer;
       this.spinnerLoading = false;
       this.errorMessage = undefined;
       this.confirm = true;

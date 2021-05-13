@@ -15,7 +15,12 @@
     </div>
     <div class="arrow"></div>
     <div class="info">How to participate?</div>
-    <div>GIF</div>
+    <div class="tutorials-place">
+      <div>
+        <p class="mb-0" style="font-size: 22px">Gif Tutorials</p>
+        <p class="mb-0">(coming soon)</p>
+      </div>
+    </div>
     <button class="join" (click)="join()">JOIN</button>
   </div>
   <div *ngIf="letsJoin" class="bg_img">
@@ -61,8 +66,8 @@
         </div>
       </div>
 
-      <div class="answerBoxResolution">
-        <p class="resolutionText">How to verify: <b>www.cnn.com</b></p>
+      <div class="answerBoxResolution" *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+        <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
       </div>
 
       <div class="arrow"></div>

@@ -24,6 +24,7 @@ export interface PrivEventMobile {
   winner: string;
   validatorsAmount: number;
   validatorAnswer: ValidatorsAnswers[];
+  resolutionDetalis: string
 }
 
 interface ParcipiantAnswers {

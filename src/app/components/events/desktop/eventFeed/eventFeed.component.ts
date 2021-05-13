@@ -50,6 +50,7 @@ export class EventFeedComponent implements OnDestroy {
   showEnd = true;
   filterMode = true;
   finishLoading = false;
+  isMobile: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -78,6 +79,7 @@ export class EventFeedComponent implements OnDestroy {
         this.coinInfo = x[0];
       }
     });
+    this.mobileCheck();
   }
 
   getData(path, from, to, search, sort) {
@@ -287,5 +289,18 @@ export class EventFeedComponent implements OnDestroy {
 
   openCreateEventModal() {
     this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
+  }
+
+  mobileCheck() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)) {
+
+      this.isMobile = true;
+    }
   }
 }

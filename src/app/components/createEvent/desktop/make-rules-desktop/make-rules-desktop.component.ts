@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component';
 
 
 type Time = { name: string, date: any, value: number };
@@ -285,6 +285,7 @@ export class MakeRulesDesktopComponent implements OnInit {
     }
     if (param === 'custom') {
       this.formData.expertsCountType = 'custom';
+      this.formData.publicEndTime = this.times[0];
       this.initializeForm();
     }
   }

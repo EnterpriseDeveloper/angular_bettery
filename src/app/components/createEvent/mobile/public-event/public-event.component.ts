@@ -4,9 +4,9 @@ import { AppState } from '../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard'
 import { PostService } from '../../../../services/post.service'
 import { Subscription } from 'rxjs';
-import { InfoModalComponent } from '../../../share/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorLimitModalComponent } from '../../../share/error-limit-modal/error-limit-modal.component';
+import { ErrorLimitModalComponent } from '../../../share/modals/error-limit-modal/error-limit-modal.component';
 import { User } from '../../../../models/User.model';
 import { Router } from "@angular/router";
 import { formDataAction } from "../../../../actions/newEvent.actions";
@@ -147,7 +147,8 @@ export class PublicEventComponent implements OnDestroy {
       roomName: this.formData.roomName,
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
-      roomId: this.formData.roomId
+      roomId: this.formData.roomId,
+      resolutionDetalis: this.formData.resolutionDetalis
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
