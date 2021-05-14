@@ -206,7 +206,7 @@ export class EventFeedComponent implements OnDestroy {
       this.scrollDistanceFrom = this.scrollDistanceFrom + 5;
       this.scrollDistanceTo = this.scrollDistanceTo + 5;
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
-    } else if (this.pureData?.amount / 5 !== 0 && (this.scrollDistanceTo + this.pureData?.amount % 5 <= this.pureData?.amount)) {
+    } else if (this.pureData?.amount % 5 !== 0 && (this.scrollDistanceTo + this.pureData?.amount % 5 <= this.pureData?.amount)) {
       this.scrollDistanceFrom = this.scrollDistanceTo + this.pureData?.amount % 5;
       this.scrollDistanceTo = this.scrollDistanceTo + this.pureData?.amount % 5;
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo + this.pureData?.amount % 5, this.searchWord, this.activeBtn);

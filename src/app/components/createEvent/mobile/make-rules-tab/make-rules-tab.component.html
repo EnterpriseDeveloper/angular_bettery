@@ -69,8 +69,8 @@
             <label for="startPublicTime" id="labelC2">{{endPublicTime}}</label>
             <select (change)="chosePublicEndTime()" [ngClass]="{ 'is_invalid': submitted && pub.publicEndTime.errors }"
                     formControlName="publicEndTime" class="btn" name="startPublicTime" id="startPublicTime">
-              <option *ngFor="let time of times, let i = index"
-                      [ngClass]="pub.expertsCountType.value !== 'custom' && i < 12 && 'd-none'" value="{{time.name}}">
+              <option style="color: #ffffff" *ngFor="let time of times, let i = index"
+                       value="{{time.name}}">
                 {{time.name}}</option>
             </select>
             <div class="calendarPosition">
@@ -144,7 +144,7 @@
       <div class="dropBox correctMB label">
         <label for="startTime" id="labelC">{{endPrivateTime}}</label>
         <select (change)="chosePrivateEndTime()" formControlName="privateEndTime" class=" pl-2 dropBox startTime" [ngClass]="{ 'is_invalid': submitted && priv.privateEndTime.errors }" name="startTime" id="startTime">
-          <option *ngFor="let time of times"   value="{{time.name}}">{{time.name}}</option>
+          <option style="color:#ffffff;" *ngFor="let time of times"   value="{{time.name}}">{{time.name}}</option>
         </select>
         <div *ngIf="submitted && priv.privateEndTime.errors">
           <small *ngIf="priv.privateEndTime.errors.required" class="form-text quize_validation_error">End time is
