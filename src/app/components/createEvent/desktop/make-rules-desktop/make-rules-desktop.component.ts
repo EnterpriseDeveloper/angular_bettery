@@ -1,30 +1,34 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component';
+import {NgbModal, NgbTimepickerConfig, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+import {InfoModalComponent} from '../../../share/modals/info-modal/info-modal.component';
 
 
 type Time = { name: string, date: any, value: number };
 
-const times: Time[] = [
-  { name: '5 minutes', date: new Date().setMinutes(new Date().getMinutes() + 5) - Date.now(), value: 0.083 },
-  { name: '15 minutes', date: new Date().setMinutes(new Date().getMinutes() + 15) - Date.now(), value: 0.25 },
-  { name: '30 minutes', date: new Date().setMinutes(new Date().getMinutes() + 30) - Date.now(), value: 0.5 },
-  { name: '45 minutes', date: new Date().setMinutes(new Date().getMinutes() + 45) - Date.now(), value: 0.75 },
-  { name: '1 hour', date: new Date().setHours(new Date().getHours() + 1) - Date.now(), value: 1 },
-  { name: '2 hours', date: new Date().setHours(new Date().getHours() + 2) - Date.now(), value: 2 },
-  { name: '3 hours', date: new Date().setHours(new Date().getHours() + 3) - Date.now(), value: 3 },
-  { name: '4 hours', date: new Date().setHours(new Date().getHours() + 4) - Date.now(), value: 4 },
-  { name: '6 hours', date: new Date().setHours(new Date().getHours() + 6) - Date.now(), value: 6 },
-  { name: '8 hours', date: new Date().setHours(new Date().getHours() + 8) - Date.now(), value: 8 },
-  { name: '12 hours', date: new Date().setHours(new Date().getHours() + 12) - Date.now(), value: 12 },
-  { name: '18 hours', date: new Date().setHours(new Date().getHours() + 18) - Date.now(), value: 18 },
-  { name: '24 hours', date: new Date().setHours(new Date().getHours() + 24) - Date.now(), value: 24 },
-  { name: '36 hours', date: new Date().setHours(new Date().getHours() + 36) - Date.now(), value: 36 },
-  { name: '48 hours', date: new Date().setHours(new Date().getHours() + 48) - Date.now(), value: 48 }
+const timesCustom: Time[] = [
+  {name: '5 minutes', date: new Date().setMinutes(new Date().getMinutes() + 5) - Date.now(), value: 0.083},
+  {name: '15 minutes', date: new Date().setMinutes(new Date().getMinutes() + 15) - Date.now(), value: 0.25},
+  {name: '30 minutes', date: new Date().setMinutes(new Date().getMinutes() + 30) - Date.now(), value: 0.5},
+  {name: '45 minutes', date: new Date().setMinutes(new Date().getMinutes() + 45) - Date.now(), value: 0.75},
+  {name: '1 hour', date: new Date().setHours(new Date().getHours() + 1) - Date.now(), value: 1},
+  {name: '2 hours', date: new Date().setHours(new Date().getHours() + 2) - Date.now(), value: 2},
+  {name: '3 hours', date: new Date().setHours(new Date().getHours() + 3) - Date.now(), value: 3},
+  {name: '4 hours', date: new Date().setHours(new Date().getHours() + 4) - Date.now(), value: 4},
+  {name: '6 hours', date: new Date().setHours(new Date().getHours() + 6) - Date.now(), value: 6},
+  {name: '8 hours', date: new Date().setHours(new Date().getHours() + 8) - Date.now(), value: 8},
+  {name: '12 hours', date: new Date().setHours(new Date().getHours() + 12) - Date.now(), value: 12},
+  {name: '18 hours', date: new Date().setHours(new Date().getHours() + 18) - Date.now(), value: 18},
+  {name: '24 hours', date: new Date().setHours(new Date().getHours() + 24) - Date.now(), value: 24},
+  {name: '36 hours', date: new Date().setHours(new Date().getHours() + 36) - Date.now(), value: 36},
+  {name: '48 hours', date: new Date().setHours(new Date().getHours() + 48) - Date.now(), value: 48}
+];
+
+const timesDefault: Time[] = [
+  {name: '24 hours', date: new Date().setHours(new Date().getHours() + 24) - Date.now(), value: 24},
+  {name: '36 hours', date: new Date().setHours(new Date().getHours() + 36) - Date.now(), value: 36},
+  {name: '48 hours', date: new Date().setHours(new Date().getHours() + 48) - Date.now(), value: 48}
 ];
 
 @Component({
@@ -42,10 +46,10 @@ export class MakeRulesDesktopComponent implements OnInit {
   publicForm: FormGroup;
   privateForm: FormGroup;
   exactTime: FormGroup;
-  times = times;
+  times = timesDefault;
   endPrivateTime;
   endPublicTime;
-  timeData: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
+  timeData: NgbTimeStruct = {hour: 0, minute: 0, second: 0};
   exactTimeBool: boolean;
   modalTrigger: boolean;
   pastTime: boolean;
@@ -58,11 +62,20 @@ export class MakeRulesDesktopComponent implements OnInit {
     config.seconds = false;
     config.spinners = false;
   }
+
   ngOnInit(): void {
-    if ( this.formData.publicEndTime.length == 0) {
-      this.formData.publicEndTime = this.times[12];
-    }
+    this.timeControl();
     this.initializeForm();
+  }
+
+  timeControl(): void {
+    if (this.formData.expertsCountType === 'custom') {
+      this.times = timesCustom;
+    }
+    const findIndex = _.findIndex(this.times, (el) => {
+      return el.value == this.formData.publicEndTime.value;
+    });
+    this.formData.publicEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
   }
 
   initializeForm() {
@@ -118,22 +131,22 @@ export class MakeRulesDesktopComponent implements OnInit {
   }
 
   openCalendar(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
     this.populatedropdown('daydropdown', 'monthdropdown', 'yeardropdown');
   }
 
   openHowEventsWorkSocial(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, {centered: true});
     this.modalTrigger = false;
   }
 
   openHowEventsWorkFriend(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, {centered: true});
     this.modalTrigger = true;
   }
 
   openLearnMore() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = '- Right now, Players can bet with BTY, the digital token of Bettery platform. Users need BTY to participate in events and (coming soon) grow their Reputation, which is required to access commercial events to earn money.';
     modalRef.componentInstance.name1 = 'Betting with ETH is coming later along our roadmap.';
     modalRef.componentInstance.boldName = 'What to bet with';
@@ -198,7 +211,7 @@ export class MakeRulesDesktopComponent implements OnInit {
     }
     this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year}, ${this.timeData.hour} : ${this.timeData.minute}`;
     this.exactTimeBool = true;
-    this.publicForm.controls.publicEndTime.setValue({ hour: 0, minute: 0, second: 0 });
+    this.publicForm.controls.publicEndTime.setValue({hour: 0, minute: 0, second: 0});
     modal.dismiss('Cross click');
   }
 
@@ -225,11 +238,11 @@ export class MakeRulesDesktopComponent implements OnInit {
     const indexMonth = monthtext.findIndex(el => {
       return el === month;
     });
-    return { monthtext, today, month, year, indexMonth };
+    return {monthtext, today, month, year, indexMonth};
   }
 
   dayCalc() {
-    const { monthtext, today, month, year, indexMonth } = this.dataForCalendar();
+    const {monthtext, today, month, year, indexMonth} = this.dataForCalendar();
     const dayfield: any = document.getElementById('daydropdown');
     const daysLength = this.daysInMonth(indexMonth, year);
 
@@ -247,7 +260,7 @@ export class MakeRulesDesktopComponent implements OnInit {
   }
 
   monthCalc() {
-    const { monthtext, today, month, year, indexMonth } = this.dataForCalendar();
+    const {monthtext, today, month, year, indexMonth} = this.dataForCalendar();
     const monthfield: any = document.getElementById('monthdropdown');
 
     for (let m = 0; m < 12; m++) {
@@ -280,11 +293,13 @@ export class MakeRulesDesktopComponent implements OnInit {
   reinitializeForm(param) {
     if (param === 'company') {
       this.formData.expertsCountType = 'company';
-      this.formData.publicEndTime = this.times[12];
+      this.times = timesDefault;
+      this.formData.publicEndTime = this.times[0];
       this.initializeForm();
     }
     if (param === 'custom') {
       this.formData.expertsCountType = 'custom';
+      this.times = timesCustom;
       this.formData.publicEndTime = this.times[0];
       this.initializeForm();
     }
