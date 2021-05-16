@@ -42,7 +42,7 @@ export class QuizActionComponent implements OnInit{
 
     let valid = this.question.validatorsAnswers == undefined ? 0 : this.question.validatorsAnswers.length;
     let validLeft = this.getValidatorsAmountLeft(this.question);
-    this.isDisableValid = validLeft == valid;
+    this.isDisableValid = valid >= validLeft ? true : false;
   }
 
   getValidatorsAmountLeft(eventData) {
