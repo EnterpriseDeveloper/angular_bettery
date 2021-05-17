@@ -1,0 +1,66 @@
+<div [formGroup]="questionForm">
+  <div *ngIf="status == 'single'">
+    <div class="lableBox">
+      <label for="Question" class="name">
+        <span class="text">{{title}}</span>
+      </label>
+      <div class="limitText" *ngIf="isLimit">
+          <span
+            [ngStyle]="colorError(f.question.value.length, (limit - 5),limit)">{{f.question.value.length}}/</span>{{limit}}
+      </div>
+    </div>
+
+
+    <div style="position: relative">
+      <div class="__htmlarea questionTextarea __answer" style="font-size: 14px">
+        <span>{{letsSlice(this.questionForm.controls.question.value, 0, limit)}}</span>
+        <span *ngIf="this.questionForm.controls.question.value.length > limit"
+              class="spanBg"
+              style="font-size: 14px">{{letsSlice(this.questionForm.controls.question.value, limit, limitEnd)}}}</span>
+      </div>
+      <textarea
+        maxlength="200"
+        (keydown)="limitError('question', null)"
+        #textarea
+        class="__textarea questionTextarea __answer placeH"
+        formControlName="question"
+        rows="1"
+        id="Question"
+        (input)="textareaGrow()"
+        placeholder="Enter topic..."
+        [ngClass]="  { 'is_invalid': submitted && f.question.errors}"
+        style="font-size: 14px"
+      ></textarea>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="status == 'multi'" [formGroup]="answerForm">
+    <div class="wrap">
+      <div style="position: relative">
+        <div class="__htmlarea questionTextarea __answer paddSetting">
+          <span>{{letsSlice(f.answers.value[i].name, 0, 60)}}</span>
+          <span *ngIf="f.answers.value[i].name.length > 55"
+                class="spanBg">{{letsSlice(f.answers.value[i].name, 60, 100)}}
+                </span>
+        </div>
+        <textarea
+          maxlength="100"
+          #answers
+          (keydown)="limitError('answer', i)"
+          class="__textarea questionTextarea __answer paddSetting"
+          formControlName="name"
+          rows="1"
+          id="Question{{i}}"
+          (input)="textareaGrowAnswer()"
+          placeholder="Outcome {{i+1}}"
+          [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
+                || submitted && checkingEqual(answer.controls.name.value, '')
+                || submitted && f.answers.value[i].name.length > 60}"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+

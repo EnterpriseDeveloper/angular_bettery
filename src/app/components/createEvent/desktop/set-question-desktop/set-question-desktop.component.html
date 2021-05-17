@@ -1,38 +1,9 @@
 <div>
   <form [formGroup]="questionForm">
     <div class="box">
-      <div class="lableBox">
-        <label for="Question" class="name">
-          <span class="text">Set topic</span>
-        </label>
-        <div class="limitText" *ngIf="isLimit">
-          <span
-            [ngStyle]="colorError(f.question.value.length, 115,120)">{{f.question.value.length}}
-            /</span> 120
-        </div>
-      </div>
-      <div>
-        <div style="position: relative">
-          <div class="__htmlarea questionTextarea __answer" style="font-size: 14px">
-            <span>{{letsSlice(this.questionForm.controls.question.value, 0, 120)}}</span>
-            <span *ngIf="this.questionForm.controls.question.value.length > 120"
-                  class="spanBg" style="font-size: 14px">{{letsSlice(this.questionForm.controls.question.value, 120, 200)}}</span>
-          </div>
-          <textarea
-            maxlength="200"
-            (keydown)="limitError('question', null)"
-            #textarea
-            class="__textarea questionTextarea __answer placeH"
-            formControlName="question"
-            rows="1"
-            id="Question"
-            (input)="textareaGrow()"
-            placeholder="Enter topic..."
-            [ngClass]="  { 'is_invalid': submitted && f.question.errors}"
-            style="font-size: 14px"
-          ></textarea>
-        </div>
-      </div>
+
+      <app-textarea [status]="'single'" [title]="'Set Topic'" [questionForm]="questionForm" [submitted]="submitted" [limit]="120" [limitEnd]="200"></app-textarea>
+
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
           question</small>
@@ -52,30 +23,10 @@
           </div>
         </div>
         <div [formGroup]="answer" class="input-group inputBox">
-          <div class="wrap">
-            <div style="position: relative">
-              <div class="__htmlarea questionTextarea __answer paddSetting">
-                <span>{{letsSlice(f.answers.value[i].name, 0, 60)}}</span>
-                <span *ngIf="f.answers.value[i].name.length > 55"
-                      class="spanBg">{{letsSlice(f.answers.value[i].name, 60, 100)}}
-                </span>
-              </div>
-              <textarea
-                maxlength="100"
-                #answers
-                (keydown)="limitError('answer', i)"
-                class="__textarea questionTextarea __answer paddSetting"
-                formControlName="name"
-                rows="1"
-                id="Question{{i}}"
-                (input)="textareaGrowAnswer(i)"
-                placeholder="Outcome {{i+1}}"
-                [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
-                || submitted && checkingEqual(answer.controls.name.value, '')
-                || submitted && f.answers.value[i].name.length > 60}"
-              ></textarea>
-            </div>
-          </div>
+
+          <app-textarea style="width: 100%" [status]="'multi'" [answer]="answer" [i]="i" [questionForm]="questionForm"
+                        [answerForm]="answer" [submitted]="submitted"></app-textarea>
+
           <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
             <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
               <div class="trashImg"></div>
@@ -100,7 +51,7 @@
     </div>
     <div class="border"></div>
     <div class="box">
-      <label for="Question" class="name" style="margin-top: 24px">
+      <label for="detalis" class="name" style="margin-top: 24px">
         <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
       </label>
       <input type="text" formControlName="details" class="answer adapting" id="detalis"
