@@ -69,13 +69,24 @@ export class MakeRulesDesktopComponent implements OnInit {
   }
 
   timeControl(): void {
-    if (this.formData.expertsCountType === 'custom') {
-      this.times = timesCustom;
+    if(this.formData.eventType == 'public') {
+      if (this.formData.expertsCountType === 'custom') {
+        this.times = timesCustom;
+      }
+      const findIndex = _.findIndex(this.times, (el) => {
+        return el.value == this.formData.publicEndTime.value;
+      });
+      this.formData.publicEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
     }
-    const findIndex = _.findIndex(this.times, (el) => {
-      return el.value == this.formData.publicEndTime.value;
-    });
-    this.formData.publicEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
+
+    if (this.formData.eventType == 'private') {
+      this.times = timesCustom;
+      const findIndex = _.findIndex(this.times, (el) => {
+        return el.value == this.formData.privateEndTime.value;
+      });
+      this.formData.privateEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
+    }
+
   }
 
   initializeForm() {
