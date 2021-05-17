@@ -53,6 +53,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   disabledButton: boolean = false;
   sessionStorageValue: string;
   finishLoading = false;
+  isMobile: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +61,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private modalService: NgbModal,
     private pageScrollService: PageScrollService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
       if (x.length === 0) {
@@ -79,6 +80,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         this.coinInfo = x[0];
       }
     });
+    this.mobileCheck();
   }
 
   ngOnInit(): void {
@@ -367,5 +369,18 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         this.commentResetFlag = true;
       }
     }, 300);
+  }
+
+  mobileCheck() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)) {
+
+      this.isMobile = true;
+    }
   }
 }

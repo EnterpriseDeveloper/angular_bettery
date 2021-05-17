@@ -77,13 +77,23 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   }
 
   timeControl(): void {
-    if (this.formData.expertsCountType === 'custom') {
-      this.times = timesCustom;
+    if(this.formData.eventType == 'public') {
+      if (this.formData.expertsCountType === 'custom') {
+        this.times = timesCustom;
+      }
+      const findIndex = _.findIndex(this.times, (el) => {
+        return el.value == this.formData.publicEndTime.value;
+      });
+      this.formData.publicEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
     }
-    const findIndex = _.findIndex(this.times, (el) => {
-      return el.value == this.formData.publicEndTime.value;
-    });
-    this.formData.publicEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
+
+    if (this.formData.eventType == 'private') {
+      this.times = timesCustom;
+      const findIndex = _.findIndex(this.times, (el) => {
+        return el.value == this.formData.privateEndTime.value;
+      });
+      this.formData.privateEndTime = findIndex != -1 ? this.times[findIndex] : this.times[0];
+    }
   }
 
   initializeForm() {
@@ -252,11 +262,11 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
     this.formData.exactMinutes = data.minute;
     this.formData.exactMonth = data.month;
     this.formData.exactYear = data.year;
-    this.formData.publicEndTime = data.publicEndTime;
+    this.formData.publicEndTime = '';
     this.formData.tokenType = data.tokenType;
     this.formData.winner = data.winner;
     this.formData.losers = data.losers;
-    this.formData.privateEndTime = data.privateEndTime;
+    this.formData.privateEndTime = '';
 
     this.store.dispatch(formDataAction({formData: this.formData}));
     this.router.navigate(['/create-room']);

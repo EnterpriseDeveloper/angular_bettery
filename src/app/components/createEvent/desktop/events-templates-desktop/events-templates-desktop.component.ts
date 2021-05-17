@@ -124,11 +124,11 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
     this.formData.exactMinutes = data.minute;
     this.formData.exactMonth = data.month;
     this.formData.exactYear = data.year;
-    this.formData.publicEndTime = data.publicEndTime;
+    this.formData.publicEndTime = '';
     this.formData.tokenType = data.tokenType;
     this.formData.winner = data.winner;
     this.formData.losers = data.losers;
-    this.formData.privateEndTime = data.privateEndTime;
+    this.formData.privateEndTime = '';
   }
 
   switchToPrivateEvent(data) {
