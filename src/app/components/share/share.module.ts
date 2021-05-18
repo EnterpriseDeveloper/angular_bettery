@@ -21,6 +21,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { JustANoteModalComponent } from './modals/just-note-modal/just-anote-modal.component';
 import { SpinnerLoadMoreComponent } from './spinners/spinner-load-more/spinner-load-more.component';
 import { MobilePlugPageComponent } from './modals/mobile-plug-page/mobile-plug-page.component';
+import { ImageLoaderComponent } from './image-loader/image-loader.component';
 
 
 
@@ -43,7 +44,8 @@ import { MobilePlugPageComponent } from './modals/mobile-plug-page/mobile-plug-p
     ComingSoonComponent,
     JustANoteModalComponent,
     SpinnerLoadMoreComponent,
-    MobilePlugPageComponent
+    MobilePlugPageComponent,
+    ImageLoaderComponent
   ],
     imports: [
         CommonModule,
@@ -65,7 +67,8 @@ import { MobilePlugPageComponent } from './modals/mobile-plug-page/mobile-plug-p
         QuizTemplateComponent,
         TimeComponent,
         JustANoteModalComponent,
-        MobilePlugPageComponent
+        MobilePlugPageComponent,
+        ImageLoaderComponent
     ]
 })
 
