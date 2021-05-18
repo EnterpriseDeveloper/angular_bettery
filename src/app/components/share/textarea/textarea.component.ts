@@ -13,6 +13,7 @@ export class TextareaComponent implements OnInit {
   @Input() questionForm;
   @Input() submitted;
   @Input() status;
+  @Input() isMobile: boolean;
   @Input()  title: string;
   @Input()  limit: number;
   @Input()  limitEnd: number;
@@ -60,7 +61,9 @@ export class TextareaComponent implements OnInit {
   }
 
   textareaGrowAnswer(): void {
-    this.calculateRows(this.answers.first);
+    if (this.answers) {
+      this.calculateRows(this.answers.first);
+    }
   }
 
   calculateRows(el) {

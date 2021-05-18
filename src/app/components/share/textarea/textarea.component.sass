@@ -10,6 +10,9 @@
   color: #7D7D7D
   font-size: 12px
 
+.questionTextarea-mobile textarea::placeholder
+  font-size: 16px
+
 .__htmlarea
   padding: 1em
   width: 100%
@@ -35,6 +38,11 @@
   color: #7d7d7d
   white-space: pre-wrap
   word-wrap: break-word
+.__htmlarea-mobile
+  background-color: rgba(50, 58, 64, 0.96)
+  color: #FFFFFF
+  font-size: 16px !important
+  border: none
 
 .__textarea
   display: block
@@ -47,7 +55,6 @@
   resize: none
 
 .__textarea:focus
-  //border-color: #CAD6FF
   border: 2px solid #CAD6FF
 
 .spanBg
@@ -55,6 +62,8 @@
   font-style: normal
   font-size: 12px
   font-weight: bold
+.spanBg-mobile
+  font-size: 16px !important
 
 .__answer
   padding-right: 30px
@@ -69,7 +78,6 @@
 
 .is_invalid
   border: 1px solid #EC0100 !important
-
 
 .lableBox
   display: flex
@@ -90,8 +98,17 @@
   color: #0B1511
   display: flex
 
+.name-mobile
+  font-size: 14px
+  line-height: 19px
+  color: #FFFFFF
+
+
 .limitText
   font-weight: bold
   font-size: 12px
   line-height: 16px
   text-transform: uppercase
+
+.limitText-mobile
+  color: #FFFFFF
