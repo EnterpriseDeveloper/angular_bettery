@@ -24,7 +24,13 @@
         </div>
         <div [formGroup]="answer" class="input-group inputBox">
 
-          <app-textarea style="width: 100%" [status]="'multi'" [answer]="answer" [i]="i" [questionForm]="questionForm"
+          <app-textarea style="width: 100%"
+                        [status]="'multi'"
+                        [answer]="answer"
+                        [i]="i"
+                        [questionForm]="questionForm"
+                        [limit]="60"
+                        [limitEnd]="100"
                         [answerForm]="answer" [submitted]="submitted"></app-textarea>
 
           <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">

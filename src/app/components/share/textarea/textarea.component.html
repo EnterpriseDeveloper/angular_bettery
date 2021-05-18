@@ -41,9 +41,9 @@
     <div class="wrap">
       <div style="position: relative">
         <div class="__htmlarea questionTextarea __answer paddSetting"  [ngClass]="isMobile && '__htmlarea-mobile'">
-          <span>{{letsSlice(f.answers.value[i].name, 0, 60)}}</span>
-          <span *ngIf="f.answers.value[i].name.length > 55"
-                class="spanBg" [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f.answers.value[i].name, 60, 100)}}
+          <span>{{letsSlice(f.answers.value[i].name, 0, limit)}}</span>
+          <span *ngIf="f.answers.value[i].name.length > (limit - 5)"
+                class="spanBg" [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f.answers.value[i].name, limit, limitEnd)}}
                 </span>
         </div>
         <textarea
@@ -58,7 +58,7 @@
           placeholder="Outcome {{i+1}}"
           [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
                 || submitted && checkingEqual(answer.controls.name.value, '')
-                || submitted && f.answers.value[i].name.length > 60}"
+                || submitted && f.answers.value[i].name.length > limit}"
           [ngStyle]="isMobile ? {'font-size': '16px', 'border': 'none'} : {}"
         ></textarea>
       </div>

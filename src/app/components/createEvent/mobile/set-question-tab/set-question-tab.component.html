@@ -25,7 +25,14 @@
             </div>
           </div>
           <div [formGroup]="answer" class="input-group inputBox">
-            <app-textarea style="width: 100%" [status]="'multi'" [isMobile]="true" [answer]="answer" [i]="i" [questionForm]="questionForm"
+            <app-textarea style="width: 100%"
+                          [status]="'multi'"
+                          [isMobile]="true"
+                          [answer]="answer"
+                          [i]="i"
+                          [questionForm]="questionForm"
+                          [limit]="60"
+                          [limitEnd]="100"
                           [answerForm]="answer" [submitted]="submitted"></app-textarea>
             <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
               <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
@@ -53,7 +60,7 @@
       </div>
       <!--        <div class="border"></div>-->
       <div class="box mx-0">
-        <label for="Question" class="name" style="margin-top: 24px">
+        <label for="detalis" class="name" style="margin-top: 24px">
           <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
         </label>
         <input type="text" formControlName="details" class="answer adapting" id="detalis"
