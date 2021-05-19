@@ -13,6 +13,7 @@ export class ImageLoaderComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() formData;
   @Input() f;
+  @Input() mobile;
   gradietnNumber: number = 0;
   eventColor: string;
   loaderImg: boolean;

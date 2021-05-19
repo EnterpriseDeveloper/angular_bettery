@@ -109,7 +109,9 @@ export class PrivateEventComponent implements OnDestroy {
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
       roomId: this.formData.roomId,
-      resolutionDetalis: this.formData.resolutionDetalis
+      resolutionDetalis: this.formData.resolutionDetalis,
+      thumImage: this.formData.thumImage,
+      thumColor: this.formData.thumColor,
     };
 
     this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)
@@ -138,6 +140,9 @@ export class PrivateEventComponent implements OnDestroy {
     this.formData.losers = '';
     this.formData.winner = '';
     this.formData.room = '';
+    this.formData.thumImage = '';
+    this.formData.thumColor = '';
+    this.formData.imgOrColor = 'color';
 
     this.store.dispatch(formDataAction({formData: this.formData}));
   }

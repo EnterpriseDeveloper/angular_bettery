@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorLimitModalComponent } from '../../../share/modals/error-limit-modal/error-limit-modal.component';
 import { User } from '../../../../models/User.model';
 import { Router } from '@angular/router';
+import {formDataAction} from '../../../../actions/newEvent.actions';
 
 
 @Component({
@@ -144,10 +145,9 @@ export class PublicEventDesktopComponent implements OnDestroy {
           this.quizData._id = x.id;
           this.spinnerLoading = false;
           this.created = true;
-          this.calculateDate()
+          this.calculateDate();
           this.modalService.dismissAll();
-          this.formData.thumImage = '';
-          this.formData.thumColor = '';
+          this.formDataReset();
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
             this.router.navigate([`room/${x.roomId}`]));
 
@@ -160,6 +160,19 @@ export class PublicEventDesktopComponent implements OnDestroy {
           console.log("set qestion error");
           console.log(err);
         })
+  }
+
+  formDataReset() {
+    this.formData.question = '';
+    this.formData.answers = [];
+    this.formData.losers = '';
+    this.formData.winner = '';
+    this.formData.roomName = '';
+    this.formData.thumImage = '';
+    this.formData.thumColor = '';
+    this.formData.imgOrColor = 'color';
+
+    this.store.dispatch(formDataAction({ formData: this.formData }));
   }
 
   calculateDate() {

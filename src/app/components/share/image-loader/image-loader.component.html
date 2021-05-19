@@ -1,24 +1,24 @@
-<div [formGroup]="form" style="margin: 0 16px">
+<div [formGroup]="form" style="margin: 0 16px" [ngStyle]="mobile && {'margin': '0'}">
   <button type="button" (click)="loaderImgOpen($event)" class="add disSetting" style="justify-content: space-between; width: 100%">
     <div class="disSetting">
-      <div class="cloudImgWrap">
-        <div class="cloudImg"></div>
+      <div class="cloudImgWrap" [ngStyle]="mobile && {'background': '#3B3B3B'}">
+        <div [ngClass]="mobile ? 'cloudImgYel' : 'cloudImg'"></div>
       </div>
-      <span class="addText">Add cover image</span>
+      <span class="addText" [ngClass]="mobile && 'addTextMobile'">Add cover image</span>
     </div>
     <div *ngIf="loaderImg">
-      <div class="trashRed" (click)="resetImgandColor()"></div>
+      <div [ngClass]="mobile ? 'trashWhite' : 'trashRed'" (click)="resetImgandColor()"></div>
     </div>
   </button>
   <div *ngIf="loaderImg" class="checkBoxPos" [ngStyle]="fileTooLarge && {'padding-bottom': '5px'}">
 
     <div (click)="generateGradient()" (change)="changeColorFunc()" class="pretty p-default p-round inline ">
       <input type="radio" value="color" formControlName="image">
-      <div class="state checkPos p-success-o">
+      <div class="state checkPos" [ngClass]="mobile ? 'p-warning-o':'p-success-o'">
         <label> </label>
       </div>
-      <div class="tab">
-        <div class="word" [ngClass]="{ 'tab_active': f.image.value == 'color' }">Color</div>
+      <div class="tab" [ngStyle]="mobile && {'background':'#2f2f2f'}">
+        <div class="word" [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'color' } : { 'tab_active': f.image.value == 'color' }">Color</div>
         <div class="gradientPicker" [ngStyle]="{'background': eventColor}">
           <div class="disColumn">
             <div class="reloadImg"></div>
@@ -30,22 +30,24 @@
     </div>
     <div (click)="loadImg()" class="pretty p-default p-round inline mr-0 prettyHover">
       <input type="radio" value="image" formControlName="image" checked>
-      <div class="state p-success-o checkPos">
+      <div class="state p-success-o checkPos" [ngClass]="mobile ? 'p-warning-o':'p-success-o'">
         <label id="l"> </label>
       </div>
-      <div class="tab" [ngClass]="fileTooLarge && 'err-border'">
+      <div class="tab" [ngStyle]="mobile && {'background':'#2f2f2f'}" [ngClass]="fileTooLarge && 'err-border'">
 
-        <div class="word" [ngClass]="{ 'tab_active': f.image.value == 'image' }">Image</div>
+        <div class="word" [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'image' } : { 'tab_active': f.image.value == 'image' }">Image</div>
         <div *ngIf="!previewUrlImg" class="gradientPicker">
           <label for="file" class="disColumn">
-            <span class="preLoadImg"></span>
-            <span class="TabToChange" style="color: #7d7d7d">Upload</span>
+            <span *ngIf="!mobile" class="preLoadImg"></span>
+            <span *ngIf="mobile" class="preLoadImgYell"></span>
+            <span class="TabToChange" [ngStyle]="mobile ? {'color': '#ffffff'} : {'color': '#7d7d7d'}">Upload</span>
           </label>
         </div>
         <input #fileInput type="file" id="file" accept=".png, .jpg" (change)="changeImgLoad($event)">
         <div *ngIf="previewUrlImg" class="preview" [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}">
           <label *ngIf="previewUrlImg" for="file" class="disColumn pre-info-img">
-            <span class="preLoadImg"></span>
+            <span *ngIf="!mobile" class="preLoadImg"></span>
+            <span *ngIf="mobile" class="preLoadImgYell"></span>
             <span class="TabToChange" style="color: #7d7d7d">Upload</span>
           </label>
           <div *ngIf="previewUrlImg && file" class="preview-info">

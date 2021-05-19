@@ -148,7 +148,9 @@ export class PublicEventComponent implements OnDestroy {
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
       roomId: this.formData.roomId,
-      resolutionDetalis: this.formData.resolutionDetalis
+      resolutionDetalis: this.formData.resolutionDetalis,
+      thumImage: this.formData.thumImage,
+      thumColor: this.formData.thumColor,
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
@@ -157,8 +159,8 @@ export class PublicEventComponent implements OnDestroy {
           this.quizData._id = x.eventId;
           this.spinnerLoading = false;
           this.created = true;
-          this.calculateDate()
-          this.formDataReset()
+          this.calculateDate();
+          this.formDataReset();
           console.log("set to db DONE")
         },
         (err) => {
@@ -177,6 +179,9 @@ export class PublicEventComponent implements OnDestroy {
     this.formData.losers = '';
     this.formData.winner = '';
     this.formData.roomName = '';
+    this.formData.thumImage = '';
+    this.formData.thumColor = '';
+    this.formData.imgOrColor = 'color';
 
     this.store.dispatch(formDataAction({ formData: this.formData }));
   }

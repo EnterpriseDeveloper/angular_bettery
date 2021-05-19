@@ -32,6 +32,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   isLimit: boolean;
   @ViewChild('textarea') textarea: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
+  eventColor: string;
+  previewUrlImg;
+  validSizeImg = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,6 +63,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     this.questionForm = this.formBuilder.group({
       question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
+      image: [this.formData.imgOrColor],
       details: [this.formData?.resolutionDetalis]
     });
 
@@ -128,8 +132,16 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.checkingEqual(null, 'check')) {
+    if (this.questionForm.invalid || this.checkingEqual(null, 'check') || this.validSizeImg) {
       return;
+    }
+    if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
+      this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumColor = 'undefined';
+    }
+    if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
+      this.formData.thumColor = this.eventColor;
+      this.formData.thumImage = 'undefined';
     }
     if (this.registered) {
       this.formData.question = this.questionForm.value.question;
@@ -223,5 +235,16 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     if (this.formDataSubscribe) {
       this.formDataSubscribe.unsubscribe();
     }
+  }
+
+  imgEmmit($event: any) {
+    const { img, valid } = $event;
+    this.previewUrlImg = img;
+    this.validSizeImg = valid;
+  }
+
+  colorEmmit($event: any) {
+    this.eventColor = $event;
+    this.validSizeImg = false;
   }
 }
