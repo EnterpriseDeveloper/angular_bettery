@@ -78,25 +78,29 @@
             <div *ngIf="commentList && roomEvents.length !== 0" class="main-comment" [ngStyle]="commentTopPosition()">
               <div style="margin-right: 30px; margin-left: 10px" class="comment-box">
                 <div class="comment-head">
-                  <div class="test-img-delet" [ngStyle]="getCommentRoomColor(commentList?.room.color)">
+                  <div *ngIf="commentList?.thumImage == 'undefined'">
+                    <div class="test-img-delet" [ngStyle]="getCommentRoomColor(commentList?.thumColor)"></div>
                   </div>
-                  <div>
-                    <span>{{commentList?.question}}</span>
+                  <div *ngIf="commentList?.thumImage != 'undefined'">
+                    <img class="comment_avatar" src="{{commentList?.thumImage}}" />
                   </div>
+                <div>
+                  <span>{{commentList?.question}}</span>
                 </div>
-                <app-comment [mobile]="false" [showAuthButton]="userData === undefined" class="deep-comment"
-                  [theme]="'white'" [userData]=userData [id]="commentList?.id"></app-comment>
               </div>
+              <app-comment [mobile]="false" [showAuthButton]="userData === undefined" class="deep-comment"
+                [theme]="'white'" [userData]=userData [id]="commentList?.id"></app-comment>
             </div>
           </div>
         </div>
-
-        <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && roomEvents.length != 0"></spinner-load-more>
-
-
-        <div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"><a pageScroll href="#top"><img
-              src="../../../../assets/descEvent/topBTN.png" alt="Top"></a></div>
     </div>
+
+    <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && roomEvents.length != 0"></spinner-load-more>
+
+
+    <div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"><a pageScroll href="#top"><img
+          src="../../../../assets/descEvent/topBTN.png" alt="Top"></a></div>
   </div>
+</div>
 
 <app-mobile-plug-page *ngIf="isMobile"></app-mobile-plug-page>
