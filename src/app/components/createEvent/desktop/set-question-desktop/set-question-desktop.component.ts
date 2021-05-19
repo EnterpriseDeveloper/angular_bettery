@@ -61,7 +61,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.questionForm = this.formBuilder.group({
       question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
-      image: ['color'],
+      image: [this.formData.imgOrColor],
       details: [this.formData.resolutionDetalis]
     });
 

@@ -27,6 +27,7 @@ const init = {
   exactYear: new Date().getFullYear(),
   exactTimeBool: false,
   roomId: "",
+  imgOrColor: "",
   thumImage: "",
   thumColor: ""
 };
@@ -72,6 +73,7 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
           exactYear: new Date().getFullYear(),
           exactTimeBool: false,
           roomId: '',
+          imgOrColor: 'color',
           thumImage: '',
           thumColor: ''
         };
