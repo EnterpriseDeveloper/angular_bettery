@@ -36,8 +36,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   @ViewChild('textarea') textarea: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
   isDuplicate: boolean;
-  roomColor: string;
+  eventColor: string;
   previewUrlImg;
+  validSizeImg = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,7 +81,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.updateTextarea();
     });
-    this.roomColor = this.formData.roomColor;
   }
 
   updateTextarea() {
@@ -121,7 +121,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.checkingEqual(null, 'check')) {
+    if (this.questionForm.invalid || this.checkingEqual(null, 'check') || this.validSizeImg) {
       return;
     }
     if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
@@ -129,7 +129,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       this.formData.thumColor = 'undefined';
     }
     if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
-      this.formData.thumColor = this.roomColor;
+      this.formData.thumColor = this.eventColor;
       this.formData.thumImage = 'undefined';
     }
     if (this.registered) {
@@ -207,11 +207,14 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   imgEmmit(e) {
-    this.previewUrlImg = e;
+    const { img, valid } = e;
+    this.previewUrlImg = img;
+    this.validSizeImg = valid;
   }
 
   colorEmmit(e) {
-    this.roomColor = e;
+    this.eventColor = e;
+    this.validSizeImg = false;
   }
 
   ngOnDestroy() {
