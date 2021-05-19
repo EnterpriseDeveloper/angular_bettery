@@ -553,10 +553,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
   }
 
-  colorForRoom() {
+  colorForRoom(color) {
     if (this.question) {
       return {
-        'background': this.question.room.color,
+        'background': color,
         'max-height': this.heightBlock + 'px'
       };
     } else {
