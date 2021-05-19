@@ -9,6 +9,7 @@ import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.
 import { ErrorLimitModalComponent } from '../../../share/modals/error-limit-modal/error-limit-modal.component';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/User.model';
+import {formDataAction} from '../../../../actions/newEvent.actions';
 
 @Component({
   selector: 'private-event-desktop',
@@ -89,8 +90,7 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
           this.spinner = false;
           this.created = true;
           this.modalService.dismissAll();
-          this.formData.thumImage = '';
-          this.formData.thumColor = '';
+          this.formDataReset();
         },
         (err) => {
           console.log("set qestion error");
@@ -100,6 +100,19 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
             this.spinnerLoading = false;
           }
         })
+  }
+
+  formDataReset() {
+    this.formData.question = '';
+    this.formData.answers = [];
+    this.formData.losers = '';
+    this.formData.winner = '';
+    this.formData.room = '';
+    this.formData.thumImage = '';
+    this.formData.thumColor = '';
+    this.formData.imgOrColor = 'color';
+
+    this.store.dispatch(formDataAction({formData: this.formData}));
   }
 
   calculateDate() {
