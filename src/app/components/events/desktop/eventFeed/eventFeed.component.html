@@ -91,7 +91,12 @@
           <div *ngIf="activeBtn !== 'pro' && newQuestions.length !== 0" class="main-comment" [ngStyle]="commentTopPosition()">
             <div style="margin-right: 30px; margin-left: 10px" class="comment-box">
               <div class="comment-head">
-                <div class="img-del" [ngStyle]="colorForRoom(commentList?.room.color)"></div>
+                <div *ngIf="commentList?.thumImage == 'undefined'">
+                  <div class="img-del" [ngStyle]="colorForRoom(commentList?.thumColor)"></div>
+                </div>
+                <div *ngIf="commentList?.thumImage != 'undefined'">
+                   <img class="comment_avatar" src="{{commentList?.thumImage}}" />
+                </div>
                 <div>
                   <span>{{commentList?.question}}</span>
                 </div>

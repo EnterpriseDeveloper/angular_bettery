@@ -6,7 +6,7 @@ import {
   EventEmitter,
   OnDestroy,
   ViewChild,
-  ElementRef, ViewChildren, QueryList, AfterViewInit,
+  ElementRef, ViewChildren, QueryList
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {Store} from '@ngrx/store';
@@ -36,6 +36,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   @ViewChild('textarea') textarea: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
   isDuplicate: boolean;
+  eventColor: string;
+  previewUrlImg;
+  validSizeImg = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,6 +61,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.questionForm = this.formBuilder.group({
       question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
+      image: [this.formData.imgOrColor],
       details: [this.formData.resolutionDetalis]
     });
 
@@ -117,8 +121,16 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    if (this.questionForm.invalid || this.checkingEqual(null, 'check')) {
+    if (this.questionForm.invalid || this.checkingEqual(null, 'check') || this.validSizeImg) {
       return;
+    }
+    if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
+      this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumColor = 'undefined';
+    }
+    if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
+      this.formData.thumColor = this.eventColor;
+      this.formData.thumImage = 'undefined';
     }
     if (this.registered) {
       this.getData.next(this.questionForm.value);
@@ -192,6 +204,17 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       });
       return this.submitted && result.length !== 0 && arr.length > 1;
     }
+  }
+
+  imgEmmit(e) {
+    const { img, valid } = e;
+    this.previewUrlImg = img;
+    this.validSizeImg = valid;
+  }
+
+  colorEmmit(e) {
+    this.eventColor = e;
+    this.validSizeImg = false;
   }
 
   ngOnDestroy() {

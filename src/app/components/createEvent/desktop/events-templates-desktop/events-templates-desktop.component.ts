@@ -26,7 +26,10 @@ const init = {
   exactMonth: new Date().getMonth(),
   exactYear: new Date().getFullYear(),
   exactTimeBool: false,
-  roomId: ""
+  roomId: "",
+  imgOrColor: "",
+  thumImage: "",
+  thumColor: ""
 };
 
 @Component({
@@ -69,7 +72,10 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
           exactMonth: new Date().getMonth(),
           exactYear: new Date().getFullYear(),
           exactTimeBool: false,
-          roomId: ''
+          roomId: '',
+          imgOrColor: 'color',
+          thumImage: '',
+          thumColor: ''
         };
         this.whichEvent = "setQuestion"
       }
@@ -124,11 +130,11 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
     this.formData.exactMinutes = data.minute;
     this.formData.exactMonth = data.month;
     this.formData.exactYear = data.year;
-    this.formData.publicEndTime = data.publicEndTime;
+    this.formData.publicEndTime = '';
     this.formData.tokenType = data.tokenType;
     this.formData.winner = data.winner;
     this.formData.losers = data.losers;
-    this.formData.privateEndTime = data.privateEndTime;
+    this.formData.privateEndTime = '';
   }
 
   switchToPrivateEvent(data) {

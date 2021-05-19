@@ -86,8 +86,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   ngOnInit() {
     this.allUserData = this.userData;
     this.form = this.formBuilder.group({
-      test: [this.avgBet(this.question)],
+      quickBet: [this.avgBet(this.question)],
     });
+    this.myAnswers.amount = this.avgBet(this.question);
   }
 
   findSum(count, to: number, from: number) {
@@ -552,11 +553,21 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
   }
 
-  colorForRoom() {
+  colorForRoom(color) {
     if (this.question) {
       return {
-        'background': this.question.room.color,
+        'background': color,
         'max-height': this.heightBlock + 'px'
+      };
+    } else {
+      return;
+    }
+  }
+
+  imageHeight(){
+    if (this.question) {
+      return {
+        'height': this.heightBlock + 'px'
       };
     } else {
       return;
@@ -712,12 +723,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   updateValue() {
-    let value = this.form.controls.test.value;
+    let value = this.form.controls.quickBet.value;
     if (value) {
       value = value.toString();
       if (value.indexOf('.') != '-1') {
         value = value.substring(0, value.indexOf('.') + 3);
-        this.form.controls.test.setValue(value);
+        this.form.controls.quickBet.setValue(value);
       }
       this.myAnswers.amount = Number(value);
     }
