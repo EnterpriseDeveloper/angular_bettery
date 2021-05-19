@@ -38,6 +38,8 @@ export interface Event {
   transactionHash: string;
   validated: number;
   validatorsAmount: number;
+  thumColor: string;
+  thumImage: string;
   validatorsAnswers: ValidatorsAnswers[];
 }
 interface ValidatorsAnswers {

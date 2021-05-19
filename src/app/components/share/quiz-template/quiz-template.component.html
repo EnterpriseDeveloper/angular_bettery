@@ -166,7 +166,7 @@
               <div><span>{{avgBet(question)}} BET</span> Avg. Bet</div>
             </div>
             <div style="cursor: pointer" routerLink="/room/{{question?.room.id}}" *ngIf="!joinRoom" class="info-item">
-              <div class="colorRoom mr-2 ml-3 " [ngStyle]="colorForRoom()"></div>
+              <div class="colorRoom mr-2 ml-3 " [ngStyle]="colorForRoom(question.thumColor)"></div>
               <div><span>{{makeShortenStr(question?.room.name, 16)}}</span> ({{question?.room.eventAmount}})</div>
             </div>
           </div>
