@@ -564,6 +564,16 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
+  imageHeight(){
+    if (this.question) {
+      return {
+        'height': this.heightBlock + 'px'
+      };
+    } else {
+      return;
+    }
+  }
+
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {

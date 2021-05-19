@@ -6,8 +6,8 @@
   <div class="row ml-0" style="margin-right: -30px; min-height: 212px">
 
     <div class="col-3 imageBox" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)"></div>
-    <div class="col-3 imageBox" *ngIf="question.thumImage !== 'undefined'">
-      <img class="event_img" src="{{question.thumImage}}"/>
+    <div class="col-3 imageBox imgFix" *ngIf="question.thumImage !== 'undefined'">
+      <img class="event_img" src="{{question.thumImage}}" [ngStyle]="imageHeight()"/>
     </div>
 
     <div class="body_card" [ngStyle]="roomCardBottom()" id="{{question.id}}">
