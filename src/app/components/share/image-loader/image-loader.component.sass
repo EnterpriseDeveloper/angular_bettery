@@ -118,8 +118,59 @@
   height: 16px
 
 .preview
+  position: relative
   background-size: cover !important
   width: 100%
   height: 80%
   border-bottom-left-radius: 8px
   border-bottom-right-radius: 8px
+  overflow: hidden
+  display: flex
+  justify-content: center
+  align-items: center
+
+.prettyHover:hover
+  .preview-info
+    bottom: 0 !important
+  .pre-info-img
+    bottom: 33%
+
+.preview-info
+  position: absolute
+  right: 0
+  bottom: -30px
+  left: 0
+  height: 25px
+  font-size: 10px
+  background: rgba(255,255,255, .5)
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 0 5px
+  transition: bottom .22s
+  & span
+    width: 50%
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+  .span2
+    text-align: right
+
+.pre-info-img
+  opacity: 0.5
+  position: absolute
+  left: 33%
+  bottom: -44%
+  transition: bottom .22s
+
+.quize_validation_error
+  font-family: 'Open Sans', sans-serif
+  font-style: normal
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+  text-align: right
+  color: #EC0100
+
+.err-border
+  border: 1px #EC0100 solid

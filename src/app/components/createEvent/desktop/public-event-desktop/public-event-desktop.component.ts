@@ -146,6 +146,8 @@ export class PublicEventDesktopComponent implements OnDestroy {
           this.created = true;
           this.calculateDate()
           this.modalService.dismissAll();
+          this.formData.thumImage = '';
+          this.formData.thumColor = '';
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
             this.router.navigate([`room/${x.roomId}`]));
 

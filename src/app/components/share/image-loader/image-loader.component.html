@@ -10,9 +10,9 @@
       <div class="trashRed" (click)="resetImgandColor()"></div>
     </div>
   </button>
-  <div *ngIf="loaderImg" class="checkBoxPos">
+  <div *ngIf="loaderImg" class="checkBoxPos" [ngStyle]="fileTooLarge && {'padding-bottom': '5px'}">
 
-    <div (click)="generateGradient()" class="pretty p-default p-round inline ">
+    <div (click)="generateGradient()" (change)="changeColorFunc()" class="pretty p-default p-round inline ">
       <input type="radio" value="color" formControlName="image">
       <div class="state checkPos p-success-o">
         <label> </label>
@@ -28,12 +28,12 @@
       </div>
 
     </div>
-    <div (click)="loadImg()" class="pretty p-default p-round inline">
+    <div (click)="loadImg()" class="pretty p-default p-round inline mr-0" [ngClass]="previewUrlImg && !fileTooLarge && 'prettyHover'">
       <input type="radio" value="image" formControlName="image" checked>
       <div class="state p-success-o checkPos">
         <label id="l"> </label>
       </div>
-      <div class="tab">
+      <div class="tab" [ngClass]="fileTooLarge && 'err-border'">
 
         <div class="word" [ngClass]="{ 'tab_active': f.image.value == 'image' }">Image</div>
         <div *ngIf="!previewUrlImg" class="gradientPicker">
@@ -42,9 +42,23 @@
             <span class="TabToChange" style="color: #7d7d7d">Upload</span>
           </label>
         </div>
-        <input #file type="file" id="file" accept=".png, .jpg" (change)="changeImgLoad($event)">
-        <div *ngIf="previewUrlImg" class="preview" [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}"></div>
+        <input #fileInput type="file" id="file" accept=".png, .jpg" (change)="changeImgLoad($event)">
+        <div *ngIf="previewUrlImg" class="preview" [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}">
+          <label *ngIf="previewUrlImg" for="file" class="disColumn pre-info-img">
+            <span class="preLoadImg"></span>
+            <span class="TabToChange" style="color: #7d7d7d">Upload</span>
+          </label>
+          <div *ngIf="previewUrlImg" class="preview-info">
+            <span>{{file.name}}</span>
+            <span class="span2">{{formatBytes(file.size, 2)}}</span>
+          </div>
+
+        </div>
       </div>
     </div>
+  </div>
+  <div>
+    <small style="padding-bottom: 10px" *ngIf="fileTooLarge"
+           class="form-text quize_validation_error">Should be less than 5MB</small>
   </div>
 </div>

@@ -16,8 +16,10 @@ export class ImageLoaderComponent implements OnInit {
   gradietnNumber: number = 0;
   roomColor: string;
   loaderImg: boolean;
-  @ViewChild('file') file: ElementRef;
+  @ViewChild('fileInput') fileInput: ElementRef;
   previewUrlImg;
+  file;
+  fileTooLarge: boolean;
 
   constructor() { }
 
@@ -33,20 +35,29 @@ export class ImageLoaderComponent implements OnInit {
     if (this.f.image.value == 'color') {
       this.gradietnNumber == Number(Object.keys(GradientJSON).length) - 1 ? this.gradietnNumber = 0 : this.gradietnNumber++;
       this.roomColor = GradientJSON[this.gradietnNumber];
-      this.colorEmmit.emit(this.roomColor)
+      this.colorEmmit.emit(this.roomColor);
     }
   }
 
   loadImg() {
-    if (this.f.image.value == 'image') {
-      this.file.nativeElement.click();
-    }
+    // if (this.f.image.value == 'image') {
+      this.fileInput.nativeElement.click();
+    // }
+  }
+
+  changeColorFunc() {
+    this.fileTooLarge = false;
   }
 
   changeImgLoad($event) {
-    const file = $event.target.files[0];
+    this.fileTooLarge = false
+    this.file = $event.target.files[0];
+    if (this.file.size > 5249880) {
+      this.fileTooLarge = true;
+      return;
+    }
 
-    if ( file && !file.type.match('image')) {
+    if ( this.file && !this.file.type.match('image')) {
       return;
     }
 
@@ -55,10 +66,24 @@ export class ImageLoaderComponent implements OnInit {
       this.previewUrlImg = e.target.result;
       this.imgEmmit.emit(this.previewUrlImg);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(this.file);
   }
 
   resetImgandColor() {
     this.previewUrlImg = null;
+    this.fileTooLarge = false;
   }
+
+  formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) { return '0 Bytes'; }
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
 }
