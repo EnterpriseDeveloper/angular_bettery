@@ -19,7 +19,7 @@
       </div>
       <div class="tab">
         <div class="word" [ngClass]="{ 'tab_active': f.image.value == 'color' }">Color</div>
-        <div class="gradientPicker" [ngStyle]="{'background': roomColor}">
+        <div class="gradientPicker" [ngStyle]="{'background': eventColor}">
           <div class="disColumn">
             <div class="reloadImg"></div>
             <div class="TabToChange">Tap to change</div>
@@ -28,7 +28,7 @@
       </div>
 
     </div>
-    <div (click)="loadImg()" class="pretty p-default p-round inline mr-0" [ngClass]="previewUrlImg && !fileTooLarge && 'prettyHover'">
+    <div (click)="loadImg()" class="pretty p-default p-round inline mr-0 prettyHover">
       <input type="radio" value="image" formControlName="image" checked>
       <div class="state p-success-o checkPos">
         <label id="l"> </label>
@@ -49,8 +49,8 @@
             <span class="TabToChange" style="color: #7d7d7d">Upload</span>
           </label>
           <div *ngIf="previewUrlImg" class="preview-info">
-            <span>{{file.name}}</span>
-            <span class="span2">{{formatBytes(file.size, 2)}}</span>
+            <span>{{file?.name}}</span>
+            <span class="span2">{{formatBytes(file?.size, 2)}}</span>
           </div>
 
         </div>
