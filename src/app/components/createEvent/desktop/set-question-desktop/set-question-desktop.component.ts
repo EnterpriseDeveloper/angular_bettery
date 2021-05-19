@@ -6,7 +6,7 @@ import {
   EventEmitter,
   OnDestroy,
   ViewChild,
-  ElementRef, ViewChildren, QueryList, AfterViewInit,
+  ElementRef, ViewChildren, QueryList
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {Store} from '@ngrx/store';
@@ -36,6 +36,8 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   @ViewChild('textarea') textarea: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
   isDuplicate: boolean;
+  roomColor: string;
+  previewUrlImg;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,6 +60,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.questionForm = this.formBuilder.group({
       question: [this.formData.question, Validators.compose([Validators.required, Validators.maxLength(120)])],
       answers: new FormArray([]),
+      image: ['color'],
       details: [this.formData.resolutionDetalis]
     });
 
@@ -77,6 +80,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.updateTextarea();
     });
+    this.roomColor = this.formData.roomColor;
   }
 
   updateTextarea() {
@@ -119,6 +123,14 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.questionForm.invalid || this.checkingEqual(null, 'check')) {
       return;
+    }
+    if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
+      this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumColor = 'undefined';
+    }
+    if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
+      this.formData.thumColor = this.roomColor;
+      this.formData.thumImage = 'undefined';
     }
     if (this.registered) {
       this.getData.next(this.questionForm.value);
@@ -192,6 +204,14 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
       });
       return this.submitted && result.length !== 0 && arr.length > 1;
     }
+  }
+
+  imgEmmit(e) {
+    this.previewUrlImg = e;
+  }
+
+  colorEmmit(e) {
+    this.roomColor = e;
   }
 
   ngOnDestroy() {

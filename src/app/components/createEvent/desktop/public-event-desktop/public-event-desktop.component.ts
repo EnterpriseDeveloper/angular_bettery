@@ -133,7 +133,9 @@ export class PublicEventDesktopComponent implements OnDestroy {
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
       roomId: this.formData.roomId,
-      resolutionDetalis: this.formData.resolutionDetalis
+      resolutionDetalis: this.formData.resolutionDetalis,
+      thumImage: this.formData.thumImage,
+      thumColor: this.formData.thumColor,
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
@@ -144,6 +146,8 @@ export class PublicEventDesktopComponent implements OnDestroy {
           this.created = true;
           this.calculateDate()
           this.modalService.dismissAll();
+          this.formData.thumImage = '';
+          this.formData.thumColor = '';
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
             this.router.navigate([`room/${x.roomId}`]));
 

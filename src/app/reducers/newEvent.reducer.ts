@@ -24,6 +24,8 @@ const init = {
   exactYear: new Date().getFullYear(),
   exactTimeBool: false,
   roomId: '',
+  thumImage: '',
+  thumColor: ''
 };
 
 export const landingFeatureSelector = createFeatureSelector<LandingStateInterface>('event');

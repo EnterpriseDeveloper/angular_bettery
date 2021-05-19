@@ -26,7 +26,9 @@ const init = {
   exactMonth: new Date().getMonth(),
   exactYear: new Date().getFullYear(),
   exactTimeBool: false,
-  roomId: ""
+  roomId: "",
+  thumImage: "",
+  thumColor: ""
 };
 
 @Component({
@@ -69,7 +71,9 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
           exactMonth: new Date().getMonth(),
           exactYear: new Date().getFullYear(),
           exactTimeBool: false,
-          roomId: ''
+          roomId: '',
+          thumImage: '',
+          thumColor: ''
         };
         this.whichEvent = "setQuestion"
       }

@@ -76,7 +76,9 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
       roomColor: this.formData.roomColor,
       whichRoom: this.formData.whichRoom,
       roomId: this.formData.roomId,
-      resolutionDetalis: this.formData.resolutionDetalis
+      resolutionDetalis: this.formData.resolutionDetalis,
+      thumImage: this.formData.thumImage,
+      thumColor: this.formData.thumColor,
     }
 
     this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)
@@ -86,8 +88,9 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
           this.calculateDate();
           this.spinner = false;
           this.created = true;
-
           this.modalService.dismissAll();
+          this.formData.thumImage = '';
+          this.formData.thumColor = '';
         },
         (err) => {
           console.log("set qestion error");
