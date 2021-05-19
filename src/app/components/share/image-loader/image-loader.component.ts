@@ -25,13 +25,28 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   if (!this.eventColor) {
-     this.eventColor = this.formData.roomColor;
-     this.colorEmmit.emit(this.eventColor);
-   }
+    if (!this.eventColor) {
+      this.eventColor = this.formData.roomColor;
+      this.colorEmmit.emit(this.eventColor);
+    }
+    if (this.formData.thumImage == 'undefined') {
+      this.eventColor = this.formData.thumColor;
+      this.previewUrlImg = undefined;
+      this.loaderImg = true;
+      this.colorEmmit.emit(this.eventColor);
+    }
+    if (this.formData.thumColor == 'undefined') {
+      this.previewUrlImg = this.formData.thumImage;
+      this.loaderImg = true;
+      this.imgEmmit.emit({img: this.previewUrlImg, valid: false});
+    }
   }
 
-  loaderImgOpen() {
+  loaderImgOpen(e) {
+    if (e.target.classList.contains('trashRed')) {
+      return;
+    }
+
     this.loaderImg = !this.loaderImg;
   }
 
@@ -44,41 +59,48 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   loadImg() {
-    this.fileInput.nativeElement.click();
+    if (this.fileInput) {
+      this.fileInput.nativeElement.click();
+    }
   }
 
   changeColorFunc() {
+    this.formData.imgOrColor = 'color';
     this.fileTooLarge = false;
     this.colorEmmit.emit(this.eventColor);
   }
 
   changeImgLoad($event) {
+    this.formData.imgOrColor = 'image';
     this.fileTooLarge = false;
     this.file = $event.target.files[0];
 
     if (this.file && !this.file.type.match('image')) {
       return;
     }
-    if (this.file.size > 5249880) {
+    if (this.file && this.file.size > 5249880) {
       this.fileTooLarge = true;
-      this.readerInit( this.fileTooLarge);
+      this.readerInit(this.fileTooLarge);
       return;
     }
-    this.readerInit( this.fileTooLarge);
+    this.readerInit(this.fileTooLarge);
   }
 
   readerInit(valid: boolean): void {
     const reader = new FileReader();
     reader.onload = e => {
       this.previewUrlImg = e.target.result;
-      this.imgEmmit.emit({ img: this.previewUrlImg, valid: valid});
+      this.imgEmmit.emit({img: this.previewUrlImg, valid: valid});
     };
-    reader.readAsDataURL(this.file);
+    if (this.file) {
+      reader.readAsDataURL(this.file);
+    }
   }
 
   resetImgandColor() {
-    this.previewUrlImg = null;
     this.fileTooLarge = false;
+    this.previewUrlImg = undefined;
+    this.imgEmmit.emit({img: this.previewUrlImg, valid: false});
   }
 
   formatBytes(bytes, decimals = 2) {

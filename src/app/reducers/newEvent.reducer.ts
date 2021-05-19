@@ -24,6 +24,7 @@ const init = {
   exactYear: new Date().getFullYear(),
   exactTimeBool: false,
   roomId: '',
+  imgOrColor: 'color',
   thumImage: '',
   thumColor: ''
 };

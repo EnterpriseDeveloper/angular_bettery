@@ -1,5 +1,5 @@
 <div [formGroup]="form" style="margin: 0 16px">
-  <button type="button" (click)="loaderImgOpen()" class="add disSetting" style="justify-content: space-between; width: 100%">
+  <button type="button" (click)="loaderImgOpen($event)" class="add disSetting" style="justify-content: space-between; width: 100%">
     <div class="disSetting">
       <div class="cloudImgWrap">
         <div class="cloudImg"></div>
@@ -48,7 +48,7 @@
             <span class="preLoadImg"></span>
             <span class="TabToChange" style="color: #7d7d7d">Upload</span>
           </label>
-          <div *ngIf="previewUrlImg" class="preview-info">
+          <div *ngIf="previewUrlImg && file" class="preview-info">
             <span>{{file?.name}}</span>
             <span class="span2">{{formatBytes(file?.size, 2)}}</span>
           </div>
