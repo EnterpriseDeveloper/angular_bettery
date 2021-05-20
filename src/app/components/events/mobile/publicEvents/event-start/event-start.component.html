@@ -5,7 +5,7 @@
       <p class="hostName">{{eventData?.host.nickName}}</p>
       <div class="bookImg" (click)="openComingSoonModal(comingSoon)"></div>
     </div>
-    <div class="gradientBox" [ngStyle]="{'background': eventData?.room.color}">
+    <div class="gradientBox" [ngStyle]="imgForEvent(eventData)">
       <div class="avatarBox">
         <img class="avatar" src={{eventData?.host.avatat}} referrerpolicy="no-referrer">
       </div>

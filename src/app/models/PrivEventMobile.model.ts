@@ -24,7 +24,9 @@ export interface PrivEventMobile {
   winner: string;
   validatorsAmount: number;
   validatorAnswer: ValidatorsAnswers[];
-  resolutionDetalis: string
+  resolutionDetalis: string;
+  thumColor: string;
+  thumImage: string;
 }
 
 interface ParcipiantAnswers {
