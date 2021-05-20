@@ -44,7 +44,7 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   loaderImgOpen(e) {
-    if (e.target.classList.contains('trashRed')) {
+    if (e.target.classList.contains('trashRed') || e.target.classList.contains('trashWhite')) {
       return;
     }
 
@@ -100,8 +100,13 @@ export class ImageLoaderComponent implements OnInit {
 
   resetImgandColor() {
     this.fileTooLarge = false;
+    this.loaderImg = false;
+
     this.previewUrlImg = undefined;
     this.imgEmmit.emit({img: this.previewUrlImg, valid: false});
+
+    this.eventColor = this.formData.roomColor;
+    this.colorEmmit.emit(this.eventColor);
   }
 
   formatBytes(bytes, decimals = 2) {

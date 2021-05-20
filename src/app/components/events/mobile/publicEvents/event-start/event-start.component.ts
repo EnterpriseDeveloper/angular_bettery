@@ -313,4 +313,12 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  imgForEvent(data) {
+    if (data && data.thumColor == 'undefined') {
+      return {'background': 'url(' + data?.thumImage + ')center center no-repeat'}
+    } else {
+      return {'background': data?.thumColor};
+    }
+  }
+
 }

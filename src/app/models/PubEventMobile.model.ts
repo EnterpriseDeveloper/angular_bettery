@@ -29,7 +29,9 @@ export interface PubEventMobile {
   transactionHash: string;
   validatorsAmount: number;
   validatorsAnswers: ValidatorsAnswers[];
-  resolutionDetalis: string
+  resolutionDetalis: string;
+  thumImage: '';
+  thumColor: '';
 }
 
 interface ParcipiantAnswers {

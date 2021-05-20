@@ -248,6 +248,13 @@ export class PrivateMainComponent implements OnInit, OnDestroy {
   openSoonModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
   }
+  imgForEvent(data) {
+    if (data && data.thumColor == 'undefined') {
+      return {'background': 'url(' + data?.thumImage + ')center center no-repeat'}
+    } else {
+      return {'background': data?.thumColor}
+    }
+  }
 
   ngOnDestroy() {
     if (this.routeSub) {
