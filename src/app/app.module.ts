@@ -34,7 +34,6 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SwiperModule } from 'swiper/angular';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { RoomModule } from './components/rooms/rooms.module';
-import { FileauthComponent } from './components/fileauth/fileauth.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     return new TranslateHttpLoader(http, './assets/locale/', '.json');
@@ -48,7 +47,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         ErcCoinSaleComponent,
         NumericDirective,
         LandingFormComponent,
-        FileauthComponent,
     ],
     imports: [
         SwiperModule,
@@ -72,7 +70,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         RouterModule.forRoot([
             { path: '', component: HomeComponent },
             { path: 'tokensale', component: ErcCoinSaleComponent },
-            { path: '.well-known/pki-validation/fileauth.txt', component: FileauthComponent }
         ], { scrollPositionRestoration: 'top' }),
         TranslateModule.forRoot({
             loader: {
