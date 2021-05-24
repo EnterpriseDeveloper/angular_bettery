@@ -16,6 +16,7 @@ import {Subscription} from 'rxjs';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../../../models/User.model';
 import {RegistrationComponent} from '../../../registration/registration.component';
+import {formDataAction} from '../../../../actions/newEvent.actions';
 
 @Component({
   selector: 'set-question-desktop',
@@ -53,6 +54,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
         this.registered = true;
+        this.formDataReset();
         if (this.clicked) {
           this.onSubmit();
         }
@@ -139,6 +141,13 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     }
   }
 
+  formDataReset() {
+    this.formData.roomName = '';
+    this.formData.whichRoom = "new";
+    this.formData.roomName = ''
+    this.formData.roomId = "";
+    this.store.dispatch(formDataAction({ formData: this.formData }));
+  }
   async loginWithTorus() {
     this.clicked = true;
     const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
