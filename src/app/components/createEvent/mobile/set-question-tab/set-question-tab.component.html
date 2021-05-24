@@ -2,41 +2,17 @@
   <events-template-new [whichEvent]="'setQuestion'"></events-template-new>
   <form [formGroup]="questionForm">
     <div class="box">
-      <div class="lableBox">
-        <label for="Question" class="name">
-          <span class="text">Set topic</span>
-        </label>
-        <div class="limitText" *ngIf="isLimit">
-          <span
-            [ngStyle]="colorError(f.question.value.length, 115,120)">{{f.question.value.length}}
-            /</span> 120
-        </div>
-      </div>
-      <div>
-        <div style="position: relative">
-          <div class="__htmlarea questionTextarea __quest">
-            <span>{{letsSlice(this.questionForm.controls.question.value, 0, 120)}}</span>
-            <span *ngIf="this.questionForm.controls.question.value.length > 120"
-                  class="spanBg">{{letsSlice(this.questionForm.controls.question.value, 120, 200)}}</span>
-          </div>
-          <textarea
-            maxlength="200"
-            (keydown)="limitError('question', null)"
-            #textarea
-            class="__textarea questionTextarea __quest"
-            formControlName="question"
-            rows="1"
-            id="Question"
-            (input)="textareaGrow()"
-            placeholder="Enter topic..."
-            [ngClass]="  { 'is_invalid': submitted && f.question.errors}"
-          ></textarea>
-        </div>
+      <app-textarea [status]="'single'"
+                    [isMobile]="true" [title]="'Set Topic'"
+                    [questionForm]="questionForm"
+                    [submitted]="submitted"
+                    [limit]="120" [limitEnd]="200"
+                    [controlName]="'question'"
+      ></app-textarea>
         <div *ngIf="submitted && f.question.errors">
           <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
             question</small>
         </div>
-      </div>
 
       <div class="box mx-0" style="margin-top:25px">
         <label class="name">
@@ -51,30 +27,15 @@
             </div>
           </div>
           <div [formGroup]="answer" class="input-group inputBox">
-            <div class="wrap">
-              <div style="position: relative">
-                <div class="__htmlarea questionTextarea __answer">
-                  <span>{{letsSlice(this.questionForm.controls.answers.value[i].name, 0, 60)}}</span>
-                  <span *ngIf="this.questionForm.controls.answers.value[i].name.length > 55"
-                        class="spanBg">{{letsSlice(this.questionForm.controls.answers.value[i].name, 60, 100)}}
-                </span>
-                </div>
-                <textarea
-                  maxlength="100"
-                  #answers
-                  (keydown)="limitError('answer', i)"
-                  class="__textarea questionTextarea __answer"
-                  formControlName="name"
-                  rows="1"
-                  id="Question{{i}}"
-                  (input)="textareaGrowAnswer(i)"
-                  placeholder="Outcome {{i+1}}"
-                  [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
-                  || submitted && checkingEqual(answer.controls.name.value, '')
-                  || submitted && f.answers.value[i].name.length > 60}"
-                ></textarea>
-              </div>
-            </div>
+            <app-textarea style="width: 100%"
+                          [status]="'multi'"
+                          [isMobile]="true"
+                          [answer]="answer"
+                          [i]="i"
+                          [questionForm]="questionForm"
+                          [limit]="60"
+                          [limitEnd]="100"
+                          [answerForm]="answer" [submitted]="submitted"></app-textarea>
             <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
               <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
                 <div class="trashImg"></div>
@@ -103,7 +64,7 @@
       <app-image-loader [mobile]="true" [form] = questionForm [formData]="formData" [f] = f (imgEmmit)="imgEmmit($event)" (colorEmmit)="colorEmmit($event)"></app-image-loader>
       <div class="border1"></div>
       <div class="box mx-0">
-        <label for="Question" class="name" style="margin-top: 24px">
+        <label for="detalis" class="name" style="margin-top: 24px">
           <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
         </label>
         <input type="text" formControlName="details" class="answer adapting" id="detalis"

@@ -22,6 +22,7 @@ import { JustANoteModalComponent } from './modals/just-note-modal/just-anote-mod
 import { SpinnerLoadMoreComponent } from './spinners/spinner-load-more/spinner-load-more.component';
 import { MobilePlugPageComponent } from './modals/mobile-plug-page/mobile-plug-page.component';
 import { ImageLoaderComponent } from './image-loader/image-loader.component';
+import { TextareaComponent } from './textarea/textarea.component';
 
 
 
@@ -45,7 +46,9 @@ import { ImageLoaderComponent } from './image-loader/image-loader.component';
     JustANoteModalComponent,
     SpinnerLoadMoreComponent,
     MobilePlugPageComponent,
-    ImageLoaderComponent
+    ImageLoaderComponent,
+    MobilePlugPageComponent,
+    TextareaComponent
   ],
     imports: [
         CommonModule,
@@ -68,7 +71,8 @@ import { ImageLoaderComponent } from './image-loader/image-loader.component';
         TimeComponent,
         JustANoteModalComponent,
         MobilePlugPageComponent,
-        ImageLoaderComponent
+        ImageLoaderComponent,
+        TextareaComponent
     ]
 })
 

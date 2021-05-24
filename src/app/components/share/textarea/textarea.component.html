@@ -1,0 +1,86 @@
+<div [formGroup]="questionForm">
+  <div *ngIf="status == 'single'">
+    <div class="lableBox">
+      <label for="Question" class="name" [ngClass]="isMobile && 'name-mobile'">
+        <span class="text">{{title}}</span>
+      </label>
+      <div class="limitText" [ngClass]="isMobile && 'limitText-mobile'" *ngIf="isLimit">
+          <span
+            [ngStyle]="controlName == 'question' ? colorError(f.question.value.length, (limit - 5),limit) : colorError(f.roomName.value.length, (limit - 5),limit)">
+            {{controlName == 'question' ? f.question.value.length : f.roomName.value.length}}
+            /</span> {{limit}}
+      </div>
+    </div>
+    <div style="position: relative" [ngClass]="isMobile && 'questionTextarea-mobile'">
+      <div *ngIf="controlName == 'question'" class="__htmlarea questionTextarea __answer"
+           [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px">
+        <span>{{letsSlice(this.questionForm.controls.question.value, 0, limit)}}</span>
+        <span
+          *ngIf=" controlName == 'question' ? this.questionForm.controls.question.value.length > limit : this.questionForm.controls.roomName.value.length > limit"
+          class="spanBg"
+          style="font-size: 14px"
+          [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(this.questionForm.controls.question.value, limit, limitEnd)}}</span>
+      </div>
+
+      <div *ngIf="controlName == 'roomName'" class="__htmlarea questionTextarea __answer"
+           [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px"
+           [ngStyle]="controlName == 'roomName' && {'padding-right': '50px'}">
+        <span>{{letsSlice(f?.roomName.value, 0, limit)}}</span>
+        <span *ngIf="f.roomName.value.length > limit"
+              class="spanBg" style="font-size: 14px"
+              [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f?.roomName.value, limit, limitEnd)}}</span>
+      </div>
+
+      <textarea
+        [maxlength]="limitEnd"
+        (keydown)="limitError(controlName, null)"
+        #textarea
+        class="__textarea questionTextarea __answer placeH"
+        formControlName="{{controlName}}"
+        rows="1"
+        id="Question"
+        (input)="textareaGrow()"
+        placeholder="{{controlName == 'question' ? 'Enter topic...' : nickName + '`s rooms' }}"
+        [ngClass]=" controlName == 'question' ? { 'is_invalid': submitted && f.question.errors} : { 'is_invalid': submitted && f.roomName.errors}"
+        style="font-size: 14px"
+        [ngStyle]="styleSetting()"
+      ></textarea>
+      <div *ngIf="controlName == 'roomName'" class="gradientPOs">
+        <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">
+          <div class="reloadImg" (click)="generateGradientEmmit()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="status == 'multi'" [formGroup]="answerForm" [ngClass]="isMobile && 'questionTextarea-mobile'">
+    <div class="wrap">
+      <div style="position: relative">
+        <div class="__htmlarea questionTextarea __answer paddSetting" [ngClass]="isMobile && '__htmlarea-mobile'">
+          <span>{{letsSlice(f.answers.value[i].name, 0, limit)}}</span>
+          <span *ngIf="f.answers.value[i].name.length > (limit - 5)"
+                class="spanBg"
+                [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f.answers.value[i].name, limit, limitEnd)}}
+                </span>
+        </div>
+        <textarea
+          maxlength="100"
+          #answers
+          (keydown)="limitError('answer', i)"
+          class="__textarea questionTextarea __answer paddSetting"
+          formControlName="name"
+          rows="1"
+          id="Question{{i}}"
+          (input)="textareaGrowAnswer()"
+          placeholder="Outcome {{i+1}}"
+          [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
+                || submitted && checkingEqual(answer.controls.name.value, '')
+                || submitted && f.answers.value[i].name.length > limit}"
+          [ngStyle]="isMobile ? {'font-size': '16px', 'border': 'none'} : {}"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+

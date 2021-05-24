@@ -34,8 +34,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   clicked = false;
   userSub: Subscription;
   isLimit: boolean;
-  @ViewChild('textarea') textarea: ElementRef;
-  @ViewChildren('answers') answers: QueryList<any>;
   isDuplicate: boolean;
   eventColor: string;
   previewUrlImg;
@@ -79,16 +77,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
           name: ['', Validators.compose([Validators.required, Validators.maxLength(60)])],
         }));
       }
-    }
-    setTimeout(() => {
-      this.updateTextarea();
-    });
-  }
-
-  updateTextarea() {
-    this.textareaGrow();
-    for (let i = 0; i < this.f.answers.value.length; i++) {
-      this.textareaGrowAnswer(i);
     }
   }
 
@@ -162,28 +150,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     if (param === 'answer' && this.f.answers.value[i].name.length >= 55) {
       return 'answer' + i;
     }
-  }
-
-  textareaGrow(): void {
-    this.calculateRows(this.textarea);
-  }
-
-  textareaGrowAnswer(i): void {
-    const el = this.answers.toArray()[i];
-    this.calculateRows(el);
-  }
-
-  calculateRows(el) {
-    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
-    el.nativeElement.rows = 1;
-    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
-    el.nativeElement.rows = innerHeight / lineHeight;
-  }
-
-  letsSlice(control, start, finish) {
-    return control.slice(start, finish);
   }
 
   colorError(length, numYel, numMain) {
