@@ -2,7 +2,14 @@
   <form [formGroup]="questionForm">
     <div class="box">
 
-      <app-textarea [status]="'single'" [title]="'Set Topic'" [questionForm]="questionForm" [submitted]="submitted" [limit]="120" [limitEnd]="200"></app-textarea>
+      <app-textarea [status]="'single'"
+                    [title]="'Set Topic'"
+                    [questionForm]="questionForm"
+                    [submitted]="submitted"
+                    [limit]="120"
+                    [limitEnd]="200"
+                    [controlName]="'question'"
+      ></app-textarea>
 
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
@@ -31,7 +38,9 @@
                         [questionForm]="questionForm"
                         [limit]="60"
                         [limitEnd]="100"
-                        [answerForm]="answer" [submitted]="submitted"></app-textarea>
+                        [answerForm]="answer"
+                        [submitted]="submitted"
+          ></app-textarea>
 
           <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
             <button (click)="deleteAnswer(i)" class="deleteButton" type="button">

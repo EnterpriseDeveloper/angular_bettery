@@ -41,52 +41,27 @@
     </form>
   </div>
   <div *ngIf="r.createNewRoom.value == 'new'">
-    <div class="lableBox">
-      <div><p class="name">ROOM NAME AND COLOR</p></div>
-      <div class="limitText" *ngIf="isLimit">
-          <span
-            [ngStyle]="colorError(f.roomName.value.length, 25,32)">{{f.roomName.value.length}}/</span> 32
-      </div>
-    </div>
     <form [formGroup]="roomForm">
-      <div class="form-group position-relative">
+      <div class="form-group position-relative" style="padding-top: 24px">
         <div style="position: relative">
-          <div class="__htmlarea questionTextarea __answer">
-            <span>{{letsSlice(f?.roomName.value, 0, 32)}}</span>
-            <span *ngIf="f.roomName.value.length > 32"
-                  class="spanBg">{{letsSlice(f?.roomName.value, 32, 42)}}</span>
-          </div>
-          <textarea
-            maxlength="42"
-            (keydown)="limitError()"
-            #textarea
-            class="__textarea questionTextarea __answer placeH"
-            formControlName="roomName"
-            id="roomName"
-            rows="1"
-            placeholder="{{nickName}}’s room"
-            (input)="textareaGrow()"
-            [ngClass]="{ 'is_invalid': submitted && f.roomName.errors }"
-          ></textarea>
-<!--      <app-textarea style="width: 100%"-->
-<!--                    [status]="'single'"-->
-<!--                    [isMobile]="true"-->
-<!--                    [questionForm]="roomForm"-->
-<!--                    [limit]="35"-->
-<!--                    [limitEnd]="60"-->
-<!--                    [submitted]="submitted"-->
-<!--                    [title]="'Set Topic'"></app-textarea>-->
 
-       <div class="gradientPOs">
-         <div class="gradientPicker" [ngStyle]="{'background': f.roomColor.value}">
-           <div class="reloadImg" (click)="generateGradient()"></div>
-         </div>
-       </div>
+          <app-textarea style="width: 100%"
+                        [status]="'single'"
+                        [isMobile]="true"
+                        [questionForm]="roomForm"
+                        [limit]="35"
+                        [limitEnd]="60"
+                        [submitted]="submitted"
+                        [title]="'ROOM NAME AND COLOR'"
+                        [controlName]="'roomName'"
+          (gradientEmmit)="generateGradient()"
+          ></app-textarea>
         </div>
         <div *ngIf="submitted && f.roomName.errors">
           <small *ngIf="f.roomName.errors.required" class="form-text quize_validation_error">Room name is
             required</small>
         </div>
+
       </div>
       <div *ngIf="roomError">
         <small class="form-text quize_validation_error">Room with this name already exist</small>

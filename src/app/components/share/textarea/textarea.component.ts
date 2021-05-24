@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 
 @Component({
   selector: 'app-textarea',
@@ -20,6 +20,8 @@ export class TextareaComponent implements OnInit {
   @Input() i;
   @Input() answer;
   @Input() answerForm;
+  @Input() controlName;
+  @Output() gradientEmmit = new EventEmitter();
 
 
   constructor() {
@@ -47,6 +49,10 @@ export class TextareaComponent implements OnInit {
     }
     if (param === 'answer' && this.f.answers.value[i].name.length >= 55) {
       return 'answer' + i;
+    }
+    if (param == 'roomName') {
+      const length = this.f.roomName.value.length;
+      this.isLimit = length >= 26;
     }
   }
 
@@ -105,6 +111,19 @@ export class TextareaComponent implements OnInit {
         return el.trim() === value.trim() && value.trim().length !== 0;
       });
       return this.submitted && result.length !== 0 && arr.length > 1;
+    }
+  }
+
+  generateGradientEmmit() {
+    this.gradientEmmit.emit(true);
+  }
+
+  styleSetting() {
+    if (this.isMobile && this.controlName == 'question') {
+      return {'font-size': '16px', 'border': 'none'}
+    }
+    if (this.isMobile && this.controlName == 'roomName')  {
+      return {'font-size': '16px', 'border': 'none', 'padding-right': '50px'}
     }
   }
 }

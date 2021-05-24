@@ -6,7 +6,9 @@
                     [isMobile]="true" [title]="'Set Topic'"
                     [questionForm]="questionForm"
                     [submitted]="submitted"
-                    [limit]="120" [limitEnd]="200"></app-textarea>
+                    [limit]="120" [limitEnd]="200"
+                    [controlName]="'question'"
+      ></app-textarea>
         <div *ngIf="submitted && f.question.errors">
           <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
             question</small>
