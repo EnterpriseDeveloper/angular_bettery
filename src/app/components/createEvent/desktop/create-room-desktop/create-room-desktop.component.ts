@@ -61,6 +61,9 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
       if (x.length != 0) {
         this.userId = x[0]._id;
         this.nickName = x[0].nickName.split(' ')[0];
+        if (this.r.createNewRoom.value == 'new' &&  this.formData.roomName.length == 0) {
+          this.f.roomName.setValue(this.nickName + '’s room');
+        }
         this.getUserRooms(this.userId);
       }
     });

@@ -84,7 +84,7 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes) {
     if (changes['eventData'] !== undefined) {
       if (changes['eventData'].currentValue !== undefined) {
-        this.coinType = this.eventData.currencyType == "token" ? "BTY" : "ETH"
+        this.coinType = this.eventData.currencyType == "token" ? "BET" : "ETH"
         this.currentPool = 0;
         this.playersJoinde = 0;
         this.expertJoinned = 0;

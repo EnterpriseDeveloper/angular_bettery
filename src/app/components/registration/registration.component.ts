@@ -143,7 +143,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       listParticipantEvents: listParticipantEvents,
       listValidatorEvents: listValidatorEvents,
       historyTransaction: historyTransaction,
-      avatar: avatar == "" ? 'https://api.bettery.io/image/avatar.png' : avatar,
+      avatar: avatar,
       verifier: verifier
     }));
     this.onReset();

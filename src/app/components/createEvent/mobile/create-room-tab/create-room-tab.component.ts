@@ -33,7 +33,6 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
   roomError: string;
   userId: number;
   nickName: string;
-  @ViewChild('textarea') textarea: ElementRef;
   isLimit: boolean;
 
   constructor(
@@ -65,11 +64,11 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
       if (x && x?.length != 0) {
         this.userId = x[0]._id;
         this.nickName = x[0].nickName.split(' ')[0];
-        this.getUserRooms(this.userId)
+        if (this.r.createNewRoom.value == 'new' &&  this.formData.roomName.length == 0) {
+          this.f.roomName.setValue(this.nickName + '’s room');
+        }
+        this.getUserRooms(this.userId);
       }
-    });
-    setTimeout(() => {
-      this.textareaGrow();
     });
   }
 
@@ -190,44 +189,6 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(formDataAction({formData: this.formData}));
     this.router.navigate(['/create-event']);
-  }
-
-  letsSlice(control, start, finish) {
-    return control.slice(start, finish);
-  }
-
-  limitError() {
-    const length = this.f.roomName.value.length;
-    this.isLimit = length >= 26;
-  }
-
-  colorError(length, numYel, numMain) {
-    if (length >= numYel && length <= numMain) {
-      return {
-        'color': '#FFFFFF'
-      };
-    }
-    if (length > numMain) {
-      return {
-        'font-weight': 'bold',
-        'color': '#FF3232'
-      };
-    }
-  }
-
-  textareaGrow(): void {
-    if (this.textarea) {
-      this.calculateRows(this.textarea);
-    }
-  }
-
-  calculateRows(el) {
-    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
-    el.nativeElement.rows = 1;
-    const innerHeight = el?.nativeElement.scrollHeight - paddingTop - paddingBottom;
-    el.nativeElement.rows = innerHeight / lineHeight;
   }
 
   ngOnDestroy() {

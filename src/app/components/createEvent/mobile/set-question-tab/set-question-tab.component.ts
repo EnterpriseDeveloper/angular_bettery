@@ -29,13 +29,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
 
   spinnerLoading: boolean;
   saveUserLocStorage = [];
-  isLimit: boolean;
-  @ViewChild('textarea') textarea: ElementRef;
-  @ViewChildren('answers') answers: QueryList<any>;
   eventColor: string;
   previewUrlImg;
   validSizeImg = false;
-
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
@@ -86,18 +82,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     //     this.formData.question = a.newEvent.trim();
     //   }
     // });
-    setTimeout(() => {
-      this.updateTextarea();
-    });
   }
-
-  updateTextarea() {
-    this.textareaGrow();
-    for (let i = 0; i < this.f.answers.value.length; i++) {
-      this.textareaGrowAnswer(i);
-    }
-  }
-
   get f() {
     return this.questionForm.controls;
   }
@@ -168,31 +153,9 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   }
 
   limitError(param, i) {
-    if (param == 'question') {
-      const length = this.f.question.value.length;
-      this.isLimit = length > 115;
-    }
     if (param === 'answer' && this.f.answers.value[i].name.length >= 55) {
       return 'answer' + i;
     }
-  }
-
-  textareaGrow(): void {
-    this.calculateRows(this.textarea);
-  }
-
-  textareaGrowAnswer(i): void {
-    const el = this.answers.toArray()[i];
-    this.calculateRows(el);
-  }
-
-  calculateRows(el) {
-    const paddingTop = parseInt(getComputedStyle(el.nativeElement).paddingTop, 10);
-    const paddingBottom = parseInt(getComputedStyle(el.nativeElement).paddingBottom, 10);
-    const lineHeight = parseInt(getComputedStyle(el.nativeElement).lineHeight, 10);
-    el.nativeElement.rows = 1;
-    const innerHeight = el.nativeElement.scrollHeight - paddingTop - paddingBottom;
-    el.nativeElement.rows = innerHeight / lineHeight;
   }
 
   letsSlice(control, start, finish) {
