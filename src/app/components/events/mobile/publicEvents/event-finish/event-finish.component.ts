@@ -22,7 +22,6 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   info = undefined;
   userSub: Subscription;
   userData = undefined;
-  pool = 0;
   currencyType: string;
   viewMore: number = null;
   coinType: string = undefined;
@@ -39,7 +38,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.currencyType = this.eventData.currencyType == 'token' ? 'BTY' : 'ETH';
+    this.currencyType = this.eventData.currencyType == 'token' ? 'BET' : 'ETH';
     this.userSub = this.store.select('user').subscribe((x) => {
       if (x.length != 0) {
         this.userData = x[0];

@@ -4,7 +4,7 @@
         <p class="title" [style]="titleColor()">EVENT ENDED</p>
     </div>
     <div class="roomBox">
-        <p class="roomName">ROOM: Avengers</p>
+        <p class="roomName">ROOM: {{eventData?.room.name}}</p>
     </div>
     <div *ngIf="userData && info !== undefined">
         <div class="statusContainer">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="infoBox">
                     <span class="abount"><b>{{expertsBet(i)}} Experts</b> validated</span>
-                    <span class="abount"><b>{{pool}} {{currencyType}}</b></span>
+                    <span class="abount"><b>{{getPool()}} {{currencyType}}</b></span>
                 </div>
 
             </div>
