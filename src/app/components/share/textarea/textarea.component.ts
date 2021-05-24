@@ -11,18 +11,17 @@ export class TextareaComponent implements OnInit {
   isLimit: boolean;
   isDuplicate: boolean;
   @Input() questionForm;
-  @Input() submitted;
-  @Input() status;
+  @Input() submitted: boolean;
+  @Input() status: string;
   @Input() isMobile: boolean;
-  @Input()  title: string;
-  @Input()  limit: number;
-  @Input()  limitEnd: number;
-  @Input() i;
+  @Input() title: string;
+  @Input() limit: number;
+  @Input() limitEnd: number;
+  @Input() i: number;
   @Input() answer;
   @Input() answerForm;
-  @Input() controlName;
+  @Input() controlName: string;
   @Output() gradientEmmit = new EventEmitter();
-
 
   constructor() {
   }

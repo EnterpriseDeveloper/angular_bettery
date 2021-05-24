@@ -6,21 +6,29 @@
       </label>
       <div class="limitText" [ngClass]="isMobile && 'limitText-mobile'" *ngIf="isLimit">
           <span
-            [ngStyle]="controlName == 'question' ? colorError(f.question.value.length, (limit - 5),limit) : colorError(f.roomName.value.length, (limit - 5),limit)">{{controlName == 'question' ? f.question.value.length : f.roomName.value.length}} /</span> {{limit}}
+            [ngStyle]="controlName == 'question' ? colorError(f.question.value.length, (limit - 5),limit) : colorError(f.roomName.value.length, (limit - 5),limit)">
+            {{controlName == 'question' ? f.question.value.length : f.roomName.value.length}}
+            /</span> {{limit}}
       </div>
     </div>
     <div style="position: relative" [ngClass]="isMobile && 'questionTextarea-mobile'">
-      <div *ngIf="controlName == 'question'" class="__htmlarea questionTextarea __answer" [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px">
+      <div *ngIf="controlName == 'question'" class="__htmlarea questionTextarea __answer"
+           [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px">
         <span>{{letsSlice(this.questionForm.controls.question.value, 0, limit)}}</span>
-        <span *ngIf=" controlName == 'question' ? this.questionForm.controls.question.value.length > limit : this.questionForm.controls.roomName.value.length > limit"
-              class="spanBg"
-              style="font-size: 14px" [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(this.questionForm.controls.question.value, limit, limitEnd)}}</span>
+        <span
+          *ngIf=" controlName == 'question' ? this.questionForm.controls.question.value.length > limit : this.questionForm.controls.roomName.value.length > limit"
+          class="spanBg"
+          style="font-size: 14px"
+          [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(this.questionForm.controls.question.value, limit, limitEnd)}}</span>
       </div>
 
-      <div *ngIf="controlName == 'roomName'" class="__htmlarea questionTextarea __answer" [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px" [ngStyle]="controlName == 'roomName' && {'padding-right': '50px'}">
+      <div *ngIf="controlName == 'roomName'" class="__htmlarea questionTextarea __answer"
+           [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 14px"
+           [ngStyle]="controlName == 'roomName' && {'padding-right': '50px'}">
         <span>{{letsSlice(f?.roomName.value, 0, limit)}}</span>
         <span *ngIf="f.roomName.value.length > limit"
-              class="spanBg"  style="font-size: 14px" [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f?.roomName.value, limit, limitEnd)}}</span>
+              class="spanBg" style="font-size: 14px"
+              [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f?.roomName.value, limit, limitEnd)}}</span>
       </div>
 
       <textarea
@@ -46,14 +54,14 @@
   </div>
 
 
-
   <div *ngIf="status == 'multi'" [formGroup]="answerForm" [ngClass]="isMobile && 'questionTextarea-mobile'">
     <div class="wrap">
       <div style="position: relative">
-        <div class="__htmlarea questionTextarea __answer paddSetting"  [ngClass]="isMobile && '__htmlarea-mobile'">
+        <div class="__htmlarea questionTextarea __answer paddSetting" [ngClass]="isMobile && '__htmlarea-mobile'">
           <span>{{letsSlice(f.answers.value[i].name, 0, limit)}}</span>
           <span *ngIf="f.answers.value[i].name.length > (limit - 5)"
-                class="spanBg" [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f.answers.value[i].name, limit, limitEnd)}}
+                class="spanBg"
+                [ngClass]="isMobile && 'spanBg-mobile'">{{letsSlice(f.answers.value[i].name, limit, limitEnd)}}
                 </span>
         </div>
         <textarea
