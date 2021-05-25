@@ -301,7 +301,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       data.parcipiantAnswers.forEach(x => {
         pool = pool + Number(x.amount);
       });
-      return pool;
+      return pool.toString().includes('.') ? pool.toFixed(1) : pool;
     } else {
       return 0;
     }

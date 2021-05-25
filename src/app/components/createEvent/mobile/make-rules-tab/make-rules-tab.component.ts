@@ -55,6 +55,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
   exactTimeBool: boolean;
   modalTrigger: boolean;
   pastTime: boolean;
+  unitOfTime = 'afterMinutes';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -174,6 +175,15 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
     let findEl = _.find(this.times, (x) => {
       return x.name.replace(/minutes|hours|hour/gi, '') == name;
     });
+    if (findEl.value < 1) {
+      this.unitOfTime = 'afterMinutes';
+    }
+    if (findEl.value > 1) {
+      this.unitOfTime = 'afterHours';
+    }
+    if (findEl.value == 1) {
+      this.unitOfTime = 'afterHour';
+    }
     this.privateForm.controls.privateEndTime.setValue(findEl);
   }
 
