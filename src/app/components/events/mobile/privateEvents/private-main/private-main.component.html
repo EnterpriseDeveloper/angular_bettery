@@ -50,7 +50,7 @@
           <button (click)="changePage()">JOIN</button>
         </div>
       </ng-container>
-      <ng-container *ngIf="condition">
+      <div id="up1" *ngIf="condition">
         <ng-container *ngIf="counts == 1">
           <div *ngIf=" displayTime() && hideBtn && hideTitle" class="blue-text">Thank you for playing!</div>
           <div *ngIf="!hideBtn && hideTitle" class="now_batting__title">
@@ -199,7 +199,7 @@
 
           </div>
         </ng-container>
-      </ng-container>
+      </div>
       <app-private-form *ngIf="counts==2" [data]="data" (changed)="onChanged($event)"></app-private-form>
     </ng-container>
     <app-private-expert *ngIf="expertPage" [data]="data" [allTime]="allTime" [ifTimeValid]="ifTimeValid"
