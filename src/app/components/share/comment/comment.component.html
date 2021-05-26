@@ -103,9 +103,9 @@
       <button (click)="sendComment()">Register to comment</button>
     </div>
     <div class="wrapCommentDown">
-      <div *ngIf="!hideInput" class="arrowUp d-flex">
+      <div *ngIf="!hideInput && showOnScreen?.length >= 5" class="arrowUp d-flex">
         <div class="arrowImg"></div>
-        <div><a style="color: #fff" pageScroll href="#up">Go to top</a></div>
+        <div><a style="color: #fff" pageScroll [pageScrollDuration]="400" href="#up">Go to top</a></div>
       </div>
       <div class="closeWhite" [ngClass]="checkTheme() && 'd-block'">
         <div class="plusClose" style="visibility: hidden">
