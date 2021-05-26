@@ -53,6 +53,7 @@ export class MakeRulesDesktopComponent implements OnInit {
   exactTimeBool: boolean;
   modalTrigger: boolean;
   pastTime: boolean;
+  unitOfTime = 'afterMinutes';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -170,7 +171,16 @@ export class MakeRulesDesktopComponent implements OnInit {
 
     let findEl = _.find(this.times, (x) => {
       return x.name.replace(/minutes|hours|hour/gi, '') == name;
-    });
+    })
+    if (findEl.value < 1) {
+      this.unitOfTime = 'afterMinutes';
+    }
+    if (findEl.value > 1) {
+      this.unitOfTime = 'afterHours';
+    }
+    if (findEl.value == 1) {
+      this.unitOfTime = 'afterHour';
+    }
 
     this.privateForm.controls.privateEndTime.setValue(findEl);
   }

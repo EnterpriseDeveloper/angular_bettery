@@ -118,17 +118,9 @@ export class QuizChooseRoleComponent implements OnInit {
       data.parcipiantAnswers.forEach(x => {
         pool = pool + Number(x.amount);
       });
-      return pool;
+      return pool.toString().includes('.') ? pool.toFixed(1) : pool;
     } else {
       return 0;
     }
   }
-
-  // letsRegistration() {
-  //   if (this.userData === undefined) {
-  //     const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
-  //     modalRef.componentInstance.openSpinner = true;
-  //   }
-  // }
-
 }

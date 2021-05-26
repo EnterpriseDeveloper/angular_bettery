@@ -13,7 +13,7 @@
       <p>Winners appreciate your expertise! Chase them for a reward, maybe?</p>
     </div>
     <div *ngIf="award == 'loser' || award == 'winner'" class="roomBox">
-      <p class="roomName">ROOM: Avengers</p>
+      <p class="roomName">ROOM: {{eventData?.room.name}}</p>
     </div>
     <div *ngIf="award == 'none'">
       <div class="title_btn">

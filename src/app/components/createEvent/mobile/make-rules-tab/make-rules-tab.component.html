@@ -9,7 +9,7 @@
           <div class="state p-warning-o checkPos">
             <label class="pos"> </label>
           </div>
-          <p class="tab">BTY Token</p>
+          <p class="tab">BET Token</p>
         </div>
 
         <div class="pretty p-default p-round inline">
@@ -141,7 +141,7 @@
         <p class="name cupName">BETTING TIME</p>
       </div>
 
-      <div class="dropBox correctMB label">
+      <div class="dropBox correctMB label" [ngClass]="unitOfTime">
         <label for="startTime" id="labelC">{{endPrivateTime}}</label>
         <select (change)="chosePrivateEndTime()" formControlName="privateEndTime" class=" pl-2 dropBox startTime" [ngClass]="{ 'is_invalid': submitted && priv.privateEndTime.errors }" name="startTime" id="startTime">
           <option style="color:#ffffff;" *ngFor="let time of times"   value="{{time.name}}">{{time.name}}</option>

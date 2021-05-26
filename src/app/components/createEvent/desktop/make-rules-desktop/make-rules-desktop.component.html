@@ -144,7 +144,7 @@
         <p class="name cupName">BETTING TIME</p>
       </div>
 
-      <div class="dropBox correctMB label">
+      <div class="dropBox correctMB label" [ngClass]="unitOfTime">
         <label for="startTime" id="labelC">{{endPrivateTime}}</label>
         <select (change)="chosePrivateEndTime()" formControlName="privateEndTime" class=" pl-2 dropBox startTime"
           [ngClass]="{ 'is_invalid': submitted && priv.privateEndTime.errors }" name="startTime" id="startTime">
