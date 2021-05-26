@@ -67,10 +67,10 @@
           </div>
           <div style="min-width: 126px">
             <div class="timer-span" *ngIf="question.finalAnswer === null && !question.status.includes('reverted') ">
-              <div style="display: flex; width: 100%; white-space: pre">
+              <div style="display: flex; width: 100%; white-space: pre; position: relative">
+                <div style="position: absolute; left: 35px" *ngIf="!timeValidating(question)">
+                  ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})</div>
                 <time class="w-100" [timer]="question?.endTime"></time>
-                <div *ngIf="!timeValidating(question)">
-                  ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}} left)</div>
               </div>
             </div>
             <div *ngIf="question.finalAnswer !== null">

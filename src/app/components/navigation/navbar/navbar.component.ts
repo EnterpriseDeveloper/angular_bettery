@@ -121,7 +121,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async ngOnInit() {
     this.onDocumentClick = this.onDocumentClick.bind(this);
-    document.addEventListener('click', this.onDocumentClick);
   }
 
   depositGuard() {
@@ -203,15 +202,15 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.openNavBar = !this.openNavBar;
   }
 
-
-  protected onDocumentClick(event: MouseEvent) {
-    if (this.insideElement) {
-      if (this.insideElement.nativeElement.contains(event.target)) {
-        return;
+  @HostListener('document:click', ['$event'])
+  protected onDocumentClick($event: MouseEvent) {
+      if (this.insideElement) {
+        if (this.insideElement.nativeElement.contains($event.target)) {
+          return;
+        }
+        this.openNavBar = false;
       }
-      this.openNavBar = false;
     }
-  }
 
   openWallet() {
     web3Obj.torus.showWallet('home');
@@ -263,7 +262,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnDestroy() {
-    document.removeEventListener('click', this.onDocumentClick);
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
