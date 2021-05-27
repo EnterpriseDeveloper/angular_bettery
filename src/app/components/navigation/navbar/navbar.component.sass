@@ -273,7 +273,6 @@
     line-height: 19px
     color: #0B1511
     padding-top: 15px
-    padding-left: 16px
     margin-bottom: 12px
 
 .ethImg
@@ -285,10 +284,14 @@
     left: 8px
     top: 5px
 
+@media (max-width: 320px)
+  .ethImg
+    width: 26px
+    height: 26px
+
 .ethImgNew
     width: 22px
     height: 37px
-
 
 .btyImg
     background: url(../../../../assets/share/BTY.png) left center no-repeat
@@ -298,6 +301,11 @@
     position: relative
     top: 4px
     left: 8px
+
+@media (max-width: 320px)
+  .btyImg
+    width: 26px
+    height: 26px
 
 .btyImgNew
     width: 40px
@@ -312,6 +320,10 @@
     justify-content: space-around
     flex-direction: row-reverse
 
+@media (max-width: 290px)
+  .balanceBox
+    flex-direction: column
+
 .balance
     font-family: 'Open Sans', sans-serif
     font-style: normal
@@ -319,8 +331,10 @@
     font-size: 16px
     line-height: 22px
     color: #FFFFFF
-    padding-left: 16px
     padding-top: 10px
+@media (max-width: 320px)
+  .balance
+    font-size: 14px
 
 .lowOnCoins
     font-family: 'Open Sans', sans-serif
@@ -332,7 +346,6 @@
     color: #FFD300
     background-color: transparent
     border: none
-    margin-left: 14px
     margin-bottom: 24px
 
 .arrow
