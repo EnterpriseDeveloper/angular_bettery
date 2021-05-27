@@ -29,6 +29,7 @@
     "@ngrx/store": "^8.5.0",
     "@ngx-translate/core": "^12.0.0",
     "@ngx-translate/http-loader": "^5.0.0",
+    "@toruslabs/openlogin": "^0.8.5",
     "@toruslabs/torus-embed": "^1.10.10",
     "@types/mocha": "^5.2.7",
     "@types/socket.io-client": "^1.4.34",
