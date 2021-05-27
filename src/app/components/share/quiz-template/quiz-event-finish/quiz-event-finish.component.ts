@@ -67,7 +67,7 @@ export class QuizEventFinishComponent implements OnInit {
         data.forEach(e => {
           amount = amount + e.amount;
         });
-        return amount;
+        return  amount.toString().includes('.') ? amount.toFixed(1) : amount;
       }
     }
   }

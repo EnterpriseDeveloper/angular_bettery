@@ -105,7 +105,7 @@
     <div class="wrapCommentDown">
       <div *ngIf="!hideInput" class="arrowUp d-flex">
         <div class="arrowImg"></div>
-        <div><a style="color: #fff" pageScroll href="#up">Go to top</a></div>
+        <div><a style="color: #fff" pageScroll [pageScrollDuration]="600" href="#up1">Go to top</a></div>
       </div>
       <div class="closeWhite" [ngClass]="checkTheme() && 'd-block'">
         <div class="plusClose" style="visibility: hidden">

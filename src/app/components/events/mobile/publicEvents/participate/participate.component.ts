@@ -81,7 +81,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     }
 
     if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
-      this.errorMessage = "Don't have enough BET tokens"
+      return;
     } else {
       this.spinnerLoading = true;
       let web3 = new Web3();
@@ -142,6 +142,11 @@ export class ParticipateComponent implements OnInit, OnDestroy {
 
   updateValue() {
     let value = this.answerForm.controls.amount.value;
+    if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
+      this.errorMessage = "Don't have enough BET tokens";
+    } else {
+      this.errorMessage = undefined;
+    }
     if (value) {
       value = value.toString();
       if (value.indexOf('.') != '-1') {
@@ -149,6 +154,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
         this.answerForm.controls.amount.setValue(value);
       }
     }
+
   }
 
   ngOnDestroy() {

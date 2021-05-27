@@ -59,7 +59,7 @@ export class TimeComponent implements OnInit {
     }
 
     if (startDate > endTime) {
-      this.future = 'Validating...';
+      this.future = 'validated';
       this.statusTime = 'end';
     }
 

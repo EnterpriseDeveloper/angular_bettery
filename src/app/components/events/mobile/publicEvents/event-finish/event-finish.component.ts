@@ -73,7 +73,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
       this.winner = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer;
       this.status = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? 'YOU EARNED' : '';
       this.amount = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? this.letsCalcalteWinner('expert') : 'YOU WERE WRONG';
-      this.info = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? `Soon, users will get extra BTY minted from events.` : 'You’ll lose Rep once Reputation system is added.';
+      this.info = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? `Soon, users will get extra BET minted from events.` : 'You’ll lose Rep once Reputation system is added.';
     } else {
       if (this.eventData.parcipiantAnswers != undefined) {
         let findPlayer = _.findIndex(this.eventData.parcipiantAnswers, (x) => {
@@ -85,7 +85,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
           this.winner = this.eventData.parcipiantAnswers[findPlayer].answer == this.eventData.finalAnswer;
           this.status = this.eventData.parcipiantAnswers[findPlayer].answer == this.eventData.finalAnswer ? 'YOU WON' : 'YOU LOST';
           this.amount = this.letsCalcalteWinner('player');
-          this.info = this.eventData.parcipiantAnswers[findPlayer].answer == this.eventData.finalAnswer ? 'Soon, users will get extra BTY minted from events.' : `You didn’t win, but have 1 BTY to win next time!`;
+          this.info = this.eventData.parcipiantAnswers[findPlayer].answer == this.eventData.finalAnswer ? 'Soon, users will get extra BET minted from events.' : `You didn’t win, but have 1 BET to win next time!`;
         } else {
           this.findHost(user);
         }
@@ -99,7 +99,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
     if (this.eventData.host.id === user._id) {
       this.status = 'You earned';
       this.amount = this.letsCalcalteWinner('host');
-      this.info = `Soon, users will get extra BTY minted from events.`;
+      this.info = `Soon, users will get extra BET minted from events.`;
     }
   }
 
@@ -160,7 +160,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
       this.eventData.parcipiantAnswers.forEach(x => {
         pool = pool + Number(x.amount);
       });
-      return pool;
+      return pool.toString().includes('.') ? pool.toFixed(2) : pool;
     } else {
       return 0;
     }
@@ -219,7 +219,8 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   }
 
   playersPers(i) {
-    return ((this.playersBet(i) * 100) / this.playersCount()) + '%';
+    const result = ((this.playersBet(i) * 100) / this.playersCount());
+    return result.toString().includes('.') ? result.toFixed(1) + '%' : result + '%';
   }
 
   totalBetAmount(i) {
@@ -231,7 +232,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
       data.forEach(x => {
         amount += x.amount;
       });
-      return amount;
+      return amount.toString().includes('.') ? amount.toFixed(1) : amount;
     }
   }
 
