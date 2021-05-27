@@ -24,7 +24,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   userData = undefined;
   currencyType: string;
   viewMore: number = null;
-  coinType: string = undefined;
+  coinType: string = 'BET';
   host: boolean = false;
   role: string = undefined;
   winner: boolean = false;
