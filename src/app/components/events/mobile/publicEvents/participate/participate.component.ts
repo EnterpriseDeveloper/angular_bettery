@@ -114,7 +114,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.userData.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
+    let web3 = new Web3();
 
     let matic = new maticInit(this.userData.verifier);
     let BTYToken = await matic.getBTYTokenBalance();

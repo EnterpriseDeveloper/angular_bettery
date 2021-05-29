@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, HostListener} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
@@ -53,7 +53,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-      this.activeModal.close();
+    this.activeModal.close();
   }
 
   async loginWithTorus() {
@@ -61,7 +61,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     // this.activeModal.dismiss('Cross click')
     await biconomyInit();
     try {
-      await web3Obj.initialize();
+      await web3Obj.login("google");
       this.setTorusInfoToDB();
     } catch (error) {
       this.spinner = false;
@@ -72,23 +72,24 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   async setTorusInfoToDB() {
-    let userInfo = await web3Obj.torus.getUserInfo('');
-    let userWallet = (await web3Obj.web3.eth.getAccounts())[0];
+    let userInfo = web3Obj.loginDetails;
+    console.log(userInfo);
 
-    this.localStoreUser(userInfo);
+    this.localStoreUser(userInfo.userInfo);
 
     let refId = sessionStorage.getItem('bettery_ref')
 
     let data: Object = {
       _id: null,
-      wallet: userWallet,
-      nickName: userInfo.name,
-      email: userInfo.email,
-      avatar: userInfo.profileImage,
-      verifier: userInfo.verifier,
-      verifierId: userInfo.verifierId,
+      wallet: userInfo.publicAddress,
+      nickName: userInfo.userInfo.name,
+      email: userInfo.userInfo.email,
+      avatar: userInfo.userInfo.profileImage,
+      verifier: userInfo.userInfo.typeOfLogin,
+      verifierId: userInfo.userInfo.verifierId,
       refId: refId == null ? 'undefined' : refId
     };
+
     this.torusRegistSub = this.http.post('user/torus_regist', data)
       .subscribe(
         (x: User) => {
@@ -108,7 +109,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         }, async (err) => {
           this.closeModal();
           this.spinner = false;
-          await web3Obj.torus.cleanUp()
           console.log(err);
         });
   }

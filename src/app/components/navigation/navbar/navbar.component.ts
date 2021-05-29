@@ -133,7 +133,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
+    let web3 = new Web3();
 
     let matic = new maticInit(this.verifier);
     let BTYToken = await matic.getBTYTokenBalance();

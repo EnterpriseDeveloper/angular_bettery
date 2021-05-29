@@ -7,5 +7,7 @@ export const environment = {
   maticUrl: "https://wispy-spring-star.matic.quiknode.pro/63e582ed6c17529d98cc064ba97cad1d95650da5/",
   maticId: 137,
   etherId: 1,
-  torusHost: "mainnet"
+  torusHost: "mainnet",
+  torusNetwork: "mainnet",
+  etherUrl: "https://mainnet.infura.io/v3/d0c12cca9146439bbd961712ea1cab45"
 };

@@ -1,4 +1,74 @@
-import OpenLogin from "@toruslabs/openlogin";
+import TorusSdk from "@toruslabs/torus-direct-web-sdk";
+import Web3 from "web3";
+import { environment } from '../../environments/environment';
+
+let loginHint = "";
+
+const web3Obj = {
+  login: async (selectedVerifier) => {
+    try {
+      let torusdirectsdk = await init();
+      const jwtParams = _loginToConnectionMap()[selectedVerifier] || {};
+      const { typeOfLogin, clientId, verifier } = verifierMap[selectedVerifier];
+      let loginDetails = await torusdirectsdk.triggerLogin({
+        typeOfLogin,
+        verifier,
+        clientId,
+        jwtParams,
+      });
+
+      let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
+      let web3Main = await web3Init(loginDetails, environment.etherUrl);
+      web3Obj.web3 = web3Polygon;
+      web3Obj.torus = web3Main;
+      web3Obj.loginDetails = loginDetails;
+      return;
+    } catch (error) {
+      console.error(error, "oninit caught");
+    }
+  },
+  torus: null, // main ehter
+  web3: null, // polygon
+  loginDetails: null,
+}
+
+const web3Init = async (loginDetails, provider) => {
+  console.log(provider)
+  let web3 = new Web3(provider);
+  const prKey = web3.eth.accounts.privateKeyToAccount('0x' + loginDetails.privateKey);
+  await web3.eth.accounts.wallet.add(prKey);
+  return web3;
+}
+
+const init = async () => {
+  let torusNetwork: any = environment.torusNetwork;
+  let torSdk = new TorusSdk({
+    baseUrl: `${location.origin}/serviceworker`,
+    enableLogging: true,
+    network: torusNetwork
+  });
+
+  await torSdk.init({ skipSw: false });
+  return torSdk
+}
+
+const _loginToConnectionMap = () => {
+  return {
+    [EMAIL_PASSWORD]: { domain: AUTH_DOMAIN },
+    [PASSWORDLESS]: { domain: AUTH_DOMAIN, login_hint: loginHint },
+    [HOSTED_EMAIL_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "", isVerifierIdCaseSensitive: false },
+    [HOSTED_SMS_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "" },
+    [APPLE]: { domain: AUTH_DOMAIN },
+    [GITHUB]: { domain: AUTH_DOMAIN },
+    [LINKEDIN]: { domain: AUTH_DOMAIN },
+    [TWITTER]: { domain: AUTH_DOMAIN },
+    [WEIBO]: { domain: AUTH_DOMAIN },
+    [LINE]: { domain: AUTH_DOMAIN },
+  };
+};
+
+
+
 
 const GOOGLE = "google";
 const FACEBOOK = "facebook";
@@ -17,58 +87,55 @@ const HOSTED_EMAIL_PASSWORDLESS = "hosted_email_passwordless";
 const HOSTED_SMS_PASSWORDLESS = "hosted_sms_passwordless";
 const WEBAUTHN = "webauthn";
 
-function initialize(){
+const verifierMap = {
+  [GOOGLE]: {
+    name: "Google",
+    typeOfLogin: "google",
+    clientId: "1022236814922-gthhdgvedjc6h1ookdtv8arje76ktk7c.apps.googleusercontent.com",
+    verifier: "bettery_google_testnet",
+  },
+  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "617201755556395", verifier: "facebook-lrc" },
+  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "YNsv1YtA_o66fA", verifier: "torus-reddit-test" },
+  [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "f5and8beke76mzutmics0zu4gw10dj", verifier: "twitch-lrc" },
+  [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "682533837464666198", verifier: "discord-lrc" },
+  [EMAIL_PASSWORD]: {
+    name: "Email Password",
+    typeOfLogin: "email_password",
+    clientId: "sqKRBVSdwa4WLkaq419U7Bamlh5vK1H7",
+    verifier: "torus-auth0-email-password",
+  },
+  [PASSWORDLESS]: {
+    name: "Passwordless",
+    typeOfLogin: "passwordless",
+    clientId: "P7PJuBCXIHP41lcyty0NEb7Lgf7Zme8Q",
+    verifier: "torus-auth0-passwordless",
+  },
+  [APPLE]: { name: "Apple", typeOfLogin: "apple", clientId: "m1Q0gvDfOyZsJCZ3cucSQEe9XMvl9d9L", verifier: "torus-auth0-apple-lrc" },
+  [GITHUB]: { name: "Github", typeOfLogin: "github", clientId: "PC2a4tfNRvXbT48t89J5am0oFM21Nxff", verifier: "torus-auth0-github-lrc" },
+  [LINKEDIN]: { name: "Linkedin", typeOfLogin: "linkedin", clientId: "59YxSgx79Vl3Wi7tQUBqQTRTxWroTuoc", verifier: "torus-auth0-linkedin-lrc" },
+  [TWITTER]: { name: "Twitter", typeOfLogin: "twitter", clientId: "A7H8kkcmyFRlusJQ9dZiqBLraG2yWIsO", verifier: "torus-auth0-twitter-lrc" },
+  [WEIBO]: { name: "Weibo", typeOfLogin: "weibo", clientId: "dhFGlWQMoACOI5oS5A1jFglp772OAWr1", verifier: "torus-auth0-weibo-lrc" },
+  [LINE]: { name: "Line", typeOfLogin: "line", clientId: "WN8bOmXKNRH1Gs8k475glfBP5gDZr9H1", verifier: "torus-auth0-line-lrc" },
+  [HOSTED_EMAIL_PASSWORDLESS]: {
+    name: "Hosted Email Passwordless",
+    typeOfLogin: "jwt",
+    clientId: "P7PJuBCXIHP41lcyty0NEb7Lgf7Zme8Q",
+    verifier: "torus-auth0-passwordless",
+  },
+  [HOSTED_SMS_PASSWORDLESS]: {
+    name: "Hosted SMS Passwordless",
+    typeOfLogin: "jwt",
+    clientId: "nSYBFalV2b1MSg5b2raWqHl63tfH3KQa",
+    verifier: "torus-auth0-sms-passwordless",
+  },
+  [WEBAUTHN]: {
+    name: "WebAuthn",
+    typeOfLogin: "webauthn",
+    clientId: "webauthn",
+    verifier: "webauthn-lrc",
+  },
+};
 
-}
+const AUTH_DOMAIN = "https://torus-test.auth0.com";
 
-// import Web3 from 'web3';
-// import Torus from '@toruslabs/torus-embed';
-// import { environment } from '../../environments/environment';
-
-// const web3Obj = {
-//   web3: new Web3(),
-//   torus: new Torus({}),
-//   setWeb3(provider) {
-//     let web3Instance = new Web3(provider);
-//     web3Obj.web3 = web3Instance;
-//   },
-//   async initialize() {
-//     await web3Obj.torus.init({
-//       showTorusButton: true,
-//       buildEnv: 'production',
-//       network: {
-//         host: environment.torusHost,
-//         chainId: environment.etherId
-//       },
-//       whiteLabel: {
-//         theme: {
-//           isDark: true,
-//           colors: {
-//             torusBrand1: '#FFD300',
-//           },
-//         },
-//         logoDark: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png', // dark logo for light background
-//         logoLight: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png',
-//         customTranslations: {
-//           en: {
-//             embed: {
-//               continue: 'Continue',
-//               actionRequired: 'Confirm Action',
-//               pendingAction: 'On the next screen, confirm your action by sending a transaction from your Bettery account', //...второй
-//             },
-//             dappTransfer: {
-//               permission: 'Bettery',
-//               data: 'Transaction Details',
-
-//             },
-//           },
-//         },
-//       },
-//     });
-//     web3Obj.torus.hideTorusButton();
-//     await web3Obj.torus.login({});
-//     web3Obj.setWeb3(web3Obj.torus.provider);
-//   }
-// };
-
-// export default web3Obj;
+export default web3Obj;
