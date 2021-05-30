@@ -60,57 +60,60 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.spinner = true;
     // this.activeModal.dismiss('Cross click')
     await biconomyInit();
-    try {
-      await web3Obj.login("google");
+    let login = await web3Obj.login("google");
+    if (login == null) {
       this.setTorusInfoToDB();
-    } catch (error) {
+    } else {
+      console.log(login)
       this.spinner = false;
       this.closeModal();
-      await web3Obj.torus.cleanUp()
-      console.error(error);
+      await web3Obj.logOut();
     }
+
   }
 
   async setTorusInfoToDB() {
     let userInfo = web3Obj.loginDetails;
-    console.log(userInfo);
+    if (userInfo != null) {
+      console.log(userInfo);
 
-    this.localStoreUser(userInfo.userInfo);
+      this.localStoreUser(userInfo.userInfo);
 
-    let refId = sessionStorage.getItem('bettery_ref')
+      let refId = sessionStorage.getItem('bettery_ref')
 
-    let data: Object = {
-      _id: null,
-      wallet: userInfo.publicAddress,
-      nickName: userInfo.userInfo.name,
-      email: userInfo.userInfo.email,
-      avatar: userInfo.userInfo.profileImage,
-      verifier: userInfo.userInfo.typeOfLogin,
-      verifierId: userInfo.userInfo.verifierId,
-      refId: refId == null ? 'undefined' : refId
-    };
+      let data: Object = {
+        _id: null,
+        wallet: userInfo.publicAddress,
+        nickName: userInfo.userInfo.name,
+        email: userInfo.userInfo.email,
+        avatar: userInfo.userInfo.profileImage,
+        verifier: userInfo.userInfo.typeOfLogin,
+        verifierId: userInfo.userInfo.verifierId,
+        refId: refId == null ? 'undefined' : refId
+      };
 
-    this.torusRegistSub = this.http.post('user/torus_regist', data)
-      .subscribe(
-        (x: User) => {
-          this.addUser(
-            x.email,
-            x.nickName,
-            x.wallet,
-            x.listHostEvents,
-            x.listParticipantEvents,
-            x.listValidatorEvents,
-            x.historyTransaction,
-            x.avatar,
-            x._id,
-            x.verifier
-          );
-          this.spinner = false;
-        }, async (err) => {
-          this.closeModal();
-          this.spinner = false;
-          console.log(err);
-        });
+      this.torusRegistSub = this.http.post('user/torus_regist', data)
+        .subscribe(
+          (x: User) => {
+            this.addUser(
+              x.email,
+              x.nickName,
+              x.wallet,
+              x.listHostEvents,
+              x.listParticipantEvents,
+              x.listValidatorEvents,
+              x.historyTransaction,
+              x.avatar,
+              x._id,
+              x.verifier
+            );
+            this.spinner = false;
+          }, async (err) => {
+            this.closeModal();
+            this.spinner = false;
+            console.log(err);
+          });
+    }
   }
 
   closeModal() {

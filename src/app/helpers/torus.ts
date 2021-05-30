@@ -22,14 +22,19 @@ const web3Obj = {
       web3Obj.web3 = web3Polygon;
       web3Obj.torus = web3Main;
       web3Obj.loginDetails = loginDetails;
-      return;
+      return null;
     } catch (error) {
-      console.error(error, "oninit caught");
+      return error;
     }
   },
   torus: null, // main ehter
   web3: null, // polygon
   loginDetails: null,
+  logOut: () => {
+    web3Obj.web3 = null;
+    web3Obj.torus = null;
+    web3Obj.loginDetails = null;
+  }
 }
 
 const web3Init = async (loginDetails, provider) => {
