@@ -26,7 +26,7 @@ export class SwapBetComponent {
       this.error = undefined;
       this.spinner = true;
       let amount = web3.utils.toWei(String(this.inputValue), 'ether');
-      let tx: any = await contr.swipeTokens(this.userWallet, amount, "torus") // switch "torus" if you will use another wallet
+      let tx: any = await contr.swipeTokens(this.userWallet, amount) // switch "torus" if you will use another wallet
       if(tx.transactionHash != undefined){
         this.spinner = false;
         this.activeModal.dismiss('Cross click');

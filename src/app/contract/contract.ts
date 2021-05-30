@@ -48,15 +48,16 @@ export default class Contract extends MetaTransaction {
         return configMaticMumbai.Main.POSContracts.RootChainManager; // TODO add to prod
     }
 
-    async approveBTYmainToken(userWallet, amount, from, provider) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    async approveBTYmainToken(userWallet, amount, provider) {
+        let web3 = new Web3(window.biconomy)
         let BTYMainContr = await this.getBTYtokenMainChain(provider); // TODO switch if will use more that one wallet
         let functionSignature = await BTYMainContr.methods.approve(this.erc20PredicateAddr(), amount).encodeABI();
         let nonce = await BTYMainContr.methods.getNonce(userWallet).call();
         const tokenName = "BET_main";
-        const chainId = environment.etherId
+        const chainId = environment.etherId;
+        let contractAddr = BTYMain.networks[networkConfiguration.goerli].address;
         let dataToSign = this.dataToSignFunc(tokenName, BTYMain.networks[networkConfiguration.goerli].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
     async deposit(userWallet, amount, from, provider) {
@@ -73,43 +74,47 @@ export default class Contract extends MetaTransaction {
         let nonce = await rCMP.methods.getNonce(userWallet).call();
         console.log(nonce)
         const tokenName = "RootChainManager";
-        const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, this.rootChainManagerProxyAddr(), nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3_2, rCMP, functionSignature)
+        const chainId = environment.etherId;
+        let contractAddr = this.rootChainManagerProxyAddr();
+        let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3_2, rCMP, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
 
     }
 
-    async approveBTYToken(userWallet, amount, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    async approveBTYToken(userWallet, amount) {
+        let web3 = new Web3(window.biconomy)
         let BTYToken = await this.getBTYTokenContract();
         let functionSignature = await BTYToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
-        const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
+        const chainId = environment.etherId;
+        let contractAddr = BTY.networks[environment.maticId].address;
+        let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
-    async approveBETToken(userWallet, amount, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    async approveBETToken(userWallet, amount) {
+        let web3 = new Web3(window.biconomy)
         let BETToken = await this.getBETTokenContract();
         let functionSignature = await BETToken.methods.approve(this.publicEventAddress(), amount).encodeABI();
         let nonce = await BETToken.methods.getNonce(userWallet).call();
         const tokenName = "BET_token";
-        const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BET.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature)
+        const chainId = environment.etherId;
+        let contractAddr = BET.networks[environment.maticId].address;
+        let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
-    async swipeTokens(userWallet, amount, from) {
-        let web3 = new Web3(from === "metamask" ? window.web3.currentProvider : web3Obj.web3.currentProvider);
+    async swipeTokens(userWallet, amount) {
+        let web3 = new Web3(window.biconomy)
         let BTYToken = await this.getBTYTokenContract();
         let functionSignature = await BTYToken.methods.swipe(amount).encodeABI();
         let nonce = await BTYToken.methods.getNonce(userWallet).call();
         const tokenName = "BTY_token";
-        const chainId = environment.etherId
-        let dataToSign = this.dataToSignFunc(tokenName, BTY.networks[environment.maticId].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature)
+        const chainId = environment.etherId;
+        let contractAddr = BTY.networks[environment.maticId].address;
+        let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
+        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
     getUserAccount() {

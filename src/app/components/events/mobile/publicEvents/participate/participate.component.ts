@@ -87,7 +87,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       let web3 = new Web3();
       let contract = new Contract();
       var _money = web3.utils.toWei(String(this.answerForm.value.amount), 'ether')
-      await contract.approveBETToken(this.userData.wallet, _money, this.userData.verifier)
+      await contract.approveBETToken(this.userData.wallet, _money)
       this.setToDB(this.eventData)
     }
   }

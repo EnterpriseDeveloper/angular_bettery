@@ -373,7 +373,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       let web3 = new Web3();
       let contract = new Contract();
       var _money = web3.utils.toWei(String(answer.amount), 'ether');
-      await contract.approveBETToken(this.allUserData.wallet, _money, this.allUserData.verifier);
+      await contract.approveBETToken(this.allUserData.wallet, _money);
 
       this.setToDB(answer);
     }
