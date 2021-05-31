@@ -31,6 +31,7 @@
     "@toruslabs/torus-direct-web-sdk": "^4.14.0",
     "@types/mocha": "^5.2.7",
     "@types/socket.io-client": "^1.4.34",
+    "axios": "^0.21.1",
     "bip39": "^3.0.2",
     "bn.js": "5.0.0",
     "emailjs-com": "^2.6.3",

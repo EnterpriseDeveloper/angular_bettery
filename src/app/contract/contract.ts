@@ -48,8 +48,9 @@ export default class Contract extends MetaTransaction {
         return configMaticMumbai.Main.POSContracts.RootChainManager; // TODO add to prod
     }
 
+    // TODO
     async approveBTYmainToken(userWallet, amount, provider) {
-        let web3 = new Web3(window.biconomy)
+        let web3 = new Web3(provider)
         let BTYMainContr = await this.getBTYtokenMainChain(provider); // TODO switch if will use more that one wallet
         let functionSignature = await BTYMainContr.methods.approve(this.erc20PredicateAddr(), amount).encodeABI();
         let nonce = await BTYMainContr.methods.getNonce(userWallet).call();
@@ -57,9 +58,11 @@ export default class Contract extends MetaTransaction {
         const chainId = environment.etherId;
         let contractAddr = BTYMain.networks[networkConfiguration.goerli].address;
         let dataToSign = this.dataToSignFunc(tokenName, BTYMain.networks[networkConfiguration.goerli].address, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
+        // TODO
+        //    return await this.setSignPromise(userWallet, dataToSign, web3, BTYMainContr, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
+    // TODO
     async deposit(userWallet, amount, from, provider) {
         console.log(provider)
         let web3 = new Web3(provider);
@@ -77,7 +80,8 @@ export default class Contract extends MetaTransaction {
         const chainId = environment.etherId;
         let contractAddr = this.rootChainManagerProxyAddr();
         let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3_2, rCMP, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
+        // TODO
+        //  return await this.setSignPromise(userWallet, dataToSign, web3_2, rCMP, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
 
     }
 
@@ -90,7 +94,7 @@ export default class Contract extends MetaTransaction {
         const chainId = environment.etherId;
         let contractAddr = BTY.networks[environment.maticId].address;
         let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
+        return await this.setSignPromiseSideChain(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
     async approveBETToken(userWallet, amount) {
@@ -102,7 +106,7 @@ export default class Contract extends MetaTransaction {
         const chainId = environment.etherId;
         let contractAddr = BET.networks[environment.maticId].address;
         let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BETToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
+        return await this.setSignPromiseSideChain(userWallet, dataToSign, web3, BETToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
     async swipeTokens(userWallet, amount) {
@@ -114,7 +118,7 @@ export default class Contract extends MetaTransaction {
         const chainId = environment.etherId;
         let contractAddr = BTY.networks[environment.maticId].address;
         let dataToSign = this.dataToSignFunc(tokenName, contractAddr, nonce, userWallet, functionSignature, chainId)
-        return await this.setSignPromise(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
+        return await this.setSignPromiseSideChain(userWallet, dataToSign, web3, BTYToken, functionSignature, contractAddr, nonce, web3Obj.loginDetails.privateKey)
     }
 
     getUserAccount() {

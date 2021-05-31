@@ -3,10 +3,7 @@ import Web3 from 'web3';
 
 const biconomyMainInit = async () => {
     // TODO add provider for prodaction
-    let biconomy = new Biconomy(new Web3.providers.HttpProvider("https://goerli.infura.io/v3/2b5ec85db4a74c8d8ed304ff2398690d")
-        // "wss://goerli.infura.io/ws/v3/2b5ec85db4a74c8d8ed304ff2398690d"
-        //web3Obj.web3.currentProvider
-        ,
+    let biconomy = new Biconomy(new Web3.providers.HttpProvider("https://goerli.infura.io/v3/2b5ec85db4a74c8d8ed304ff2398690d"),
         {
             apiKey: "fFSHzs4c0.4922e9d7-3091-49c7-b74b-520f368a5d82",
             //    strictMode: true,

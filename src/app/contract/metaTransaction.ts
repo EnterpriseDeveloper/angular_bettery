@@ -1,4 +1,7 @@
 var sigUtil = require('eth-sig-util')
+import axios from "axios";
+import { environment } from '../../environments/environment';
+import Web3 from "web3";
 
 export default class MetaTransaction {
     domainType;
@@ -18,7 +21,7 @@ export default class MetaTransaction {
         ];
     }
 
-    async setSignPromise(userWallet, dataToSign, web3, whichContract, functionSignature, contractAddress, nonce, privateKey) {
+    async setSignPromiseSideChain(userWallet, dataToSign, web3, whichContract, functionSignature, contractAddress, nonce, privateKey) {
         let x = Buffer.from(privateKey, 'hex');
         const signature = sigUtil.signTypedMessage(x, { data: dataToSign }, 'V3');
         let { r, s, v } = this.getSignatureParameters(signature, web3);
@@ -31,6 +34,7 @@ export default class MetaTransaction {
             "nonce": nonce,
             "value": "0x0",
             "gas": Number((((gasEstimate * 50) / 100) + gasEstimate).toFixed(0)),
+            "gasPrice": this.getGasPriceMatic(),
             "data": executeMetaTransactionData
         };
 
@@ -43,6 +47,16 @@ export default class MetaTransaction {
             console.log("Transaction hash is ", txHash);
             return txHash;
         });
+    }
+
+    async getGasPriceMatic() {
+        let data: any = await axios.get(environment.gasStationAPI).catch((err) => {
+            console.log("gas station api", err);
+            return
+        })
+        let web3 = new Web3();
+        let fast = web3.utils.toWei(String(data.data.fast), "gwei");
+        return fast;
     }
 
     dataToSignFunc(tokenName, contractAddress, nonce, userWallet, functionSignature, chainId) {

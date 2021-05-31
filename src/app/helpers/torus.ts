@@ -38,7 +38,6 @@ const web3Obj = {
 }
 
 const web3Init = async (loginDetails, provider) => {
-  console.log(provider)
   let web3 = new Web3(provider);
   const prKey = web3.eth.accounts.privateKeyToAccount('0x' + loginDetails.privateKey);
   await web3.eth.accounts.wallet.add(prKey);
@@ -64,11 +63,8 @@ const _loginToConnectionMap = () => {
     [HOSTED_EMAIL_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "", isVerifierIdCaseSensitive: false },
     [HOSTED_SMS_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "" },
     [APPLE]: { domain: AUTH_DOMAIN },
-    [GITHUB]: { domain: AUTH_DOMAIN },
     [LINKEDIN]: { domain: AUTH_DOMAIN },
-    [TWITTER]: { domain: AUTH_DOMAIN },
-    [WEIBO]: { domain: AUTH_DOMAIN },
-    [LINE]: { domain: AUTH_DOMAIN },
+    [TWITTER]: { domain: AUTH_DOMAIN }
   };
 };
 
@@ -80,12 +76,9 @@ const FACEBOOK = "facebook";
 const REDDIT = "reddit";
 const DISCORD = "discord";
 const TWITCH = "twitch";
-const GITHUB = "github";
 const APPLE = "apple";
 const LINKEDIN = "linkedin";
 const TWITTER = "twitter";
-const WEIBO = "weibo";
-const LINE = "line";
 const EMAIL_PASSWORD = "email_password";
 const PASSWORDLESS = "passwordless";
 const HOSTED_EMAIL_PASSWORDLESS = "hosted_email_passwordless";
@@ -99,10 +92,10 @@ const verifierMap = {
     clientId: "1022236814922-gthhdgvedjc6h1ookdtv8arje76ktk7c.apps.googleusercontent.com",
     verifier: "bettery_google_testnet",
   },
-  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "617201755556395", verifier: "facebook-lrc" },
-  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "YNsv1YtA_o66fA", verifier: "torus-reddit-test" },
-  [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "f5and8beke76mzutmics0zu4gw10dj", verifier: "twitch-lrc" },
-  [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "682533837464666198", verifier: "discord-lrc" },
+  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "1183222495454711", verifier: "bettery-facebook-test" },
+  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "Z1vp1iGcy1AYfPlVWcO-UE_Xlk0ctw", verifier: "bettery-reddit-test" },
+  [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "00x4niz79js6mke5mensaa6ywunssm", verifier: "bettery-twitch-test" },
+  [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "848876046170062878", verifier: "bettery-discord-test" },
   [EMAIL_PASSWORD]: {
     name: "Email Password",
     typeOfLogin: "email_password",
@@ -116,11 +109,8 @@ const verifierMap = {
     verifier: "torus-auth0-passwordless",
   },
   [APPLE]: { name: "Apple", typeOfLogin: "apple", clientId: "m1Q0gvDfOyZsJCZ3cucSQEe9XMvl9d9L", verifier: "torus-auth0-apple-lrc" },
-  [GITHUB]: { name: "Github", typeOfLogin: "github", clientId: "PC2a4tfNRvXbT48t89J5am0oFM21Nxff", verifier: "torus-auth0-github-lrc" },
-  [LINKEDIN]: { name: "Linkedin", typeOfLogin: "linkedin", clientId: "59YxSgx79Vl3Wi7tQUBqQTRTxWroTuoc", verifier: "torus-auth0-linkedin-lrc" },
+  [LINKEDIN]: { name: "Linkedin", typeOfLogin: "linkedin", clientId: "78lhd7bb1pqn2i", verifier: "better_linkedin_test", jwtParams: { domain: "https://www.bettery.io" } },
   [TWITTER]: { name: "Twitter", typeOfLogin: "twitter", clientId: "A7H8kkcmyFRlusJQ9dZiqBLraG2yWIsO", verifier: "torus-auth0-twitter-lrc" },
-  [WEIBO]: { name: "Weibo", typeOfLogin: "weibo", clientId: "dhFGlWQMoACOI5oS5A1jFglp772OAWr1", verifier: "torus-auth0-weibo-lrc" },
-  [LINE]: { name: "Line", typeOfLogin: "line", clientId: "WN8bOmXKNRH1Gs8k475glfBP5gDZr9H1", verifier: "torus-auth0-line-lrc" },
   [HOSTED_EMAIL_PASSWORDLESS]: {
     name: "Hosted Email Passwordless",
     typeOfLogin: "jwt",
