@@ -172,7 +172,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     }
 
     // animation test adapting , to do =================
-    if ((index === 6 || index === 7 || index === this.roomsSort.length - 1) && window.screen.width < 1199 && window.screen.width > 991) {
+    if ((index === 6 || index === 7 || index === this.roomsSort.length - 1) && window.screen.width <= 1199 && window.screen.width > 991) {
       this.testAnimation = index;
     }
     this.activeRoom = index;

@@ -34,6 +34,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SwiperModule } from 'swiper/angular';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { RoomModule } from './components/rooms/rooms.module';
+import { PrivacyPolicyComponent } from './components/documents/privacy-policy/privacy-policy.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     return new TranslateHttpLoader(http, './assets/locale/', '.json');
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         ErcCoinSaleComponent,
         NumericDirective,
         LandingFormComponent,
+        PrivacyPolicyComponent,
     ],
     imports: [
         SwiperModule,
@@ -70,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         RouterModule.forRoot([
             { path: '', component: HomeComponent },
             { path: 'tokensale', component: ErcCoinSaleComponent },
+            { path: 'privacy-policy', component: PrivacyPolicyComponent },
         ], { scrollPositionRestoration: 'top' }),
         TranslateModule.forRoot({
             loader: {

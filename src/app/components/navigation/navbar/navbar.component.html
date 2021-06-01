@@ -77,17 +77,17 @@
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
             <b>{{coinInfo?.BET | number:'1.0-2'}}</b> BET
           </p>
-          <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
+          <p *ngIf="amountSpinner" class="balance" style="font-weight: 400; font-size: 12px">Calculating...</p>
           <div class="ethImg"></div>
         </div>
         <div class="balancePos">
           <p *ngIf="!amountSpinner" class="balance" style="font-weight: 500;">
             <b>{{coinInfo?.BTY | number:'1.0-2'}}</b> BTY
           </p>
-          <p *ngIf="amountSpinner" class="balance" style="font-weight: 400;">Calculating...</p>
+          <p *ngIf="amountSpinner" class="balance" style="font-weight: 400; font-size: 12px">Calculating...</p>
           <div class="btyImg"></div>
         </div>
-        <div class="balancePos pr-2" style="padding-top: 14px">
+        <div class="balancePos" style="padding-top: 14px">
           <button class="lowOnCoins" (click)="openModal(contentModal)">Need more?</button>
         </div>
       </div>
