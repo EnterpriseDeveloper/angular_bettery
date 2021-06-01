@@ -241,6 +241,7 @@
   height: 32px
 .bg-google
   background-color: #ffffff
+  transition: box-shadow 0.22s
 
 .facebook-img
   background: url(../../../assets/registration/facebook-icon.png) center center no-repeat
@@ -249,6 +250,7 @@
   height: 33px
 .bg-facebook
   background-color: #3C5A9A
+  transition: box-shadow 0.22s
 
 .reddit-img
   background: url(../../../assets/registration/reddit-icon.png) center center no-repeat
@@ -257,7 +259,7 @@
   height: 33px
 .bg-reddit
   background-color: #FF3F18
-
+  transition: box-shadow 0.22s
 
 .discord-img
   background: url(../../../assets/registration/discord-icon.png) center center no-repeat
@@ -266,6 +268,7 @@
   height: 33px
 .bg-discord
   background-color: #7289D9
+  transition: box-shadow 0.22s
 
 .twitch-img
   background: url(../../../assets/registration/twitch-icon.png) center center no-repeat
@@ -274,6 +277,7 @@
   height: 33px
 .bg-twitch
   background-color: #5A3E85
+  transition: box-shadow 0.22s
 
 .apple-img
   background: url(../../../assets/registration/apple-icon.png) center center no-repeat
@@ -282,6 +286,7 @@
   height: 33px
 .bg-apple
   background-color: #151515
+  transition: box-shadow 0.22s
 
 .linkedin-img
   background: url(../../../assets/registration/linkedin-icon.png) center center no-repeat
@@ -290,6 +295,7 @@
   height: 33px
 .bg-linkedin
   background-color: #0077B5
+  transition: box-shadow 0.22s
 
 .twitter-img
   background: url(../../../assets/registration/twitter-icon.png) center center no-repeat
@@ -298,6 +304,12 @@
   height: 30px
 .bg-twitter
   background-color: #17A3F2
+  transition: box-shadow 0.22s
+
+.bg-google:hover, .bg-facebook:hover, .bg-reddit:hover, .bg-discord:hover, .bg-twitch:hover, .bg-apple:hover, .bg-linkedin:hover, .bg-twitter:hover
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
 
 .link-left
   text-align: right
@@ -363,4 +375,17 @@
   outline: none
 .btn-with-email:active
   outline: none
+
+.quize_validation_error
+  font-family: 'Open Sans', sans-serif
+  font-style: normal
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+  text-align: right
+  color: #EC0100
+  margin-bottom: 6px
+
+.is_invalid
+  border: 1px solid #EC0100 !important
 //=======================================================//

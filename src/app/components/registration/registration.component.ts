@@ -44,12 +44,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      nickName: ['', Validators.minLength(6)],
-      email: ['', [Validators.email, Validators.required]]
+      email: ['', Validators.compose([Validators.required, Validators.email])],
     });
-    // if (this.openSpinner === true) {
-    //   this.loginWithTorus();
-    // }
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -178,11 +174,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  choseRegistrationMethod(selectedVerifier: string) {
-    this.loginWithTorus(selectedVerifier);
-  }
-
-  sensForm() {
+  sendForm() {
+    this.submitted = true;
     if (this.registerForm.controls.email.valid) {
       console.log(this.registerForm.controls.email.value);
     }
