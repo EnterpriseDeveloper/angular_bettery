@@ -47,20 +47,20 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       nickName: ['', Validators.minLength(6)],
       email: ['', [Validators.email, Validators.required]]
     });
-    if (this.openSpinner === true) {
-      this.loginWithTorus();
-    }
+    // if (this.openSpinner === true) {
+    //   this.loginWithTorus();
+    // }
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.activeModal.close();
   }
 
-  async loginWithTorus() {
+  async loginWithTorus(selectedVerifier) {
     this.spinner = true;
     // this.activeModal.dismiss('Cross click')
     await biconomyInit();
-    let login = await web3Obj.login("google");
+    let login = await web3Obj.login(selectedVerifier);
     if (login == null) {
       this.setTorusInfoToDB();
     } else {
@@ -178,4 +178,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
+  choseRegistrationMethod(selectedVerifier: string) {
+    this.loginWithTorus(selectedVerifier);
+  }
+
+  sensForm() {
+    if (this.registerForm.controls.email.valid) {
+      console.log(this.registerForm.controls.email.value);
+    }
+  }
 }

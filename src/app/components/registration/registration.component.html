@@ -14,11 +14,103 @@
         <p class="modal-text">Get free 10 BET Tokens, enjoy betting with friends to win pizza, and grow your Reputations to earn big!</p>
       </div>
       <div class="modal-two-btn">
-        <button class="btn-1" (click)="loginWithTorus()">Login or Register</button>
+        <button class="btn-1" (click)="openSpinner = true">Login or Register</button>
       </div>
     </div>
   </div>
 </div>
+
+<div *ngIf="openSpinner" style="padding: 24px 0">
+  <div>
+    <button type="button" class=" soonClose close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="title-reg">LOGIN or SIGN UP</div>
+  </div>
+
+  <div style="padding: 16px 24px">
+    <div class="hr"></div>
+  </div>
+
+  <div style="padding: 0 24px">
+    <div class="container">
+      <div class="row">
+        <div (click)="choseRegistrationMethod('google')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-google card w-100">
+            <div class="google-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('facebook')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-facebook card w-100">
+            <div class="facebook-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('reddit')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-reddit card w-100">
+            <div class="reddit-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('discord')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-discord card w-100">
+            <div class="discord-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div (click)="choseRegistrationMethod('twitch')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-twitch card w-100">
+            <div class="twitch-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('apple')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-apple card w-100">
+            <div class="apple-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('linkedin')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-linkedin card w-100">
+            <div class="linkedin-img"></div>
+          </div>
+        </div>
+        <div (click)="choseRegistrationMethod('twitter')" class="col-6 col-lg-3 wrapCard">
+          <div class="bg-twitter card w-100">
+            <div class="twitter-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 16px 24px; position: relative">
+    <div class="hr"></div>
+    <div class="or">OR</div>
+  </div>
+
+  <form  [formGroup]="registerForm" style="padding: 10px 24px" (submit)="sensForm()">
+    <input class="input-email" formControlName="email" type="email" placeholder="Enter your email">
+    <button [disabled]="!registerForm.controls.email.valid" [ngStyle]="!registerForm.controls.email.valid && {'opacity': '0.5'}" class="btn-with-email" type="submit">
+      CONTINUE with email
+    </button>
+  </form>
+
+  <div style="padding: 16px 24px">
+    <div class="hr"></div>
+  </div>
+  <div>
+    <p class="text-reg">
+      Account comes with a secure private wallet powered by <a href="">Torus</a> to store and withdraw earnings easily.
+    </p>
+  </div>
+ <div class="container" style="padding-top: 14px">
+   <div class="row">
+     <div class="link-left col-12 col-lg-6"><a href="" target="_blank">Bettery Privacy Policy</a></div>
+     <div class="link-right col-12 col-lg-6"><a href="" target="_blank">Torus Terms of Service</a></div>
+   </div>
+ </div>
+</div>
+
 <app-spinner-loading *ngIf="spinner"></app-spinner-loading>
 
 
