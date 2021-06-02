@@ -89,8 +89,8 @@ const verifierMap = {
   [GOOGLE]: {
     name: "Google",
     typeOfLogin: "google",
-    clientId: "1022236814922-gthhdgvedjc6h1ookdtv8arje76ktk7c.apps.googleusercontent.com",
-    verifier: "bettery_google_testnet",
+    clientId: environment.googleId,
+    verifier: environment.verifierGoogle,
   },
   [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "1183222495454711", verifier: "bettery-facebook-test" },
   [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "Z1vp1iGcy1AYfPlVWcO-UE_Xlk0ctw", verifier: "bettery-reddit-test" },
