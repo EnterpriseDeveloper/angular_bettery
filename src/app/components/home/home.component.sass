@@ -947,7 +947,7 @@ footer
 
 .img_telegram
   background: url("../../../assets/landingPage/Path.png") center center no-repeat #FDD92A
-  background-size: 18px 15px
+  background-size: 16px 14px
   border-radius: 100%
   width: 32px
   height: 32px
@@ -1422,3 +1422,33 @@ footer
   & button:active
     box-shadow: none
     outline: none
+
+.policy-box
+  display: flex
+  justify-content: space-between
+  align-items: center
+.policy-box-mobile
+  display: none
+.policy-text
+  font-weight: normal
+  font-size: 12px
+  line-height: 14px
+  color: #FFFFFF
+.right-policy
+  color: #949494
+.pointer
+  cursor: pointer
+.pointer:hover
+  text-decoration: underline
+
+@media (max-width: 992px)
+  .policy-box
+    display: none
+  .policy-box-mobile
+    display: flex
+    flex-direction: column
+@media (max-width: 1080px)
+  .text-adap
+    & a
+      font-size: 14px
+
