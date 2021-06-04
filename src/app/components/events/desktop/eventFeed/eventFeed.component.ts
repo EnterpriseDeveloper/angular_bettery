@@ -62,6 +62,7 @@ export class EventFeedComponent implements OnDestroy {
         this.userId = null;
         this.userData = undefined;
         this.activeBtn = 'trending';
+        this.scrollDistanceFrom = 0;
         this.activeBtnFromSearchBar(this.activeBtn);
       } else {
         this.userId = x[0]._id;
@@ -70,6 +71,7 @@ export class EventFeedComponent implements OnDestroy {
           this.queryPath = 'user/event_activites';
           this.getData(this.queryPath, 0, 5, this.searchWord, '');
         } else {
+          this.scrollDistanceFrom = 0;
           this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
         }
       }

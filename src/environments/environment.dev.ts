@@ -4,7 +4,7 @@ export const environment = {
   defaultLocale: 'en',
   apiUrl: 'http://localhost:80',
   biconomy: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
-  maticUrl: "https://rpc-mumbai.maticvigil.com",
+  maticUrl: "https://matic-mumbai.chainstacklabs.com",
   maticId: 80001,
   etherId: 5,
   torusHost: "goerli"
