@@ -67,11 +67,15 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       if (x.length === 0) {
         this.userId = null;
         this.userData = undefined;
+        this.scrollDistanceFrom = 0;
+        this.bottom = false;
         this.getAllData();
       } else {
         this.userId = x[0]._id;
         this.userData = x[0];
         this.allData = [];
+        this.scrollDistanceFrom = 0;
+        this.bottom = false;
         this.getAllData();
       }
     });
