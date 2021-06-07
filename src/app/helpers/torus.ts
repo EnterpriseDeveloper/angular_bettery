@@ -93,7 +93,7 @@ const verifierMap = {
     verifier: environment.verifierGoogle,
   },
   [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "1183222495454711", verifier: "bettery-facebook-test" },
-  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "Z1vp1iGcy1AYfPlVWcO-UE_Xlk0ctw", verifier: "bettery-reddit-test" },
+  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "fGsFVMwvzXTBpw", verifier: "bettery_reddit" },
   [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "00x4niz79js6mke5mensaa6ywunssm", verifier: "bettery-twitch-test" },
   [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "848876046170062878", verifier: "bettery-discord-test" },
   [EMAIL_PASSWORD]: {
