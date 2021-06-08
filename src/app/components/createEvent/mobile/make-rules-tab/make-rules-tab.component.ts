@@ -249,7 +249,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
     } else {
       this.pastTime = false;
     }
-    this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year}, ${this.timeData.hour} : ${this.timeData.minute}`;
+    this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year},  ${this.timeData.hour === 0 ? '00' : this.timeData.hour} : ${this.timeData.minute === 0 ? '00' : this.timeData.minute }`;
     this.exactTimeBool = true;
     this.publicForm.controls.publicEndTime.setValue({hour: 0, minute: 0, second: 0});
     this.modalService.dismissAll();
