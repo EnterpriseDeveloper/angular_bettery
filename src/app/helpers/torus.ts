@@ -58,6 +58,7 @@ const init = async () => {
 
 const _loginToConnectionMap = () => {
   return {
+    [GOOGLE]: { domain: AUTH_DOMAIN },
     [EMAIL_PASSWORD]: { domain: AUTH_DOMAIN },
     [PASSWORDLESS]: { domain: AUTH_DOMAIN, login_hint: loginHint },
     [HOSTED_EMAIL_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "", isVerifierIdCaseSensitive: false },
@@ -86,13 +87,22 @@ const HOSTED_SMS_PASSWORDLESS = "hosted_sms_passwordless";
 const WEBAUTHN = "webauthn";
 
 const verifierMap = {
+  jwt: {
+    typeOfLogin: "jwt",
+    clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf",
+    verifier: "betteryAuth0",
+    jwtParameters: {
+      domain: "https://bettery.us.auth0.com",
+      connection: "google"
+    }
+  },
   [GOOGLE]: {
     name: "Google",
     typeOfLogin: "google",
-    clientId: environment.googleId,
-    verifier: environment.verifierGoogle,
+    clientId: "1022236814922-gthhdgvedjc6h1ookdtv8arje76ktk7c.apps.googleusercontent.com",
+    verifier: "bettery-google-prod",
   },
-  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: "1183222495454711", verifier: "bettery-facebook-test" },
+  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: environment.facebookId, verifier: "bettery-facebook-test" },
   [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "fGsFVMwvzXTBpw", verifier: "bettery_reddit" },
   [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "00x4niz79js6mke5mensaa6ywunssm", verifier: "bettery-twitch-test" },
   [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "848876046170062878", verifier: "bettery-discord-test" },
@@ -131,6 +141,6 @@ const verifierMap = {
   },
 };
 
-const AUTH_DOMAIN = "https://torus-test.auth0.com";
+const AUTH_DOMAIN = "bettery.us.auth0.com";
 
 export default web3Obj;
