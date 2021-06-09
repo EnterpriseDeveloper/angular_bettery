@@ -8,8 +8,6 @@ export const environment = {
   maticId: 80001,
   etherId: 5,
   torusNetwork: "testnet",
-  verifierGoogle: "bettery_test",
-  facebookId: "637302387247727",
   etherUrl: "https://goerli.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
   gasStationAPI: "https://gasstation-mumbai.matic.today"
 }

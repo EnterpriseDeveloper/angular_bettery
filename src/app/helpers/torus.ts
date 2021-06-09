@@ -2,20 +2,12 @@ import TorusSdk from "@toruslabs/torus-direct-web-sdk";
 import Web3 from "web3";
 import { environment } from '../../environments/environment';
 
-let loginHint = "";
-
 const web3Obj = {
   login: async (selectedVerifier) => {
     try {
       let torusdirectsdk = await init();
-      const jwtParams = _loginToConnectionMap()[selectedVerifier] || {};
-      const { typeOfLogin, clientId, verifier } = verifierMap[selectedVerifier];
-      let loginDetails = await torusdirectsdk.triggerLogin({
-        typeOfLogin,
-        verifier,
-        clientId,
-        jwtParams,
-      });
+      let conf: any = verifierMap(selectedVerifier)
+      let loginDetails = await torusdirectsdk.triggerLogin(conf);
 
       let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
       let web3Main = await web3Init(loginDetails, environment.etherUrl);
@@ -52,95 +44,21 @@ const init = async () => {
     network: torusNetwork
   });
 
-  await torSdk.init({ skipSw: false });
+  await torSdk.init();
   return torSdk
 }
 
-const _loginToConnectionMap = () => {
+
+const verifierMap = (selectedVerifier) => {
   return {
-    [GOOGLE]: { domain: AUTH_DOMAIN },
-    [EMAIL_PASSWORD]: { domain: AUTH_DOMAIN },
-    [PASSWORDLESS]: { domain: AUTH_DOMAIN, login_hint: loginHint },
-    [HOSTED_EMAIL_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "", isVerifierIdCaseSensitive: false },
-    [HOSTED_SMS_PASSWORDLESS]: { domain: AUTH_DOMAIN, verifierIdField: "name", connection: "" },
-    [APPLE]: { domain: AUTH_DOMAIN },
-    [LINKEDIN]: { domain: AUTH_DOMAIN },
-    [TWITTER]: { domain: AUTH_DOMAIN }
-  };
-};
-
-
-
-
-const GOOGLE = "google";
-const FACEBOOK = "facebook";
-const REDDIT = "reddit";
-const DISCORD = "discord";
-const TWITCH = "twitch";
-const APPLE = "apple";
-const LINKEDIN = "linkedin";
-const TWITTER = "twitter";
-const EMAIL_PASSWORD = "email_password";
-const PASSWORDLESS = "passwordless";
-const HOSTED_EMAIL_PASSWORDLESS = "hosted_email_passwordless";
-const HOSTED_SMS_PASSWORDLESS = "hosted_sms_passwordless";
-const WEBAUTHN = "webauthn";
-
-const verifierMap = {
-  jwt: {
+    name: "bettery",
     typeOfLogin: "jwt",
     clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf",
     verifier: "betteryAuth0",
-    jwtParameters: {
+    jwtParams: {
       domain: "https://bettery.us.auth0.com",
-      connection: "google"
+      connection: selectedVerifier
     }
-  },
-  [GOOGLE]: {
-    name: "Google",
-    typeOfLogin: "google",
-    clientId: "1022236814922-gthhdgvedjc6h1ookdtv8arje76ktk7c.apps.googleusercontent.com",
-    verifier: "bettery-google-prod",
-  },
-  [FACEBOOK]: { name: "Facebook", typeOfLogin: "facebook", clientId: environment.facebookId, verifier: "bettery-facebook-test" },
-  [REDDIT]: { name: "Reddit", typeOfLogin: "reddit", clientId: "fGsFVMwvzXTBpw", verifier: "bettery_reddit" },
-  [TWITCH]: { name: "Twitch", typeOfLogin: "twitch", clientId: "00x4niz79js6mke5mensaa6ywunssm", verifier: "bettery-twitch-test" },
-  [DISCORD]: { name: "Discord", typeOfLogin: "discord", clientId: "848876046170062878", verifier: "bettery-discord-test" },
-  [EMAIL_PASSWORD]: {
-    name: "Email Password",
-    typeOfLogin: "email_password",
-    clientId: "sqKRBVSdwa4WLkaq419U7Bamlh5vK1H7",
-    verifier: "torus-auth0-email-password",
-  },
-  [PASSWORDLESS]: {
-    name: "Passwordless",
-    typeOfLogin: "passwordless",
-    clientId: "P7PJuBCXIHP41lcyty0NEb7Lgf7Zme8Q",
-    verifier: "torus-auth0-passwordless",
-  },
-  [APPLE]: { name: "Apple", typeOfLogin: "apple", clientId: "m1Q0gvDfOyZsJCZ3cucSQEe9XMvl9d9L", verifier: "torus-auth0-apple-lrc" },
-  [LINKEDIN]: { name: "Linkedin", typeOfLogin: "linkedin", clientId: "78lhd7bb1pqn2i", verifier: "better_linkedin_test", jwtParams: { domain: "https://www.bettery.io" } },
-  [TWITTER]: { name: "Twitter", typeOfLogin: "twitter", clientId: "A7H8kkcmyFRlusJQ9dZiqBLraG2yWIsO", verifier: "torus-auth0-twitter-lrc" },
-  [HOSTED_EMAIL_PASSWORDLESS]: {
-    name: "Hosted Email Passwordless",
-    typeOfLogin: "jwt",
-    clientId: "P7PJuBCXIHP41lcyty0NEb7Lgf7Zme8Q",
-    verifier: "torus-auth0-passwordless",
-  },
-  [HOSTED_SMS_PASSWORDLESS]: {
-    name: "Hosted SMS Passwordless",
-    typeOfLogin: "jwt",
-    clientId: "nSYBFalV2b1MSg5b2raWqHl63tfH3KQa",
-    verifier: "torus-auth0-sms-passwordless",
-  },
-  [WEBAUTHN]: {
-    name: "WebAuthn",
-    typeOfLogin: "webauthn",
-    clientId: "webauthn",
-    verifier: "webauthn-lrc",
-  },
+  }
 };
-
-const AUTH_DOMAIN = "bettery.us.auth0.com";
-
 export default web3Obj;
