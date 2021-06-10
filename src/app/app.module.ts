@@ -26,6 +26,7 @@ import { NumericDirective } from './helpers/numeric';
 import { CreateEventModule } from './components/createEvent/createEvent.module';
 import { EventsModule } from './components/events/events.module';
 import { ShareModule } from './components/share/share.module';
+import { UserModule } from './components/user/user.module';
 import { LandingFormComponent } from './components/home/landing-form/landing-form.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     imports: [
         SwiperModule,
         ShareModule,
+        UserModule,
         RecaptchaV3Module,
         AvatarModule,
         ClipboardModule,

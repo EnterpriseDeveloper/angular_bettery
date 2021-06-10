@@ -1,0 +1,48 @@
+<div class="box" *ngIf="userData != undefined">
+    <p class="my_prof">MY PROFILE</p>
+    <div class="my_profile_box">
+        <div class="main_box">
+            <div class="header_box">
+                <img class="avatar" src={{userData.avatar}} />
+            </div>
+            <div>
+                <div class="edit_box">
+                    <p class="disp_name">Display name</p>
+                    <div class="edit_text">Edit <div class="edit"></div>
+                    </div>
+                </div>
+                <div class="name_box">
+                    <p class="name">{{userData.nickName}}</p>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p class="disp_name">Email</p>
+                </div>
+                <div class="name_box">
+                    <p class="name">{{userData.email}}</p>
+                </div>
+            </div>
+            <div class="info_box">
+                <div class="info_con" style="padding-right: 3px;">
+                    <p class="disp_name">Location</p>
+                    <select class="option">
+                        <option *ngFor="let loc of location; let i = index" value="{{loc}}">{{loc}}</option>
+                    </select>
+                    <p class="option_text">You'll be able to see Events nearby your location.</p>
+                    <p class="disp_name" style="padding-top: 17px;">Linked account</p>
+                    <p class="option_text">You'll be able to login using any of the linked accounts. As a bonus, you'll
+                        receive 100 Tokens.</p>
+                </div>
+                <div class="info_con" style="padding-left: 3px;">
+                    <p class="disp_name">Language</p>
+                    <select class="option">
+                        <option *ngFor="let lang of language; let i = index" value="{{lang}}">{{lang}}</option>
+                    </select>
+                    <p class="option_text">You'll be able to see Events in your language.</p>
+                    <p class="disp_name" style="padding-top: 17px;">Referrer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
