@@ -54,7 +54,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
 
   timeToBet() {
     if (this.formData.exactTimeBool) {
-      return `${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour} : ${this.formData.exactMinutes}`;
+      return `${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour === 0 ? '00' : this.formData.exactHour} : ${this.formData.exactMinutes === 0 ? '00' : this.formData.exactMinutes }`;
     } else {
       return this.formData.publicEndTime.name;
     }

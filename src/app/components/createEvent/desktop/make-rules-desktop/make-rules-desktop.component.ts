@@ -99,7 +99,7 @@ export class MakeRulesDesktopComponent implements OnInit {
       this.endPrivateTime = name;
     }
     if (this.formData.exactTimeBool) {
-      this.endPublicTime = `Until ${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour} : ${this.formData.exactMinutes}`;
+      this.endPublicTime = `Until ${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear},  ${this.formData.exactHour === 0 ? '00' : this.formData.exactHour} : ${this.formData.exactMinutes === 0 ? '00' : this.formData.exactMinutes }`;
     } else if (this.formData.publicEndTime !== '') {
       let findTime = _.find(this.times, (x) => {
         return x.value === this.formData.publicEndTime.value;
