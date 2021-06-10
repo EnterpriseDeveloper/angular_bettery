@@ -2,6 +2,8 @@ import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
 import { PostService } from "../../../services/post.service";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegistrationComponent } from '../../registration/registration.component';
 
 @Component({
   selector: 'my-profile',
@@ -16,7 +18,8 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   addionalData = undefined;
 
   constructor(
-    private postService: PostService
+    private postService: PostService,
+    private modalService: NgbModal,
   ) { }
 
 
@@ -40,6 +43,16 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
       "height": "20px",
       "margin-right": "7px"
     }
+  }
+
+  linkAccount() {
+    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+    modalRef.componentInstance.openSpinner = true;
+    modalRef.componentInstance.linkUser = true;
+    modalRef.componentInstance.linkedAccouns = this.addionalData.linkedAccounts;
+    modalRef.componentInstance.linkedDone.subscribe((e) => {
+      console.log(e);
+    })
   }
 
   ngOnDestroy() {

@@ -5,9 +5,9 @@ import { environment } from '../../environments/environment';
 const web3Obj = {
   login: async (selectedVerifier) => {
     try {
-      let torusdirectsdk = await init();
+      web3Obj.torusdirectsdk = await init();
       let conf: any = verifierMap(selectedVerifier)
-      let loginDetails = await torusdirectsdk.triggerLogin(conf);
+      let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 
       let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
       let web3Main = await web3Init(loginDetails, environment.etherUrl);
@@ -19,9 +19,19 @@ const web3Obj = {
       return error;
     }
   },
+  torusdirectsdk: null,
   torus: null, // main ehter
   web3: null, // polygon
   loginDetails: null,
+  linkUser: async (selectedVerifier) => {
+    try {
+      let conf: any = verifierMap(selectedVerifier)
+      let data = await web3Obj.torusdirectsdk.triggerLogin(conf);
+      return { data: data, err: false }
+    } catch (err) {
+      return { data: null, err: err }
+    }
+  },
   logOut: () => {
     web3Obj.web3 = null;
     web3Obj.torus = null;

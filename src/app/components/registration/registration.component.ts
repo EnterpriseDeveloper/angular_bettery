@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
@@ -21,6 +21,10 @@ import biconomyInit from '../../../app/contract/biconomy';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
   @Input() openSpinner = false;
+  @Input() linkUser = false;
+  @Input() linkedAccouns = [];
+  @Output() linkedDone = new EventEmitter<Object[]>();
+
   registerForm: FormGroup;
   submitted: boolean = false;
   registerError: any = undefined;
@@ -53,19 +57,44 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   async loginWithTorus(selectedVerifier) {
-    this.spinner = true;
-    // this.activeModal.dismiss('Cross click')
-    await biconomyInit();
-    let login = await web3Obj.login(selectedVerifier);
-    if (login == null) {
-      this.setTorusInfoToDB();
+    if (this.linkUser) {
+      if (!this.linVerification(selectedVerifier)) {
+        this.spinner = true;
+        let { data, err } = await web3Obj.linkUser(selectedVerifier);
+        if (!err) {
+          await this.linkAccount(data);
+        } else {
+          this.logOut(err);
+        }
+      }
     } else {
-      console.log(login)
-      this.spinner = false;
-      this.closeModal();
-      await web3Obj.logOut();
+      this.spinner = true;
+      await biconomyInit();
+      let login = await web3Obj.login(selectedVerifier);
+      if (login == null) {
+        this.setTorusInfoToDB();
+      } else {
+        this.logOut(login);
+      }
     }
+  }
 
+  async logOut(x) {
+    console.log(x)
+    this.spinner = false;
+    this.closeModal();
+    await web3Obj.logOut();
+  }
+
+  async linkAccount(data) {
+    // TODO send to db
+    console.log(data);
+    this.linkedDone.next([{ status: "done" }])
+  }
+
+  linVerification(x) {
+    let z = x == 'google-oauth2' ? 'google' : x;
+    return this.linkedAccouns.includes(z);
   }
 
   async setTorusInfoToDB() {
