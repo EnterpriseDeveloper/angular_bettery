@@ -31,7 +31,13 @@
                     </select>
                     <p class="option_text">You'll be able to see Events nearby your location.</p>
                     <p class="disp_name" style="padding-top: 17px;">Linked account</p>
-                    <p class="option_text">You'll be able to login using any of the linked accounts. As a bonus, you'll
+                    <div *ngIf="addionalData" style="display: flex">
+                        <div *ngFor="let icon of addionalData.linkedAccounts">
+                            <div class="socialLink" [ngStyle]="getIcon(icon)"></div>
+                        </div>
+                        <div class="linkAccount"></div>
+                    </div>
+                    <p class="option_text" style="padding-top: 9px;">You'll be able to login using any of the linked accounts. As a bonus, you'll
                         receive 100 Tokens.</p>
                 </div>
                 <div class="info_con" style="padding-left: 3px;">
