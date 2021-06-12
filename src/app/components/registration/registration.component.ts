@@ -114,7 +114,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         avatar: userInfo.userInfo.profileImage,
         verifier: userInfo.userInfo.typeOfLogin,
         verifierId: userInfo.userInfo.verifierId,
-        refId: refId == null ? 'undefined' : refId
+        refId: refId == null ? 'undefined' : refId,
+        accessToken: userInfo.userInfo.accessToken,
       };
 
       this.torusRegistSub = this.http.post('user/torus_regist', data)
@@ -130,7 +131,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
               x.historyTransaction,
               x.avatar,
               x._id,
-              x.verifier
+              x.verifier,
+              x.sessionToken,
+              x.verifierId,
+              x.accessToken = userInfo.userInfo.accessToken
             );
             this.spinner = false;
           }, async (err) => {
@@ -159,7 +163,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     historyTransaction: Object,
     avatar: string,
     _id: number,
-    verifier: string
+    verifier: string,
+    sessionToken: string,
+    verifierId: string,
+    accessToken: string
   ) {
 
     this.store.dispatch(new UserActions.AddUser({
@@ -172,7 +179,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       listValidatorEvents: listValidatorEvents,
       historyTransaction: historyTransaction,
       avatar: avatar,
-      verifier: verifier
+      verifier: verifier,
+      sessionToken: sessionToken,
+      verifierId: verifierId,
+      accessToken: accessToken
     }));
     this.onReset();
   }

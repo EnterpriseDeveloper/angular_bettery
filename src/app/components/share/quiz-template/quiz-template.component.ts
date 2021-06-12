@@ -497,7 +497,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             listValidatorEvents: currentUser[0].listValidatorEvents,
             historyTransaction: currentUser[0].historyTransaction,
             avatar: currentUser[0].avatar,
-            verifier: currentUser[0].verifier
+            verifier: currentUser[0].verifier,
+            verifierId: currentUser[0].verifierId,
+            sessionToken: currentUser[0].sessionToken,
+            accessToken: currentUser[0].accessToken
           }));
         });
   }
