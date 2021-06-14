@@ -1,14 +1,14 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../app.state';
-import {User} from '../../models/User.model';
+import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
+import { User } from '../../models/User.model';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor, OnDestroy {
@@ -22,8 +22,10 @@ export class AuthInterceptor implements HttpInterceptor, OnDestroy {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     this.userSub = this.store.select('user').subscribe((x: User[]) => {
-      this.sessionToken = x[0].sessionToken;
-      this.accessToken = x[0].accessToken;
+      if (x.length != 0) {
+        this.sessionToken = x[0].sessionToken;
+        this.accessToken = x[0].accessToken;
+      }
     });
 
     request = request.clone({

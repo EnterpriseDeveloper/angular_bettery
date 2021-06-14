@@ -32,6 +32,7 @@ export class RegistrationComponent implements OnDestroy {
   userWallet: string = undefined;
   validateSubscribe: Subscription;
   torusRegistSub: Subscription;
+  linkSub: Subscription;
   spinner: boolean;
   saveUserLocStorage = [];
 
@@ -41,7 +42,7 @@ export class RegistrationComponent implements OnDestroy {
     private router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
-  ) {}
+  ) { }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.activeModal.close();
@@ -80,8 +81,16 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   async linkAccount(data) {
-    // TODO send to db
     console.log(data);
+    let post = {
+      verifierId: data.userInfo.verifierId
+    }
+    this.linkSub = this.http.post("user/link_account", post).subscribe((x) => {
+      this.closeModal();
+      this.spinner = false;
+    }, (err) => {
+
+    })
     this.linkedDone.next([{ status: "done" }])
   }
 
@@ -199,6 +208,9 @@ export class RegistrationComponent implements OnDestroy {
   ngOnDestroy() {
     if (this.torusRegistSub) {
       this.torusRegistSub.unsubscribe();
+    }
+    if (this.linkSub) {
+      this.linkSub.unsubscribe();
     }
   }
 }

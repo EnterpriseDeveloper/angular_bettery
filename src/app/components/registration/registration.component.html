@@ -42,17 +42,17 @@
             <div class="google-img"></div>
           </div>
         </div>
-        <div (click)="loginWithTorus('facebook')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithTorus('facebook')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-facebook card w-100">
             <div class="facebook-img"></div>
           </div>
         </div>
-        <div (click)="loginWithTorus('Redit')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithTorus('Redit')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-reddit card w-100">
             <div class="reddit-img"></div>
           </div>
         </div>
-        <div (click)="loginWithTorus('discord')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithTorus('discord')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-discord card w-100">
             <div class="discord-img"></div>
           </div>
@@ -62,7 +62,7 @@
 
     <div class="container">
       <div class="row">
-        <div (click)="loginWithTorus('twitch')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithTorus('twitch')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitch card w-100">
             <div class="twitch-img"></div>
           </div>
@@ -72,12 +72,12 @@
             <div class="apple-img"></div>
           </div>
         </div>
-        <div (click)="loginWithTorus('linkedin')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-linkedin card w-100">
             <div class="linkedin-img"></div>
           </div>
         </div>
-        <div (click)="loginWithTorus('twitter')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithTorus('twitter')" class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitter card w-100">
             <div class="twitter-img"></div>
           </div>
