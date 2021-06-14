@@ -64,10 +64,10 @@ const verifierMap = (selectedVerifier) => {
     name: "bettery",
     typeOfLogin: "jwt",
     clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf",
-    verifier: "betteryAuth0",
+    verifier: environment.torusVerifierId,
     jwtParams: {
       domain: "https://bettery.us.auth0.com",
-      connection: selectedVerifier
+      connection: selectedVerifier == "email" ? null : selectedVerifier
     }
   }
 };

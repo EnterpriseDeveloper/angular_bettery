@@ -2,7 +2,7 @@
   <div *ngIf="!openSpinner">
     <div style="padding: 0 40px; border: none">
       <div>
-        <button type="button" class=" soonClose close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
         <div class="main-img"></div>
@@ -23,7 +23,7 @@
 
 <div *ngIf="openSpinner" style="padding: 24px 0">
   <div>
-    <button type="button" class=" soonClose close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
     <div class="title-reg">{{!linkUser ? 'LOGIN or SIGN UP' : 'ADD SOCIAL MEDIA ACCOUNT'}}</div>
@@ -91,17 +91,11 @@
       <div class="or">OR</div>
     </div>
 
-    <form [formGroup]="registerForm" style="padding: 10px 24px" (submit)="sendForm()">
-      <input [ngClass]="submitted && registerForm.controls.email.errors && 'is_invalid'" class="input-email"
-        formControlName="email" type="email" placeholder="Enter your email">
-      <div *ngIf="submitted && registerForm.controls.email.errors">
-        <small *ngIf="registerForm.controls.email.errors" class="form-text quize_validation_error">Email is not
-          valid</small>
-      </div>
-      <button class="btn-with-email" type="submit">
+    <div style="padding: 10px 24px">
+      <button (click)="loginWithTorus('email')" class="btn-with-email" type="submit">
         CONTINUE with email
       </button>
-    </form>
+    </div>
 
     <div style="padding: 16px 24px">
       <div class="hr"></div>

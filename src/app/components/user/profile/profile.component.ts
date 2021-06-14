@@ -5,6 +5,7 @@ import { AppState } from '../../../app.state';
 import { User } from '../../../models/User.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationComponent } from '../../registration/registration.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'profile',
@@ -18,12 +19,15 @@ export class ProfileComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private modalService: NgbModal,
+    private router: Router
   ) { 
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
-      console.log(x);
       if (x.length === 0) {
         const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
         modalRef.componentInstance.openSpinner = true;
+        modalRef.componentInstance.closedWindow.subscribe((e) => {
+          this.router.navigate(['join']);
+        })
       } else {
         this.userData = x[0];
       }

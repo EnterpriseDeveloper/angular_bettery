@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostListener, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
 import { AppState } from '../../app.state';
@@ -19,13 +18,13 @@ import biconomyInit from '../../../app/contract/biconomy';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.sass']
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnDestroy {
   @Input() openSpinner = false;
   @Input() linkUser = false;
   @Input() linkedAccouns = [];
   @Output() linkedDone = new EventEmitter<Object[]>();
+  @Output() closedWindow = new EventEmitter();
 
-  registerForm: FormGroup;
   submitted: boolean = false;
   registerError: any = undefined;
   web3: Web3 | undefined = null;
@@ -37,20 +36,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   saveUserLocStorage = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private store: Store<AppState>,
     private http: PostService,
     private router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
-  ) {
-  }
-
-  ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-    });
-  }
+  ) {}
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.activeModal.close();
@@ -80,7 +71,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   async logOut(x) {
-    console.log(x)
+    if (JSON.stringify(x).search("user closed popup") != -1) {
+      this.closedWindow.next();
+    }
     this.spinner = false;
     this.closeModal();
     await web3Obj.logOut();
@@ -142,11 +135,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
+    this.closedWindow.next();
     this.activeModal.dismiss('Cross click');
-  }
-
-  get f() {
-    return this.registerForm.controls;
   }
 
   addUser(
@@ -180,7 +170,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   onReset() {
     this.submitted = false;
-    this.registerForm.reset();
     this.closeModal();
   }
 
@@ -200,13 +189,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.torusRegistSub) {
       this.torusRegistSub.unsubscribe();
-    }
-  }
-
-  sendForm() {
-    this.submitted = true;
-    if (this.registerForm.controls.email.valid) {
-      console.log(this.registerForm.controls.email.value);
     }
   }
 }
