@@ -46,7 +46,13 @@
                         <option *ngFor="let lang of language; let i = index" value="{{lang}}">{{lang}}</option>
                     </select>
                     <p class="option_text">You'll be able to see Events in your language.</p>
-                    <p class="disp_name" style="padding-top: 17px;">Referrer</p>
+                    <div *ngIf="addionalData?.invitedBy != null">
+                        <p class="disp_name" style="padding-top: 17px;">Referrer</p>
+                        <div class="ref_box">
+                            <img src="{{addionalData?.invitedBy.avatar}}" class="ref_avatar" />
+                            <p class="ref_name">{{addionalData?.invitedBy.nickName}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
