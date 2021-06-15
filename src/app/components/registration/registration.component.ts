@@ -35,6 +35,7 @@ export class RegistrationComponent implements OnDestroy {
   linkSub: Subscription;
   spinner: boolean;
   saveUserLocStorage = [];
+  alreadyRegister = [];
 
   constructor(
     private store: Store<AppState>,
@@ -49,6 +50,7 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   async loginWithTorus(selectedVerifier) {
+    console.log(selectedVerifier)
     if (this.linkUser) {
       if (!this.linVerification(selectedVerifier)) {
         this.spinner = true;
@@ -140,13 +142,29 @@ export class RegistrationComponent implements OnDestroy {
               x.accessToken = userInfo.userInfo.accessToken
             );
             this.spinner = false;
+            this.alreadyRegister = [];
           }, async (err) => {
-            this.closeModal();
-            this.spinner = false;
-            console.log(err);
+            if (err.status == 302) {
+              this.alreadyRegister = err.error;
+              this.spinner = false;
+            } else {
+              this.closeModal();
+              this.spinner = false;
+              console.log(err);
+            }
           });
     }
   }
+
+  goBack() {
+    this.alreadyRegister = [];
+  }
+
+  alreadyRegistCloseModal() {
+    web3Obj.logOut();
+    this.closeModal();
+  }
+
 
   closeModal() {
     this.closedWindow.next();

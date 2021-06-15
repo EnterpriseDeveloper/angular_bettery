@@ -4,9 +4,10 @@ import { environment } from '../../environments/environment';
 
 const web3Obj = {
   login: async (selectedVerifier) => {
+    let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
     try {
       web3Obj.torusdirectsdk = await init();
-      let conf: any = verifierMap(selectedVerifier)
+      let conf: any = verifierMap(x)
       let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 
       let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
@@ -24,8 +25,9 @@ const web3Obj = {
   web3: null, // polygon
   loginDetails: null,
   linkUser: async (selectedVerifier) => {
+    let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
     try {
-      let conf: any = verifierMap(selectedVerifier)
+      let conf: any = verifierMap(x)
       let data = await web3Obj.torusdirectsdk.triggerLogin(conf);
       return { data: data, err: false }
     } catch (err) {

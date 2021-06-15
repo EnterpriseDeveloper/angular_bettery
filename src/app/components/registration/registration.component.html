@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div *ngIf="openSpinner" style="padding: 24px 0">
+<div *ngIf="openSpinner && alreadyRegister.length == 0" style="padding: 24px 0">
   <div>
     <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -36,23 +36,26 @@
   <div style="padding: 0 24px">
     <div class="container">
       <div class="row">
-        <div [ngClass]='{disabled: linVerification("google")}' (click)="loginWithTorus('google-oauth2')"
+        <div [ngClass]='{disabled: linVerification("google")}' (click)="loginWithTorus('google')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-google card w-100">
             <div class="google-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithTorus('facebook')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithTorus('facebook')"
+          class="col-6 col-lg-3 wrapCard">
           <div class="bg-facebook card w-100">
             <div class="facebook-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithTorus('Redit')" class="col-6 col-lg-3 wrapCard">
-          <div class="bg-reddit card w-100">
-            <div class="reddit-img"></div>
+        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithTorus('Redit')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-Redit card w-100">
+            <div class="Redit-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithTorus('discord')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithTorus('discord')"
+          class="col-6 col-lg-3 wrapCard">
           <div class="bg-discord card w-100">
             <div class="discord-img"></div>
           </div>
@@ -62,7 +65,8 @@
 
     <div class="container">
       <div class="row">
-        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithTorus('twitch')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithTorus('twitch')"
+          class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitch card w-100">
             <div class="twitch-img"></div>
           </div>
@@ -72,12 +76,14 @@
             <div class="apple-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')"
+          class="col-6 col-lg-3 wrapCard">
           <div class="bg-linkedin card w-100">
             <div class="linkedin-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithTorus('twitter')" class="col-6 col-lg-3 wrapCard">
+        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithTorus('twitter')"
+          class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitter card w-100">
             <div class="twitter-img"></div>
           </div>
@@ -125,4 +131,20 @@
   </div>
 </div>
 
+<div class="already_regist_box" *ngIf="alreadyRegister.length != 0">
+  <button type="button" class=" soonClose close" aria-label="Close" (click)="alreadyRegistCloseModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="title-reg padding_reg">EMAIL DUPLICATE ALERT</div>
+  <div class="already_regist_text"><b>{{alreadyRegister.email}}</b> is already registered with Bettery. Click to login
+    using one of these platforms:</div>
+  <div class="already_regist_icon_box">
+    <div class="wrapCard icon_width" *ngFor="let link of alreadyRegister.linkedAccounts">
+      <div class="bg-{{link}} card w-100" (click)="loginWithTorus(link)">
+        <div class="{{link}}-img"></div>
+      </div>
+    </div>
+  </div>
+  <button (click)="goBack()" class="already_regist_button">Nah, return</button>
+</div>
 <app-spinner-loading *ngIf="spinner"></app-spinner-loading>
