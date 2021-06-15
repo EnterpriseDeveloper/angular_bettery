@@ -86,10 +86,11 @@ export class RegistrationComponent implements OnDestroy {
       verifierId: data.userInfo.verifierId
     }
     this.linkSub = this.http.post("user/link_account", post).subscribe((x) => {
+      //TODO update users
       this.closeModal();
       this.spinner = false;
     }, (err) => {
-
+      console.log(err)
     })
     this.linkedDone.next([{ status: "done" }])
   }
