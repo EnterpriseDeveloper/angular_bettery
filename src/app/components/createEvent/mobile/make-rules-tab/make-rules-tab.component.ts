@@ -106,7 +106,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
       this.endPrivateTime = name;
     }
     if (this.formData && this.formData.exactTimeBool) {
-      this.endPublicTime = `Until ${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour} : ${this.formData.exactMinutes}`;
+      this.endPublicTime = `Until ${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear}, ${this.formData.exactHour < 10 ? '0' + this.formData.exactHour : this.formData.exactHour} : ${this.formData.exactMinutes < 10 ? '0' + this.formData.exactMinutes : this.formData.exactMinutes }`;
     } else if (this.formData && this.formData.publicEndTime !== '') {
       let findTime = _.find(this.times, (x) => {
         return x.value === this.formData.publicEndTime.value;
@@ -249,7 +249,7 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
     } else {
       this.pastTime = false;
     }
-    this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year}, ${this.timeData.hour} : ${this.timeData.minute}`;
+    this.endPublicTime = `Until ${this.exactTime.value.day} ${this.exactTime.value.month} ${this.exactTime.value.year},  ${this.timeData.hour < 10 ? '0' + this.timeData.hour : this.timeData.hour} : ${this.timeData.minute < 10 ? '0' + this.timeData.minute : this.timeData.minute }`;
     this.exactTimeBool = true;
     this.publicForm.controls.publicEndTime.setValue({hour: 0, minute: 0, second: 0});
     this.modalService.dismissAll();
