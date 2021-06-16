@@ -34,16 +34,6 @@ const web3Obj = {
       return { data: null, err: err }
     }
   },
-  autoLogin: async () => {
-    // TODO
-    // let loginDetails = await web3Obj.torusdirectsdk.getTorusKey({
-    //   verifier: environment.torusVerifierId,
-    //   verifierId: string,
-    //   verifierParams: { verifier_id: string },
-    //   idToken: string
-    // });
-    // console.log(loginDetails);
-  },
   logOut: () => {
     web3Obj.web3 = null;
     web3Obj.torus = null;
