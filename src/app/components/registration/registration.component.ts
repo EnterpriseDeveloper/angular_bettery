@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnDestroy {
   linkSub: Subscription;
   spinner: boolean;
   saveUserLocStorage = [];
-  alreadyRegister = [];
+  alreadyRegister = undefined;
 
   constructor(
     private store: Store<AppState>,
@@ -141,7 +141,7 @@ export class RegistrationComponent implements OnDestroy {
               x.accessToken = userInfo.userInfo.accessToken
             );
             this.spinner = false;
-            this.alreadyRegister = [];
+            this.alreadyRegister = undefined;
           }, async (err) => {
             if (err.status == 302) {
               this.alreadyRegister = err.error;
@@ -156,7 +156,7 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   goBack() {
-    this.alreadyRegister = [];
+    this.alreadyRegister = undefined;
   }
 
   alreadyRegistCloseModal() {
