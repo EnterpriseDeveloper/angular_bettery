@@ -86,7 +86,6 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
       eventId: this.data.id,
       answer: this.answerForm.value.answer,
       answerNumber: answer,
-      from: this.userData._id,
     };
     this.postSub = this.postService.post('privateEvents/validate', data).subscribe(async () => {
       this.answerIndex = answer;

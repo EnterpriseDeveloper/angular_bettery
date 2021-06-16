@@ -95,7 +95,6 @@ export class PrivateEventComponent implements OnDestroy {
     }
     this.spinnerLoading = true;
     this.eventData = {
-      host: this.host[0]._id,
       prodDev: environment.production,
       answers: this.formData.answers.map((x) => {
         return x.name;
@@ -113,7 +112,6 @@ export class PrivateEventComponent implements OnDestroy {
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
     };
-
     this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)
       .subscribe(
         (x: any) => {

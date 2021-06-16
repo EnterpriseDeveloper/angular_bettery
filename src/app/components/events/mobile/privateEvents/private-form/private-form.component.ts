@@ -65,7 +65,6 @@ export class PrivateFormComponent implements OnInit, OnDestroy {
     let data = {
       eventId: this.data.id,
       answer: answer,
-      from: this.userData._id,
     };
     this.postSub = this.postService.post('privateEvents/participate', data).subscribe(async () => {
       this.spinnerLoading = false;

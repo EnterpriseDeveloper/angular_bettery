@@ -7,6 +7,7 @@ import { PostService } from 'src/app/services/post.service';
 import Contract from '../../../contract/contract';
 import biconomyMainInit from '../../../contract/biconomyMain';
 import biconomyInit from '../../../contract/biconomy';
+import {GetService} from '../../../services/get.service';
 
 @Component({
   selector: 'app-deposit',
@@ -32,7 +33,8 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeModal: NgbActiveModal,
-    public postService: PostService
+    public postService: PostService,
+    public getService: GetService
   ) { }
 
   ngOnInit(): void {
@@ -43,10 +45,7 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
   }
 
   checkStatusOfWith() {
-    let data = {
-      id: this.userId
-    }
-    this.withExitSub = this.postService.post("withdrawal/exit", data).subscribe((x) => {
+    this.withExitSub = this.getService.get('withdrawal/exit').subscribe((x) => {
       // this.status = 'withdraw'
       // this.receiveBTY = true;
       // this.stillProcessed = false;   //for 3 screen
