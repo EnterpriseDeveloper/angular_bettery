@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div *ngIf="openSpinner && alreadyRegister.length == 0" style="padding: 24px 0">
+<div *ngIf="openSpinner && alreadyRegister == undefined" style="padding: 24px 0">
   <div>
     <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
