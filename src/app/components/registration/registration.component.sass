@@ -1,133 +1,141 @@
 .registration_module
-    top: 0px
-    width: 100%
-    height: 100%
-    background-color: rgba(0, 0 ,0 , 50%)
-    position: absolute
-    z-index: 100
+  top: 0px
+  width: 100%
+  height: 100%
+  background-color: rgba(0, 0 ,0 , 50%)
+  position: absolute
+  z-index: 100
 
+.disabled
+  opacity: 0.2 !important
+  cursor: not-allowed !important
+  div
+    cursor: not-allowed !important
+    div
+      cursor: not-allowed !important
 
 .registration_box
-    margin: auto
-    position: absolute
-    top: 50%
-    left: 0
-    right: 0
-    width: 450px
-    height: auto
-    background-color: #ffffff
-    border-radius: 10px
-    transform: translateY(-50%)
+  margin: auto
+  position: absolute
+  top: 50%
+  left: 0
+  right: 0
+  width: 450px
+  height: auto
+  background-color: #ffffff
+  border-radius: 10px
+  transform: translateY(-50%)
 
 .registr_form
-    display: table-caption
+  display: table-caption
 
 .modal_close
-    font-size: 20px
-    float: right
-    padding-right: 15px
-    padding-top: 10px
-    cursor: pointer
+  font-size: 20px
+  float: right
+  padding-right: 15px
+  padding-top: 10px
+  cursor: pointer
 
 .registration_title
-    display: inline-block
-    padding-left: 10px
-    padding-top: 10px
+  display: inline-block
+  padding-left: 10px
+  padding-top: 10px
+  padding-top: 24px
+  padding-bottom: 14px
 
 .regist_label
-    margin-bottom: 0px !important
+  margin-bottom: 0px !important
 
 .form_container
-    margin-left: 20px
-    margin-right: 20px
-    margin-top: 10px
+  margin-left: 20px
+  margin-right: 20px
+  margin-top: 10px
 
 .regist_input
-    width: 98%
-    height: 20px
-    border-width: 1px
-    border-radius: 5px
-    outline: none
+  width: 98%
+  height: 20px
+  border-width: 1px
+  border-radius: 5px
+  outline: none
 
 .button_pos
-    display: flex
-    justify-content: space-around
-    margin-top: 30px
-    margin-bottom: 20px
+  display: flex
+  justify-content: space-around
+  margin-top: 30px
+  margin-bottom: 20px
 
 .regist_button_box
-    min-width: 150px
-    outline: none !important
-    cursor: pointer
-
+  min-width: 150px
+  outline: none !important
+  cursor: pointer
 
 .error-feedback
-    color: #fc471e !important
+  color: #fc471e !important
 
 .register_error
-    text-align: center
-    color: #fc471e
+  text-align: center
+  color: #fc471e
 
 .metamask_error
-    text-align: center
-    color: #fc471e
-    padding-top: 20px
-    padding-bottom: 20px
+  text-align: center
+  color: #fc471e
+  padding-top: 20px
+  padding-bottom: 20px
 
 .user_wallet
-    padding-top: 20px
-    padding-bottom: 10px
-    text-align: center
+  padding-top: 20px
+  padding-bottom: 10px
+  text-align: center
 
 .networkError
-    text-align: center
-    color: red
-    padding-top: 20px
-    padding-bottom: 5px
+  text-align: center
+  color: red
+  padding-top: 20px
+  padding-bottom: 5px
 
 .login_button
-    text-align: center
-    padding-top: 15px
-    padding-bottom: 15px
-    margin-top: 10px
+  text-align: center
+  padding-top: 15px
+  padding-bottom: 15px
+  margin-top: 10px
 
 .googleLogin
-    margin-right: 20px
+  margin-right: 20px
 
 .lds-ripple
-    margin-top: 75px
-    margin-bottom: 75px
-    position: relative
-    width: 80px
-    height: 80px
-    display: block
-    margin-left: auto
-    margin-right: auto
+  margin-top: 75px
+  margin-bottom: 75px
+  position: relative
+  width: 80px
+  height: 80px
+  display: block
+  margin-left: auto
+  margin-right: auto
 
 .lds-ripple div
-    position: absolute
-    border: 4px solid #5682e2
-    opacity: 1
-    border-radius: 50%
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite
+  position: absolute
+  border: 4px solid #5682e2
+  opacity: 1
+  border-radius: 50%
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite
 
 .lds-ripple div:nth-child(2)
-    animation-delay: -0.5s
+  animation-delay: -0.5s
 
 @keyframes lds-ripple
-    0%
-        top: 36px
-        left: 36px
-        width: 0
-        height: 0
-        opacity: 1
+  0%
+    top: 36px
+    left: 36px
+    width: 0
+    height: 0
+    opacity: 1
 
-    100%
-        top: 0px
-        left: 0px
-        width: 72px
-        height: 72px
-        opacity: 0
+  100%
+    top: 0px
+    left: 0px
+    width: 72px
+    height: 72px
+    opacity: 0
 
 .main-img
   background: url("../../../assets/share/BTY.png") center center no-repeat
@@ -184,3 +192,252 @@
 
 .modal-content
   border: none !important
+
+//=========== chose registration method setting =========//
+.wrapCard
+  display: flex
+  justify-content: center
+  align-items: center
+  border: none
+  padding: 4px
+
+.title-reg
+  font-weight: 800
+  font-size: 16px
+  line-height: 22px
+  text-align: center
+  color: #FFD300
+
+.hr
+  background: rgba(194, 194, 194, 0.5)
+  height: 0.5px
+.or
+  width: 40px
+  background-color: #FFFFFF
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  text-align: center
+  font-size: 12px
+  line-height: 14px
+  color: #0B1511
+  font-weight: 700
+
+.card
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 8px 0
+  border-radius: 5px
+  cursor: pointer
+
+.text-reg
+  font-size: 12px
+  line-height: 16px
+  text-align: center
+  color: #6B6B6B
+  margin: 0 40px
+  & a
+    color: #6B6B6B
+    font-weight: bold
+
+.google-img
+  background: url(../../../assets/registration/google-icon.png) center center no-repeat
+  background-size: contain
+  width: 32px
+  height: 32px
+.bg-google
+  background-color: #ffffff
+  transition: box-shadow 0.22s
+
+.facebook-img
+  background: url(../../../assets/registration/facebook-icon.png) center center no-repeat
+  background-size: contain
+  width: 17px
+  height: 33px
+.bg-facebook
+  background-color: #3C5A9A
+  transition: box-shadow 0.22s
+
+.Redit-img
+  background: url(../../../assets/registration/reddit-icon.png) center center no-repeat
+  background-size: contain
+  width: 36px
+  height: 33px
+.bg-Redit
+  background-color: #FF3F18
+  transition: box-shadow 0.22s
+
+.discord-img
+  background: url(../../../assets/registration/discord-icon.png) center center no-repeat
+  background-size: contain
+  width: 29px
+  height: 33px
+.bg-discord
+  background-color: #7289D9
+  transition: box-shadow 0.22s
+
+.twitch-img
+  background: url(../../../assets/registration/twitch-icon.png) center center no-repeat
+  background-size: contain
+  width: 31px
+  height: 33px
+.bg-twitch
+  background-color: #5A3E85
+  transition: box-shadow 0.22s
+
+.apple-img
+  background: url(../../../assets/registration/apple-icon.png) center center no-repeat
+  background-size: contain
+  width: 27px
+  height: 33px
+.bg-apple
+  background-color: #151515
+  transition: box-shadow 0.22s
+
+.linkedin-img
+  background: url(../../../assets/registration/linkedin-icon.png) center center no-repeat
+  background-size: contain
+  width: 31px
+  height: 33px
+.bg-linkedin
+  background-color: #0077B5
+  transition: box-shadow 0.22s
+
+.twitter-img
+  background: url(../../../assets/registration/twitter-icon.png) center center no-repeat
+  background-size: contain
+  width: 36px
+  height: 30px
+.bg-twitter
+  background-color: #17A3F2
+  transition: box-shadow 0.22s
+
+.bg-google:hover, .bg-facebook:hover, .bg-reddit:hover, .bg-discord:hover, .bg-twitch:hover, .bg-apple:hover, .bg-linkedin:hover, .bg-twitter:hover
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2)
+
+.link-left
+  text-align: right
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  display: flex
+  align-items: center
+  text-decoration-line: underline
+  & a
+    color: #54DD96
+    width: 100%
+.link-right
+  text-align: left
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  display: flex
+  align-items: center
+  text-decoration-line: underline
+  & a
+    color: #0364FF
+    width: 100%
+
+@media (max-width: 992px)
+  .link-right, .link-left
+    text-align: center
+    margin: 5px 0
+
+.input-email
+  width: 100%
+  background: #FFFFFF
+  border: 1px solid #E1E1E1
+  border-radius: 5px
+  margin-bottom: 8px
+  padding: 14px 12px
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 19px
+  display: flex
+  align-items: center
+  color: #0B1511
+.input-email:focus
+  outline: none
+.input-email:active
+  outline: none
+
+.btn-with-email
+  width: 100%
+  background: #FFD300
+  border-radius: 5px
+  border: none
+  font-weight: 600
+  font-size: 18px
+  line-height: 25px
+  text-align: center
+  text-transform: uppercase
+  color: #000000
+  padding: 12px 0
+
+.btn-with-email:focus
+  outline: none
+.btn-with-email:active
+  outline: none
+
+.quize_validation_error
+  font-family: 'Open Sans', sans-serif
+  font-style: normal
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+  text-align: right
+  color: #EC0100
+  margin-bottom: 6px
+
+.is_invalid
+  border: 1px solid #EC0100 !important
+//=======================================================//
+
+.already_regist_text
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 19px
+  align-items: center
+  text-align: center
+  color: #6B6B6B
+
+.already_regist_box
+  margin-left: 33px
+  margin-right: 33px
+
+.padding_reg
+  padding-top: 24px
+  padding-bottom: 12px
+
+.icon_width
+  width: 91px
+
+.already_regist_icon_box
+  display: flex
+  justify-content: center
+  margin-top: 15px
+  margin-bottom: 15px
+
+.already_regist_button
+  background: #FFD300
+  border-radius: 5px
+  font-style: normal
+  font-weight: 600
+  font-size: 18px
+  line-height: 25px
+  align-items: center
+  text-align: center
+  text-transform: uppercase
+  color: #000000
+  width: 100%
+  padding-top: 10px
+  padding-bottom: 10px
+  border: none
+  margin-bottom: 27px
+  margin-top: 15px

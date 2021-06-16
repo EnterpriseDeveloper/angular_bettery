@@ -77,7 +77,7 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
         var value = web3.utils.toWei(this.inputValue.toString(), 'ether');
         let biconomy_provider = await biconomyMainInit();
         let contrc = new Contract();
-        let approve: any = await contrc.approveBTYmainToken(this.wallet, value, "torus", biconomy_provider) // switch "torus" to another wallet if we will use another one
+        let approve: any = await contrc.approveBTYmainToken(this.wallet, value, biconomy_provider)
         console.log(approve);
         if (approve.message === undefined) {
           let deposit: any = await contrc.deposit(this.wallet, value, "torus", biconomy_provider) // switch "torus" to another wallet if we will use another one

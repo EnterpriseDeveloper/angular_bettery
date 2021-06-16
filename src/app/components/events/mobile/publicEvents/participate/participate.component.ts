@@ -87,7 +87,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       let web3 = new Web3();
       let contract = new Contract();
       var _money = web3.utils.toWei(String(this.answerForm.value.amount), 'ether')
-      await contract.approveBETToken(this.userData.wallet, _money, this.userData.verifier)
+      await contract.approveBETToken(this.userData.wallet, _money)
       this.setToDB(this.eventData)
     }
   }
@@ -114,7 +114,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.userData.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
+    let web3 = new Web3();
 
     let matic = new maticInit(this.userData.verifier);
     let BTYToken = await matic.getBTYTokenBalance();

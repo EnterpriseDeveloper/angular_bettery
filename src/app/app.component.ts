@@ -15,10 +15,6 @@ window.web3 = window.web3 || {};
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'Quiz';
-
-  constructor() {
-  }
 
   detectPath() {
     const href = window.location.pathname;

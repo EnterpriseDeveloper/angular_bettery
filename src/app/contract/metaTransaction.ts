@@ -1,6 +1,9 @@
 var sigUtil = require('eth-sig-util')
+import axios from "axios";
+import { environment } from '../../environments/environment';
+import Web3 from "web3";
 
-export default class MetaTransaction{
+export default class MetaTransaction {
     domainType;
     metaTransactionType;
     constructor() {
@@ -18,38 +21,42 @@ export default class MetaTransaction{
         ];
     }
 
-    setSignPromise(userWallet, dataToSign, web3, whichContract, functionSignature) {
-        return new Promise((resolve, reject) => {
-            web3.eth.currentProvider.send(
-                {
-                    jsonrpc: "2.0",
-                    id: 999999999999,
-                    method: "eth_signTypedData_v4",
-                    params: [userWallet, dataToSign],
-                },
-                async (error, response) => {
-                    if (error) {
-                        console.log(error)
-                        return reject(error)
-                    }
+    async setSignPromiseSideChain(userWallet, dataToSign, web3, whichContract, functionSignature, contractAddress, nonce, privateKey) {
+        let x = Buffer.from(privateKey, 'hex');
+        const signature = sigUtil.signTypedMessage(x, { data: dataToSign }, 'V3');
+        let { r, s, v } = this.getSignatureParameters(signature, web3);
+        let executeMetaTransactionData = whichContract.methods.executeMetaTransaction(userWallet, functionSignature, r, s, v).encodeABI();
+        let gasEstimate = await whichContract.methods.executeMetaTransaction(userWallet, functionSignature, r, s, v).estimateGas({ from: userWallet });
 
-                    let { r, s, v } = this.getSignatureParameters(response.result, web3);
+        let txParams = {
+            "from": userWallet,
+            "to": contractAddress,
+            "nonce": nonce,
+            "value": "0x0",
+            "gas": Number((((gasEstimate * 50) / 100) + gasEstimate).toFixed(0)),
+            "gasPrice": this.getGasPriceMatic(),
+            "data": executeMetaTransactionData
+        };
 
-                    const recovered = sigUtil.recoverTypedSignature_v4({
-                        data: JSON.parse(dataToSign),
-                        sig: response.result,
-                    });
-                    console.log(`Recovered ${recovered}`);
-                    let executeMetaTransaction = await whichContract.methods
-                        .executeMetaTransaction(userWallet, functionSignature, r, s, v)
-                        .send({
-                            from: userWallet
-                        });
+        const signedTx = await web3.eth.accounts.signTransaction(txParams, `0x${privateKey}`);
+        return await web3.eth.sendSignedTransaction(signedTx.rawTransaction, (error, txHash) => {
+            if (error) {
+                console.log("ERROR HERE")
+                return console.error(error);
+            }
+            console.log("Transaction hash is ", txHash);
+            return txHash;
+        });
+    }
 
-                    return resolve(executeMetaTransaction);
-                }
-            );
+    async getGasPriceMatic() {
+        let data: any = await axios.get(environment.gasStationAPI).catch((err) => {
+            console.log("gas station api", err);
+            return
         })
+        let web3 = new Web3();
+        let fast = web3.utils.toWei(String(data.data.fast), "gwei");
+        return fast;
     }
 
     dataToSignFunc(tokenName, contractAddress, nonce, userWallet, functionSignature, chainId) {
@@ -64,9 +71,8 @@ export default class MetaTransaction{
         message.nonce = parseInt(nonce);
         message.from = userWallet;
         message.functionSignature = functionSignature;
-        message.network = "Interact with Matic Network";
 
-        return JSON.stringify({
+        return {
             types: {
                 EIP712Domain: this.domainType,
                 MetaTransaction: this.metaTransactionType,
@@ -74,7 +80,7 @@ export default class MetaTransaction{
             domain: domainData,
             primaryType: "MetaTransaction",
             message: message,
-        });
+        };
     }
 
 

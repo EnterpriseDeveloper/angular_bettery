@@ -1,51 +1,76 @@
-import Web3 from 'web3';
-import Torus from '@toruslabs/torus-embed';
+import TorusSdk from "@toruslabs/torus-direct-web-sdk";
+import Web3 from "web3";
 import { environment } from '../../environments/environment';
 
 const web3Obj = {
-  web3: new Web3(),
-  torus: new Torus({}),
-  setWeb3(provider) {
-    let web3Instance = new Web3(provider);
-    web3Obj.web3 = web3Instance;
-  },
-  async initialize() {
-    await web3Obj.torus.init({
-      showTorusButton: true,
-      buildEnv: 'production',
-      network: {
-        host: environment.torusHost,
-        chainId: environment.etherId
-      },
-      whiteLabel: {
-        theme: {
-          isDark: true,
-          colors: {
-            torusBrand1: '#FFD300',
-          },
-        },
-        logoDark: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png', // dark logo for light background
-        logoLight: 'https://i.ibb.co/f2RZrKt/logo-web-512px.png',
-        customTranslations: {
-          en: {
-            embed: {
-              continue: 'Continue',
-              actionRequired: 'Confirm Action',
-              pendingAction: 'On the next screen, confirm your action by sending a transaction from your Bettery account', //...второй
-            },
-            dappTransfer: {
-              permission: 'Bettery',
-              data: 'Transaction Details',
+  login: async (selectedVerifier) => {
+    let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
+    try {
+      web3Obj.torusdirectsdk = await init();
+      let conf: any = verifierMap(x)
+      let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 
-            },
-          },
-        },
-      },
-    });
-    web3Obj.torus.hideTorusButton();
-    await web3Obj.torus.login({});
-    web3Obj.setWeb3(web3Obj.torus.provider);
+      let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
+      let web3Main = await web3Init(loginDetails, environment.etherUrl);
+      web3Obj.web3 = web3Polygon;
+      web3Obj.torus = web3Main;
+      web3Obj.loginDetails = loginDetails;
+      return null;
+    } catch (error) {
+      return error;
+    }
+  },
+  torusdirectsdk: null,
+  torus: null, // main ehter
+  web3: null, // polygon
+  loginDetails: null,
+  linkUser: async (selectedVerifier) => {
+    let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
+    try {
+      let conf: any = verifierMap(x)
+      let data = await web3Obj.torusdirectsdk.triggerLogin(conf);
+      return { data: data, err: false }
+    } catch (err) {
+      return { data: null, err: err }
+    }
+  },
+  logOut: () => {
+    web3Obj.web3 = null;
+    web3Obj.torus = null;
+    web3Obj.loginDetails = null;
+  }
+}
+
+const web3Init = async (loginDetails, provider) => {
+  let web3 = new Web3(provider);
+  const prKey = web3.eth.accounts.privateKeyToAccount('0x' + loginDetails.privateKey);
+  await web3.eth.accounts.wallet.add(prKey);
+  return web3;
+}
+
+const init = async () => {
+  let torusNetwork: any = environment.torusNetwork;
+  let torSdk = new TorusSdk({
+    baseUrl: `${location.origin}/serviceworker`,
+    enableLogging: true,
+    network: torusNetwork
+  });
+
+  await torSdk.init();
+  return torSdk
+}
+
+
+const verifierMap = (selectedVerifier) => {
+  return {
+    name: "bettery",
+    typeOfLogin: "jwt",
+    clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf",
+    verifier: environment.torusVerifierId,
+    jwtParams: {
+      domain: "https://bettery.us.auth0.com",
+      connection: selectedVerifier == "email" ? null : selectedVerifier
+    }
   }
 };
-
 export default web3Obj;
