@@ -161,7 +161,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     const data = {
       bty: bty,
       bet: bet,
-      id: this.userId
     };
 
     this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {

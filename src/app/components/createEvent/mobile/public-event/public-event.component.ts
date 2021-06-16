@@ -131,7 +131,6 @@ export class PublicEventComponent implements OnDestroy {
     this.spinnerLoading = true;
 
     this.quizData = {
-      host: this.host[0]._id,
       question: this.formData.question,
       hashtags: [], // TODO
       amount: 0, // TODO amount on premium event

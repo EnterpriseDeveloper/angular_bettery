@@ -12,6 +12,7 @@ import {RoomModel} from '../../../../models/Room.model';
 import {User} from '../../../../models/User.model';
 import {formDataAction} from "../../../../actions/newEvent.actions";
 import {Router} from "@angular/router";
+import {GetService} from '../../../../services/get.service';
 
 @Component({
   selector: 'create-room-tab',
@@ -39,6 +40,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private postService: PostService,
+    private getService: GetService,
     private store: Store<AppState>,
     private router: Router,
   ) {
@@ -67,16 +69,13 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
         if (this.r.createNewRoom.value == 'new' &&  this.formData.roomName.length == 0) {
           this.f.roomName.setValue(this.nickName + '’s room');
         }
-        this.getUserRooms(this.userId);
+        this.getUserRooms();
       }
     });
   }
 
-  getUserRooms(id) {
-    let data = {
-      id: id
-    };
-    this.postSubscribe = this.postService.post('room/get_by_user_id', data).subscribe((x: RoomModel[]) => {
+  getUserRooms() {
+    this.postSubscribe = this.getService.get('room/get_by_user_id').subscribe((x: RoomModel[]) => {
       if (x?.length !== 0 && this.formData.roomName == '') {
         this.createRoomForm.controls.createNewRoom.setValue("exist");
       }
@@ -153,7 +152,6 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     }
     let x = {
       name: this.roomForm.value.roomName,
-      userId: this.userId
     }
     this.postValidation = this.postService.post("room/validation", x).subscribe((z) => {
       this.roomError = undefined;

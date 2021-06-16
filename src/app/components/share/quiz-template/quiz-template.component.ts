@@ -383,7 +383,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     let data = {
       event_id: answer.event_id,
       answerIndex: answer.answer,
-      userId: this.userData._id,
       amount: Number(answer.amount)
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
@@ -436,7 +435,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
-      userId: this.userData._id
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
         this.myAnswers.answered = true;

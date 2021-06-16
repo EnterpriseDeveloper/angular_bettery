@@ -97,7 +97,6 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     let data = {
       event_id: dataAnswer.id,
       answerIndex: _whichAnswer,
-      userId: this.userData._id,
       amount: Number(this.answerForm.value.amount)
     }
     this.postSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
