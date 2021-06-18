@@ -27,7 +27,11 @@
               "src/favicon.ico",
               "src/assets",
               "src/.htaccess",
-              "src/serviceworker",
+              {
+                "glob": "**/*",
+                "input": "src/serviceworker",
+                "output": "serviceworker/"
+              },
               {
                 "glob": "**/*",
                 "input": "src/.well-known",
