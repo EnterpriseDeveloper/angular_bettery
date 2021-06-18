@@ -38,7 +38,9 @@
               "src/styles.sass",
               "src/assets/pretty-checkbox.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/serviceworker"
+            ]
           },
           "configurations": {
             "dev": {
