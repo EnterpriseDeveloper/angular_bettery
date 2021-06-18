@@ -27,11 +27,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/.htaccess",
-              {
-                "glob": "**/*",
-                "input": "src/serviceworker",
-                "output": "serviceworker/"
-              },
+              "src/serviceworker",
               {
                 "glob": "**/*",
                 "input": "src/.well-known",
@@ -72,7 +68,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "8mb",
                   "maximumError": "15mb"
                 },
                 {
@@ -113,7 +109,13 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/serviceworker",
+              {
+                "glob": "**/*",
+                "input": "src/.well-known",
+                "output": ".well-known/"
+              }
             ],
             "styles": [
               "src/styles.sass"
