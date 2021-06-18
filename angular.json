@@ -26,7 +26,13 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/.htaccess"
+              "src/.htaccess",
+              "src/serviceworker",
+              {
+                "glob": "**/*",
+                "input": "src/.well-known",
+                "output": ".well-known/"
+              }
             ],
             "styles": [
               "src/styles.sass",
@@ -137,6 +143,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Quiz"
 }
