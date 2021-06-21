@@ -30,7 +30,7 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   addionalData = undefined;
 
   editFlag: boolean;
-  emailFlag = false;
+  emailFlag: boolean;
   nameForm: string;
 
   constructor(
@@ -52,22 +52,13 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getInfo(id) {
-    this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id: id}).subscribe((x) => {
+    this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x) => {
       this.addionalData = x;
-      // todo =========
       if (this.addionalData.publicEmail == null) {
-        console.log('null');
-      } else if (this.addionalData.publicEmail === false) {
-        this.emailFlag = true;
-        console.log(true);
+        this.letsUpdatePublicEmail(true);
       } else {
-        this.emailFlag = false;
-        console.log(false);
+        this.emailFlag = this.addionalData.publicEmail;
       }
-
-
-
-      console.log(this.addionalData, 'this.addionalData');
     }, (err) => {
       console.log('from get additional data', err);
     });
@@ -153,7 +144,6 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
       this.editFlag = false;
     }
     if (btn === 'Cancel') {
-      console.log('cancel');
       this.editFlag = false;
     }
   }
@@ -162,11 +152,9 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
     const target = $event.target.textContent;
     if (target === 'Public') {
       this.letsUpdatePublicEmail(true);
-      console.log('public');
     }
     if (target === 'Private') {
       this.letsUpdatePublicEmail(false);
-      console.log('private');
     }
   }
 
@@ -174,9 +162,8 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
     const data = {
       publicEmail: status
     };
-    this.updateEmailSub = this.postService.post('user/update_public_email', data).subscribe((x) => {
-      console.log(x);
-      // todo ===============
+    this.updateEmailSub = this.postService.post('user/update_public_email', data).subscribe((x: {publicEmail: boolean}) => {
+      x.publicEmail = this.emailFlag;
     }, (err) => {
       console.log('from update_public_email data', err);
     });

@@ -71,13 +71,13 @@
 
 
           <div style="display: flex" (click)="changeStatusEmail($event)">
-            <label (click)="emailFlag = false">
-              <input type="radio" name="a" [checked]="!emailFlag" class="cheBox">
-              <span class="pseudocheckbox" [ngStyle]="!emailFlag && {'color': '#54DD96'}">Public</span>
-            </label>
-            <label (click)="emailFlag = true">
+            <label class="hoverPointer">
               <input type="radio" name="a" [checked]="emailFlag" class="cheBox">
-              <span class="pseudocheckbox" [ngStyle]="emailFlag  && {'color': '#54DD96'}">Private</span>
+              <span class="pseudocheckbox" [ngStyle]="emailFlag && {'color': '#54DD96'}">Public</span>
+            </label>
+            <label class="hoverPointer">
+              <input type="radio" name="a" [checked]="!emailFlag" class="cheBox">
+              <span class="pseudocheckbox" [ngStyle]="!emailFlag  && {'color': '#54DD96'}">Private</span>
             </label>
           </div>
 
