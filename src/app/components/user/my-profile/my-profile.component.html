@@ -1,60 +1,141 @@
 <div class="box" *ngIf="userData != undefined">
-    <p class="my_prof">MY PROFILE</p>
-    <div class="my_profile_box">
-        <div class="main_box">
-            <div class="header_box">
-                <img class="avatar" src={{userData.avatar}} />
+  <p class="my_prof">MY PROFILE</p>
+  <div class="my_profile_box">
+    <div class="main_box">
+      <div class="header_box row">
+
+        <div class="ava_block col-12 col-lg-5 flex-column flex-xl-row">
+          <img class="avatar" src={{userData.avatar}}/>
+          <div class="total_box">
+            <div class="rep_title">Reputations</div>
+            <div class="">
+              <div class="totalImg_box">
+                <div class="totalRep_img"></div>
+                <div class="totalRep">65</div>
+              </div>
+              <div class="text_total">Overall</div>
             </div>
-            <div>
-                <div class="edit_box">
-                    <p class="disp_name">Display name</p>
-                    <div class="edit_text">Edit <div class="edit"></div>
-                    </div>
-                </div>
-                <div class="name_box">
-                    <p class="name">{{userData.nickName}}</p>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <p class="disp_name">Email</p>
-                </div>
-                <div class="name_box">
-                    <p class="name">{{userData.email}}</p>
-                </div>
-            </div>
-            <div class="info_box">
-                <div class="info_con" style="padding-right: 3px;">
-                    <p class="disp_name">Location</p>
-                    <select class="option">
-                        <option *ngFor="let loc of location; let i = index" value="{{loc}}">{{loc}}</option>
-                    </select>
-                    <p class="option_text">You'll be able to see Events nearby your location.</p>
-                    <p class="disp_name" style="padding-top: 17px;">Linked account</p>
-                    <div *ngIf="addionalData" style="display: flex">
-                        <div *ngFor="let icon of addionalData.linkedAccounts">
-                            <div class="socialLink" [ngStyle]="getIcon(icon)"></div>
-                        </div>
-                        <div (click)="linkAccount()" class="linkAccount"></div>
-                    </div>
-                    <p class="option_text" style="padding-top: 9px;">You'll be able to login using any of the linked accounts. As a bonus, you'll
-                        receive 10 BET Tokens.</p>
-                </div>
-                <div class="info_con" style="padding-left: 3px;">
-                    <p class="disp_name">Language</p>
-                    <select class="option">
-                        <option *ngFor="let lang of language; let i = index" value="{{lang}}">{{lang}}</option>
-                    </select>
-                    <p class="option_text">You'll be able to see Events in your language.</p>
-                    <div *ngIf="addionalData?.invitedBy != null">
-                        <p class="disp_name" style="padding-top: 17px;">Referrer</p>
-                        <div class="ref_box">
-                            <img src="{{addionalData?.invitedBy.avatar}}" class="ref_avatar" />
-                            <p class="ref_name">{{addionalData?.invitedBy.nickName}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="col-lg-7">
+          <div class="row">
+            <div class="col-6 col-xl-3 rep_card_wrap">
+              <div class="rep_card">
+                <div class="host_img"></div>
+                <div class="rep_count">23</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3 rep_card_wrap">
+              <div class="rep_card">
+                <div class="participant_img"></div>
+                <div class="rep_count">23</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3 rep_card_wrap">
+              <div class="rep_card">
+                <div class="expert_img"></div>
+                <div class="rep_count">23</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3 rep_card_wrap">
+              <div class="rep_card">
+                <div class="advisor_img"></div>
+                <div class="rep_count">23</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div>
+        <div class="edit_box">
+          <p class="disp_name">Display name</p>
+          <div *ngIf="!editFlag" (click)="editClick()" class="edit_text">Edit
+            <div class="edit"></div>
+          </div>
+          <div *ngIf="editFlag" (click)="letsEditName($event)" class="edit_text">
+            <span class="mr-2">Save</span>
+            <span style="color: #FF3232">Cancel</span>
+          </div>
+        </div>
+        <div *ngIf="!editFlag" class="name_box">
+          <p class="name">{{userData.nickName}}</p>
+        </div>
+        <input *ngIf="editFlag" class="name name_box name_box_input" type="text" [(ngModel)]="nameForm">
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <p class="disp_name">Email</p>
+
+
+          <div style="display: flex" (click)="changeStatusEmail($event)">
+            <label class="hoverPointer">
+              <input type="radio" name="a" [checked]="emailFlag" class="cheBox">
+              <span class="pseudocheckbox" [ngStyle]="emailFlag && {'color': '#54DD96'}">Public</span>
+            </label>
+            <label class="hoverPointer">
+              <input type="radio" name="a" [checked]="!emailFlag" class="cheBox">
+              <span class="pseudocheckbox" [ngStyle]="!emailFlag  && {'color': '#54DD96'}">Private</span>
+            </label>
+          </div>
+
+        </div>
+        <div class="name_box">
+          <p class="name">{{userData.email}}</p>
+        </div>
+      </div>
+      <div class="info_box">
+        <div class="info_con" style="padding-right: 3px;">
+          <p class="disp_name">Location</p>
+          <select class="option">
+            <option *ngFor="let loc of location; let i = index" value="{{loc}}">{{loc}}</option>
+          </select>
+          <p class="option_text">You'll be able to see Events nearby your location.</p>
+          <p class="disp_name" style="padding-top: 17px;">Linked account</p>
+          <div *ngIf="addionalData" style="display: flex">
+            <div *ngFor="let icon of addionalData.linkedAccounts">
+              <div class="socialLink" [ngStyle]="getIcon(icon)"></div>
+            </div>
+            <div (click)="linkAccount()" class="linkAccount"></div>
+          </div>
+          <p class="option_text" style="padding-top: 9px;">You'll be able to login using any of the linked accounts. As
+            a bonus, you'll
+            receive 10 BET Tokens.</p>
+        </div>
+        <div class="info_con" style="padding-left: 3px;">
+          <p class="disp_name">Language</p>
+          <select class="option">
+            <option *ngFor="let lang of language; let i = index" value="{{lang}}">{{lang}}</option>
+          </select>
+          <p class="option_text">You'll be able to see Events in your language.</p>
+          <div *ngIf="addionalData?.invitedBy != null">
+            <p class="disp_name" style="padding-top: 17px;">Referrer</p>
+            <div class="ref_box">
+              <img src="{{addionalData?.invitedBy.avatar}}" class="ref_avatar"/>
+              <p class="ref_name">{{addionalData?.invitedBy.nickName}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom_box">
+        <div>
+          <h4>Share my data</h4>
+          <p>
+            By sharing your data with Bettery, most importantly your Reputations, you can access Pro events that have
+            Reputation requirement to join.
+          </p>
+        </div>
+        <div>
+          <div class="pretty p-switch p-fill">
+            <input type="checkbox" checked/>
+            <div class="state p-success">
+              <label></label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

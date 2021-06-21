@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -16,6 +17,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
         RouterModule.forChild([
             { path: 'profile', component: ProfileComponent },
         ]),
+        FormsModule,
     ],
 })
 
