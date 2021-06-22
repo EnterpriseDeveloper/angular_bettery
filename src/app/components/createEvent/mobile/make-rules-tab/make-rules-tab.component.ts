@@ -120,8 +120,8 @@ export class MakeRulesTabComponent implements OnInit, OnDestroy {
       expertsCount: [this.formData?.expertsCount, this.formData?.expertsCountType == 'custom' ? (Validators.compose([Validators.required, Validators.min(1)])) : '']
     });
     this.privateForm = this.formBuilder.group({
-      winner: [this.formData?.winner, Validators.required],
-      losers: [this.formData?.losers, Validators.required],
+      winner: [this.formData?.winner, Validators.compose([Validators.required, Validators.maxLength(32)])],
+      losers: [this.formData?.losers, Validators.compose([Validators.required, Validators.maxLength(32)])],
       privateEndTime: [this.formData?.privateEndTime, Validators.required]
     });
     var monthtext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
