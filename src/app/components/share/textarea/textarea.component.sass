@@ -141,14 +141,16 @@
 
 .fixBordRadius
   padding: 1em
-  padding-right: 95px
+  padding-right: 82px
+  min-height: 48px
+  overflow-y: hidden
 
 .fixBordRadius:focus
   border: none
 
 .fixBordRadius::placeholder
-  font-size: 16px
-  font-weight: bold
+  font-size: 14px
+  font-weight: 400
 
 .tip
   font-family: 'Open Sans', sans-serif
@@ -157,7 +159,7 @@
   font-size: 14px
   line-height: 19px
   color: #FFFFFF
-  width: 90px
+  width: 77px
   background: rgba(50, 58, 64, 0.96)
   border-top-right-radius: 8px
   border-bottom-right-radius: 8px
@@ -178,7 +180,7 @@
   justify-content: flex-end
   align-items: center
 
-.privTitle
+.privTitle,.privTitleDes
   font-style: normal
   font-weight: bold
   font-size: 14px
@@ -188,8 +190,20 @@
   padding-top: 40px
   padding-bottom: 10px
 
+.privTitleDes
+  color: #0B1511
+
 .limitTextPriv
   display: flex
   align-items: flex-end
   padding-bottom: 6px
   padding-right: 1px
+
+.tipDes
+  color: #7D7D7D
+  background: #FFFFFF
+  font-size: 12px
+  font-weight: 600
+  border-top-right-radius: 8px
+  border-bottom-right-radius: 8px
+  border: 2px solid #CBCBCB
