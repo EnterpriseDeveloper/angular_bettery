@@ -110,16 +110,23 @@
   </div>
   <div *ngIf="formData.eventType === 'private'">
     <form [formGroup]="privateForm">
-      <div class="cupInfo">
-        <p class="name cupName">What to win or lose</p>
-      </div>
-      <div class="form-group">
+
+      <div class="form-group mb-0">
         <div class="inputBox">
-          <input type="text" formControlName="winner" class="answer fixBordRadius" id="winner"
-            placeholder="Get free dinner" [ngClass]="{ 'is_invalid': submitted && priv.winner.errors }">
-          <div class="tip">
-            <p class="posOne">Winners</p>
-          </div>
+
+          <app-textarea style="width: 100%"
+                        [status]="'privateBet'"
+                        [isMobile]="false"
+                        [questionForm]="privateForm"
+                        [limit]="32"
+                        [limitEnd]="60"
+                        [submitted]="submitted"
+                        [title]="'Get free dinner'"
+                        [controlName]="'winner'"
+                        [nickName]="'Winner'"
+                        [titleWhatToWin]="'What to win or lose'"
+          ></app-textarea>
+
         </div>
         <div *ngIf="submitted && priv.winner.errors">
           <small *ngIf="priv.winner.errors.required" class="form-text quize_validation_error">Winners is
@@ -128,11 +135,19 @@
       </div>
       <div class="form-group">
         <div class="inputBox">
-          <input type="text" formControlName="losers" class="answer fixBordRadius" id="losers"
-            placeholder="Share the bill" [ngClass]="{ 'is_invalid': submitted && priv.losers.errors }">
-          <div class="tip">
-            <p class="posTwo">Losers</p>
-          </div>
+
+          <app-textarea style="width: 100%"
+                        [status]="'privateBet'"
+                        [isMobile]="false"
+                        [questionForm]="privateForm"
+                        [limit]="32"
+                        [limitEnd]="60"
+                        [submitted]="submitted"
+                        [title]="'Share the bill'"
+                        [controlName]="'losers'"
+                        [nickName]="'Losers'"
+          ></app-textarea>
+
         </div>
         <div *ngIf="submitted && priv.losers.errors">
           <small *ngIf="priv.losers.errors.required" class="form-text quize_validation_error">Losers is

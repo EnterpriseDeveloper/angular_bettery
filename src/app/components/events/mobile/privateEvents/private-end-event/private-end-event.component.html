@@ -38,7 +38,7 @@
         <h4 *ngIf="award == 'none'">Winners</h4>
       </div>
       <div>
-        <p style="text-transform: uppercase; font-size: 16px;">{{eventData?.winner}}</p>
+        <p style="text-transform: uppercase; overflow-wrap: anywhere; font-size: 16px;">{{eventData?.winner}}</p>
       </div>
       <div class="people">
         <div *ngFor="let winner of winners">

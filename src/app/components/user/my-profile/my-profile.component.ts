@@ -33,6 +33,11 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   emailFlag: boolean;
   nameForm: string;
 
+  hostRep: number;
+  expertRep: number;
+  playerRep: number;
+  advisorRep: number;
+
   constructor(
     private store: Store<AppState>,
     private postService: PostService,
@@ -54,6 +59,12 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x) => {
       this.addionalData = x;
+      console.log(x);
+      this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
+      this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
+      this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;
+      this.playerRep = this.addionalData.playerReputPoins === null ? 0 : this.addionalData.playerReputPoins;
+
       if (this.addionalData.publicEmail == null) {
         this.letsUpdatePublicEmail(true);
       } else {
