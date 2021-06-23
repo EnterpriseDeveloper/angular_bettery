@@ -71,10 +71,11 @@
             <div class="twitch-img"></div>
           </div>
         </div>
-        <div class="col-6 col-lg-3 wrapCard disabled">
+        <div class="col-6 col-lg-3 wrapCard disabled" style="position: relative">
           <div class="bg-apple card w-100">
             <div class="apple-img"></div>
           </div>
+          <div class="comingSoonModal">Coming Soon</div>
         </div>
         <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')"
           class="col-6 col-lg-3 wrapCard">
