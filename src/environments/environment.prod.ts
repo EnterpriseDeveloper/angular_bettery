@@ -8,7 +8,7 @@ export const environment = {
   maticId: 137,
   etherId: 1,
   torusNetwork: "mainnet",
-  torusVerifierId: "betteryAuth0Prod",
+  torusVerifierId: "bettery-auth0-prod",
   etherUrl: "https://mainnet.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
   gasStationAPI: "https://gasstation-mainnet.matic.network"
 };
