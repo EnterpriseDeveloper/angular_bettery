@@ -268,7 +268,6 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.disabledButton = true;
       let data = {
-        userId: this.userId,
         roomId: Number(this.roomData?.roomId)
       };
       this.joinRoomSub = this.postService.post('room/join', data).subscribe((x) => {

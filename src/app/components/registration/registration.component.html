@@ -1,8 +1,8 @@
 <div *ngIf="!spinner">
   <div *ngIf="!openSpinner">
-    <div  style="padding: 0 40px; border: none">
+    <div style="padding: 0 40px; border: none">
       <div>
-        <button type="button" class=" soonClose close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
         <div class="main-img"></div>
@@ -11,14 +11,140 @@
         <h3 class="modal-title">Sign-up to Bettery</h3>
       </div>
       <div>
-        <p class="modal-text">Get free 10 BET Tokens, enjoy betting with friends to win pizza, and grow your Reputations to earn big!</p>
+        <p class="modal-text">Get free 10 BET Tokens, enjoy betting with friends to win pizza, and grow your Reputations
+          to earn big!</p>
       </div>
       <div class="modal-two-btn">
-        <button class="btn-1" (click)="loginWithTorus()">Login or Register</button>
+        <button class="btn-1" (click)="openSpinner = true">Login or Register</button>
       </div>
     </div>
   </div>
 </div>
+
+<div *ngIf="openSpinner && alreadyRegister == undefined" style="padding: 24px 0">
+  <div>
+    <button type="button" class=" soonClose close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="title-reg">{{!linkUser ? 'LOGIN or SIGN UP' : 'ADD SOCIAL MEDIA ACCOUNT'}}</div>
+  </div>
+
+  <div style="padding: 16px 24px">
+    <div class="hr"></div>
+  </div>
+
+  <div style="padding: 0 24px">
+    <div class="container">
+      <div class="row">
+        <div [ngClass]='{disabled: linVerification("google")}' (click)="loginWithTorus('google')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-google card w-100">
+            <div class="google-img"></div>
+          </div>
+        </div>
+        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithTorus('facebook')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-facebook card w-100">
+            <div class="facebook-img"></div>
+          </div>
+        </div>
+        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithTorus('Redit')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-Redit card w-100">
+            <div class="Redit-img"></div>
+          </div>
+        </div>
+        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithTorus('discord')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-discord card w-100">
+            <div class="discord-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithTorus('twitch')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-twitch card w-100">
+            <div class="twitch-img"></div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3 wrapCard disabled">
+          <div class="bg-apple card w-100">
+            <div class="apple-img"></div>
+          </div>
+        </div>
+        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-linkedin card w-100">
+            <div class="linkedin-img"></div>
+          </div>
+        </div>
+        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithTorus('twitter')"
+          class="col-6 col-lg-3 wrapCard">
+          <div class="bg-twitter card w-100">
+            <div class="twitter-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!linkUser">
+    <div style="padding: 16px 24px; position: relative">
+      <div class="hr"></div>
+      <div class="or">OR</div>
+    </div>
+
+    <div style="padding: 10px 24px">
+      <button (click)="loginWithTorus('email')" class="btn-with-email" type="submit">
+        CONTINUE with email
+      </button>
+    </div>
+
+    <div style="padding: 16px 24px">
+      <div class="hr"></div>
+    </div>
+    <div>
+      <p class="text-reg">
+        Account comes with a secure private wallet powered by <a href="https://toruswallet.io/"
+          target="_blank">Torus</a> to store and withdraw earnings easily.
+      </p>
+    </div>
+    <div class="container" style="padding-top: 14px">
+      <div class="row">
+        <div class="link-left col-12 col-lg-6"><a href="" routerLink="/privacy-policy" target="_blank">Bettery Privacy
+            Policy</a></div>
+        <div class="link-right col-12 col-lg-6"><a href="https://docs.tor.us/legal/terms-and-conditions"
+            target="_blank">Torus Terms of Service</a></div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="linkUser">
+    <div class="hr" style="margin: 17px 30px;"></div>
+    <div class="text-reg">
+      <p>You'll be able to login using any of the linked accounts. As a bonus, you'll receive 10 BET.</p>
+      <div><a style="color: #54DD96;" href="" routerLink="/privacy-policy" target="_blank">Bettery Privacy
+          Policy</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="already_regist_box" *ngIf="alreadyRegister != undefined">
+  <button type="button" class=" soonClose close" aria-label="Close" (click)="alreadyRegistCloseModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="title-reg padding_reg">EMAIL ALREADY EXISTS</div>
+  <div class="already_regist_text"><b>{{alreadyRegister.email}}</b> is already registered with Bettery. Click to login
+    using one of these platforms:</div>
+  <div class="already_regist_icon_box">
+    <div class="wrapCard icon_width" *ngFor="let link of alreadyRegister.linkedAccounts">
+      <div class="bg-{{link}} card w-100" (click)="loginWithTorus(link)">
+        <div class="{{link}}-img"></div>
+      </div>
+    </div>
+  </div>
+  <div class="already_regist_button"><span (click)="goBack()">Nah, return</span></div>
+</div>
 <app-spinner-loading *ngIf="spinner"></app-spinner-loading>
-
-

@@ -75,11 +75,10 @@ export class RoomsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getUsersRoomById(id: number) {
+  getUsersRoomById() {
     const path = 'room/get_by_user_id';
-    const data = {id};
 
-    this.roomById = this.postService.post(path, data).subscribe(list => {
+    this.roomById = this.getService.get(path).subscribe(list => {
       this.usersRoom = list;
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
       this.spinner = true;
@@ -191,10 +190,10 @@ export class RoomsComponent implements OnInit, OnDestroy {
       if (x.length !== 0) {
         this.userData = x[0];
         if (this.btnMiddleActive === 'showUsersRoom') {
-          this.getUsersRoomById(this.userData._id);
+          this.getUsersRoomById();
         }
         if (this.btnMiddleActive === 'joinedRoom') {
-          this.getJoinedUsersRoomById(this.userData._id);
+          this.getJoinedUsersRoomById();
         }
       } else {
         this.userData = undefined;
@@ -212,7 +211,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.startLength = 0;
     this.showLength = 8;
     if (this.userData) {
-      this.getUsersRoomById(this.userData._id);
+      this.getUsersRoomById();
       this.btnMiddleActive = 'showUsersRoom';
     } else {
       this.btnMiddleActive = 'showUsersRoom';
@@ -250,7 +249,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.startLength = 0;
     this.showLength = 8;
     if (this.userData) {
-      this.getJoinedUsersRoomById(this.userData._id);
+      this.getJoinedUsersRoomById();
       this.btnMiddleActive = 'joinedRoom';
     } else {
       this.btnMiddleActive = 'joinedRoom';
@@ -260,11 +259,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getJoinedUsersRoomById(id) {
+  getJoinedUsersRoomById() {
     const path = 'room/joined';
-    const data = {id};
-
-    this.joinedRoomSub = this.postService.post(path, data).subscribe(list => {
+    this.joinedRoomSub = this.getService.get(path).subscribe(list => {
       this.usersRoom = list;
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
       this.spinner = true;

@@ -63,7 +63,6 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
     this.spinnerLoading = true;
 
     this.eventData = {
-      host: this.host[0]._id,
       prodDev: environment.production,
       answers: this.formData.answers.map((x) => {
         return x.name

@@ -47,5 +47,8 @@ Thumbs.db
 /loom
 
 # Mobile
-/www
 /android
+/www
+/resources
+/plugins
+/platforms

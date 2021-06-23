@@ -6,12 +6,15 @@ export const environment = {
   production: false,
   locales: ['en', 'vn'],
   defaultLocale: 'en',
-  apiUrl: 'https://13.229.200.135',
+  apiUrl: 'https://apitest.bettery.io',
   biconomy: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
   maticUrl: "https://matic-mumbai.chainstacklabs.com",
   maticId: 80001,
   etherId: 5,
-  torusHost: "goerli"
+  torusNetwork: "testnet",
+  torusVerifierId: "betteryAuth0",
+  etherUrl: "https://goerli.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
+  gasStationAPI: "https://gasstation-mumbai.matic.today"
 };
 
 /*

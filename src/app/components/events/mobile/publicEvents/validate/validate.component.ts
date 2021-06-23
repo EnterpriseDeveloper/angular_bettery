@@ -126,7 +126,6 @@ export class ValidateComponent implements OnInit, OnDestroy {
     let data = {
       event_id: dataAnswer.id,
       answer: _whichAnswer,
-      userId: this.userData._id
     }
     this.postSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.errorMessage = undefined;

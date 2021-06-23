@@ -1,22 +1,22 @@
-import {Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../app.state';
-import {Coins} from '../../../models/Coins.model';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.state';
+import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
 import maticInit from '../../../contract/maticInit.js';
-import {ClipboardService} from 'ngx-clipboard';
+import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';
 import web3Obj from '../../../helpers/torus';
-import {Subscription} from 'rxjs';
-import {User} from '../../../models/User.model';
-import {RegistrationComponent} from '../../registration/registration.component';
-import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
-import {SwapBetComponent} from '../swap-bet/swap-bet.component';
-import {PostService} from '../../../services/post.service';
+import { Subscription } from 'rxjs';
+import { User } from '../../../models/User.model';
+import { RegistrationComponent } from '../../registration/registration.component';
+import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component';
+import { SwapBetComponent } from '../swap-bet/swap-bet.component';
+import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
 
 
@@ -26,7 +26,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
-  @ViewChild('insideElement', {static: false}) insideElement;
+  @ViewChild('insideElement', { static: false }) insideElement;
 
   nickName: string = undefined;
   web3: Web3 | undefined = null;
@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
     private postService: PostService
-    ) {
+  ) {
 
     this.detectPath();
 
@@ -132,7 +132,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async updateBalance() {
-    let web3 = new Web3(this.verifier === 'metamask' ? window.web3.currentProvider : web3Obj.torus.provider);
+    let web3 = new Web3();
 
     let matic = new maticInit(this.verifier);
     let BTYToken = await matic.getBTYTokenBalance();
@@ -161,7 +161,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     const data = {
       bty: bty,
       bet: bet,
-      id: this.userId
     };
 
     this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
@@ -171,7 +170,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     this.updateBalance();
   }
 
@@ -184,7 +183,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async logOut() {
     if (this.userWallet !== undefined && this.verifier !== 'metamask') {
-      await web3Obj.torus.cleanUp();
+      await web3Obj.logOut();
     }
     this.store.dispatch(new UserActions.RemoveUser(0));
     this.nickName = undefined;
@@ -193,7 +192,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async loginWithTorus() {
-    const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
+    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
     modalRef.componentInstance.openSpinner = true;
   }
 
@@ -227,7 +226,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openModal(contentModal) {
-    this.modalService.open(contentModal, {size: 'sm', centered: true});
+    this.modalService.open(contentModal, { size: 'sm', centered: true });
     this.openNavBar = false;
   }
 
@@ -241,7 +240,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   openDeposit(str: string) {
     this.updateBalance();
-    const modalRef = this.modalService.open(ChainTransferComponent, {centered: true});
+    const modalRef = this.modalService.open(ChainTransferComponent, { centered: true });
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
@@ -253,7 +252,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   openSwapBetToBTY() {
     this.updateBalance();
-    const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
+    const modalRef = this.modalService.open(SwapBetComponent, { centered: true });
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.userWallet = this.userWallet;
     this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {

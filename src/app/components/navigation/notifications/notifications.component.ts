@@ -4,6 +4,7 @@ import { PostService } from '../../../services/post.service';
 import _ from 'lodash';
 import {NotificationModel} from "../../../models/Notification.model";
 import {SessionStorageService} from '../../rooms/sessionStorage-service/session-storage.service';
+import {GetService} from '../../../services/get.service';
 
 @Component({
   selector: 'notifications',
@@ -22,6 +23,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   constructor(
     private postService: PostService,
+    private getService: GetService,
     private eRef: ElementRef,
     private sessionStorageService: SessionStorageService
   ) { }
@@ -38,10 +40,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   getDataFromDb() {
-    let data = {
-      userId: this.userId
-    }
-    this.notifSub = this.postService.post('notification/get_by_user_id', data).subscribe((x: NotificationModel[]) => {
+    this.notifSub = this.getService.get('notification/get_by_user_id').subscribe((x: NotificationModel[]) => {
       this.notifData = x;
       let index = _.findIndex(x, (o) => { return o.read == false });
       this.colocol = index == -1 ? false : true;
@@ -82,7 +81,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this.notifData.forEach((x: any) => {
       id.push(x.id);
     })
-
     let data = {
       id: id,
     }

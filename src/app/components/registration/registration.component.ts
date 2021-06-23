@@ -1,5 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, HostListener} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/User.model';
 import { AppState } from '../../app.state';
@@ -19,9 +18,13 @@ import biconomyInit from '../../../app/contract/biconomy';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.sass']
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnDestroy {
   @Input() openSpinner = false;
-  registerForm: FormGroup;
+  @Input() linkUser = false;
+  @Input() linkedAccouns = [];
+  @Output() linkedDone = new EventEmitter<Object[]>();
+  @Output() closedWindow = new EventEmitter();
+
   submitted: boolean = false;
   registerError: any = undefined;
   web3: Web3 | undefined = null;
@@ -29,96 +32,142 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   userWallet: string = undefined;
   validateSubscribe: Subscription;
   torusRegistSub: Subscription;
+  linkSub: Subscription;
   spinner: boolean;
   saveUserLocStorage = [];
+  alreadyRegister = undefined;
 
   constructor(
-    private formBuilder: FormBuilder,
     private store: Store<AppState>,
     private http: PostService,
     private router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
-  ) {
-  }
-
-  ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      nickName: ['', Validators.minLength(6)],
-      email: ['', [Validators.email, Validators.required]]
-    });
-    if (this.openSpinner === true) {
-      this.loginWithTorus();
-    }
-  }
+  ) { }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-      this.activeModal.close();
+    this.activeModal.close();
   }
 
-  async loginWithTorus() {
-    this.spinner = true;
-    // this.activeModal.dismiss('Cross click')
-    await biconomyInit();
-    try {
-      await web3Obj.initialize();
-      this.setTorusInfoToDB();
-    } catch (error) {
-      this.spinner = false;
-      this.closeModal();
-      await web3Obj.torus.cleanUp()
-      console.error(error);
+  async loginWithTorus(selectedVerifier) {
+    console.log(selectedVerifier)
+    if (this.linkUser) {
+      if (!this.linVerification(selectedVerifier)) {
+        this.spinner = true;
+        let { data, err } = await web3Obj.linkUser(selectedVerifier);
+        if (!err) {
+          await this.linkAccount(data);
+        } else {
+          this.logOut(err);
+        }
+      }
+    } else {
+      this.spinner = true;
+      await biconomyInit();
+      let login = await web3Obj.login(selectedVerifier);
+      if (login == null) {
+        this.setTorusInfoToDB();
+      } else {
+        this.logOut(login);
+      }
     }
+  }
+
+  async logOut(x) {
+    if (JSON.stringify(x).search("user closed popup") != -1) {
+      this.closedWindow.next();
+    }
+    this.spinner = false;
+    this.closeModal();
+    await web3Obj.logOut();
+  }
+
+  async linkAccount(data) {
+    console.log(data);
+    let post = {
+      verifierId: data.userInfo.verifierId
+    }
+    this.linkSub = this.http.post("user/link_account", post).subscribe((x) => {
+      this.linkedDone.next([{ status: "done" }])
+      this.activeModal.dismiss('Cross click');
+      this.spinner = false;
+    }, (err) => {
+      console.log(err)
+    })
+  }
+
+  linVerification(x) {
+    let z = x == 'google-oauth2' ? 'google' : x;
+    return this.linkedAccouns.includes(z);
   }
 
   async setTorusInfoToDB() {
-    let userInfo = await web3Obj.torus.getUserInfo('');
-    let userWallet = (await web3Obj.web3.eth.getAccounts())[0];
+    let userInfo = web3Obj.loginDetails;
+    if (userInfo != null) {
+      console.log(userInfo);
 
-    this.localStoreUser(userInfo);
+      this.localStoreUser(userInfo.userInfo);
 
-    let refId = sessionStorage.getItem('bettery_ref')
+      let refId = sessionStorage.getItem('bettery_ref')
 
-    let data: Object = {
-      _id: null,
-      wallet: userWallet,
-      nickName: userInfo.name,
-      email: userInfo.email,
-      avatar: userInfo.profileImage,
-      verifier: userInfo.verifier,
-      verifierId: userInfo.verifierId,
-      refId: refId == null ? 'undefined' : refId
-    };
-    this.torusRegistSub = this.http.post('user/torus_regist', data)
-      .subscribe(
-        (x: User) => {
-          this.addUser(
-            x.email,
-            x.nickName,
-            x.wallet,
-            x.listHostEvents,
-            x.listParticipantEvents,
-            x.listValidatorEvents,
-            x.historyTransaction,
-            x.avatar,
-            x._id,
-            x.verifier
-          );
-          this.spinner = false;
-        }, async (err) => {
-          this.closeModal();
-          this.spinner = false;
-          await web3Obj.torus.cleanUp()
-          console.log(err);
-        });
+      let data: Object = {
+        _id: null,
+        wallet: userInfo.publicAddress,
+        nickName: userInfo.userInfo.name,
+        email: userInfo.userInfo.email,
+        avatar: userInfo.userInfo.profileImage,
+        verifier: userInfo.userInfo.typeOfLogin,
+        verifierId: userInfo.userInfo.verifierId,
+        refId: refId == null ? 'undefined' : refId,
+        accessToken: userInfo.userInfo.accessToken,
+      };
+
+      this.torusRegistSub = this.http.post('user/torus_regist', data)
+        .subscribe(
+          (x: User) => {
+            this.addUser(
+              x.email,
+              x.nickName,
+              x.wallet,
+              x.listHostEvents,
+              x.listParticipantEvents,
+              x.listValidatorEvents,
+              x.historyTransaction,
+              x.avatar,
+              x._id,
+              x.verifier,
+              x.sessionToken,
+              x.verifierId,
+              x.accessToken = userInfo.userInfo.accessToken
+            );
+            this.spinner = false;
+            this.alreadyRegister = undefined;
+          }, async (err) => {
+            if (err.status == 302) {
+              this.alreadyRegister = err.error;
+              this.spinner = false;
+            } else {
+              this.activeModal.dismiss('Cross click');
+              this.spinner = false;
+              console.log(err);
+            }
+          });
+    }
   }
+
+  goBack() {
+    this.alreadyRegister = undefined;
+  }
+
+  alreadyRegistCloseModal() {
+    web3Obj.logOut();
+    this.closeModal();
+  }
+
 
   closeModal() {
+    this.closedWindow.next();
     this.activeModal.dismiss('Cross click');
-  }
-
-  get f() {
-    return this.registerForm.controls;
   }
 
   addUser(
@@ -131,7 +180,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     historyTransaction: Object,
     avatar: string,
     _id: number,
-    verifier: string
+    verifier: string,
+    sessionToken: string,
+    verifierId: string,
+    accessToken: string
   ) {
 
     this.store.dispatch(new UserActions.AddUser({
@@ -144,16 +196,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       listValidatorEvents: listValidatorEvents,
       historyTransaction: historyTransaction,
       avatar: avatar,
-      verifier: verifier
+      verifier: verifier,
+      sessionToken: sessionToken,
+      verifierId: verifierId,
+      accessToken: accessToken
     }));
-    this.onReset();
-  }
-
-
-  onReset() {
     this.submitted = false;
-    this.registerForm.reset();
-    this.closeModal();
+    this.activeModal.dismiss('Cross click');
   }
 
   localStoreUser(userInfo): void {
@@ -173,6 +222,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     if (this.torusRegistSub) {
       this.torusRegistSub.unsubscribe();
     }
+    if (this.linkSub) {
+      this.linkSub.unsubscribe();
+    }
   }
-
 }

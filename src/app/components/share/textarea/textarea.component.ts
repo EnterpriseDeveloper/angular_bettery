@@ -7,10 +7,12 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, V
 })
 export class TextareaComponent implements OnInit {
   @ViewChild('textarea') textarea: ElementRef;
+  @ViewChild('private') private: ElementRef;
   @ViewChildren('answers') answers: QueryList<any>;
   isLimit: boolean;
   isDuplicate: boolean;
   @Input() questionForm;
+  @Input() titleWhatToWin: string;
   @Input() submitted: boolean;
   @Input() status: string;
   @Input() isMobile: boolean;
@@ -40,6 +42,9 @@ export class TextareaComponent implements OnInit {
     if (this.status == 'multi') {
       this.textareaGrowAnswer();
     }
+    if (this.status == 'privateBet') {
+      this.textareaGrowPrivate();
+    }
   }
 
   limitError(param, i) {
@@ -52,6 +57,14 @@ export class TextareaComponent implements OnInit {
     }
     if (param == 'roomName') {
       const length = this.f.roomName.value.length;
+      this.isLimit = length >= 26;
+    }
+    if (param == 'winner') {
+      const length = this.f.winner.value.length;
+      this.isLimit = length >= 26;
+    }
+    if (param == 'losers') {
+      const length = this.f.losers.value.length;
       this.isLimit = length >= 26;
     }
   }
@@ -69,6 +82,12 @@ export class TextareaComponent implements OnInit {
   textareaGrowAnswer(): void {
     if (this.answers) {
       this.calculateRows(this.answers.first);
+    }
+  }
+
+  textareaGrowPrivate(): void {
+    if (this.private) {
+      this.calculateRows(this.private);
     }
   }
 

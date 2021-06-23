@@ -82,5 +82,48 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="status == 'privateBet'" [ngStyle]="!titleWhatToWin && !isLimit ? {'margin-top': '14px'} : {} ">
+    <div class="lableBox" [ngClass]="titleWhatToWin ? 'lableBox' : 'lableBoxPriv'">
+      <div *ngIf="titleWhatToWin" [ngClass]="isMobile ? 'privTitle' : 'privTitleDes'">{{titleWhatToWin}}</div>
+      <div class="limitText limitTextPriv" [ngClass]="isMobile && 'limitText-mobile'" *ngIf="isLimit">
+          <span
+            [ngStyle]="controlName == 'winner' ? colorError(f.winner.value.length, (limit - 5),limit) : colorError(f.losers.value.length, (limit - 5),limit)">
+            {{controlName == 'winner' ? f.winner.value.length : f.losers.value.length}}
+            /</span> {{limit}}
+      </div>
+    </div>
+    <div style="position: relative">
+      <div style="position: relative" [ngClass]="isMobile && 'questionTextarea-mobile'">
+        <div class="__htmlarea questionTextarea __answer fixBordRadius"
+             [ngClass]="isMobile && '__htmlarea-mobile'" style="font-size: 12px;">
+          <span>{{controlName == 'winner' ? letsSlice(f.winner.value, 0, limit) : letsSlice(f.losers.value, 0, limit)}}</span>
+          <span *ngIf="f.winner.value.length > limit || f.losers.value.length > limit "
+                class="spanBg" style="font-size: 12px;"
+                [ngClass]="isMobile && 'spanBg-mobile'">{{controlName == 'winner' ? letsSlice(f?.winner.value, limit, limitEnd) : letsSlice(f?.losers.value, limit, limitEnd)}}</span>
+        </div>
+
+        <textarea
+          [maxlength]="limitEnd"
+          (keydown)="limitError(controlName, null)"
+          #private
+          class="__textarea questionTextarea __answer placeH fixBordRadius"
+          formControlName="{{controlName}}"
+          rows="1"
+          id="private"
+          (input)="textareaGrowPrivate()"
+          placeholder="{{title}}"
+          [ngClass]="titleWhatToWin ? { 'is_invalid': submitted && f.winner.errors || submitted && f.winner.value.length > limit} : { 'is_invalid': submitted && f.losers.errors || submitted && f.losers.value.length > limit}"
+          style="font-size: 16px; border: none"
+          [ngStyle]="isMobile ? {'font-size': '16px', 'border': 'none'} : {'font-size': '12px', 'border': '2px solid transparent'}"
+        ></textarea>
+      </div>
+
+      <div class="tip" [ngClass]="!isMobile && 'tipDes'">
+        <p class="posOne m-0">{{nickName}}</p>
+      </div>
+    </div>
+
+  </div>
 </div>
 

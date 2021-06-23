@@ -27,7 +27,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/.htaccess",
-              "src/serviceworker/redirect.html",
+              "src/serviceworker",
               {
                 "glob": "**/*",
                 "input": "src/.well-known",
@@ -37,9 +37,6 @@
             "styles": [
               "src/styles.sass",
               "src/assets/pretty-checkbox.min.css"
-            ],
-            "scripts": [
-              "src/serviceworker/sw.js"
             ]
           },
           "configurations": {
