@@ -49,3 +49,6 @@ Thumbs.db
 # Mobile
 /android
 /www
+/resources
+/plugins
+/platforms
