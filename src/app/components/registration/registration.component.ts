@@ -89,7 +89,7 @@ export class RegistrationComponent implements OnDestroy {
     }
     this.linkSub = this.http.post("user/link_account", post).subscribe((x) => {
       this.linkedDone.next([{ status: "done" }])
-      this.closeModal();
+      this.activeModal.dismiss('Cross click');
       this.spinner = false;
     }, (err) => {
       console.log(err)
@@ -147,7 +147,7 @@ export class RegistrationComponent implements OnDestroy {
               this.alreadyRegister = err.error;
               this.spinner = false;
             } else {
-              this.closeModal();
+              this.activeModal.dismiss('Cross click');
               this.spinner = false;
               console.log(err);
             }
@@ -201,13 +201,8 @@ export class RegistrationComponent implements OnDestroy {
       verifierId: verifierId,
       accessToken: accessToken
     }));
-    this.onReset();
-  }
-
-
-  onReset() {
     this.submitted = false;
-    this.closeModal();
+    this.activeModal.dismiss('Cross click');
   }
 
   localStoreUser(userInfo): void {

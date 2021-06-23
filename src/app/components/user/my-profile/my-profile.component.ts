@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {PostService} from '../../../services/post.service';
@@ -17,7 +17,7 @@ import * as UserActions from '../../../actions/user.actions';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.sass']
 })
-export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
+export class MyProfileComponent implements OnChanges, OnDestroy {
   getAddUserDataSub: Subscription;
   postSub: Subscription;
   updateSub: Subscription;
@@ -33,25 +33,21 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   emailFlag: boolean;
   nameForm: string;
 
-  hostRep: number;
-  expertRep: number;
-  playerRep: number;
-  advisorRep: number;
+  hostRep: number = 0;
+  expertRep: number = 0;
+  playerRep: number = 0;
+  advisorRep: number = 0;
 
   constructor(
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
-  ) {
-  }
-
-  ngOnInit() {
-    this.nameForm = this.userData.nickName;
-  }
+  ) {}
 
   ngOnChanges(changes) {
     if (changes['userData'].currentValue) {
       let id = changes['userData'].currentValue._id;
+      this.nameForm = changes['userData'].currentValue.nickName;
       this.getInfo(id);
     }
   }
@@ -59,7 +55,6 @@ export class MyProfileComponent implements OnInit, OnChanges, OnDestroy {
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x) => {
       this.addionalData = x;
-      console.log(x);
       this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
       this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
       this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;

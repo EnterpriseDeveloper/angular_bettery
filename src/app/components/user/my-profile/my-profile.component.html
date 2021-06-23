@@ -5,7 +5,7 @@
       <div class="header_box row">
 
         <div class="ava_block col-12 col-lg-5 flex-column flex-xl-row">
-          <img class="avatar" src={{userData.avatar}}/>
+          <img class="avatar" src={{userData?.avatar}}/>
           <div class="total_box">
             <div class="rep_title">Reputations</div>
             <div class="">
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div *ngIf="!editFlag" class="name_box">
-          <p class="name">{{userData.nickName}}</p>
+          <p class="name">{{userData?.nickName}}</p>
         </div>
         <input *ngIf="editFlag" class="name name_box name_box_input" type="text" [(ngModel)]="nameForm">
       </div>
@@ -83,7 +83,7 @@
 
         </div>
         <div class="name_box">
-          <p class="name">{{userData.email}}</p>
+          <p class="name">{{userData?.email}}</p>
         </div>
       </div>
       <div class="info_box">
