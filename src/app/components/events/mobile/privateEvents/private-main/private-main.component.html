@@ -108,12 +108,8 @@
             <div>
               <div class="winner_get">
                 <div class="winner_get_left">
-                  <div class="winner_get_left_top">WINNERS:</div>
-                  <div>LOSERS:</div>
-                </div>
-                <div class="winner_get_right">
-                  <div class="winner_get_right_top">{{data?.winner}}</div>
-                  <div class="winner_get_right_bottom">{{data?.loser}}</div>
+                  <div class="winner_get_left_top"><span>WINNERS:</span> <span class="winner_get_right_top"> {{data?.winner}}</span></div>
+                  <div style="display: flex; justify-content: space-between"><span>LOSERS:</span> <span class="winner_get_right_bottom"> {{data?.loser}}</span></div>
                 </div>
               </div>
             </div>
