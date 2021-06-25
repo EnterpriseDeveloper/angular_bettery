@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   newCreateEvent = '';
   typedCreateEvent = '';
   switchLang = 'en';
-  topQuestions = EN.HEADER.TOP_QUESTIONS;
+  topQuestions = ["TEST"];
   scrollHideMenu: boolean;
   styleHideMenu = true;
   flagMenu = false;
@@ -80,11 +80,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     if (this.selectedLanguage === 'vn') {
       this.switchLang = 'vn';
-      this.topQuestions = VN.HEADER.TOP_QUESTIONS;
+   //   this.topQuestions = VN.HEADER.TOP_QUESTIONS;
     }
     if (this.selectedLanguage === 'en') {
       this.switchLang = 'en';
-      this.topQuestions = EN.HEADER.TOP_QUESTIONS;
+    //  this.topQuestions = EN.HEADER.TOP_QUESTIONS;
     }
   }
 
