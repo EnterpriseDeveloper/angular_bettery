@@ -8,7 +8,7 @@ export const environment = {
   defaultLocale: 'en',
   apiUrl: 'https://apitest.bettery.io',
   biconomy: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
-  maticUrl: "https://matic-mumbai.chainstacklabs.com",
+  maticUrl: "https://competent-panini:demise-sphere-refuse-spoils-down-fiber@nd-425-039-881.p2pify.com",
   maticId: 80001,
   etherId: 5,
   torusNetwork: "testnet",
