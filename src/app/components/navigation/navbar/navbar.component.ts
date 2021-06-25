@@ -4,7 +4,7 @@ import { AppState } from '../../../app.state';
 import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
-import maticInit from '../../../contract/maticInit.js';
+import maticInit from '../../../contract/maticInit';
 import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
@@ -203,13 +203,13 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   @HostListener('document:click', ['$event'])
   protected onDocumentClick($event: MouseEvent) {
-      if (this.insideElement) {
-        if (this.insideElement.nativeElement.contains($event.target)) {
-          return;
-        }
-        this.openNavBar = false;
+    if (this.insideElement) {
+      if (this.insideElement.nativeElement.contains($event.target)) {
+        return;
       }
+      this.openNavBar = false;
     }
+  }
 
   openWallet() {
     web3Obj.torus.showWallet('home');

@@ -1,18 +1,18 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {TranslateService} from '@ngx-translate/core';
-import {Subscription} from 'rxjs';
-import {NgxTypedJsComponent} from 'ngx-typed-js';
-import {Store} from '@ngrx/store';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { NgxTypedJsComponent } from 'ngx-typed-js';
+import { Store } from '@ngrx/store';
 
-import {formDataAction} from '../../actions/newEvent.actions';
-import {environment} from '../../../environments/environment';
-import * as EN from '../../../assets/locale/en.json';
-import * as VN from '../../../assets/locale/vn.json';
-import {PostService} from '../../services/post.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {EventsTemplatesDesktopComponent} from '../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
-import {SessionStorageService} from '../rooms/sessionStorage-service/session-storage.service';
+import { formDataAction } from '../../actions/newEvent.actions';
+import { environment } from '../../../environments/environment';
+import EN from '../../../assets/locale/en.json';
+import VN from '../../../assets/locale/vn.json';
+import { PostService } from '../../services/post.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EventsTemplatesDesktopComponent } from '../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
+import { SessionStorageService } from '../rooms/sessionStorage-service/session-storage.service';
 
 @Component({
   selector: 'home',
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   newCreateEvent = '';
   typedCreateEvent = '';
   switchLang = 'en';
-  topQuestions = EN.HEADER.TOP_QUESTIONS;
+  topQuestions = [];
   scrollHideMenu: boolean;
   styleHideMenu = true;
   flagMenu = false;
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   formDataSub: Subscription;
   afterSubType: boolean = false;
 
-  @ViewChild(NgxTypedJsComponent, {static: true}) typed: NgxTypedJsComponent;
+  @ViewChild(NgxTypedJsComponent, { static: true }) typed: NgxTypedJsComponent;
 
   constructor(
     private modalService: NgbModal,
@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.topQuestions = EN.HEADER.TOP_QUESTIONS;
     this.translateService.use(environment.defaultLocale);
     this.selectedLanguage = environment.defaultLocale;
     this.translate();
@@ -101,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   open(content) {
-    this.modalService.open(content, {centered: true, size: 'lg'});
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
   @HostListener('click', ['$event'])
@@ -130,10 +131,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.fromData.question = this.newCreateEvent;
     if (this.fromData.question) {
-      this.store.dispatch(formDataAction({formData: this.fromData}));
+      this.store.dispatch(formDataAction({ formData: this.fromData }));
     } else {
       this.fromData.question = this.typedCreateEvent;
-      this.store.dispatch(formDataAction({formData: this.fromData}));
+      this.store.dispatch(formDataAction({ formData: this.fromData }));
     }
   }
 
@@ -285,7 +286,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   sendEventDesktop() {
     this.sendEvent();
-    this.modalService.open(EventsTemplatesDesktopComponent, {centered: true});
+    this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
   }
 
   mobileCheck() {

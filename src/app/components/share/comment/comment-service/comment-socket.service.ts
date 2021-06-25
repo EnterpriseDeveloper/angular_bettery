@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import * as socketIo from 'socket.io-client';
+import socketIo from 'socket.io-client';
 import {observable, Observable} from 'rxjs';
 import { CommentModel } from '../model/сomment.model';
 import {environment} from '../../../../../environments/environment';

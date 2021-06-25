@@ -4,12 +4,32 @@
     "node_modules/@types"
   ],
   "compilerOptions": {
+    "paths": {
+      "crypto": [
+        "./node_modules/crypto-browserify"
+      ],
+      "stream": [
+        "./node_modules/stream-browserify"
+      ],
+      "https": [
+        "./node_modules/https-browserify"
+      ],      
+      "assert": [
+        "./node_modules/assert"
+      ],
+      "http": [
+        "./node_modules/stream-http"
+      ],
+      "os": [
+        "./node_modules/os-browserify"
+      ]
+    },
     "resolveJsonModule": true,
-  //  "esModuleInterop": true,
-//    "types": [
-//      "node",
-//      "mocha"
-//    ],
+    "esModuleInterop": true,
+    //    "types": [
+    //      "node",
+    //      "mocha"
+    //    ],
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -17,7 +37,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",

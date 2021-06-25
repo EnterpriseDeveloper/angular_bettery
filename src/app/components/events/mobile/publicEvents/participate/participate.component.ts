@@ -8,7 +8,7 @@ import Contract from '../../../../../contract/contract';
 import _ from "lodash";
 import { PostService } from '../../../../../services/post.service';
 import web3Obj from '../../../../../helpers/torus'
-import maticInit from '../../../../../contract/maticInit.js'
+import maticInit from '../../../../../contract/maticInit'
 import * as CoinsActios from '../../../../../actions/coins.actions';
 import { Subscription } from 'rxjs';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
