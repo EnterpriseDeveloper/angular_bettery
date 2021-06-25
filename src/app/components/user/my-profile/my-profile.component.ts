@@ -1,14 +1,14 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {User} from '../../../models/User.model';
-import {PostService} from '../../../services/post.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RegistrationComponent} from '../../registration/registration.component';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from '../../../models/User.model';
+import { PostService } from '../../../services/post.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegistrationComponent } from '../../registration/registration.component';
 import Web3 from 'web3';
-import maticInit from '../../../contract/maticInit.js';
-import {environment} from '../../../../environments/environment';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../app.state';
+import maticInit from '../../../contract/maticInit';
+import { environment } from '../../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.state';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
 
@@ -42,7 +42,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
-  ) {}
+  ) { }
 
   ngOnChanges(changes) {
     if (changes['userData'].currentValue) {
@@ -53,7 +53,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   }
 
   getInfo(id) {
-    this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x) => {
+    this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
       this.addionalData = x;
       this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
       this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
@@ -81,7 +81,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   }
 
   linkAccount() {
-    const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
+    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
     modalRef.componentInstance.openSpinner = true;
     modalRef.componentInstance.linkUser = true;
     modalRef.componentInstance.linkedAccouns = this.addionalData.linkedAccounts;
@@ -164,11 +164,11 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     }
   }
 
-  letsUpdatePublicEmail(status: boolean){
+  letsUpdatePublicEmail(status: boolean) {
     const data = {
       publicEmail: status
     };
-    this.updateEmailSub = this.postService.post('user/update_public_email', data).subscribe((x: {publicEmail: boolean}) => {
+    this.updateEmailSub = this.postService.post('user/update_public_email', data).subscribe((x: { publicEmail: boolean }) => {
       x.publicEmail = this.emailFlag;
     }, (err) => {
       console.log('from update_public_email data', err);
