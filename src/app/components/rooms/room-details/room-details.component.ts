@@ -274,7 +274,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  joinToRoom() {
+ joinToRoom() {
     if (!this.userId) {
       this.modalService.open(RegistrationComponent, {centered: true});
     } else {
@@ -283,7 +283,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         roomId: Number(this.roomData?.roomId)
       };
       this.joinRoomSub = this.postService.post('room/join', data).subscribe((x) => {
-        this.getRoomInfo(data);
+          const dataInfo = { userId: this.userId, roomId: data.roomId };
+          this.getRoomInfo(dataInfo);
       }, (err) => {
         console.log(err);
       });

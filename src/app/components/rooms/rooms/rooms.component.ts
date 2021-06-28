@@ -54,13 +54,10 @@ export class RoomsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // this.findCurrentUser();
     this.mobileCheck();
   }
 
   ngOnInit(): void {
-    // this.getAllRoomsFromServer();
-
     this.route.queryParams.subscribe(
       (queryParam: any) => {
         if (Object.keys(queryParam).length === 0) {
@@ -220,7 +217,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
         if (this.btnMiddleActive === 'joinedRoom') {
           this.getJoinedUsersRoomById();
         }
-        if (this.btnMiddleActive === 'showAllRoom') {
+        if (this.btnMiddleActive === 'showAllRoom' || this.btnMiddleActive === 'searchInput') {
           this.getAllRoomsFromServer();
         }
       } else {
