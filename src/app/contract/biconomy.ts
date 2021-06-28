@@ -4,7 +4,7 @@ import Web3 from 'web3';
 
 const biconomyInit = async () => {
     console.log(environment.maticUrl)
-    let biconomy = new Biconomy(new Web3.providers.WebsocketProvider(environment.maticUrl),
+    let biconomy = new Biconomy(new Web3.providers.HttpProvider(environment.maticUrl),
         {
             apiKey: environment.biconomy,
             strictMode: true

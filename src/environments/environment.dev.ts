@@ -4,7 +4,7 @@ export const environment = {
   defaultLocale: 'en',
   apiUrl: 'http://localhost:80',
   biconomy: "iwIgyW3sM.12ac582c-bd06-4289-8d48-47ef552af03f",
-  maticUrl: "wss://competent-panini:demise-sphere-refuse-spoils-down-fiber@ws-nd-425-039-881.p2pify.com",
+  maticUrl: "https://nd-425-039-881.p2pify.com/f97dd350631b1ab91bc9dc66c1cb158b",
   maticId: 80001,
   etherId: 5,
   torusNetwork: "testnet",
