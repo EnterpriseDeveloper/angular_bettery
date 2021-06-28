@@ -82,7 +82,6 @@ export class ChainTransferComponent implements OnInit, OnDestroy {
           let deposit: any = await contrc.deposit(this.wallet, value, "torus", biconomy_provider) // switch "torus" to another wallet if we will use another one
           console.log(deposit);
           if (deposit.message === undefined) {
-            // await biconomyInit;
             // this.activeModal.dismiss('Cross click')
             // this.spinner = false;
           } else {

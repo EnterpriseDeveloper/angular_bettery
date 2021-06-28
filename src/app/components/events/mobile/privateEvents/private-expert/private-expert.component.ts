@@ -40,7 +40,6 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private postService: PostService,
   ) {
-    console.log(this.data)
     this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
         this.userData = x[0];

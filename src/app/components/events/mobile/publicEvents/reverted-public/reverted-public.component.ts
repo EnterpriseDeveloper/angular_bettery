@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
 import { User } from '../../../../../models/User.model';
 import { Store } from '@ngrx/store';
@@ -9,17 +9,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './reverted-public.component.html',
   styleUrls: ['./reverted-public.component.sass']
 })
-export class RevertedPublicComponent implements OnInit, OnDestroy {
+export class RevertedPublicComponent implements OnDestroy {
   storeSub: Subscription;
   @Input() eventData: PubEventMobile;
   userData: User;
 
   constructor(private store: Store<any>) {
     this.getUsers();
-  }
-
-  ngOnInit(): void {
-    console.log(this.eventData);
   }
 
   getUsers() {

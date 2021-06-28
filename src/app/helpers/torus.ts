@@ -52,13 +52,11 @@ const web3Obj = {
     web3Obj.loginDetails = { privateKey, publicAddress };
     web3Obj.web3 = await web3Init(privateKey, environment.maticUrl);
     web3Obj.torus = await web3Init(privateKey, environment.etherUrl);
-    console.log(web3Obj.web3);
     return
   }
 }
 
 const web3Init = async (privateKey, provider) => {
-  console.log(provider);
   let web3 = new Web3(provider);
   const prKey = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
   await web3.eth.accounts.wallet.add(prKey);
