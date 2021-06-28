@@ -101,7 +101,7 @@
                 <p>No Events at the moment</p>
               </div>
               <div class="join-room">
-                <button routerLink="/room/{{room.id}}">View Room</button>
+                <button routerLink="/room/{{room.id}}" [queryParams]="{from: pageRoom, sort: btnMiddleActive }">View Room</button>
               </div>
             </div>
           </div>

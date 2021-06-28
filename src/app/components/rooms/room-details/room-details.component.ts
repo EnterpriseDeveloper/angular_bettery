@@ -54,6 +54,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   sessionStorageValue: string;
   finishLoading = false;
   isMobile: boolean;
+  fromPage: number;
+  sort: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +94,16 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       this.sessionStorageValue = e;
       if (this.sessionStorageValue) {
         this.scrollTo();
+      }
+    });
+
+    this.route.queryParams.subscribe(param => {
+      if (Object.keys(param).length === 0) {
+        this.fromPage = 1;
+        this.sort = 'showAllRoom';
+      } else {
+        this.fromPage = +param.from;
+        this.sort = param.sort;
       }
     });
   }

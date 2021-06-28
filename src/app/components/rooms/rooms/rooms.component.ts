@@ -11,6 +11,7 @@ import {RegistrationComponent} from '../../registration/registration.component';
 import {EventsTemplatesDesktopComponent} from '../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import {RoomModel} from '../../../models/Room.model';
 import {User} from '../../../models/User.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-rooms',
@@ -50,13 +51,35 @@ export class RoomsComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private store: Store<AppState>,
     private modalService: NgbModal,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    this.findCurrentUser();
+    // this.findCurrentUser();
     this.mobileCheck();
   }
 
   ngOnInit(): void {
-    this.getAllRoomsFromServer();
+    // this.getAllRoomsFromServer();
+
+    this.route.queryParams.subscribe(
+      (queryParam: any) => {
+        if (Object.keys(queryParam).length === 0) {
+          this.changeQuery(1, this.btnMiddleActive);
+          this.pageRoom = 1;
+          this.findCurrentUser();
+        } else {
+          this.pageRoom = +queryParam.page;
+          this.btnMiddleActive = queryParam.sort;
+          this.startLength = (this.pageRoom - 1) * 8;
+          this.showLength = this.startLength + 8;
+          this.findCurrentUser();
+        }
+      }
+    );
+  }
+
+  changeQuery(num, sort) {
+    this.router.navigate(['.'], { relativeTo: this.route, queryParams: { page: num, sort: sort }, queryParamsHandling: 'merge'});
   }
 
   @HostListener('click', ['$event'])
@@ -98,6 +121,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.pageRoom = this.pageRoom - 1;
     this.startLength = this.startLength - 8;
     this.showLength = this.showLength - 8;
+    this.changeQuery(this.pageRoom, this.btnMiddleActive);
 
     if (this.btnMiddleActive === 'showUsersRoom') {
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
@@ -118,6 +142,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.startLength = this.startLength + 8;
     this.showLength = this.showLength + 8;
     this.pageRoom = this.pageRoom + 1;
+    this.changeQuery(this.pageRoom, this.btnMiddleActive);
 
     if (this.btnMiddleActive === 'showUsersRoom') {
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
@@ -195,6 +220,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
         if (this.btnMiddleActive === 'joinedRoom') {
           this.getJoinedUsersRoomById();
         }
+        if (this.btnMiddleActive === 'showAllRoom') {
+          this.getAllRoomsFromServer();
+        }
       } else {
         this.userData = undefined;
         this.usersRoom = undefined;
@@ -222,6 +250,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   showAllRooms() {
+    if (this.allRooms == undefined) {
+      this.getAllRoomsFromServer();
+    }
     this.activeRoom = undefined;
     this.btnMiddleActive = 'showAllRoom';
     this.usersRoom = null;
