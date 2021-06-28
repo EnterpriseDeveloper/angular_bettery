@@ -4,7 +4,7 @@ export const environment = {
   defaultLocale: 'en',
   apiUrl: 'https://api.bettery.io',
   biconomy: "qhib4zfV0.2244c10d-a20e-4cdc-b8fd-3080905f7444",
-  maticUrl: "wss://angry-jepsen:aliens-swore-bagful-mulled-judge-hummus@ws-nd-166-193-145.p2pify.com",
+  maticUrl: "https://nd-166-193-145.p2pify.com/2f7e02c8a0c734ceacc688cd604521bc",
   maticId: 137,
   etherId: 1,
   torusNetwork: "mainnet",
