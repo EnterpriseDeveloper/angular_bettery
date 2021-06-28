@@ -181,6 +181,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   makeAnswer(i) {
+    this.letsRegistration();
     this.myAnswers.answer = i;
   }
 

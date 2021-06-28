@@ -18,6 +18,7 @@ import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
+import biconomyInit from '../../../contract/biconomy';
 
 
 @Component({
@@ -133,7 +134,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async updateBalance() {
     let web3 = new Web3();
-
+    if (!window.biconomy) {
+      await biconomyInit();
+    }
     let matic = new maticInit(this.verifier);
     let BTYToken = await matic.getBTYTokenBalance();
     let BETToken = await matic.getBETTokenBalance();
@@ -182,9 +185,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async logOut() {
-    if (this.userWallet !== undefined && this.verifier !== 'metamask') {
-      await web3Obj.logOut();
-    }
+    web3Obj.logOut();
     this.store.dispatch(new UserActions.RemoveUser(0));
     this.nickName = undefined;
     this.openNavBar = false;

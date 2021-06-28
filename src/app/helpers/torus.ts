@@ -44,6 +44,7 @@ const web3Obj = {
     }
   },
   logOut: () => {
+    localStorage.removeItem('_buserlog');
     web3Obj.web3 = null;
     web3Obj.torus = null;
     web3Obj.loginDetails = null;
