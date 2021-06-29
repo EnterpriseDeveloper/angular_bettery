@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PostService } from '../../../services/post.service';
-import _ from 'lodash';
 import {NotificationModel} from "../../../models/Notification.model";
 import {SessionStorageService} from '../../rooms/sessionStorage-service/session-storage.service';
 import {GetService} from '../../../services/get.service';
@@ -42,7 +41,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   getDataFromDb() {
     this.notifSub = this.getService.get('notification/get_by_user_id').subscribe((x: NotificationModel[]) => {
       this.notifData = x;
-      let index = _.findIndex(x, (o) => { return o.read == false });
+      let index = x.findIndex((o) => { return o.read == false });
       this.colocol = index == -1 ? false : true;
     }, (err) => {
       console.log(err);
@@ -94,7 +93,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   unreadNotif() {
-    let data = _.filter(this.notifData, (o) => { return o.read == false });
+    let data = this.notifData.filter((o) => { return o.read == false });
     return data.length;
   }
 

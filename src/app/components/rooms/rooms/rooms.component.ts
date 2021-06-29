@@ -5,7 +5,6 @@ import {PostService} from '../../../services/post.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../app.state';
 import {formDataAction} from '../../../actions/newEvent.actions';
-import * as _ from 'lodash';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RegistrationComponent} from '../../registration/registration.component';
 import {EventsTemplatesDesktopComponent} from '../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
@@ -296,7 +295,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
   forLetsFindRoom(arr) {
     if (this.searchWord && this.searchWord.length >= 3) {
-      arr = _.filter(this.allRooms, o => {
+      arr = this.allRooms.filter(o => {
         return o.name.toLowerCase().includes(this.searchWord.toLowerCase());
       });
       if (arr.length > 0) {

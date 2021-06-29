@@ -9,7 +9,6 @@ import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import _ from 'lodash';
 import web3Obj from '../../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
@@ -40,8 +39,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   coinsSub: Subscription;
   depositSub: Subscription;
   swipeSub: Subscription;
-  userHistory: any = [];
-  loadMore = false;
   avatar: string;
   verifier: string = undefined;
   openNavBar = false;
@@ -71,9 +68,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.verifier = x[0].verifier;
         this.avatar = x[0].avatar;
         this.userId = x[0]._id;
-
-        let historyData = _.orderBy(x[0].historyTransaction, ['date'], ['desc']);
-        this.getHistoryUsers(historyData);
         this.updateBalance();
       }
     });
@@ -95,31 +89,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
       this.display = false;
     } else {
       this.display = true;
-    }
-  }
-
-  getHistoryUsers(data) {
-    if (data === undefined) {
-      this.userHistory = [];
-      this.loadMore = false;
-    } else {
-      let z = data.map((x) => {
-        return {
-          date: Number((new Date(x.date).getTime() * 1000).toFixed(0)),
-          amount: x.amount.toFixed(4),
-          currencyType: x.currencyType,
-          paymentWay: x.paymentWay,
-          eventId: x.eventId,
-          role: x.role
-        };
-      });
-      if (z.length > 5) {
-        this.loadMore = true;
-        this.userHistory = z.slice(0, 5);
-      } else {
-        this.loadMore = true;
-        this.userHistory = z;
-      }
     }
   }
 

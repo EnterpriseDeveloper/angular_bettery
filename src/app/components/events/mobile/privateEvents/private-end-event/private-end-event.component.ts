@@ -1,10 +1,9 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import _ from 'lodash';
-import {Subscription} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../../app.state';
-import {User} from '../../../../../models/User.model';
-import {PrivEventMobile} from '../../../../../models/PrivEventMobile.model';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../../app.state';
+import { User } from '../../../../../models/User.model';
+import { PrivEventMobile } from '../../../../../models/PrivEventMobile.model';
 
 @Component({
   selector: 'app-private-end-event',
@@ -37,7 +36,7 @@ export class PrivateEndEventComponent implements OnInit, OnDestroy {
   }
 
   letsFindActivites(id) {
-    let find = _.find(this.eventData.parcipiantAnswers, (o) => {
+    let find = this.eventData.parcipiantAnswers.find((o) => {
       return o.userId == id;
     });
     if (find) {
