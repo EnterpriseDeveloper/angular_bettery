@@ -74,13 +74,20 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     this.goBack.next();
   }
 
-  async bet() {
+  bet() {
     this.submitted = true;
     if (this.answerForm.invalid) {
       return;
     }
+    this.sendToMatic()
+  }
 
-    if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
+  async sendToMatic() {
+    if (!this.coinInfo) {
+      setTimeout(() => {
+        this.sendToMatic();
+      }, 1000)
+    } else if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
       return;
     } else {
       this.spinnerLoading = true;
@@ -91,6 +98,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       this.setToDB(this.eventData)
     }
   }
+
 
   setToDB(dataAnswer) {
     var _whichAnswer = _.findIndex(dataAnswer.answers, (o) => { return o == this.answerForm.value.answer; });
