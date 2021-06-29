@@ -19,6 +19,7 @@ import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
 import biconomyInit from '../../../contract/biconomy';
+import {GetService} from '../../../services/get.service';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   logoutBox: boolean;
   copyLinkFlag: boolean;
   postSub: Subscription;
+  logoutSub: Subscription;
   environments = environment;
 
   constructor(
@@ -56,7 +58,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
-    private postService: PostService
+    private postService: PostService,
+    private getService: GetService
   ) {
 
     this.detectPath();
@@ -185,11 +188,15 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async logOut() {
-    web3Obj.logOut();
-    this.store.dispatch(new UserActions.RemoveUser(0));
-    this.nickName = undefined;
-    this.openNavBar = false;
-    this.logoutBox = false;
+    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+      web3Obj.logOut();
+      this.store.dispatch(new UserActions.RemoveUser(0));
+      this.nickName = undefined;
+      this.openNavBar = false;
+      this.logoutBox = false;
+    }, err => {
+      console.log(err);
+    });
   }
 
   async loginWithTorus() {
