@@ -39,7 +39,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
   forEventId: any;
   testAnimation: number;
-  btnMiddleActive = 'showAllRoom';
+  btnMiddleActive = 'show_all_room';
   showInputFlag: boolean;
   spinner: boolean;
   formData;
@@ -120,7 +120,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.showLength = this.showLength - 8;
     this.changeQuery(this.pageRoom, this.btnMiddleActive);
 
-    if (this.btnMiddleActive === 'showUsersRoom') {
+    if (this.btnMiddleActive === 'show_users_room') {
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
     } else {
       this.roomsSort = this.allRooms.slice(this.startLength, this.showLength);
@@ -131,7 +131,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   nextRooms() {
     if (this.pageRoom > Math.round(this.usersRoom?.length / 8) ||
       this.pageRoom > Math.round(this.allRooms?.length / 8) ||
-      this.pageRoom > Math.round(this.roomsSort?.length / 8) && this.btnMiddleActive === 'searchInput'
+      this.pageRoom > Math.round(this.roomsSort?.length / 8) && this.btnMiddleActive === 'search'
     ) {
       return;
     }
@@ -141,7 +141,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.pageRoom = this.pageRoom + 1;
     this.changeQuery(this.pageRoom, this.btnMiddleActive);
 
-    if (this.btnMiddleActive === 'showUsersRoom') {
+    if (this.btnMiddleActive === 'show_users_room') {
       this.roomsSort = this.usersRoom.slice(this.startLength, this.showLength);
 
     } else {
@@ -159,15 +159,15 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   letsFindRoomsLength() {
-    if (this.btnMiddleActive === 'showUsersRoom') {
+    if (this.btnMiddleActive === 'show_users_room') {
       return this.forLetsFindRoomsLength(this.usersRoom?.length);
     }
 
-    if (this.btnMiddleActive === 'searchInput' && this.searchWord?.length <= 3) {
+    if (this.btnMiddleActive === 'search' && this.searchWord?.length <= 3) {
       return this.forLetsFindRoomsLength(this.allRooms?.length);
     }
 
-    if (this.btnMiddleActive === 'searchInput' && this.searchWord?.length > 3) {
+    if (this.btnMiddleActive === 'search' && this.searchWord?.length > 3) {
       return this.forLetsFindRoomsLength(this.roomsSort?.length);
     }
 
@@ -211,20 +211,20 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length !== 0) {
         this.userData = x[0];
-        if (this.btnMiddleActive === 'showUsersRoom') {
+        if (this.btnMiddleActive === 'show_user_room') {
           this.getUsersRoomById();
         }
-        if (this.btnMiddleActive === 'joinedRoom') {
+        if (this.btnMiddleActive === 'joined_room') {
           this.getJoinedUsersRoomById();
         }
-        if (this.btnMiddleActive === 'showAllRoom' || this.btnMiddleActive === 'searchInput') {
+        if (this.btnMiddleActive === 'show_all_room' || this.btnMiddleActive === 'search') {
           this.getAllRoomsFromServer();
         }
       } else {
         this.userData = undefined;
         this.usersRoom = undefined;
         this.getAllRoomsFromServer();
-        this.btnMiddleActive = 'showAllRoom';
+        this.btnMiddleActive = 'show_all_room';
       }
     });
   }
@@ -237,9 +237,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.showLength = 8;
     if (this.userData) {
       this.getUsersRoomById();
-      this.btnMiddleActive = 'showUsersRoom';
+      this.btnMiddleActive = 'show_users_room';
     } else {
-      this.btnMiddleActive = 'showUsersRoom';
+      this.btnMiddleActive = 'show_users_room';
       this.modalService.open(RegistrationComponent, {centered: true});
       this.spinner = true;
       return;
@@ -251,7 +251,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
       this.getAllRoomsFromServer();
     }
     this.activeRoom = undefined;
-    this.btnMiddleActive = 'showAllRoom';
+    this.btnMiddleActive = 'show_all_room';
     this.usersRoom = null;
     this.roomsSort = this.allRooms.slice(this.startLength, this.showLength);
   }
@@ -278,9 +278,9 @@ export class RoomsComponent implements OnInit, OnDestroy {
     this.showLength = 8;
     if (this.userData) {
       this.getJoinedUsersRoomById();
-      this.btnMiddleActive = 'joinedRoom';
+      this.btnMiddleActive = 'joined_room';
     } else {
-      this.btnMiddleActive = 'joinedRoom';
+      this.btnMiddleActive = 'joined_room';
       this.modalService.open(RegistrationComponent, {centered: true});
       this.spinner = true;
       return;
@@ -297,11 +297,11 @@ export class RoomsComponent implements OnInit, OnDestroy {
   }
 
   showSearchInput() {
-    if (this.btnMiddleActive !== 'showAllRoom') {
+    if (this.btnMiddleActive !== 'show_all_room') {
       this.showAllRooms();
     }
     this.showInputFlag = !this.showInputFlag;
-    this.btnMiddleActive = 'searchInput';
+    this.btnMiddleActive = 'search';
   }
 
   letsFindRooms(e) {
@@ -336,7 +336,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
   forFilterBySubject() {
     if (this.roomsSort?.length > 0 && this.searchWord?.length >= 3) {
       return this.roomsSort?.length;
-    } else if (this.btnMiddleActive === 'showUsersRoom' || this.btnMiddleActive === 'joinedRoom') {
+    } else if (this.btnMiddleActive === 'show_users_room' || this.btnMiddleActive === 'joined_room') {
       return this.usersRoom?.length;
     } else {
       return this.allRooms?.length;

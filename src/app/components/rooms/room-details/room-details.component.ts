@@ -100,7 +100,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(param => {
       if (Object.keys(param).length === 0) {
         this.fromPage = 1;
-        this.sort = 'showAllRoom';
+        this.sort = 'show_all_room';
       } else {
         this.fromPage = +param.from;
         this.sort = param.sort;
