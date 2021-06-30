@@ -54,6 +54,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   sessionStorageValue: string;
   finishLoading = false;
   isMobile: boolean;
+  fromPage: number;
+  sort: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +94,16 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       this.sessionStorageValue = e;
       if (this.sessionStorageValue) {
         this.scrollTo();
+      }
+    });
+
+    this.route.queryParams.subscribe(param => {
+      if (Object.keys(param).length === 0) {
+        this.fromPage = 1;
+        this.sort = 'show_all_room';
+      } else {
+        this.fromPage = +param.from;
+        this.sort = param.sort;
       }
     });
   }
@@ -262,7 +274,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  joinToRoom() {
+ joinToRoom() {
     if (!this.userId) {
       this.modalService.open(RegistrationComponent, {centered: true});
     } else {
@@ -271,7 +283,8 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
         roomId: Number(this.roomData?.roomId)
       };
       this.joinRoomSub = this.postService.post('room/join', data).subscribe((x) => {
-        this.getRoomInfo(data);
+          const dataInfo = { userId: this.userId, roomId: data.roomId };
+          this.getRoomInfo(dataInfo);
       }, (err) => {
         console.log(err);
       });
