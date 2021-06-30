@@ -1,19 +1,18 @@
-import {Component, OnInit, OnDestroy, HostListener, EventEmitter} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {PostService} from '../../../services/post.service';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../app.state';
-import {Answer} from '../../../models/Answer.model';
-import {User} from '../../../models/User.model';
-import _ from 'lodash';
-import {RegistrationComponent} from '../../registration/registration.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Coins} from '../../../models/Coins.model';
-import {RoomDetails} from '../../../models/RoomDetails.model';
-import {EventModel, Event} from '../../../models/Event.model';
-import {PageScrollService} from 'ngx-page-scroll-core';
-import {SessionStorageService} from '../sessionStorage-service/session-storage.service';
+import { Component, OnInit, OnDestroy, HostListener, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PostService } from '../../../services/post.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.state';
+import { Answer } from '../../../models/Answer.model';
+import { User } from '../../../models/User.model';
+import { RegistrationComponent } from '../../registration/registration.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Coins } from '../../../models/Coins.model';
+import { RoomDetails } from '../../../models/RoomDetails.model';
+import { EventModel, Event } from '../../../models/Event.model';
+import { PageScrollService } from 'ngx-page-scroll-core';
+import { SessionStorageService } from '../sessionStorage-service/session-storage.service';
 
 
 @Component({
@@ -211,9 +210,9 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   }
 
   findAnswer(data) {
-    let findParticipiant = _.findIndex(data.parcipiantAnswers, {'userId': this.userId});
+    let findParticipiant = data.parcipiantAnswers != undefined ? data.parcipiantAnswers.findIndex((x) => { return x.userId == this.userId }) : -1;
     if (findParticipiant === -1) {
-      let findValidators = _.findIndex(data.validatorsAnswers, {'userId': this.userId});
+      let findValidators = data.validatorsAnswers! + undefined ? data.validatorsAnswers.findIndex((x) => { return x.userId == this.userId }) : -1;
       return {
         answer: findValidators !== -1 ? data.validatorsAnswers[findValidators].answer : undefined,
         from: 'validator',
@@ -230,12 +229,12 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
 
 
   infoRoomColor(value) {
-    return {'background': value};
+    return { 'background': value };
   }
 
   commentById($event) {
     if ($event) {
-      let newCommentList = _.find(this.roomEvents, (o) => {
+      let newCommentList = this.roomEvents.find((o) => {
         return o.id == $event;
       });
       this.commentList = newCommentList;
@@ -243,7 +242,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   }
 
   getCommentRoomColor(color) {
-    return {'background': color};
+    return { 'background': color };
   }
 
   onScrollQuizTemplate() {
@@ -264,7 +263,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
 
   joinToRoom() {
     if (!this.userId) {
-      this.modalService.open(RegistrationComponent, {centered: true});
+      this.modalService.open(RegistrationComponent, { centered: true });
     } else {
       this.disabledButton = true;
       let data = {
@@ -351,9 +350,9 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
 
   commentTopPosition() {
     if (document.documentElement.scrollTop < 422) {
-      return {'top': (422 - this.scrollTop) + 'px'};
+      return { 'top': (422 - this.scrollTop) + 'px' };
     } else {
-      return {'top': 0};
+      return { 'top': 0 };
     }
   }
 

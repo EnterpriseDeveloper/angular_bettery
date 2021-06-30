@@ -20,7 +20,7 @@
                 <div class="answers">
                   <div *ngIf="!finalAnswerGuard(question)">
                     <div class="d-flex align-items-center" [ngClass]="answersStructure()">
-                      <div (click)="letsRegistration()" class="each_answer" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'" *ngFor="let answer of question.answers; let i = index">
+                      <div class="each_answer" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'" *ngFor="let answer of question.answers; let i = index">
                         <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i)"
                           value="{{i}}" type="radio" name="{{question.id}}">
                         <label for="{{question.id}}{{i}}" class="label answer-checkbox" style="cursor: pointer">{{answer}}</label>
@@ -83,7 +83,7 @@
               <div style="margin-top: 34px" *ngIf="!finalAnswerGuard(question)">
                 <div  [formGroup] = "form" *ngIf="timeValidating(question)">
                   BET <input  (keydown)="filterKeyCode($event)" (input)="updateValue()" min="0" type="number" step="0.01" formControlName="quickBet" class="bet-style" /> <span
-                    (click)="this.setAnswer(question, 'participate')" class="quickBet"
+                    (click)="this.setAnswer('participate')" class="quickBet"
                     [ngClass]="this.disable == this.index && 'quickBetDisabled'"
                 >QUICK BET</span>
                 </div>

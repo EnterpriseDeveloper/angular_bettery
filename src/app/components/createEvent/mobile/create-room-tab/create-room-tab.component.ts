@@ -1,18 +1,17 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import GradientJSON from '../../../../../assets/gradients.json';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {InfoModalComponent} from '../../../share/modals/info-modal/info-modal.component'
-import {PostService} from '../../../../services/post.service';
-import {Subscription} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../app.state';
-import _ from 'lodash';
-import {RoomModel} from '../../../../models/Room.model';
-import {User} from '../../../../models/User.model';
-import {formDataAction} from "../../../../actions/newEvent.actions";
-import {Router} from "@angular/router";
-import {GetService} from '../../../../services/get.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component'
+import { PostService } from '../../../../services/post.service';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../app.state';
+import { RoomModel } from '../../../../models/Room.model';
+import { User } from '../../../../models/User.model';
+import { formDataAction } from "../../../../actions/newEvent.actions";
+import { Router } from "@angular/router";
+import { GetService } from '../../../../services/get.service';
 
 @Component({
   selector: 'create-room-tab',
@@ -66,7 +65,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
       if (x && x?.length != 0) {
         this.userId = x[0]._id;
         this.nickName = x[0].nickName.split(' ')[0];
-        if (this.r.createNewRoom.value == 'new' &&  this.formData.roomName.length == 0) {
+        if (this.r.createNewRoom.value == 'new' && this.formData.roomName.length == 0) {
           this.f.roomName.setValue(this.nickName + '’s room');
         }
         this.getUserRooms();
@@ -112,7 +111,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
 
   // TO DO
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
+    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
     modalRef.componentInstance.name = "- Event for Friends is private and they can bet with anything like pizza or promise of a favor. The result will be validated by one Expert, which can be the Host or another friend.";
     modalRef.componentInstance.name1 = "Event for Social Media is for betting with online communities using BET tokens. The result will be validated by several Experts to ensure fairness.";
     modalRef.componentInstance.boldName = 'Friends vs Social Media';
@@ -124,7 +123,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     if (this.existRoom.invalid) {
       return;
     }
-    let searchRoom = _.find(this.allRooms, (x) => {
+    let searchRoom = this.allRooms.find((x) => {
       return x.id == this.existRoom.value.roomId
     })
     let roomType = searchRoom.privateEventsId.length == 0 ? "public" : "private"
@@ -141,7 +140,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     this.formData.eventType = data.eventType;
     this.formData.roomId = data.roomId;
 
-    this.store.dispatch(formDataAction({formData: this.formData}));
+    this.store.dispatch(formDataAction({ formData: this.formData }));
     this.router.navigate(['/make-rules']);
   }
 
@@ -166,7 +165,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
       this.formData.eventType = data.eventType;
       this.formData.roomId = data.roomId;
 
-      this.store.dispatch(formDataAction({formData: this.formData}));
+      this.store.dispatch(formDataAction({ formData: this.formData }));
       this.router.navigate(['/make-rules']);
     }, (err) => {
       console.log(err);
@@ -185,7 +184,7 @@ export class CreateRoomTabComponent implements OnInit, OnDestroy {
     this.formData.roomColor = data.roomColor;
     this.formData.eventType = data.eventType;
 
-    this.store.dispatch(formDataAction({formData: this.formData}));
+    this.store.dispatch(formDataAction({ formData: this.formData }));
     this.router.navigate(['/create-event']);
   }
 

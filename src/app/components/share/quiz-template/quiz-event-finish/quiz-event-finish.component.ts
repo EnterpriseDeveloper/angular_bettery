@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import _ from 'lodash';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'quiz-event-finish',
@@ -23,7 +22,7 @@ export class QuizEventFinishComponent implements OnInit {
     if (this.question.parcipiantAnswers == undefined) {
       return 0;
     } else {
-      let data = _.filter(this.question.parcipiantAnswers, (x) => {
+      let data = this.question.parcipiantAnswers.filter((x) => {
         return x.answer == i;
       });
       return data.length;
@@ -34,7 +33,7 @@ export class QuizEventFinishComponent implements OnInit {
     if (this.question.validatorsAnswers == undefined) {
       return 0;
     } else {
-      let data = _.filter(this.question.validatorsAnswers, (x) => {
+      let data = this.question.validatorsAnswers.filter((x) => {
         return x.answer == i;
       });
       return data.length + '/' + this.question.validatorsAnswers.length;
@@ -58,7 +57,7 @@ export class QuizEventFinishComponent implements OnInit {
       return 0;
     } else {
       let amount = 0;
-      let data = _.filter(this.question.parcipiantAnswers, (x) => {
+      let data = this.question.parcipiantAnswers.filter((x) => {
         return x.answer == i;
       });
       if (data.length == 0) {
@@ -67,7 +66,7 @@ export class QuizEventFinishComponent implements OnInit {
         data.forEach(e => {
           amount = amount + e.amount;
         });
-        return  amount.toString().includes('.') ? amount.toFixed(1) : amount;
+        return amount.toString().includes('.') ? amount.toFixed(1) : amount;
       }
     }
   }
@@ -111,7 +110,7 @@ export class QuizEventFinishComponent implements OnInit {
         'right': '13px'
       };
     }
-    if ( length >= 4) {
+    if (length >= 4) {
       return {
         'position': 'relative',
         'right': '23px'

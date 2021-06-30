@@ -9,7 +9,6 @@ import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import _ from 'lodash';
 import web3Obj from '../../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
@@ -18,6 +17,8 @@ import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
+import biconomyInit from '../../../contract/biconomy';
+import {GetService} from '../../../services/get.service';
 
 
 @Component({
@@ -38,8 +39,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   coinsSub: Subscription;
   depositSub: Subscription;
   swipeSub: Subscription;
-  userHistory: any = [];
-  loadMore = false;
   avatar: string;
   verifier: string = undefined;
   openNavBar = false;
@@ -48,6 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   logoutBox: boolean;
   copyLinkFlag: boolean;
   postSub: Subscription;
+  logoutSub: Subscription;
   environments = environment;
 
   constructor(
@@ -55,7 +55,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
-    private postService: PostService
+    private postService: PostService,
+    private getService: GetService
   ) {
 
     this.detectPath();
@@ -67,9 +68,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.verifier = x[0].verifier;
         this.avatar = x[0].avatar;
         this.userId = x[0]._id;
-
-        let historyData = _.orderBy(x[0].historyTransaction, ['date'], ['desc']);
-        this.getHistoryUsers(historyData);
         this.updateBalance();
       }
     });
@@ -94,31 +92,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  getHistoryUsers(data) {
-    if (data === undefined) {
-      this.userHistory = [];
-      this.loadMore = false;
-    } else {
-      let z = data.map((x) => {
-        return {
-          date: Number((new Date(x.date).getTime() * 1000).toFixed(0)),
-          amount: x.amount.toFixed(4),
-          currencyType: x.currencyType,
-          paymentWay: x.paymentWay,
-          eventId: x.eventId,
-          role: x.role
-        };
-      });
-      if (z.length > 5) {
-        this.loadMore = true;
-        this.userHistory = z.slice(0, 5);
-      } else {
-        this.loadMore = true;
-        this.userHistory = z;
-      }
-    }
-  }
-
   async ngOnInit() {
     this.onDocumentClick = this.onDocumentClick.bind(this);
   }
@@ -133,7 +106,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async updateBalance() {
     let web3 = new Web3();
-
+    if (!window.biconomy) {
+      await biconomyInit();
+    }
     let matic = new maticInit(this.verifier);
     let BTYToken = await matic.getBTYTokenBalance();
     let BETToken = await matic.getBETTokenBalance();
@@ -182,13 +157,15 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async logOut() {
-    if (this.userWallet !== undefined && this.verifier !== 'metamask') {
-      await web3Obj.logOut();
-    }
-    this.store.dispatch(new UserActions.RemoveUser(0));
-    this.nickName = undefined;
-    this.openNavBar = false;
-    this.logoutBox = false;
+    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+      web3Obj.logOut();
+      this.store.dispatch(new UserActions.RemoveUser(0));
+      this.nickName = undefined;
+      this.openNavBar = false;
+      this.logoutBox = false;
+    }, err => {
+      console.log(err);
+    });
   }
 
   async loginWithTorus() {

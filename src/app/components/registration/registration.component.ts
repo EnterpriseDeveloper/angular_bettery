@@ -10,7 +10,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import web3Obj from '../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { WelcomePageComponent } from '../share/modals/welcome-page/welcome-page.component';
-import biconomyInit from '../../../app/contract/biconomy';
 
 
 @Component({
@@ -50,7 +49,6 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   async loginWithTorus(selectedVerifier) {
-    console.log(selectedVerifier)
     if (this.linkUser) {
       if (!this.linVerification(selectedVerifier)) {
         this.spinner = true;
@@ -63,7 +61,6 @@ export class RegistrationComponent implements OnDestroy {
       }
     } else {
       this.spinner = true;
-      await biconomyInit();
       let login = await web3Obj.login(selectedVerifier);
       if (login == null) {
         this.setTorusInfoToDB();
@@ -83,7 +80,6 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   async linkAccount(data) {
-    console.log(data);
     let post = {
       verifierId: data.userInfo.verifierId
     }

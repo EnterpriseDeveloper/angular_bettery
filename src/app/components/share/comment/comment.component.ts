@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CommentSocketService } from './comment-service/comment-socket.service';
-import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { CommentModel } from './model/сomment.model';
 import { User } from '../../../models/User.model';
@@ -154,14 +153,14 @@ export class CommentComponent implements OnInit, OnDestroy, OnChanges {
 
   letsSort(): void {
     if (this.sortComment === 'hottest') {
-      this.allComments = _.sortBy(this.allComments, (item) => {
+      this.allComments = this.allComments.sort((item) => {
         return item.activites;
       }).reverse();
       this.showOnScreen = this.allComments.slice(0, this.showLength);
     }
     if (this.sortComment === 'newest') {
       this.comingSoon = false;
-      this.allComments = _.sortBy(this.allComments, (item) => {
+      this.allComments = this.allComments.sort((item) => {
         return item.date;
       }).reverse();
       this.showOnScreen = this.allComments.slice(0, this.showLength);
@@ -198,7 +197,7 @@ export class CommentComponent implements OnInit, OnDestroy, OnChanges {
 
   findUserActivites(arr) {
     if (this.userData) {
-      const findUser = _.findIndex(arr, (el) => {
+      const findUser = arr.findIndex((el) => {
         return el.user.id === this.userData._id;
       });
       return findUser !== -1;
@@ -252,7 +251,7 @@ export class CommentComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   additionToAnchorLink(id) {
-    const index = _.findIndex(this.allComments, (el) => {
+    const index = this.allComments.findIndex((el) => {
       return el.id === id;
     });
     if (this.showLength < (index + 1)) {

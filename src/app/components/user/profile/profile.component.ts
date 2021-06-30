@@ -20,14 +20,17 @@ export class ProfileComponent implements OnInit {
     private store: Store<AppState>,
     private modalService: NgbModal,
     private router: Router
-  ) { 
+  ) {
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
       if (x.length === 0) {
-        const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
-        modalRef.componentInstance.openSpinner = true;
-        modalRef.componentInstance.closedWindow.subscribe((e) => {
-          this.router.navigate(['join']);
-        })
+        let autoLogin = localStorage.getItem('_buserlog');
+        if (autoLogin == null) {
+          const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+          modalRef.componentInstance.openSpinner = true;
+          modalRef.componentInstance.closedWindow.subscribe((e) => {
+            this.router.navigate(['join']);
+          })
+        }
       } else {
         this.userData = x[0];
       }

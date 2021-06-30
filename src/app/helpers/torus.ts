@@ -1,6 +1,7 @@
 import TorusSdk from "@toruslabs/torus-direct-web-sdk";
 import Web3 from "web3";
 import { environment } from '../../environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 const web3Obj = {
   login: async (selectedVerifier) => {
@@ -10,11 +11,19 @@ const web3Obj = {
       let conf: any = verifierMap(x)
       let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 
-      let web3Polygon = await web3Init(loginDetails, environment.maticUrl);
-      let web3Main = await web3Init(loginDetails, environment.etherUrl);
-      web3Obj.web3 = web3Polygon;
-      web3Obj.torus = web3Main;
+      web3Obj.web3 = await web3Init(loginDetails.privateKey, environment.maticUrl);
+      web3Obj.torus = await web3Init(loginDetails.privateKey, environment.etherUrl);
+
       web3Obj.loginDetails = loginDetails;
+
+      // add to local storage
+      let data = {
+        privateKey: loginDetails.privateKey,
+        publicAddress: loginDetails.publicAddress,
+        accessToken: loginDetails.userInfo.accessToken
+      }
+      const bytes = CryptoJS.AES.encrypt(JSON.stringify(data), environment.secretKey)
+      localStorage.setItem('_buserlog', bytes.toString());
       return null;
     } catch (error) {
       return error;
@@ -35,15 +44,22 @@ const web3Obj = {
     }
   },
   logOut: () => {
+    localStorage.removeItem('_buserlog');
     web3Obj.web3 = null;
     web3Obj.torus = null;
     web3Obj.loginDetails = null;
+  },
+  autoLogin: async (privateKey, publicAddress) => {
+    web3Obj.loginDetails = { privateKey, publicAddress };
+    web3Obj.web3 = await web3Init(privateKey, environment.maticUrl);
+    web3Obj.torus = await web3Init(privateKey, environment.etherUrl);
+    return
   }
 }
 
-const web3Init = async (loginDetails, provider) => {
+const web3Init = async (privateKey, provider) => {
   let web3 = new Web3(provider);
-  const prKey = web3.eth.accounts.privateKeyToAccount('0x' + loginDetails.privateKey);
+  const prKey = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
   await web3.eth.accounts.wallet.add(prKey);
   return web3;
 }

@@ -5,9 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClipboardService } from 'ngx-clipboard'
 import Web3 from "web3"
 import Contract from '../../../../../contract/contract';
-import _ from "lodash";
 import { PostService } from '../../../../../services/post.service';
-import web3Obj from '../../../../../helpers/torus'
 import maticInit from '../../../../../contract/maticInit'
 import * as CoinsActios from '../../../../../actions/coins.actions';
 import { Subscription } from 'rxjs';
@@ -74,13 +72,20 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     this.goBack.next();
   }
 
-  async bet() {
+  bet() {
     this.submitted = true;
     if (this.answerForm.invalid) {
       return;
     }
+    this.sendToMatic()
+  }
 
-    if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
+  async sendToMatic() {
+    if (!this.coinInfo) {
+      setTimeout(() => {
+        this.sendToMatic();
+      }, 1000)
+    } else if (Number(this.coinInfo.BET) < Number(this.answerForm.value.amount)) {
       return;
     } else {
       this.spinnerLoading = true;
@@ -92,8 +97,9 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     }
   }
 
+
   setToDB(dataAnswer) {
-    var _whichAnswer = _.findIndex(dataAnswer.answers, (o) => { return o == this.answerForm.value.answer; });
+    var _whichAnswer = dataAnswer.answers.findIndex((o) => { return o == this.answerForm.value.answer; });
     let data = {
       event_id: dataAnswer.id,
       answerIndex: _whichAnswer,

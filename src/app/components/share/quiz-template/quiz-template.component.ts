@@ -181,6 +181,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   makeAnswer(i) {
+    this.letsRegistration();
     this.myAnswers.answer = i;
   }
 
@@ -309,7 +310,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   betEvent(event) {
     event.event_id = this.question.id;
-    this.setToNetwork(event, this.question);
+    this.setToNetwork(event);
   }
 
   validateEvent(event) {
@@ -317,7 +318,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.setToNetworkValidation(event);
   }
 
-  async setAnswer(dataAnswer, from) {
+  async setAnswer(from) {
     if (this.disable === this.index) {
       return;
     }
@@ -341,7 +342,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.nameButton = 'fine';
           } else {
             this.isDisabled();
-            this.setToNetwork(answer, dataAnswer);
+            this.setToNetwork(answer);
           }
         }
       }
@@ -359,9 +360,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  async setToNetwork(answer, dataAnswer) {
-
-    if (Number(this.coinInfo.BET) < Number(answer.amount)) {
+  async setToNetwork(answer) {
+    if(!this.coinInfo){
+      setTimeout(()=>{
+        this.setToNetwork(answer)
+      },1000)
+    }else if (Number(this.coinInfo.BET) < Number(answer.amount)) {
       let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
       modalRef.componentInstance.errType = 'error';
       modalRef.componentInstance.title = 'Insufficient BET';
