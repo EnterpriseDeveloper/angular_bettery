@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app.state';
 import { Answer } from '../../../../models/Answer.model';
 import { User } from '../../../../models/User.model';
-import _ from 'lodash';
 import { PostService } from '../../../../services/post.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -154,9 +153,9 @@ export class EventFeedComponent implements OnDestroy {
   }
 
   findAnswer(data) {
-    let findParticipiant = _.findIndex(data.parcipiantAnswers, { 'userId': this.userId });
+    let findParticipiant = data.parcipiantAnswers != undefined ? data.parcipiantAnswers.findIndex((x) => { return x.userId == this.userId }) : - 1;
     if (findParticipiant === -1) {
-      let findValidators = _.findIndex(data.validatorsAnswers, { 'userId': this.userId });
+      let findValidators = data.validatorsAnswers != undefined ? data.validatorsAnswers.findIndex((x) => { return x.userId == this.userId }) : -1;
       return {
         answer: findValidators != -1 ? data.validatorsAnswers[findValidators].answer : undefined,
         from: 'validator',
@@ -173,7 +172,7 @@ export class EventFeedComponent implements OnDestroy {
 
   commentById($event) {
     if ($event) {
-      const list = _.find(this.newQuestions, (o) => {
+      const list = this.newQuestions.find((o) => {
         return o.id == $event;
       });
       this.commentList = list;

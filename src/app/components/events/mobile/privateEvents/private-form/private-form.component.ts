@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import _ from 'lodash';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../app.state';
 import {PostService} from '../../../../../services/post.service';
@@ -54,7 +53,7 @@ export class PrivateFormComponent implements OnInit, OnDestroy {
       this.formValid = true;
       return;
     }
-    const index = _.findIndex(this.data.answers, (el => {
+    const index = this.data.answers.findIndex((el => {
       return el === answerForm.value.answer;
     }));
     this.sendToDb(index);

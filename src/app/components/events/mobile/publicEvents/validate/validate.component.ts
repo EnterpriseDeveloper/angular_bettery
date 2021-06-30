@@ -4,7 +4,6 @@ import { AppState } from '../../../../../app.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClipboardService } from 'ngx-clipboard'
 import { PostService } from '../../../../../services/post.service';
-import _ from "lodash";
 import { Subscription } from 'rxjs';
 import { User } from '../../../../../models/User.model';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
@@ -122,7 +121,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
 
   setToDBValidation(dataAnswer) {
     this.spinnerLoading = true;
-    var _whichAnswer = _.findIndex(this.eventData.answers, (o) => { return o == this.answerForm.value.answer; });
+    var _whichAnswer = this.eventData.answers.findIndex((o) => { return o == this.answerForm.value.answer; });
     let data = {
       event_id: dataAnswer.id,
       answer: _whichAnswer,

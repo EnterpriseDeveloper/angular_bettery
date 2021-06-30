@@ -3,7 +3,6 @@ import { PostService } from '../../../../../services/post.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard';
-import _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfoModalComponent } from '../../../../share/modals/info-modal/info-modal.component';
@@ -111,7 +110,7 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
 
   letsFindActivites(userData) {
     if (this.eventData.parcipiantAnswers) {
-      let findParts = _.find(this.eventData.parcipiantAnswers, (o) => {
+      let findParts = this.eventData.parcipiantAnswers.find((o) => {
         return o.userId == userData._id;
       });
       if (findParts) {
@@ -120,7 +119,7 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     if (this.eventData.validatorsAnswers) {
-      let findValid = _.find(this.eventData.validatorsAnswers, (o) => {
+      let findValid = this.eventData.validatorsAnswers.find((o) => {
         return o.userId == userData._id;
       });
       if (findValid) {

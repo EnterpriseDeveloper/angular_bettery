@@ -5,7 +5,6 @@ import {InfoModalComponent} from '../../../../share/modals/info-modal/info-modal
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../../app.state';
 import {Subscription} from 'rxjs';
-import _ from 'lodash';
 import {ClipboardService} from 'ngx-clipboard';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 
@@ -64,7 +63,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   }
 
   letsFindWinner(user) {
-    let findValidator = _.findIndex(this.eventData.validatorsAnswers, (x) => {
+    let findValidator = this.eventData.validatorsAnswers.findIndex((x) => {
       return x.userId == user._id;
     });
     if (findValidator !== -1) {
@@ -76,7 +75,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
       this.info = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? `Soon, users will get extra BET minted from events.` : 'You’ll lose Rep once Reputation system is added.';
     } else {
       if (this.eventData.parcipiantAnswers != undefined) {
-        let findPlayer = _.findIndex(this.eventData.parcipiantAnswers, (x) => {
+        let findPlayer = this.eventData.parcipiantAnswers.findIndex((x) => {
           return x.userId == user._id;
         });
         if (findPlayer !== -1) {
@@ -200,7 +199,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
     if (this.eventData.parcipiantAnswers == undefined) {
       return 0;
     } else {
-      let data = _.filter(this.eventData.parcipiantAnswers, (x) => {
+      let data = this.eventData.parcipiantAnswers.filter((x) => {
         return x.answer == i;
       });
       return data.length;
@@ -211,7 +210,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
     if (this.eventData.validatorsAnswers == undefined) {
       return 0;
     } else {
-      let data = _.filter(this.eventData.validatorsAnswers, (x) => {
+      let data = this.eventData.validatorsAnswers.filter((x) => {
         return x.answer == i;
       });
       return data.length + '/' + this.eventData.validatorsAnswers.length;
@@ -224,7 +223,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   }
 
   totalBetAmount(i) {
-    let data = _.filter(this.eventData.parcipiantAnswers, (x) => {
+    let data = this.eventData.parcipiantAnswers.filter((x) => {
       return x.answer == i;
     });
     if (data.length != 0) {
