@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 
 import { formDataAction } from '../../actions/newEvent.actions';
 import { environment } from '../../../environments/environment';
-import EN from '../../../assets/locale/en.json';
-import VN from '../../../assets/locale/vn.json';
+import EN from '../../../files/locale/en.json';
+import VN from '../../../files/locale/vn.json';
 import { PostService } from '../../services/post.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventsTemplatesDesktopComponent } from '../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';

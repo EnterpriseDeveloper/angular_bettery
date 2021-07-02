@@ -35,11 +35,12 @@
             "assets": [
               "src/favicon.ico",
               "src/.htaccess",
-              "src/serviceworker"
+              "src/serviceworker",
+              "src/files"
             ],
             "styles": [
               "src/styles.sass",
-              "src/assets/pretty-checkbox.min.css"
+              "src/files/pretty-checkbox.min.css"
             ],
             "scripts": [],
             "vendorChunk": true,
