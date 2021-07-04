@@ -39,7 +39,7 @@ import { RoomModule } from './components/rooms/rooms.module';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
-  return new TranslateHttpLoader(http, './assets/locale/', '.json');
+  return new TranslateHttpLoader(http, './files/locale/', '.json');
 }
 
 @NgModule({

@@ -2,8 +2,8 @@
   <div class="main bg-main">
     <div class="bg-basic-img">
       <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-           [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
-           class="container-fluid row d-flex align-items-center pb-2">
+        [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
+        class="container-fluid row d-flex align-items-center pb-2">
         <div class="col-3 col-lg-2 logo"></div>
         <div class="d-flex align-items-center col-lg-9 mt-4 pl-pr-0">
           <ul class="nav_bar">
@@ -14,20 +14,20 @@
               <a href="#getStarted" (click)="styleHideMen()" pageScroll>{{'NAVBAR.ITEM_2' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100"
-                 pageScroll>{{'NAVBAR.ITEM_3' | translate}}</a>
+              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
+                translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100"
-                 pageScroll>{{'NAVBAR.ITEM_4' | translate}}</a>
+              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' |
+                translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100"
-                 pageScroll>{{'NAVBAR.ITEM_5' | translate}}</a>
+              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' |
+                translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100"
-                 pageScroll>{{'NAVBAR.ITEM_6' | translate}}</a>
+              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' |
+                translate}}</a>
             </li>
             <li class="nav_bar_item">
               <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
@@ -52,19 +52,21 @@
       </nav>
 
       <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-           [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
-           class="mobile_nav container-fluid">
+        [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
+        class="mobile_nav container-fluid">
         <div class="d-flex align-items-center justify-content-between row">
           <div class="logo col-4 my-2"></div>
 
           <div class="btn_short col-4 d-flex justify-content-end">
             <div class="d-flex align-items-center">
               <div (click)="open(content)" class="mr-3">
-                <a href="#"><img style="width: 24px; height: 26px"
-                                 src="../../../assets/landingPage/questionMark.png" alt="tel"></a>
+                <a href="#">
+                  <div class="questionMark"></div>
+                </a>
               </div>
-              <div class="mobile_img_path mr-3"><a href="https://t.me/bettery_io" target="_blank"><img
-                src="../../../assets/landingPage/Path-yellowe2.png" alt="tel"></a></div>
+              <div class="mobile_img_path mr-3"><a href="https://t.me/bettery_io" target="_blank">
+                  <div class="pathYellow"></div>
+                </a></div>
               <div class="mr-2">
                 <select style="display: none" id="language" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
                   <option *ngFor="let language of languages" [value]="language.id">{{ language.id }}</option>
@@ -75,26 +77,26 @@
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="correct-left">
                   <a href="#social2" ngbDropdownItem pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="#getStarted" (click)="styleHideMen()" pageScroll
-                     ngbDropdownItem>{{'NAVBAR.ITEM_2' | translate}}</a>
+                  <a href="#getStarted" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_2' |
+                    translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="#whyBettery" (click)="styleHideMen()" pageScroll
-                     ngbDropdownItem>{{'NAVBAR.ITEM_3' | translate}}</a>
+                  <a href="#whyBettery" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_3' |
+                    translate}}</a>
 
                   <div class="dropdown-divider"></div>
-                  <a href="#tokenSale" (click)="styleHideMen()" pageScroll
-                     ngbDropdownItem>{{'NAVBAR.ITEM_4' | translate}}</a>
+                  <a href="#tokenSale" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_4' |
+                    translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="#roadmap" (click)="styleHideMen()" pageScroll
-                     ngbDropdownItem>{{'NAVBAR.ITEM_5' | translate}}</a>
+                  <a href="#roadmap" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_5' |
+                    translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="#team" (click)="styleHideMen()" pageScroll
-                     ngbDropdownItem>{{'NAVBAR.ITEM_6' | translate}}</a>
+                  <a href="#team" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_6' |
+                    translate}}</a>
                   <div class="dropdown-divider"></div>
                   <a href="#BusinessDemo" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_7' | translate}}</a>
                   <div class="dropdown-divider"></div>
-                  <a href="https://friendlybets.medium.com/" target="_blank"
-                     ngbDropdownItem>{{'NAVBAR.ITEM_8' | translate}}</a>
+                  <a href="https://friendlybets.medium.com/" target="_blank" ngbDropdownItem>{{'NAVBAR.ITEM_8' |
+                    translate}}</a>
                 </div>
               </div>
             </div>
@@ -113,10 +115,10 @@
                 </div>
                 <div>
                   <h1>
-                  <span class="green_wrapper">
+                    <span class="green_wrapper">
                       <span class="green">{{ 'HEADER.TITLE_PART_2' | translate }}</span>
                       <span class="green-text">{{ 'HEADER.TITLE_PART_2' | translate }}</span>
-                  </span>
+                    </span>
                   </h1>
                 </div>
               </div>
@@ -124,12 +126,9 @@
                 <p>{{'HEADER.TEXT' | translate}}</p>
               </div>
 
-              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'"
-                            [strings]="topQuestions"
-                            [typeSpeed]="60" [backSpeed]="20" [loop]="true"
-                            (stringTyped)="sendDefaultEvent($event)"
-                            (preStringTyped)="renovationDefaultEvent()"
-              >
+              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
+                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                (preStringTyped)="renovationDefaultEvent()">
                 <div class="pencil">
                   <div class="text">
                     <span class="typing a" (mouseenter)="showPopover()"></span>
@@ -143,12 +142,9 @@
                 </div>
               </ngx-typed-js>
 
-              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'"
-                            [strings]="topQuestions"
-                            [typeSpeed]="60" [backSpeed]="20" [loop]="true"
-                            (stringTyped)="sendDefaultEvent($event)"
-                            (preStringTyped)="renovationDefaultEvent()"
-              >
+              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'" [strings]="topQuestions"
+                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                (preStringTyped)="renovationDefaultEvent()">
                 <div class="pencil">
                   <div class="text">
                     <span class="typing" (mouseenter)="showPopover()" (mouseleave)="hidePopover()"></span>
@@ -163,33 +159,32 @@
                 </div>
               </ngx-typed-js>
 
-              <input [(ngModel)]="newCreateEvent" *ngIf="active" autofocus class="headerInput" type="text"
-                     id="newEvent" name="newEvent"
-                     placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
+              <input [(ngModel)]="newCreateEvent" *ngIf="active" autofocus class="headerInput" type="text" id="newEvent"
+                name="newEvent" placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
               <div class="btn_title row">
                 <div class="col-lg-3 col-12 pr-0">
                   <button *ngIf="isMobile" class="btn btn-success" routerLink="/create-event"
-                          (click)="sendEvent()">{{'HEADER.BUTTON_TEXT' | translate}}
+                    (click)="sendEvent()">{{'HEADER.BUTTON_TEXT' | translate}}
                   </button>
-                  <button *ngIf="!isMobile" class="btn btn-success"
-                          (click)="sendEventDesktop()" routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
+                  <button *ngIf="!isMobile" class="btn btn-success" (click)="sendEventDesktop()"
+                    routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
                   </button>
                 </div>
                 <div *ngIf="eventData && eventData?.length != 0" class="dropText col-lg-5 col-12 px-0">
-                  <p (click)="dropDown()">{{'HEADER.OR_JOIN.1' | translate}}
-                    ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})<img class="ml-1"
-                                                                                   src="{{dropDownSwitch ? '../../../assets/landingPage/triangle-open.png' : '../../../assets/landingPage/triangle-close.png'}}"
-                                                                                   alt="triangle"></p>
+                  <div (click)="dropDown()" style="display: inline-flex;">{{'HEADER.OR_JOIN.1' | translate}}
+                    ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})<div class="ml-1" style="margin-top: 8px;"
+                      [ngClass]="{'toggleDown' : dropDownSwitch, 'toggleUp': !dropDownSwitch}" alt="triangle"></div>
+                  </div>
                 </div>
               </div>
               <div [class]="dropDownSwitch ? 'dropdown_box_show' : ''" class="dropdown_box col-lg-7 col-12 mt-3">
                 <ul class="dropdown_list ">
                   <li *ngFor="let event of eventData">
                     <p>{{event['publicEvents/question']}}</p>
-                    <button *ngIf="isMobile" class="btn"
-                            routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' | translate}}</button>
+                    <button *ngIf="isMobile" class="btn" routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' |
+                      translate}}</button>
                     <button *ngIf="!isMobile" class="btn" (click)="getSaveId(event?._id)"
-                            routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
+                      routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
                   </li>
                 </ul>
               </div>
@@ -338,7 +333,7 @@
               <div class="four_card">
                 <div class="mb-2">
                   <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <img src="../../../assets/landingPage/Fill.png" alt="fill">
+                    <div class="fillImg"></div>
                   </div>
                 </div>
                 <div class="mb-2">
@@ -354,7 +349,7 @@
               <div class="four_card">
                 <div class="mb-2">
                   <div class="img_bg_yellow d-flex justify-content-center align-items-center correct-img">
-                    <img src="../../../assets/landingPage/between.png" alt="between">
+                    <div class="between_img"></div>
                   </div>
                 </div>
                 <div class="mb-2">
@@ -370,7 +365,7 @@
               <div class="four_card">
                 <div class="mb-2">
                   <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <img src="../../../assets/landingPage/money.png" alt="money">
+                    <div class="money_img"></div>
                   </div>
                 </div>
                 <div class="mb-2">
@@ -386,7 +381,7 @@
               <div class="four_card">
                 <div class="mb-2">
                   <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <img src="../../../assets/landingPage/last.png" alt="1">
+                    <div class="last_img"></div>
                   </div>
                 </div>
                 <div class="mb-2">
@@ -414,8 +409,8 @@
               <div class="tokenSale-btn">
                 <button routerLink="/tokensale">{{'TOKEN_SALE.JOIN_TOKEN_SALE' | translate}}</button>
                 <a class="mt-1"
-                   href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
-                   target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
+                  href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
+                  target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
               </div>
             </div>
             <div class="col-lg-5 col-xs-12 tokenSale-right">
@@ -448,8 +443,8 @@
             </div>
             <div class="px-lg-5">
               <p>{{'ROADMAP.TEXT_1' | translate}}<a style="color: inherit; text-decoration: underline"
-                                                    href="https://trello.com/b/ttywM11r/bettery-roadmap"
-                                                    target="_blank">{{'ROADMAP.TEXT_2' | translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
+                  href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">{{'ROADMAP.TEXT_2' |
+                  translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
               </p>
             </div>
           </div>
@@ -463,9 +458,11 @@
                   <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
                 </a>
               </div>
-              <div class="text-center"><p><span>{{'ROADMAP.DATE_1' | translate}}</span></p></div>
-              <div class="green-box before-correct"
-                   style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</div>
+              <div class="text-center">
+                <p><span>{{'ROADMAP.DATE_1' | translate}}</span></p>
+              </div>
+              <div class="green-box before-correct" style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1' | translate}}
+              </div>
             </div>
 
             <div class="col-lg-3 col-xs-12 col-sm-6">
@@ -474,7 +471,9 @@
                   <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
                 </a>
               </div>
-              <div class="text-center"><p>{{'ROADMAP.DATE_2' | translate}}</p></div>
+              <div class="text-center">
+                <p>{{'ROADMAP.DATE_2' | translate}}</p>
+              </div>
               <div class="green-box before-correct">{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</div>
             </div>
 
@@ -484,7 +483,9 @@
                   <p class="pr-3 pl-2">{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
                 </a>
               </div>
-              <div class="text-center"><p>{{'ROADMAP.DATE_3' | translate}}</p></div>
+              <div class="text-center">
+                <p>{{'ROADMAP.DATE_3' | translate}}</p>
+              </div>
               <div class="green-box">{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</div>
             </div>
 
@@ -494,7 +495,9 @@
                   <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p>
                 </a>
               </div>
-              <div class="text-center"><p>{{'ROADMAP.DATE_4' | translate}}</p></div>
+              <div class="text-center">
+                <p>{{'ROADMAP.DATE_4' | translate}}</p>
+              </div>
               <div class="green-box">{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</div>
             </div>
             <div class="hr"></div>
@@ -516,7 +519,9 @@
                 </div>
                 <div class="card-mob-text pt-4  pb-1">
                   <div>
-                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p></b>
+                    <b>
+                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+                    </b>
                   </div>
                   <div class="p-3 ">
                     <p>{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</p>
@@ -531,7 +536,9 @@
                 </div>
                 <div class="card-mob-text pt-4  pb-1">
                   <div>
-                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p></b>
+                    <b>
+                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
+                    </b>
                   </div>
                   <div class="p-3 ">
                     <p>{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</p>
@@ -546,7 +553,9 @@
                 </div>
                 <div class="card-mob-text pt-4  pb-1">
                   <div>
-                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p></b>
+                    <b>
+                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
+                    </b>
                   </div>
                   <div class="p-3 ">
                     <p>{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</p>
@@ -561,7 +570,9 @@
                 </div>
                 <div class="card-mob-text pt-4  pb-1">
                   <div>
-                    <b><p>{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p></b>
+                    <b>
+                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p>
+                    </b>
                   </div>
                   <div class="p-3 ">
                     <p>{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</p>
@@ -590,13 +601,14 @@
                 <p>{{'TEAM.FEDOR.STATUS' | translate}}</p>
               </div>
               <div class="team_card_text">
-                <p><span
-                  class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.FEDOR.EXPERTISE' | translate}}</p>
+                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.FEDOR.EXPERTISE' |
+                  translate}}</p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.FEDOR.PASSION' | translate}}
                 </p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar2"></div>
@@ -609,8 +621,9 @@
                 </p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SIM.PASSION' | translate}}</p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar3"></div>
@@ -619,13 +632,14 @@
                 <p>{{'TEAM.MAXIM.STATUS' | translate}}</p>
               </div>
               <div class="team_card_text">
-                <p><span
-                  class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.MAXIM.EXPERTISE' | translate}}</p>
+                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.MAXIM.EXPERTISE' |
+                  translate}}</p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.MAXIM.PASSION' | translate}}
                 </p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar4"></div>
@@ -634,13 +648,14 @@
                 <p>{{'TEAM.SHANE.STATUS' | translate}}</p>
               </div>
               <div class="team_card_text">
-                <p><span
-                  class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SHANE.EXPERTISE' | translate}}</p>
+                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SHANE.EXPERTISE' |
+                  translate}}</p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SHANE.PASSION' | translate}}
                 </p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar5"></div>
@@ -649,13 +664,14 @@
                 <p>{{'TEAM.NELSON.STATUS' | translate}}</p>
               </div>
               <div class="team_card_text">
-                <p><span
-                  class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.NELSON.EXPERTISE' | translate}}</p>
+                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.NELSON.EXPERTISE' |
+                  translate}}</p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.NELSON.PASSION' | translate}}
                 </p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar6"></div>
@@ -668,8 +684,9 @@
                 </p>
                 <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.KEN.PASSION' | translate}}</p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
             <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
               <div class="img_team_avatar7"></div>
@@ -680,8 +697,9 @@
               <div class="team_card_text">
                 <p>{{'TEAM.TEXT' | translate}}</p>
               </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank"><img
-                src="../../../assets/landingPage/linkedin-square.png" alt="linkedin"></a></div>
+              <div class="img_team_linkedin"><a href="https://www.linkedin.com/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
             </div>
           </div>
         </div>
@@ -727,23 +745,20 @@
             <form [formGroup]="form" (ngSubmit)="subscribe()">
               <div class="input-group mb-3 focus">
                 <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
-                       formControlName="email"
-                       [ngClass]="submitted && f.email.errors && 'subscibeError'"
-                       aria-label="Recipient's username"
-                       aria-describedby="basic-addon2">
+                  formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
+                  aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                  <button [disabled]="subscribed" class="btn btn-outline-secondary"
-                          type="submit">
+                  <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
                     <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
                     <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
                   </button>
                 </div>
               </div>
               <div *ngIf="submitted && f.email.errors">
-                <small *ngIf="f.email.errors.required"
-                       class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
-                <small *ngIf="f.email.errors.email"
-                       class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' | translate}}</small>
+                <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' |
+                  translate}}</small>
+                <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' |
+                  translate}}</small>
               </div>
             </form>
             <div class="policy-box">
@@ -779,7 +794,9 @@
         <div class="vertical-hr h-100"></div>
       </div>
       <div class="col-12 col-sm-3 modal_right d-flex align-items-center flex-column">
-        <div><p>Bettery Pitch Deck</p></div>
+        <div>
+          <p>Bettery Pitch Deck</p>
+        </div>
         <div class="slide_img mt-3 mb-3"></div>
         <div><a href="#">{{'MODAL.DOWNLOAD' | translate}}</a></div>
       </div>

@@ -34,9 +34,9 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
               "src/.htaccess",
               "src/serviceworker",
+              "src/files",
               {
                 "glob": "**/*",
                 "input": "src/.well-known",
@@ -45,7 +45,7 @@
             ],
             "styles": [
               "src/styles.sass",
-              "src/assets/pretty-checkbox.min.css"
+              "src/files/pretty-checkbox.min.css"
             ],
             "scripts": [],
             "vendorChunk": true,

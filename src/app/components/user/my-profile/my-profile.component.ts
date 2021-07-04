@@ -72,7 +72,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
 
   getIcon(icon) {
     return {
-      'background': `url("../../../../assets/profile/${icon}.png") center center no-repeat`,
+      'background': `url("../../../../files/profile/${icon}.png") center center no-repeat`,
       'background-size': 'contain',
       'width': '20px',
       'height': '20px',

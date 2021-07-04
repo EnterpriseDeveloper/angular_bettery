@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import GradientJSON from '../../../../../assets/gradients.json';
+import GradientJSON from '../../../../../files/gradients.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component'
 import { PostService } from '../../../../services/post.service';
