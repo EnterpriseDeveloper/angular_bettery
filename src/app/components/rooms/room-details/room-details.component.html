@@ -1,6 +1,6 @@
 <div *ngIf="!isMobile" class="main-bg" [ngClass]="spinner && 'main-bg-spinner'">
   <div id="top" class="container containerFor1920">
-    <div *ngIf="!spinner" routerLink="/rooms" [queryParams]="{page: fromPage, sort: sort }" class="back">
+    <div *ngIf="!spinner" routerLink="/rooms" [queryParams]="{page: fromPage, sort: sort, search: search }" class="back">
       << Back to Rooms </div>
 
         <div class="lds-ripple" *ngIf="spinner">

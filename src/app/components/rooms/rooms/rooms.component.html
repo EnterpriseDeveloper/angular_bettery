@@ -16,23 +16,23 @@
   <div class="middle row">
     <div class=" middle-wrap d-flex col-xl-8 col-lg-8">
       <div (click)="showAllRooms()" class="btn-middle"
-        [ngClass]="(btnMiddleActive === 'show_all_room' || btnMiddleActive === 'search')  && 'btn-middle-active'">
+        [ngClass]="(btnMiddleActive === ALL_ROOM || btnMiddleActive === SEARCH)  && 'btn-middle-active'">
         <div class="square-9-img mr-3"
-          [ngClass]="btnMiddleActive === 'show_all_room' ? 'square-9-img' : 'square-dis-img'"></div>
+          [ngClass]="btnMiddleActive === ALL_ROOM ? 'square-9-img' : 'square-dis-img'"></div>
         <span>Discover</span>
       </div>
       <div (click)="showUsersRoom()" class="btn-middle"
-        [ngClass]="btnMiddleActive === 'show_users_room' && 'btn-middle-active'">
-        <div [ngClass]="btnMiddleActive === 'show_users_room' ? 'my-room-img' : 'deactivate-2'">
+        [ngClass]="btnMiddleActive === SHOW_USERS_ROOM && 'btn-middle-active'">
+        <div [ngClass]="btnMiddleActive === SHOW_USERS_ROOM ? 'my-room-img' : 'deactivate-2'">
         </div>
         <span>My Rooms</span>
       </div>
       <div (click)="showJoinedRoom()" class="btn-middle"
-        [ngClass]="btnMiddleActive === 'joined_room' && 'btn-middle-active'">
-        <div [ngClass]="btnMiddleActive === 'joined_room' ? 'joinedRoom-active-img' : 'joinedRoom-dis-img'"></div>
+        [ngClass]="btnMiddleActive === JOINED_ROOM && 'btn-middle-active'">
+        <div [ngClass]="btnMiddleActive === JOINED_ROOM ? 'joinedRoom-active-img' : 'joinedRoom-dis-img'"></div>
         <span>Joined Rooms</span>
       </div>
-      <div class="btn-middle" [ngClass]="btnMiddleActive === 'search' && 'btn-middle-active'">
+      <div class="btn-middle" [ngClass]="btnMiddleActive === SEARCH && 'btn-middle-active'">
         <div (click)="showSearchInput()" class="search-img"></div>
         <input [(ngModel)]="searchWord" (keyup)="letsFindRooms($event)" class="search-input"
           [ngClass]="showInputFlag && 'search-input-active'" type="text">
@@ -101,7 +101,7 @@
                 <p>No Events at the moment</p>
               </div>
               <div class="join-room">
-                <button routerLink="/room/{{room.id}}" [queryParams]="{from: pageRoom, sort: btnMiddleActive }">View Room</button>
+                <button routerLink="/room/{{room.id}}" [queryParams]="{from: pageRoom, sort: btnMiddleActive,  search: codeSearchWord }">View Room</button>
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <div class="notFound" *ngIf="btnMiddleActive === 'show_users_room' && roomsSort?.length === 0 && spinner == true">
+    <div class="notFound" *ngIf="btnMiddleActive === SHOW_USERS_ROOM && roomsSort?.length === 0 && spinner == true">
       <div class="noCreateEvents-img"></div>
 
       <div class="notFound-title">
@@ -127,7 +127,7 @@
       </div>
     </div>
 
-    <div class="notFound" *ngIf="btnMiddleActive === 'joined_room' && roomsSort?.length === 0 && spinner == true">
+    <div class="notFound" *ngIf="btnMiddleActive === JOINED_ROOM && roomsSort?.length === 0 && spinner == true">
       <div class="joinedRooms-img"></div>
 
       <div class="notFound-title">
