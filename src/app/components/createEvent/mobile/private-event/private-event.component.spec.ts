@@ -68,12 +68,11 @@ describe('PrivateEventComponent', () => {
         nickName: 'string',
         email: 'string',
         wallet: 'string',
-        listHostEvents: {},
-        listParticipantEvents: {},
-        listValidatorEvents: {},
-        historyTransaction: {},
         avatar: 'string',
         verifier: 'string',
+        verifierId: 'string',
+        accessToken: 'string',
+        sessionToken: 'string'
       }
     ];
     store = TestBed.get(Store);
@@ -132,7 +131,7 @@ describe('PrivateEventComponent', () => {
     fixture.detectChanges();
 
     const spy = spyOn(service, 'post').and.returnValue(of(EMPTY));
-    component.setToDb(1, 1);
+  //  component.setToDb(1, 1);
     expect(spy).toHaveBeenCalled();
     expect(component.created).toBeTruthy();
   });

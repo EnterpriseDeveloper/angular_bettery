@@ -121,23 +121,21 @@ export class RegistrationComponent implements OnDestroy {
       this.torusRegistSub = this.http.post('user/torus_regist', data)
         .subscribe(
           (x: User) => {
-            this.addUser(
-              x.email,
-              x.nickName,
-              x.wallet,
-              x.listHostEvents,
-              x.listParticipantEvents,
-              x.listValidatorEvents,
-              x.historyTransaction,
-              x.avatar,
-              x._id,
-              x.verifier,
-              x.sessionToken,
-              x.verifierId,
-              x.accessToken = userInfo.userInfo.accessToken
-            );
+            this.store.dispatch(new UserActions.AddUser({
+              _id: x._id,
+              email: x.email,
+              nickName: x.nickName,
+              wallet: x.wallet,
+              avatar: x.avatar,
+              verifier: x.verifier,
+              sessionToken: x.sessionToken,
+              verifierId: x.verifierId,
+              accessToken: x.accessToken
+            }));
             this.spinner = false;
             this.alreadyRegister = undefined;
+            this.submitted = false;
+            this.activeModal.dismiss('Cross click');
           }, async (err) => {
             if (err.status == 302) {
               this.alreadyRegister = err.error;
@@ -163,41 +161,6 @@ export class RegistrationComponent implements OnDestroy {
 
   closeModal() {
     this.closedWindow.next();
-    this.activeModal.dismiss('Cross click');
-  }
-
-  addUser(
-    email: string,
-    nickName: string,
-    wallet: string,
-    listHostEvents: Object,
-    listParticipantEvents: Object,
-    listValidatorEvents: Object,
-    historyTransaction: Object,
-    avatar: string,
-    _id: number,
-    verifier: string,
-    sessionToken: string,
-    verifierId: string,
-    accessToken: string
-  ) {
-
-    this.store.dispatch(new UserActions.AddUser({
-      _id: _id,
-      email: email,
-      nickName: nickName,
-      wallet: wallet,
-      listHostEvents: listHostEvents,
-      listParticipantEvents: listParticipantEvents,
-      listValidatorEvents: listValidatorEvents,
-      historyTransaction: historyTransaction,
-      avatar: avatar,
-      verifier: verifier,
-      sessionToken: sessionToken,
-      verifierId: verifierId,
-      accessToken: accessToken
-    }));
-    this.submitted = false;
     this.activeModal.dismiss('Cross click');
   }
 
