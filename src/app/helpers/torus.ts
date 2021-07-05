@@ -69,12 +69,23 @@ const init = async () => {
   let torSdk = new TorusSdk({
     baseUrl: `${location.origin}/serviceworker`,
     enableLogging: true,
+    redirectPathName: getRedirect(),
     network: torusNetwork
   });
 
   await torSdk.init();
   return torSdk
 }
+
+const getRedirect = () => {
+  if (/CriOS/i.test(navigator.userAgent) && /iphone|ipod|ipad/i.test(navigator.userAgent)) {
+    return 'redirect.html';
+  } else {
+    return undefined;
+  }
+}
+
+
 
 
 const verifierMap = (selectedVerifier) => {
