@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { RouterModule } from '@angular/router';
+import {Router, Event, Scroll, RouterModule} from '@angular/router';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AvatarModule } from 'ngx-avatar';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
@@ -37,6 +37,8 @@ import { SwiperModule } from 'swiper/angular';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { RoomModule } from './components/rooms/rooms.module';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
+import {ViewportScroller} from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './assets/locale/', '.json');
@@ -76,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
       { path: '', component: HomeComponent },
       { path: 'tokensale', component: ErcCoinSaleComponent },
       { path: 'privacy-policy', component: PrivacyPolicyComponent },
-    ], { scrollPositionRestoration: 'top' }),
+    ]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -100,4 +102,13 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   ]
 })
 export class AppModule {
+  constructor(router: Router, viewportScroller: ViewportScroller) {
+    router.events.pipe(
+      filter((e: Event): e is Scroll => e instanceof Scroll)
+    ).subscribe(e => {
+      if (!router.url.includes('rooms')) {
+        viewportScroller.scrollToPosition([0, 0]);
+      }
+    });
+  }
 }
