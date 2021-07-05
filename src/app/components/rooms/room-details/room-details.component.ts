@@ -55,6 +55,7 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
   isMobile: boolean;
   fromPage: number;
   sort: string;
+  search: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -100,9 +101,11 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       if (Object.keys(param).length === 0) {
         this.fromPage = 1;
         this.sort = 'show_all_room';
+        this.search = null;
       } else {
         this.fromPage = +param.from;
         this.sort = param.sort;
+        param.search ? this.search = param.search : this.search = null;
       }
     });
   }
