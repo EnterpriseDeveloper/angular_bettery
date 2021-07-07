@@ -5,7 +5,7 @@
         ],
         "target": {
             "namespace": "android_app",
-            "package_name": "bettery.io.app",
+            "package_name": "io.ionic.starter",
             "sha256_cert_fingerprints": [
                 "41:DE:6B:5B:CC:85:B9:7F:99:A5:06:13:1E:3F:EF:71:08:86:64:5A:57:E7:45:F3:63:BC:D3:39:FF:0F:CB:5E"
             ]
