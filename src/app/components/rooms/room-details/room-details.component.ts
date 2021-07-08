@@ -99,17 +99,39 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.route.queryParams.subscribe(param => {
-      if (Object.keys(param).length === 0) {
-        this.fromPage = 1;
-        this.sort = 'show_all_room';
-        this.search = null;
-      } else {
-        this.fromPage = +param.from;
-        this.sort = param.sort;
-        param.search ? this.search = param.search : this.search = null;
-      }
+
+
+    this.querySub = this.route.queryParams.subscribe(
+      (param: any) => {
+        if (Object.keys(param).length !== 0) {
+          this.resetQueryParam(param);
+          this.getParamsFromSession();
+        }
+      });
+  }
+
+  resetQueryParam(param) {
+    const data = {
+      from: param.from ? +param.from : 1,
+      sort: param.sort ?  param.sort : 'show_all_room',
+      search: param.search ? param.search : null,
+    };
+    sessionStorage.setItem('queryParams', JSON.stringify(data));
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams: {from: null, sort: null, search: null},
+      queryParamsHandling: 'merge'
     });
+  }
+
+  getParamsFromSession() {
+    const data = JSON.parse(sessionStorage.getItem('queryParams'));
+
+    if (data) {
+      this.fromPage = data.from;
+      this.sort = data.sort;
+      this.search = data.search;
+    }
   }
 
   scrollTo() {
