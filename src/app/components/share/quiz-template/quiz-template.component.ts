@@ -178,6 +178,17 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           this.allUserData = this.userData;
         }
       }
+
+      if (currentValue == undefined) {
+        this.question.usersAnswers = {
+          event_id: null,
+          answer: null,
+          from: null,
+          answered: null,
+          amount:   this.question.usersAnswers.amount,
+          betAmount: null,
+        };
+      }
     }
   }
 
@@ -543,7 +554,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   backgroundColorEventFinish(data) {
-    if (data.finalAnswer != this.myAnswers.answer && this.myAnswers.answer != undefined) {
+    if (this.userData && data.finalAnswer != this.myAnswers.answer && this.myAnswers.answer != undefined) {
       return {'background': '#FFEDED'};
     } else {
       return {'background': '#F4F4F4'};
