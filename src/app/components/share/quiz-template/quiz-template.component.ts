@@ -47,7 +47,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() index: number;
   @Input() question: Event;
   @Input('userData') userData: User;
-  @Input() myAnswers: Answer;
+  myAnswers: Answer;
   @Input() coinInfo: Coins;
   @Input() fromComponent: string;
 
@@ -88,6 +88,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.form = this.formBuilder.group({
       quickBet: [this.avgBet(this.question)],
     });
+    this.myAnswers = this.question.usersAnswers;
     this.myAnswers.amount = this.avgBet(this.question);
   }
 
