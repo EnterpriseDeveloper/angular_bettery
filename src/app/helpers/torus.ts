@@ -4,10 +4,12 @@ import { environment } from '../../environments/environment';
 import * as CryptoJS from 'crypto-js';
 
 const web3Obj = {
+  init: async () => {
+    web3Obj.torusdirectsdk = await init();
+  },
   login: async (selectedVerifier) => {
     let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
     try {
-      web3Obj.torusdirectsdk = await init();
       let conf: any = verifierMap(x)
       let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 

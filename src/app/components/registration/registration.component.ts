@@ -42,7 +42,9 @@ export class RegistrationComponent implements OnDestroy {
     private router: Router,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
-  ) { }
+  ) {
+    web3Obj.init();
+  }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.activeModal.close();
