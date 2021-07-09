@@ -78,7 +78,7 @@ const init = async () => {
 }
 
 const getRedirect = () => {
-  if (/CriOS/i.test(navigator.userAgent) && /iphone|ipod|ipad/i.test(navigator.userAgent)) {
+  if (/iphone|ipod|ipad/i.test(navigator.userAgent)) {
     return 'redirect.html';
   } else {
     return undefined;
