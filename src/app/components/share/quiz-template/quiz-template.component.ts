@@ -402,7 +402,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       amount: Number(answer.amount)
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
-        this.myAnswers.answered = true;
         this.updateUser();
         this.callGetData.next();
         this.disable = null;
@@ -453,7 +452,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       answer: answer.answer,
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
-        this.myAnswers.answered = true;
         this.updateUser();
         this.callGetData.next();
         this.validDisable = false;
