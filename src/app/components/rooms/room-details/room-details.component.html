@@ -52,7 +52,7 @@
               [ngClass]="(roomEvents.length === 0) && 'w-100'">
               <div *ngFor="let question of roomEvents; let index = index">
                 <quiz-template [joinRoom]="true" (commentIdEmmit)="commentById($event)" [coinInfo]="coinInfo"
-                  [index]="index" [myAnswers]="myAnswers[index]" [userData]="userData" [question]="question"
+                  [index]="index" [userData]="userData" [question]="question"
                   [fromComponent]="fromComponent" (callGetData)="getRoomEvent(0, scrollDistanceTo, searchWord)">
                 </quiz-template>
               </div>

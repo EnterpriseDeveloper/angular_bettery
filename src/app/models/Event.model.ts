@@ -1,3 +1,5 @@
+import {Answer} from './Answer.model';
+
 export interface EventModel {
   allAmountEvents: number;
   amount: number;
@@ -41,6 +43,7 @@ export interface Event {
   thumColor: string;
   thumImage: string;
   validatorsAnswers: ValidatorsAnswers[];
+  usersAnswers: Answer;
 }
 interface ValidatorsAnswers {
   answer: number;

@@ -40,12 +40,12 @@
                           <div [ngClass]="{'win_img': question.finalAnswer == i}"></div>
                           <div [ngClass]="{'cycle': question.finalAnswer != i && this.myAnswers?.answer != i}"></div>
                           <div class="display"
-                            [ngClass]="{'lost_box': question.finalAnswer != this.myAnswers?.answer && this.myAnswers?.answer == i}">
+                            [ngClass]="{'lost_box': userData && question.finalAnswer != this.myAnswers?.answer && this.myAnswers?.answer == i}">
                             <div class="lost_img"></div>
                           </div>
                         </div>
                         <div class="label answer-checkbox"
-                          [ngClass]="{'win_text': question.finalAnswer == i, 'lost_text': question.finalAnswer != this.myAnswers?.answer && this.myAnswers?.answer == i}">
+                          [ngClass]="{'win_text': question.finalAnswer == i, 'lost_text': userData &&  question.finalAnswer != this.myAnswers?.answer && this.myAnswers?.answer == i}">
                           {{answer}}</div>
                       </div>
                     </div>
@@ -107,7 +107,7 @@
               </div>
             </div>
             <div class="amount_box" [ngClass]="question?.host.id === userData?._id && 'earnedHost'" style="padding-right: 1px"
-              *ngIf="question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.betAmount > 0">
+              *ngIf="userData && question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.betAmount > 0">
               <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
                 <p class="winner_text">You earned</p>
                 <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{hostEarned(question)}}</p>
