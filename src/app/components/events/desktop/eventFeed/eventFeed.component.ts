@@ -122,10 +122,8 @@ export class EventFeedComponent implements OnDestroy {
       this.pureData = x;
       if (from == 0) {
         this.newQuestions = this.pureData.events;
-        this.myAnswers = this.getAnswers(this.newQuestions);
       } else {
         this.pureData.events.forEach(el => this.newQuestions.push(el));
-        this.myAnswers = this.getAnswers(this.newQuestions);
       }
       if (this.timelineActive) {
         this.timelineActive = false;
@@ -137,37 +135,6 @@ export class EventFeedComponent implements OnDestroy {
       this.spinner = false;
       console.log(err);
     });
-  }
-
-  getAnswers(x) {
-    return x.map((data) => {
-      return {
-        event_id: data.id,
-        answer: this.findAnswer(data).answer,
-        from: this.findAnswer(data).from,
-        answered: this.findAnswer(data).answer != undefined ? true : false,
-        amount: 0,
-        betAmount: this.findAnswer(data).amount
-      };
-    });
-  }
-
-  findAnswer(data) {
-    let findParticipiant = data.parcipiantAnswers != undefined ? data.parcipiantAnswers.findIndex((x) => { return x.userId == this.userId }) : - 1;
-    if (findParticipiant === -1) {
-      let findValidators = data.validatorsAnswers != undefined ? data.validatorsAnswers.findIndex((x) => { return x.userId == this.userId }) : -1;
-      return {
-        answer: findValidators != -1 ? data.validatorsAnswers[findValidators].answer : undefined,
-        from: 'validator',
-        amount: 0
-      };
-    } else {
-      return {
-        answer: data.parcipiantAnswers[findParticipiant].answer,
-        from: 'participant',
-        amount: data.parcipiantAnswers[findParticipiant].amount
-      };
-    }
   }
 
   commentById($event) {

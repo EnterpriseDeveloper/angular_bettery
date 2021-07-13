@@ -29,7 +29,6 @@
               <div *ngFor="let newQuestion of newQuestions; let index = index">
                 <quiz-template (commentIdEmmit)="commentById($event)" [coinInfo]="coinInfo"
                                [index]="index"
-                               [myAnswers]="myAnswers[index]"
                                [userData]="userData"
                                [question]="newQuestion"
                                [fromComponent]="fromComponent"

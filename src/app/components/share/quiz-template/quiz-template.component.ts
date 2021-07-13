@@ -47,7 +47,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Input() index: number;
   @Input() question: Event;
   @Input('userData') userData: User;
-  @Input() myAnswers: Answer;
+  myAnswers: Answer;
   @Input() coinInfo: Coins;
   @Input() fromComponent: string;
 
@@ -88,6 +88,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.form = this.formBuilder.group({
       quickBet: [this.avgBet(this.question)],
     });
+    this.myAnswers = this.question.usersAnswers;
     this.myAnswers.amount = this.avgBet(this.question);
   }
 
@@ -176,6 +177,17 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.allUserData === undefined || currentValue._id !== this.allUserData._id) {
           this.allUserData = this.userData;
         }
+      }
+
+      if (currentValue == undefined) {
+        this.question.usersAnswers = {
+          event_id: null,
+          answer: null,
+          from: null,
+          answered: null,
+          amount:   this.question.usersAnswers.amount,
+          betAmount: null,
+        };
       }
     }
   }
@@ -390,7 +402,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       amount: Number(answer.amount)
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
-        this.myAnswers.answered = true;
         this.updateUser();
         this.callGetData.next();
         this.disable = null;
@@ -441,7 +452,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       answer: answer.answer,
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
-        this.myAnswers.answered = true;
         this.updateUser();
         this.callGetData.next();
         this.validDisable = false;
@@ -542,7 +552,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   backgroundColorEventFinish(data) {
-    if (data.finalAnswer != this.myAnswers.answer && this.myAnswers.answer != undefined) {
+    if (this.userData && data.finalAnswer != this.myAnswers.answer && this.myAnswers.answer != undefined) {
       return {'background': '#FFEDED'};
     } else {
       return {'background': '#F4F4F4'};
