@@ -16,10 +16,11 @@ export class ProfileComponent implements OnInit {
   storeUserSubscribe: Subscription;
   userData: User = undefined;
 
+
   constructor(
     private store: Store<AppState>,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
   ) {
     this.storeUserSubscribe = this.store.select('user').subscribe((x: User[]) => {
       if (x.length === 0) {
@@ -33,11 +34,13 @@ export class ProfileComponent implements OnInit {
         }
       } else {
         this.userData = x[0];
+
       }
     });
   }
 
   ngOnInit(): void {
+
   }
 
   ngOnDestroy() {

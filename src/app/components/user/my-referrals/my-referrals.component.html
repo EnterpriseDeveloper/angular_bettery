@@ -1,0 +1,33 @@
+<div class="box" *ngIf="userData != undefined">
+  <p class="my_prof">MY Referrals</p>
+  <div class='my_profile_box'>
+    <div class="main_box" style="padding-right: 0">
+      <div class="container bootstrap snippets bootdey">
+        <div class="row">
+          <div class="col-md-12" style="margin-right: 0; padding-right: 0">
+            <div class="levels">
+              <div class="level_box">
+                <div class="level_type"><div class="level_type_value">Level 1</div></div>
+                <div class="level_amount"><span class="level_amount_value">{{refData?.level1}}</span></div>
+
+              </div>
+              <div class=" level_box">
+                <div class="level_type"><div class="level_type_value">Level 2</div></div>
+                <div class="level_amount level_2_amount"><span>{{refData?.level2}}</span></div>
+
+              </div>
+              <div class=" level_box ">
+                <div class="level_type"><div class="level_type_value">Level 3</div></div>
+                <div class="level_amount level_3_amount"><span>{{refData?.level3}}</span></div>
+
+              </div>
+            </div>
+            <div class="referrals_block">
+              <app-referral [invitedUsers]="invitedUsers"></app-referral>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -42,7 +42,9 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
-  ) { }
+  ) {
+
+  }
 
   ngOnChanges(changes) {
     if (changes['userData'].currentValue) {
