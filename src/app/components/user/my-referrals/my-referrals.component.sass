@@ -7,6 +7,11 @@
   color: #0B1511
   padding-top: 31px
 
+.d_flex_alight_justify_center
+  display: flex
+  align-items: center
+  justify-content: center
+
 .avatar
   width: 110px
   height: 110px
@@ -30,7 +35,7 @@
   padding: 15px
 
 .box
-  width: 50%
+  max-width: 600px
 
 .my_profile_box
   background: #FFFFFF
@@ -41,7 +46,6 @@
 .main_box
   padding: 25px
   width: fit-content
-  height: 692px
 
 .name_box
   background: #F2F2F2
@@ -246,11 +250,13 @@
   display: flex
   justify-content: space-between
   align-items: center
+
   & h4
     font-weight: bold
     font-size: 14px
     line-height: 19px
     color: #0B1511
+
   & p
     font-size: 10px
     line-height: 14px
@@ -272,9 +278,9 @@
 
 .name_box_input:active
   outline: none
+
 .name_box_input:focus
   outline: none
-
 
 
 hr
@@ -339,7 +345,6 @@ a
   color: #6b6e80
 
 
-
 .blog-comment .meta
   font-size: 13px
   color: #aaaaaa
@@ -370,9 +375,7 @@ a
 .levels
   display: flex
   column-gap: 19px
-
-
-
+  padding-right: 40px
 
 .level_type
   display: flex
@@ -381,14 +384,11 @@ a
   width: 100%
   height: 19px
   margin: 0
-  font-family: Open Sans sans-serif
   font-style: normal
   font-weight: bold
   font-size: 14px
   line-height: 19px
   color: #0B1511
-
-
 
 
 .level_type_value
@@ -398,37 +398,30 @@ a
   padding: 0
 
 .level_amount
- width: 152.62px
- height: 48px
-
- background: #FFFBE7
- border-radius: 8px
-
-
-
- font-family: Open Sans sans-serif
- font-style: normal
- font-weight: 800
- font-size: 32px
- line-height: 44px
- text-align: center
- color: #FFD300
+  width: 152.62px
+  height: 48px
+  background: #FFFBE7
+  border-radius: 8px
+  font-style: normal
+  font-weight: 800
+  font-size: 32px
+  line-height: 44px
+  text-align: center
+  color: #FFD300
 
 .level_2_amount
   background: #EAFFF4
-  &span
-   color: #54DD96
+  color: #54DD96
 
 .level_3_amount
   background: #F5F5F5
-
   color: #5C5C5C
 
 .referrals_block
   width: 100%
   margin-top: 26px
   height: 500px
-  overflow: scroll
+  overflow: overlay
   max-height: 500px
   flex: 1
   background-color: transparent
@@ -440,20 +433,80 @@ a
   height: 20px
   z-index: 5
   position: absolute
-  scroll-margin-right: 10px
+
 
 .referrals_block::-webkit-scrollbar-track
   z-index: 5
   position: absolute
-  scroll-margin-right: 10px
   background-color: transparent
 
 .referrals_block::-webkit-scrollbar-thumb
-  background: #FF0000
-  height: 5px !important
+  background: #54DD96
+  height: 5px
   z-index: 5
   position: absolute
-  scroll-margin-right: 10px
 
+.noRefs
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  padding-bottom: 150px
 
+  span
+    display: block
+    font-style: normal
+    font-weight: 800
+    font-size: 20px
+    line-height: 27px
+    text-align: center
+    text-transform: uppercase
+    color: #939393
 
+.ref_link_btn
+  display: flex
+  align-items: center
+  justify-content: center
+  margin-top: 15px
+  background: #FFD300
+  border-radius: 8px
+  width: 209px
+  height: 32px
+  cursor: pointer
+
+  span
+    font-style: normal
+    font-weight: bold
+    font-size: 16px
+    line-height: 22px
+    text-align: center
+    text-decoration-line: underline
+    text-transform: uppercase
+
+    color: #FFFFFF
+
+.myRefIcon
+  position: relative
+  margin-right: 5px
+  top: 2px
+  width: 20px
+  height: 18px
+  background-image: url("../../../../assets/referrals/myRefIcon.png")
+
+.ref_sys_info
+  margin-top: 8px
+  display: flex
+  align-items: center
+  justify-content: center
+
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    display: flex
+    align-items: center
+    text-align: center
+    text-transform: none
+    text-decoration-line: underline
+    color: #54DD96

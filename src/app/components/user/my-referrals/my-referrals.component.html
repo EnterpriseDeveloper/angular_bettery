@@ -7,23 +7,45 @@
           <div class="col-md-12" style="margin-right: 0; padding-right: 0">
             <div class="levels">
               <div class="level_box">
-                <div class="level_type"><div class="level_type_value">Level 1</div></div>
-                <div class="level_amount"><span class="level_amount_value">{{refData?.level1}}</span></div>
+                <div class="level_type">
+                  <div class="level_type_value">Level 1</div>
+                </div>
+                <div class="level_amount d_flex_alight_justify_center"><span
+                  class="level_amount_value">{{refData ? refData?.level1 : 0}}</span></div>
 
               </div>
               <div class=" level_box">
-                <div class="level_type"><div class="level_type_value">Level 2</div></div>
-                <div class="level_amount level_2_amount"><span>{{refData?.level2}}</span></div>
+                <div class="level_type">
+                  <div class="level_type_value">Level 2</div>
+                </div>
+                <div class="level_amount level_2_amount d_flex_alight_justify_center">
+                  <span>{{refData ? refData.level2 : 0}}</span>
+                </div>
 
               </div>
               <div class=" level_box ">
-                <div class="level_type"><div class="level_type_value">Level 3</div></div>
-                <div class="level_amount level_3_amount"><span>{{refData?.level3}}</span></div>
+                <div class="level_type">
+                  <div class="level_type_value">Level 3</div>
+                </div>
+                <div class="level_amount level_3_amount d_flex_alight_justify_center">
+                  <span>{{refData ? refData.level3 : 0}}</span>
+                </div>
 
               </div>
             </div>
             <div class="referrals_block">
-              <app-referral [invitedUsers]="invitedUsers"></app-referral>
+              <app-referral *ngIf="invitedUsers" [invitedUsers]="invitedUsers"></app-referral>
+              <div *ngIf="!invitedUsers" class="noRefs">
+                <div>
+                  <span>no referrals yet.
+                  <span>Refer to earn now!</span>
+                </span>
+                  <div class="ref_link_btn">
+                    <div class="myRefIcon"></div>
+                    <span>My referral link</span></div>
+                  <a href="#" class="ref_sys_info"><span>What is Bettery referral program?</span></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -5,4 +5,5 @@ export interface InvitedUser{
   registered:number
   _id:number,
   opened: boolean
+  thirdLvlRefs:number
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {InvitedUser} from "../../../../models/InvitedUser";
 
 @Component({
@@ -6,7 +6,7 @@ import {InvitedUser} from "../../../../models/InvitedUser";
   templateUrl: './referral.component.html',
   styleUrls: ['./referral.component.sass']
 })
-export class ReferralComponent implements OnInit, OnDestroy {
+export class ReferralComponent implements OnInit {
 
   @Input() invitedUsers:InvitedUser[]
   userReferrals:number
@@ -14,7 +14,6 @@ export class ReferralComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
   }
 
   toggle(i,k=undefined,z=undefined) {
@@ -27,7 +26,4 @@ export class ReferralComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  ngOnDestroy() {
-  }
 }

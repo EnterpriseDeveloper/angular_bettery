@@ -6,27 +6,30 @@
 
       <div style="display: flex">
 
-        <div style="width: 100%;position: relative" class="level_1_block">
-          <a (click)="toggle(i,null,'lvl1')" *ngIf="userItem.invited" style="display: flex; align-items: center;justify-content: center">
+        <div style="width: 100%; position: relative" class="level_1_block">
+          <a (click)="toggle(i,null,'lvl1')" *ngIf="userItem.invited.length" class="d_flex_alight_justify_center">
 
-            <div [ngClass]="userItem.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'" ></div>
+            <div [ngClass]="userItem.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'"></div>
 
           </a>
           <div class="level_1_item">
             <div style="display: flex">
-              <div style="display: flex; align-items: center; justify-content: center" >
+              <div class="d_flex_alight_justify_center">
                 <img [src]="userItem.avatar" alt="avatar" class="referral_avatar">
               </div>
-              <div style="display: flex; justify-content: center; align-items: center">
+              <div class="d_flex_alight_justify_center">
                 <span class="nickName">{{userItem.nickName}}</span>
-                <span class="nickName" style="margin-left: 5px" *ngIf="userItem.invited">({{userItem?.invited?.length}},{{userItem?.invited?.length}})</span>
+                <span class="nickName" style="margin-left : 5px"
+                      *ngIf="userItem.invited.length">({{userItem?.invited?.length}}
+                  ,{{userItem?.thirdLvlRefs}})</span>
               </div>
             </div>
             <div class="betValueLvl1">
               <span class="betValue">40 BET</span>
             </div>
-            <div style="display: flex; align-items: center;justify-content: center; margin-right: 10px">
-              <span class="referral_join_date_block">Joined <span class="referral_join_date">{{userItem.registered |date}}</span></span>
+            <div class="d_flex_alight_justify_center" style="margin-right: 20px">
+              <span class="referral_join_date_block">Joined <span
+                class="referral_join_date">{{userItem.registered * 1000|date}}</span></span>
             </div>
           </div>
 
@@ -34,69 +37,83 @@
 
       </div>
 
+      <div style="position: relative">
+        <div [ngClass]="userItem.opened?'closed ':'open '" class="test1">
 
-      <div [ngClass]="userItem.opened?'closed':'open'">
-        <div *ngFor="let userItemLvl2 of userItem?.invited; let k=index"
-             style=" ; margin-left:0  ">
-          <div style="display: flex; width: 100%; justify-content: flex-end">
-            <a (click)="toggle(i,k,'lvl2')" *ngIf="userItemLvl2.invited" style="display: flex;align-items: center;justify-content: center">
+          <div class="lvl2Itm" *ngFor="let userItemLvl2 of userItem?.invited; let k=index"
+               style="margin-left:0; position: relative">
+            <div style="position: relative">
+              <div
+                [ngClass]="userItemLvl2?.invited?.length? (!userItemLvl2.opened?'lvl2TreeWithBtnOpen':'lvl2TreeWithBtn'):'lvl2Tree'"
+                style="display: flex; width: 100%; justify-content: flex-end">
+                <a (click)="toggle(i,k,'lvl2')" *ngIf="userItemLvl2.invited" class="d_flex_alight_justify_center">
+                  <div [ngClass]="userItemLvl2.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'"></div>
+                </a>
 
-              <div [ngClass]="userItemLvl2.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'" ></div>
 
-            </a>
+                <div class="level_2_block">
 
-
-            <div class="level_2_block">
-
-              <div class="level_2_item">
-                <div style="display: flex">
-                  <div style="display: flex; align-items: center; justify-content: center"><img [src]="userItemLvl2.avatar" alt="avatar" class="referral_avatar"></div>
-                  <div style="display: flex; justify-content: center; align-items: center">
-                    <span class="nickName">{{userItemLvl2.nickName}}</span>
-                    <span class="nickName" style="margin-left: 5px" *ngIf="userItemLvl2?.invited?.length">({{userItemLvl2?.invited?.length}})</span>
-                  </div>
-                </div>
-                <div class="betValueLvl1">
-                  <span class="betValue">40 BET</span>
-                </div>
-                <div style="display: flex; align-items: center;justify-content: center; margin-right: 10px">
-                  <span class="referral_join_date_block">Joined <span class="referral_join_date">{{userItemLvl2.registered |date}}</span></span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div [ngClass]="userItemLvl2.opened?'closed':'open'">
-            <div *ngFor="let userItemLvl3 of userItemLvl2?.invited; let k=index"
-                 style=" display: flex;margin-left:75px ; ">
-              <div style=" width: 100%">
-
-                <div style="width: 100%;position: relative" class="level_3_block">
-
-                  <div class="level_3_item">
+                  <div class="level_2_item">
                     <div style="display: flex">
-                      <div style="display: flex; align-items: center; justify-content: center"><img [src]="userItemLvl3.avatar" alt="avatar" class="referral_avatar"></div>
-                      <div style="display: flex; justify-content: center; align-items: center">
-                        <span class="nickName">{{userItemLvl3.nickName}}</span>
+                      <div class="d_flex_alight_justify_center"><img
+                        [src]="userItemLvl2.avatar" alt="avatar" class="referral_avatar"></div>
+                      <div class="d_flex_alight_justify_center">
+                        <span class="nickName">{{userItemLvl2.nickName}}</span>
+                        <span class="nickName" style="margin-left: 5px"
+                              *ngIf="userItemLvl2?.invited?.length">({{userItemLvl2?.invited?.length}})</span>
                       </div>
                     </div>
                     <div class="betValueLvl1">
                       <span class="betValue">40 BET</span>
                     </div>
-                    <div style="display: flex; align-items: center;justify-content: center; margin-right: 10px">
-                      <span class="referral_join_date_block">Joined <span class="referral_join_date">{{userItemLvl3.registered |date}}</span></span>
+                    <div class="d_flex_alight_justify_center" style="margin-right: 20px">
+                    <span class="referral_join_date_block">Joined <span
+                      class="referral_join_date">{{userItemLvl2.registered * 1000 |date}}</span></span>
                     </div>
                   </div>
 
                 </div>
               </div>
-
             </div>
+            <div [ngClass]="userItemLvl2.opened?'closed':'open'">
+
+              <div class="test2" style="position: relative">
+
+                <div class="lvl3Tree" *ngFor="let userItemLvl3 of userItemLvl2?.invited; let k=index"
+                     style=" display: flex; justify-content: flex-end; position: relative">
+                  <div style=" width: 100%">
+
+                    <div class="level_3_block">
+
+                      <div class="level_3_item">
+                        <div style="display: flex">
+                          <div class="d_flex_alight_justify_center">
+                            <img
+                              [src]="userItemLvl3.avatar" alt="avatar" class="referral_avatar"></div>
+                          <div class="d_flex_alight_justify_center">
+                            <span class="nickName">{{userItemLvl3.nickName}}</span>
+                          </div>
+                        </div>
+                        <div class="betValueLvl1">
+                          <span class="betValue">40 BET</span>
+                        </div>
+                        <div class="d_flex_alight_justify_center" style=" margin-right: 20px">
+                        <span class="referral_join_date_block">Joined <span
+                          class="referral_join_date">{{userItemLvl3.registered * 1000 |date}}</span></span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           </div>
 
+
         </div>
-
-
       </div>
 
     </div>
