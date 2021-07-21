@@ -56,12 +56,8 @@
 
 
 .plusMinusImageBlock
-  display: flex
+  margin-right: 1.6%
 
-  background-size: contain
-  background-repeat: no-repeat
-  height: 20px
-  width: 20px
 
 .ulItemLvl1
   position: relative
@@ -109,12 +105,11 @@
   border: 0
   height: 15px
   width: 15px
-  margin: 0 7px
   cursor: pointer
 
 .referral_avatar
-  width: 17.7px
-  height: 17.7px
+  width: 17px
+  height: 17px
   border-radius: 50%
   margin: 0 7px
   border: 1px solid #FFD300
@@ -171,13 +166,13 @@
 
 .lvl2TreeWithBtnOpen::after
   position: absolute
-  left: 3.3%
+  left: 3%
   bottom: 47%
-  width: 2.1%
+  width: 3.2%
   content: ''
   border-bottom: 1px dashed #DFDFDF
 
-div.test1::before
+div.lvl1Container::before
   content: ''
   position: absolute
   height: 100%
@@ -186,7 +181,7 @@ div.test1::before
   bottom: 13px
 
 
-.test1 div.lvl2Itm:last-child::before
+.lvl1Container div.lvl2Itm:last-child::before
   content: ''
   background: #fff
   height: 100%
@@ -195,7 +190,7 @@ div.test1::before
   top: 21px
   position: absolute
 
-div.test2::before
+div.lvl2Container::before
   content: ''
   position: absolute
   height: 100%
@@ -203,7 +198,7 @@ div.test2::before
   left: 7.35%
   bottom: 13px
 
-.test2 div.lvl3Tree:last-child::before
+.lvl2Container div.lvl3Tree:last-child::before
   content: ''
   background: #fff
   height: 100%

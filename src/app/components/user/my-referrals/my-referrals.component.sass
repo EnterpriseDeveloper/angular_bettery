@@ -35,17 +35,14 @@
   padding: 15px
 
 .box
-  max-width: 600px
 
 .my_profile_box
   background: #FFFFFF
   box-shadow: 0 0 9px rgba(0, 0, 0, 0.15)
   border-radius: 8px
-  width: fit-content
 
 .main_box
   padding: 25px
-  width: fit-content
 
 .name_box
   background: #F2F2F2
@@ -376,6 +373,7 @@ a
   display: flex
   column-gap: 19px
   padding-right: 40px
+  width: 100%
 
 .level_type
   display: flex
@@ -397,8 +395,12 @@ a
   margin: 0 auto
   padding: 0
 
+.level_box
+  width: 33.3%
+  span
+   flex: 1
+
 .level_amount
-  width: 152.62px
   height: 48px
   background: #FFFBE7
   border-radius: 8px
@@ -488,7 +490,6 @@ a
 .myRefIcon
   position: relative
   margin-right: 5px
-  top: 2px
   width: 20px
   height: 18px
   background-image: url("../../../../assets/referrals/myRefIcon.png")
@@ -510,3 +511,8 @@ a
     text-transform: none
     text-decoration-line: underline
     color: #54DD96
+
+@media screen and (max-width: 1020px)
+  .my_prof
+    color: #FFFFFF
+    padding-top: 0

@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {InvitedUser} from "../../../../models/InvitedUser";
+import {Component, Input, OnInit} from '@angular/core';
+import {InvitedUser} from '../../../../models/InvitedUser';
 
 @Component({
   selector: 'app-referral',
@@ -8,22 +8,18 @@ import {InvitedUser} from "../../../../models/InvitedUser";
 })
 export class ReferralComponent implements OnInit {
 
-  @Input() invitedUsers:InvitedUser[]
-  userReferrals:number
+  @Input() invitedUsers: InvitedUser[];
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  toggle(i,k=undefined,z=undefined) {
-    if(z == "lvl1"){
-      console.log(111)
-      this.invitedUsers[i].opened =!this.invitedUsers[i].opened;
-    }else if(z== "lvl2"){
-      console.log(222)
-      this.invitedUsers[i].invited[k].opened =!this.invitedUsers[i].invited[k]?.opened;
+  toggle(i, k , z ) {
+    if (z === 'lvl1'){
+      this.invitedUsers[i].opened = !this.invitedUsers[i].opened;
+    }else if (z === 'lvl2'){
+      this.invitedUsers[i].invited[k].opened = !this.invitedUsers[i].invited[k]?.opened;
     }
   }
-
 }

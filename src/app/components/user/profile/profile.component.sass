@@ -1,2 +1,39 @@
 .container_profile
     padding-left: 124px
+.background
+  background: url("../../../../assets/referrals/background_wave.png") 15% 50px no-repeat
+  max-width: 1440px
+  z-index: -1
+  background-size: 100%
+  position: absolute
+  opacity: 0.1
+  top: 0
+  right: 0
+  width: 51%
+  height: 586px
+
+.my_profile
+  width: 50%
+
+.my_referrals
+  width: 50%
+  margin-left: 2%
+  margin-right: 4%
+
+.adaptive_container
+  display: flex
+
+@media screen and (max-width: 1020px)
+  .container_profile
+    padding: 0
+  .adaptive_container
+    display: block
+    margin: 0 5%
+  .my_referrals
+    width: 100%
+
+
+  .my_profile
+    width: 100%
+    .my_prof
+      color: #FFFFFF

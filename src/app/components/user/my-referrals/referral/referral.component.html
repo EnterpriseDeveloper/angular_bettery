@@ -7,7 +7,7 @@
       <div style="display: flex">
 
         <div style="width: 100%; position: relative" class="level_1_block">
-          <a (click)="toggle(i,null,'lvl1')" *ngIf="userItem.invited.length" class="d_flex_alight_justify_center">
+          <a (click)="toggle(i,null,'lvl1')" *ngIf="userItem.invited.length" class="d_flex_alight_justify_center plusMinusImageBlock">
 
             <div [ngClass]="userItem.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'"></div>
 
@@ -20,8 +20,7 @@
               <div class="d_flex_alight_justify_center">
                 <span class="nickName">{{userItem.nickName}}</span>
                 <span class="nickName" style="margin-left : 5px"
-                      *ngIf="userItem.invited.length">({{userItem?.invited?.length}}
-                  ,{{userItem?.thirdLvlRefs}})</span>
+                      *ngIf="userItem.invited.length">({{userItem?.invited?.length}},{{userItem?.thirdLvlRefs}})</span>
               </div>
             </div>
             <div class="betValueLvl1">
@@ -38,7 +37,7 @@
       </div>
 
       <div style="position: relative">
-        <div [ngClass]="userItem.opened?'closed ':'open '" class="test1">
+        <div [ngClass]="userItem.opened?'closed ':'open '" class="lvl1Container">
 
           <div class="lvl2Itm" *ngFor="let userItemLvl2 of userItem?.invited; let k=index"
                style="margin-left:0; position: relative">
@@ -46,7 +45,7 @@
               <div
                 [ngClass]="userItemLvl2?.invited?.length? (!userItemLvl2.opened?'lvl2TreeWithBtnOpen':'lvl2TreeWithBtn'):'lvl2Tree'"
                 style="display: flex; width: 100%; justify-content: flex-end">
-                <a (click)="toggle(i,k,'lvl2')" *ngIf="userItemLvl2.invited" class="d_flex_alight_justify_center">
+                <a (click)="toggle(i,k,'lvl2')" *ngIf="userItemLvl2.invited" class="d_flex_alight_justify_center plusMinusImageBlock">
                   <div [ngClass]="userItemLvl2.opened?'imgPlus plusMinusButton':'imgMinus plusMinusButton'"></div>
                 </a>
 
@@ -77,7 +76,7 @@
             </div>
             <div [ngClass]="userItemLvl2.opened?'closed':'open'">
 
-              <div class="test2" style="position: relative">
+              <div class="lvl2Container" style="position: relative">
 
                 <div class="lvl3Tree" *ngFor="let userItemLvl3 of userItemLvl2?.invited; let k=index"
                      style=" display: flex; justify-content: flex-end; position: relative">

@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
           modalRef.componentInstance.openSpinner = true;
           modalRef.componentInstance.closedWindow.subscribe((e) => {
             this.router.navigate(['join']);
-          })
+          });
         }
       } else {
         this.userData = x[0];
