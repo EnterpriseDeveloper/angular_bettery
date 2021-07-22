@@ -4,7 +4,7 @@ import { AppState } from '../../../app.state';
 import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
-import maticInit from '../../../contract/maticInit';
+import maticInit from "../../../contract/maticInit";
 import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
