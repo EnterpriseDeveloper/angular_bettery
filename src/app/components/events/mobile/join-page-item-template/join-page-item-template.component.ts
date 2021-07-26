@@ -55,7 +55,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   colorForRoom(color) {
     if (this.question) {
       return {
-        'background': color,
+        background: color,
         'max-height': this.heightBlock + 'px'
       };
     } else {
@@ -85,6 +85,24 @@ export class JoinPageItemTemplateComponent implements OnInit {
     if (action === '/') {
       const avg = Number(num1) / Number(num2);
       return avg.toString().includes('.') ? avg.toFixed(1) : avg;
+    }
+  }
+  timeValidating(question) {
+    const timeNow = Number((Date.now() / 1000).toFixed(0));
+    return question.endTime - timeNow > 0;
+  }
+  getValidatorsAmount(q) {
+    return q.validatorsAnswers === undefined ? 0 : q.validatorsAnswers.length;
+  }
+  getValidatorsAmountLeft(eventData) {
+    return eventData.validatorsAmount == 0 ? this.expertAmount(eventData) : eventData.validatorsAmount;
+  }
+  expertAmount(eventData) {
+    const part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
+    if (part < 11) {
+      return 3;
+    } else {
+      return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
   }
 

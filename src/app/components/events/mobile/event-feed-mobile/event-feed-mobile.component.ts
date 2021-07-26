@@ -31,7 +31,6 @@ export class EventFeedMobileComponent implements OnDestroy {
   fromComponent = 'eventFeed';
   commentList;
   newCommentList;
-
   pureData: EventModel;
   scrollDistanceFrom = 0;
   scrollDistanceTo = 5;

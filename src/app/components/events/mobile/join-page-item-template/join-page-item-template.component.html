@@ -27,9 +27,6 @@
       <div class="item-info_detail">
         <div class="detail_question_block">
           <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
-            <div>
-              <div class="pepper_img"></div>
-            </div>
             <div class="detail_question_text"><span>{{question.question}}</span></div>
             <div>
               <div class="item_open_button_down"></div>
@@ -38,14 +35,20 @@
         </div>
         <div class="detail_question_info">
           <div class="question_options_block">
-            <div class="d_flex_alight_justify_center question_option"><input type="radio"><span>{{question.answers[0]}}</span></div>
-            <div class="d_flex_alight_justify_center question_option"><input type="radio"><span>{{question.answers[1]}}</span></div>
-            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>{{question.answers.length-2}} more outcomes</span></div>
+            <div class=" question_option">
+              <div class="answer_circle"></div>
+              <span>{{question.answers[0]}}</span></div>
+            <div class=" question_option">
+              <div class="answer_circle"></div>
+              <span>{{question.answers[1]}}</span></div>
+            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
+            </div>
           </div>
           <div class="event_info_block">
             <div class="event_info_joined">
               <div class="event_info_joined_img"></div>
-              <div class="event_info_joined_text"><span>{{question?.validated + question?.answerAmount}} Joined</span></div>
+              <div class="event_info_joined_text"><span>{{question?.validated + question?.answerAmount}} Joined</span>
+              </div>
             </div>
             <div class="event_info_avg_bet">
               <div class="event_info_avg_bet_img"></div>
@@ -53,20 +56,40 @@
             </div>
             <div class="event_info_comments">
               <div class="event_info_comments_img"></div>
-              <div class="event_info_comments_text" *ngIf="question.commentsAmount"><span>{{question?.commentsAmount}} Comments</span></div>
+              <div class="event_info_comments_text" *ngIf="question.commentsAmount"><span>{{question?.commentsAmount}}
+                Comments</span></div>
               <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
+            </div>
+            <div class="item_ending_time_block">
+              <div>
+                <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px">
+                  <div style="position: absolute; left: 35px" *ngIf="!timeValidating(question)">
+                    ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
+                  </div>
+                  <time class="event_date" [timer]="question?.endTime"></time>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="detail_question_ending_time">
-          <div class="detail_question_theme">
-            <div class="detail_question_theme_img"></div>
-            <div class="detail_question_theme_text"><span>Politics</span></div>
-          </div>
-          <div class="item_ending_time_block">
-            <div>Ending in:
+        <div class="detail_hr"></div>
+        <div class="down_side_block">
+          <div style="display: flex ; flex: 1">
+            <div class="host_info">
+              <div class="avatar"><img [src]="question?.host?.avatat" alt="avatar">
+                <div class="host_name"><span>{{question.host.nickName}}</span></div>
+              </div>
+
+            </div>
+            <div class="host_info">
+              <div class="avengers">
+                <div class="avengers_img"></div>
+                <div class="host_name"><span>Avengers ({{question?.room?.eventAmount}})</span></div>
+              </div>
+
             </div>
           </div>
+          <div class="join_event_button"><a [href]="'#'"><span>Join Now</span></a></div>
 
         </div>
       </div>
