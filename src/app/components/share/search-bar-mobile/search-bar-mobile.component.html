@@ -1,0 +1,26 @@
+<div class="search_block">
+  <div>
+    <div class="search-img"></div>
+    <input type="text" placeholder="What are you interested in?">
+    <div class="lines_3_img"></div>
+  </div>
+</div>
+<div class="d_flex_alight_justify_center">
+  <div class="d-flex">
+    <div (click)="changesActiveBtn('trending')" class="text-disactive"
+         [ngClass]="active === 'trending' && 'text-active'">
+      <span>Trending</span>
+    </div>
+    <div (click)="changesActiveBtn('controversial')" class="text-disactive"
+         [ngClass]="active === 'controversial' && 'text-active'">
+      <span>Controversial</span>
+    </div>
+    <div (click)="changesActiveBtn('following')" class="text-disactive"
+         [ngClass]="active === 'following' && 'text-active'">
+      <span>Following</span>
+    </div>
+    <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && 'text-active'">
+      <div [ngClass]="active=== 'pro' ? 'baksGreen-img' : 'baks-img'" class="baks-img"></div>
+    </div>
+  </div>
+</div>

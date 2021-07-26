@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.sass']
+  selector: 'app-search-bar-mobile',
+  templateUrl: './search-bar-mobile.component.html',
+  styleUrls: ['./search-bar-mobile.component.sass']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarMobileComponent implements OnInit {
+
   searchWord = '';
   timeout: any;
   @Output() searchWordEmit = new EventEmitter();
@@ -14,7 +15,6 @@ export class SearchBarComponent implements OnInit {
   @Input() allAmountEvents: number;
   @Input() amount: number;
   @Input() active = 'trending';
-
   constructor() {
   }
 
@@ -39,4 +39,5 @@ export class SearchBarComponent implements OnInit {
   openFilter() {
     this.timelineActive.emit(true);
   }
+
 }

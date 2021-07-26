@@ -1,0 +1,76 @@
+<div class="container">
+
+  <div>
+    <img *ngIf="!question.thumImage==='undefined'" class="item-logo" [src]="question?.thumImage" alt="">
+    <div class="item-logo" [ngStyle]="colorForRoom(question.thumColor)">
+      <div *ngIf="question.thumImage === 'undefined'" class="unloadedImgBlock">
+        <div style="height: 50% ; width: 100% ;background: rgba(0, 0, 0, 0.5);" class="d_flex_alight_justify_center">
+          <div class="unloadedImgContent">
+            <span class="unloadedImgQuestion">{{question?.question}}</span>
+          </div>
+        </div>
+      </div>
+      <!--      <div class="item-info">-->
+      <!--        <div class="item-info_container">-->
+      <!--          <div class="social_img"></div>-->
+      <!--          <div style="display: block">-->
+      <!--            <div class="question_block">-->
+      <!--              <div class="question_tittle"><span class="question_text">{{question.question}}</span><span-->
+      <!--                class="event_date">8 NOV 9PM</span></div>-->
+      <!--            </div>-->
+      <!--            <div class="item_ending_time"><span>Ending in: </span>-->
+      <!--              <p> 40:59</p></div>-->
+      <!--          </div>-->
+      <!--          <div class="item_open_button_up"></div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <div class="item-info_detail">
+        <div class="detail_question_block">
+          <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
+            <div>
+              <div class="pepper_img"></div>
+            </div>
+            <div class="detail_question_text"><span>{{question.question}}</span></div>
+            <div>
+              <div class="item_open_button_down"></div>
+            </div>
+          </div>
+        </div>
+        <div class="detail_question_info">
+          <div class="question_options_block">
+            <div class="d_flex_alight_justify_center question_option"><input type="radio"><span>{{question.answers[0]}}</span></div>
+            <div class="d_flex_alight_justify_center question_option"><input type="radio"><span>{{question.answers[1]}}</span></div>
+            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>{{question.answers.length-2}} more outcomes</span></div>
+          </div>
+          <div class="event_info_block">
+            <div class="event_info_joined">
+              <div class="event_info_joined_img"></div>
+              <div class="event_info_joined_text"><span>{{question?.validated + question?.answerAmount}} Joined</span></div>
+            </div>
+            <div class="event_info_avg_bet">
+              <div class="event_info_avg_bet_img"></div>
+              <div class="event_info_avg_bet_text"><span>{{avgBet(question)}} BET Avg.Bet</span></div>
+            </div>
+            <div class="event_info_comments">
+              <div class="event_info_comments_img"></div>
+              <div class="event_info_comments_text" *ngIf="question.commentsAmount"><span>{{question?.commentsAmount}} Comments</span></div>
+              <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="detail_question_ending_time">
+          <div class="detail_question_theme">
+            <div class="detail_question_theme_img"></div>
+            <div class="detail_question_theme_text"><span>Politics</span></div>
+          </div>
+          <div class="item_ending_time_block">
+            <div>Ending in:
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

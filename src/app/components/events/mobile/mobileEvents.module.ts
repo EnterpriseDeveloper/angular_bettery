@@ -15,8 +15,10 @@ import {InfoComponent} from './publicEvents/info/info.component';
 import {ParticipateComponent} from './publicEvents/participate/participate.component';
 import {ValidateComponent} from './publicEvents/validate/validate.component';
 import {EventFinishComponent} from './publicEvents/event-finish/event-finish.component';
-import {ShareModule} from "../../share/share.module";
+import {ShareModule} from '../../share/share.module';
 import { RevertedPublicComponent } from './publicEvents/reverted-public/reverted-public.component';
+import { EventFeedMobileComponent } from './event-feed-mobile/event-feed-mobile.component';
+import { JoinPageItemTemplateComponent } from './join-page-item-template/join-page-item-template.component';
 
 
 
@@ -34,6 +36,7 @@ import { RevertedPublicComponent } from './publicEvents/reverted-public/reverted
         ShareModule,
     ],
   exports: [
+    EventFeedMobileComponent
   ],
   declarations: [
     PrivateMainComponent,
@@ -47,7 +50,9 @@ import { RevertedPublicComponent } from './publicEvents/reverted-public/reverted
     PrivateExpertComponent,
     BadRequestComponent,
     PrivateEndEventComponent,
-    RevertedPublicComponent
+    RevertedPublicComponent,
+    EventFeedMobileComponent,
+    JoinPageItemTemplateComponent
 ]
 })
 export class MobileEventsModule { }
