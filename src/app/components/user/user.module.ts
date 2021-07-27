@@ -4,13 +4,17 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import {FormsModule} from '@angular/forms';
+import { MyReferralsComponent } from './my-referrals/my-referrals.component';
+import { ReferralComponent } from './my-referrals/referral/referral.component';
 
 
 
 @NgModule({
     declarations: [
         ProfileComponent,
-        MyProfileComponent
+        MyProfileComponent,
+        MyReferralsComponent,
+        ReferralComponent
     ],
     imports: [
         CommonModule,

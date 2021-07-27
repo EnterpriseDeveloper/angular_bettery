@@ -1,0 +1,209 @@
+*
+  margin: 0
+  padding: 0
+.open
+  display: block
+
+.closed
+  display: none
+
+.d_flex_alight_justify_center
+ display: flex
+ align-items: center
+ justify-content: center
+
+#list li
+  list-style-type: none
+  padding-top: 0
+  padding-bottom: 0
+
+.level_1_item
+ display: flex
+ align-items: center
+ justify-content: space-between
+ width: 94.5%
+ height: 40px
+ background: #FFFBE7
+
+
+.level_2_item
+ display: flex
+ align-items: center
+ justify-content: space-between
+ width: 91%
+ flex: 1
+ height: 40px
+ background: #EAFFF4
+
+.nickName
+    display: block
+    text-align: center
+    height: 19px
+    font-style: normal
+    font-weight: 600
+    font-size: 14px
+    line-height: 19px
+    color: #0B1511
+
+.level_3_item
+ display: flex
+ align-items: center
+ justify-content: space-between
+ width: 85.5%
+ height: 40px
+ background: #F5F5F5
+
+
+
+.plusMinusImageBlock
+  margin-right: 1.6%
+
+
+.ulItemLvl1
+  position: relative
+  width: 100%
+  margin: 0
+  padding: 0
+
+.ulItemLvl2
+  position: relative
+  width: 100%
+  margin: 0
+  padding: 0
+
+.level_1_block
+  display: flex
+  justify-content: flex-end
+
+.level_2_block
+  position: relative
+  display: flex
+  justify-content: flex-end
+  width: 90%
+
+.level_3_block
+  position: relative
+  display: flex
+  justify-content: flex-end
+  width: 100%
+
+.betValueLvl1
+  position: absolute
+  display: flex
+  align-items: center
+  right: 140px
+
+.imgMinus
+  background: url("../../../../../assets/referrals/minusImg.png") center center no-repeat
+  background-size: contain
+
+.imgPlus
+  background: url("../../../../../assets/referrals/plusImg.png") center center no-repeat
+  background-size: contain
+
+.plusMinusButton
+  border: 0
+  height: 15px
+  width: 15px
+  cursor: pointer
+
+.referral_avatar
+  width: 17px
+  height: 17px
+  border-radius: 50%
+  margin: 0 7px
+  border: 1px solid #FFD300
+
+.betValue
+ font-style: normal
+ font-weight: bold
+ font-size: 14px
+ line-height: 19px
+ color: #0B1511
+ visibility: hidden
+
+.referral_join_date_block
+ display: block
+ font-style: normal
+ font-weight: normal
+ font-size: 10px
+ line-height: 14px
+ color: #5C5C5C
+
+.referral_join_date
+ text-transform: uppercase
+ font-style: normal
+ font-weight: bold
+ font-size: 10px
+ line-height: 14px
+ color: #5C5C5C
+#list
+  position: relative
+
+.lvl3Tree div::after
+  position: absolute
+  left: 7.6%
+  bottom: 17px
+  width: 6.7%
+  content: ''
+  border-bottom: 1px dashed #DFDFDF
+
+
+.lvl2Tree::after
+  position: absolute
+  left: 3%
+  bottom: 18px
+  width: 7%
+  content: ''
+  border-bottom: 1px dashed #DFDFDF
+
+.lvl2TreeWithBtn::after
+  position: absolute
+  left: 3.3%
+  bottom: 47%
+  width: 3%
+  content: ''
+  border-bottom: 1px dashed #DFDFDF
+
+.lvl2TreeWithBtnOpen::after
+  position: absolute
+  left: 3%
+  bottom: 47%
+  width: 3.2%
+  content: ''
+  border-bottom: 1px dashed #DFDFDF
+
+div.lvl1Container::before
+  content: ''
+  position: absolute
+  height: 100%
+  border-left: 1px dashed #DFDFDF
+  left: 2.7%
+  bottom: 13px
+
+
+.lvl1Container div.lvl2Itm:last-child::before
+  content: ''
+  background: #fff
+  height: 100%
+  width: 10px
+  left: 2.5%
+  top: 21px
+  position: absolute
+
+div.lvl2Container::before
+  content: ''
+  position: absolute
+  height: 100%
+  border-left: 1px dashed #DFDFDF
+  left: 7.35%
+  bottom: 13px
+
+.lvl2Container div.lvl3Tree:last-child::before
+  content: ''
+  background: #fff
+  height: 100%
+  width: 10px
+  left: 7%
+  top: 22px
+  position: absolute

@@ -23,7 +23,8 @@ import { SwapBetComponent } from './swap-bet/swap-bet.component';
   ],
     exports: [
         NavbarComponent,
-        SidebarComponent
+        SidebarComponent,
+        ReferalsComponent
     ],
   imports: [
     CommonModule,
