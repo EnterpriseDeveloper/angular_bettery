@@ -10,9 +10,8 @@
           </div>
         </div>
       </div>
-      <div class="item-info"  [ngClass]="question.detailOpened?'d_none ':'d_block '" >
-        <div class="item-info_container">
-          <div class="social_img"></div>
+      <div class="item-info" [ngClass]="question.detailOpened?'d_none ':'d_block '">
+        <div class="item-info_container" (click)="toggleDetailOpened()">
           <div style="display: block">
             <div class="question_block">
               <div class="question_tittle"><span class="question_text">{{question.question}}</span></div>
@@ -20,7 +19,7 @@
             <div class="item_ending_time">
               <div>
                 <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px">
-                  <div style="position: absolute; left: 35px" *ngIf="!timeValidating(question)">
+                  <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
                     ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
                   </div>
                   <time class="event_date" [timer]="question?.endTime"></time>
@@ -28,10 +27,10 @@
               </div>
             </div>
           </div>
-          <div class="item_open_button_up" (click)="toggleDetailOpened()"></div>
+          <div class="item_open_button_up"></div>
         </div>
       </div>
-      <div class="item-info_detail"  [ngClass]="!question.detailOpened?'d_none':'d_block '">
+      <div class="item-info_detail" [ngClass]="!question.detailOpened?'d_none':'d_block '">
         <div class="detail_question_block">
           <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
             <div class="detail_question_text"><span>{{question.question}}</span></div>
@@ -41,7 +40,8 @@
           </div>
         </div>
         <div class="detail_question_info">
-          <div class="question_options_block">
+
+          <div class="question_options_block" *ngIf="!question.usersAnswers.answered">
             <div class=" question_option">
               <div class="answer_circle"></div>
               <span>{{makeShortenStr(question.answers[0].toString(), 20)}}</span></div>
@@ -51,6 +51,18 @@
             <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
             </div>
           </div>
+
+          <div class="question_options_block" *ngIf="question.usersAnswers.answered">
+            <div class=" question_option">
+              <div class="choosen_answer_circle"></div>
+              <span>{{makeShortenStr(question.answers[question.usersAnswers.answer].toString(), 20)}}</span></div>
+            <div class=" question_option">
+              <div class="answer_circle"></div>
+              <span>{{makeShortenStr(question.answers[question.usersAnswers.answer-1].toString() || question.answers[question.usersAnswers.answer+1].toString(), 20)}}</span></div>
+            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
+            </div>
+          </div>
+
           <div class="event_info_block">
             <div class="event_info_joined">
               <div class="event_info_joined_img"></div>
@@ -63,14 +75,16 @@
             </div>
             <div class="event_info_comments">
               <div class="event_info_comments_img"></div>
-              <div class="event_info_comments_text" *ngIf="question.commentsAmount"><span>{{question?.commentsAmount}}
-                Comments</span></div>
+              <div class="event_info_comments_text" *ngIf="question.commentsAmount">
+                <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+                  <span>{{question?.commentsAmount}}Comments</span>
+                </a></div>
               <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
             </div>
             <div class="item_ending_time_block">
               <div>
-                <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px">
-                  <div style="position: absolute; left: 35px" *ngIf="!timeValidating(question)">
+                <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px; color: #fff">
+                  <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
                     ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
                   </div>
                   <time class="event_date" [timer]="question?.endTime"></time>
@@ -96,7 +110,17 @@
 
             </div>
           </div>
-          <div class="join_event_button"><a [href]="'#'"><span>Join Now</span></a></div>
+          <div class="join_event_button" *ngIf="!question.usersAnswers.answered">
+            <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <span>Join Now</span>
+            </a>
+          </div>
+          <div class="join_event_button_user_made_bet" *ngIf="question.usersAnswers.answered">
+            <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank" class="d_flex_alight_justify_center">
+              <div class="hand_bet_img"></div>
+              <div><span>{{question.usersAnswers.betAmount.toString() + ' BET'}}</span></div>
+            </a>
+          </div>
 
         </div>
       </div>
