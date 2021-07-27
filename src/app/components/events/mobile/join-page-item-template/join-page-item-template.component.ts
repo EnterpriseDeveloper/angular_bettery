@@ -1,4 +1,3 @@
-
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Subscription} from 'rxjs';
@@ -46,10 +45,15 @@ export class JoinPageItemTemplateComponent implements OnInit {
   form: FormGroup;
 
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     console.log(this.question);
+  }
+
+  toggleDetailOpened() {
+    this.question.detailOpened = !this.question.detailOpened;
   }
 
   colorForRoom(color) {
@@ -62,6 +66,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
       return;
     }
   }
+
   avgBet(q) {
     let amount = 0;
     if (q.parcipiantAnswers == undefined) {
@@ -73,6 +78,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
     return this.checkFractionalNumb(amount, q.parcipiantAnswers.length, '/');
   }
+
   checkFractionalNumb(num1, num2, action) {
     if (action === '+') {
       const sum = Number(num1) + Number(num2);
@@ -87,16 +93,20 @@ export class JoinPageItemTemplateComponent implements OnInit {
       return avg.toString().includes('.') ? avg.toFixed(1) : avg;
     }
   }
+
   timeValidating(question) {
     const timeNow = Number((Date.now() / 1000).toFixed(0));
     return question.endTime - timeNow > 0;
   }
+
   getValidatorsAmount(q) {
     return q.validatorsAnswers === undefined ? 0 : q.validatorsAnswers.length;
   }
+
   getValidatorsAmountLeft(eventData) {
     return eventData.validatorsAmount == 0 ? this.expertAmount(eventData) : eventData.validatorsAmount;
   }
+
   expertAmount(eventData) {
     const part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
     if (part < 11) {
@@ -104,6 +114,10 @@ export class JoinPageItemTemplateComponent implements OnInit {
     } else {
       return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
+  }
+
+  makeShortenStr(str: string, howMuch: number): string {
+    return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
   }
 
 }

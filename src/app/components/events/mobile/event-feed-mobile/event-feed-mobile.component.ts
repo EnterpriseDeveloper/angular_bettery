@@ -121,8 +121,10 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.pureData = x;
       if (from == 0) {
         this.newQuestions = this.pureData.events;
+        this.newQuestions.forEach(e => e.detailOpened = false);
       } else {
         this.pureData.events.forEach(el => this.newQuestions.push(el));
+        this.newQuestions.forEach(e => e.detailOpened = false);
       }
       if (this.timelineActive) {
         this.timelineActive = false;

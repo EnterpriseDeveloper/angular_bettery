@@ -19,6 +19,7 @@ import {ShareModule} from '../../share/share.module';
 import { RevertedPublicComponent } from './publicEvents/reverted-public/reverted-public.component';
 import { EventFeedMobileComponent } from './event-feed-mobile/event-feed-mobile.component';
 import { JoinPageItemTemplateComponent } from './join-page-item-template/join-page-item-template.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 
 
@@ -34,6 +35,7 @@ import { JoinPageItemTemplateComponent } from './join-page-item-template/join-pa
             {path: 'public_event/:id', component: PublicMainComponent},
         ]),
         ShareModule,
+        InfiniteScrollModule,
     ],
   exports: [
     EventFeedMobileComponent

@@ -10,26 +10,33 @@
           </div>
         </div>
       </div>
-      <!--      <div class="item-info">-->
-      <!--        <div class="item-info_container">-->
-      <!--          <div class="social_img"></div>-->
-      <!--          <div style="display: block">-->
-      <!--            <div class="question_block">-->
-      <!--              <div class="question_tittle"><span class="question_text">{{question.question}}</span><span-->
-      <!--                class="event_date">8 NOV 9PM</span></div>-->
-      <!--            </div>-->
-      <!--            <div class="item_ending_time"><span>Ending in: </span>-->
-      <!--              <p> 40:59</p></div>-->
-      <!--          </div>-->
-      <!--          <div class="item_open_button_up"></div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <div class="item-info_detail">
+      <div class="item-info"  [ngClass]="question.detailOpened?'d_none ':'d_block '" >
+        <div class="item-info_container">
+          <div class="social_img"></div>
+          <div style="display: block">
+            <div class="question_block">
+              <div class="question_tittle"><span class="question_text">{{question.question}}</span></div>
+            </div>
+            <div class="item_ending_time">
+              <div>
+                <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px">
+                  <div style="position: absolute; left: 35px" *ngIf="!timeValidating(question)">
+                    ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
+                  </div>
+                  <time class="event_date" [timer]="question?.endTime"></time>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item_open_button_up" (click)="toggleDetailOpened()"></div>
+        </div>
+      </div>
+      <div class="item-info_detail"  [ngClass]="!question.detailOpened?'d_none':'d_block '">
         <div class="detail_question_block">
           <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
             <div class="detail_question_text"><span>{{question.question}}</span></div>
             <div>
-              <div class="item_open_button_down"></div>
+              <div class="item_open_button_down" (click)="toggleDetailOpened()"></div>
             </div>
           </div>
         </div>
@@ -37,10 +44,10 @@
           <div class="question_options_block">
             <div class=" question_option">
               <div class="answer_circle"></div>
-              <span>{{question.answers[0]}}</span></div>
+              <span>{{makeShortenStr(question.answers[0].toString(), 20)}}</span></div>
             <div class=" question_option">
               <div class="answer_circle"></div>
-              <span>{{question.answers[1]}}</span></div>
+              <span>{{makeShortenStr(question.answers[1].toString(), 20)}}</span></div>
             <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
             </div>
           </div>

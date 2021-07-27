@@ -39,43 +39,33 @@
                             [active] = activeBtn>
 
      </app-search-bar-mobile>
-      <!--      <div class="d_flex_alight_justify_center">-->
-      <!--        <div class="d-flex">-->
-      <!--          <div (click)="changesActiveBtn('trending')" class="text-disactive" [ngClass]="active === 'trending' && 'text-active'">-->
-      <!--            <span>Trending</span>-->
-      <!--          </div>-->
-      <!--          <div (click)="changesActiveBtn('controversial')" class="text-disactive" [ngClass]="active === 'controversial' && 'text-active'">-->
-      <!--            <span>Controversial</span>-->
-      <!--          </div>-->
-      <!--          <div (click)="changesActiveBtn('following')" class="text-disactive" [ngClass]="active === 'following' && 'text-active'">-->
-      <!--            <span>Following</span>-->
-      <!--          </div>-->
-      <!--          <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && 'text-active'">-->
-      <!--            <div [ngClass]="active=== 'pro' ? 'baksGreen-img' : 'baks-img'" class="baks-img"></div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
     </nav>
-    <main>
-<!--      <app-join-page-item-template></app-join-page-item-template>-->
-      <div *ngIf="spinner" style="padding-top: 20%">
-        <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>
-      </div>
-      <div *ngIf="!spinner">
-        <div *ngFor="let question of newQuestions; let index = index">
-          <app-join-page-item-template
-            [index]="index"
-            [userData]="userData"
-            [question]="question"
-            [fromComponent]="fromComponent"
-          ></app-join-page-item-template>
+    <div class="search-results" infiniteScroll
+         [infiniteScrollDistance]="1"
+         [infiniteScrollThrottle]="50"
+         (scrolled)="onScrollQuizTemplate()"
+         [ngClass]="(activeBtn==='pro' || newQuestions.length === 0) && 'w-100'">
+      <main>
+        <div *ngIf="spinner" style="margin: 50% auto">
+          <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>
         </div>
-      </div>
-      <div style="padding: 5% 0">
-        <spinner-load-more [finishLoading]="finishLoading"
-                           *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more>
-      </div>
-    </main>
+        <div *ngIf="!spinner">
+          <div *ngFor="let question of newQuestions; let index = index">
+            <app-join-page-item-template
+              [index]="index"
+              [userData]="userData"
+              [question]="question"
+              [fromComponent]="fromComponent"
+            ></app-join-page-item-template>
+          </div>
+        </div>
+
+        <div style="padding: 5% 0; position: relative">
+          <spinner-load-more [finishLoading]="finishLoading"
+                             *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more>
+        </div>
+      </main>
+    </div>
 
   </div>
 </div>
