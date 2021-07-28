@@ -16,7 +16,7 @@
             <div class="question_block">
               <div class="question_tittle"><span class="question_text">{{question.question}}</span></div>
             </div>
-            <div class="item_ending_time">
+            <div class="item_ending_time" *ngIf="!question.usersAnswers.answered">
               <div>
                 <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px">
                   <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
@@ -25,6 +25,23 @@
                   <time class="event_date" [timer]="question?.endTime"></time>
                 </div>
               </div>
+            </div>
+
+            <div class="join_event_button_user_made_bet" *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant'">
+              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank"
+                 style="display: flex;align-items: center">
+                <div class="hand_bet_img"></div>
+                <div><span>{{question.usersAnswers?.betAmount.toString() + ' BET'}}</span></div>
+              </a>
+            </div>
+
+            <div class="join_event_button_user_validator" *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
+              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank"
+                 style="display: flex;align-items: center">
+                <div class="validated_img"></div>
+                <div><span>Validated  <span style="color: #fff">({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})</span>
+                </span></div>
+              </a>
             </div>
           </div>
           <div class="item_open_button_up"></div>
@@ -41,57 +58,11 @@
         </div>
         <div class="detail_question_info">
 
-          <div class="question_options_block" *ngIf="!question.usersAnswers.answered">
-            <div class=" question_option">
-              <div class="answer_circle"></div>
-              <span>{{makeShortenStr(question.answers[0].toString(), 20)}}</span></div>
-            <div class=" question_option">
-              <div class="answer_circle"></div>
-              <span>{{makeShortenStr(question.answers[1].toString(), 20)}}</span></div>
-            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
-            </div>
-          </div>
+          <app-question-options-block [question]="question"
+                                      [userData]="userData"
+                                      style="width: 100%">
 
-          <div class="question_options_block" *ngIf="question.usersAnswers.answered">
-            <div class=" question_option">
-              <div class="choosen_answer_circle"></div>
-              <span>{{makeShortenStr(question.answers[question.usersAnswers.answer].toString(), 20)}}</span></div>
-            <div class=" question_option">
-              <div class="answer_circle"></div>
-              <span>{{makeShortenStr(question.answers[question.usersAnswers.answer-1].toString() || question.answers[question.usersAnswers.answer+1].toString(), 20)}}</span></div>
-            <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}} more outcomes</span>
-            </div>
-          </div>
-
-          <div class="event_info_block">
-            <div class="event_info_joined">
-              <div class="event_info_joined_img"></div>
-              <div class="event_info_joined_text"><span>{{question?.validated + question?.answerAmount}} Joined</span>
-              </div>
-            </div>
-            <div class="event_info_avg_bet">
-              <div class="event_info_avg_bet_img"></div>
-              <div class="event_info_avg_bet_text"><span>{{avgBet(question)}} BET Avg.Bet</span></div>
-            </div>
-            <div class="event_info_comments">
-              <div class="event_info_comments_img"></div>
-              <div class="event_info_comments_text" *ngIf="question.commentsAmount">
-                <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
-                  <span>{{question?.commentsAmount}}Comments</span>
-                </a></div>
-              <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
-            </div>
-            <div class="item_ending_time_block">
-              <div>
-                <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px; color: #fff">
-                  <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
-                    ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
-                  </div>
-                  <time class="event_date" [timer]="question?.endTime"></time>
-                </div>
-              </div>
-            </div>
-          </div>
+          </app-question-options-block>
         </div>
         <div class="detail_hr"></div>
         <div class="down_side_block">
@@ -110,21 +81,40 @@
 
             </div>
           </div>
-          <div class="join_event_button" *ngIf="!question.usersAnswers.answered">
+
+          <div class="join_event_button" *ngIf="!question.usersAnswers.answered && timeValidating(question) && question?.host.id != userData?._id">
             <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
               <span>Join Now</span>
             </a>
           </div>
-          <div class="join_event_button_user_made_bet" *ngIf="question.usersAnswers.answered">
-            <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank" class="d_flex_alight_justify_center">
+
+          <div class="join_event_button_user_made_bet" *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant'">
+            <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank"
+               class="d_flex_alight_justify_center">
               <div class="hand_bet_img"></div>
-              <div><span>{{question.usersAnswers.betAmount.toString() + ' BET'}}</span></div>
+              <div><span>{{question?.usersAnswers?.betAmount.toString() + ' BET'}}</span></div>
+            </a>
+          </div>
+          <div class="join_event_button_user_validator" *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
+            <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow"
+                   style="display: flex;">
+                VALIDATED
+              </div>
+              <div style="display: flex; justify-content: flex-end"> <span style="color: #fff"> ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})</span></div>
             </a>
           </div>
 
-        </div>
+          <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id && !question.usersAnswers.from && !question.status=='finished'" class="validateNow"
+               style="display: flex;">
+            VALIDATE NOW <div></div>
+          </div>
+          <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id && !question.usersAnswers.from && question.status=='finished'" class="validateNow"
+               style="display: flex; color: #fff">VIEW EVENT
+          </div>
       </div>
     </div>
   </div>
 
+</div>
 </div>

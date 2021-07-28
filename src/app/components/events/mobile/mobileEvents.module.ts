@@ -20,6 +20,7 @@ import { RevertedPublicComponent } from './publicEvents/reverted-public/reverted
 import { EventFeedMobileComponent } from './event-feed-mobile/event-feed-mobile.component';
 import { JoinPageItemTemplateComponent } from './join-page-item-template/join-page-item-template.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { QuestionOptionsBlockComponent } from './join-page-item-template/question-options-block/question-options-block.component';
 
 
 
@@ -54,7 +55,8 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     PrivateEndEventComponent,
     RevertedPublicComponent,
     EventFeedMobileComponent,
-    JoinPageItemTemplateComponent
+    JoinPageItemTemplateComponent,
+    QuestionOptionsBlockComponent
 ]
 })
 export class MobileEventsModule { }
