@@ -66,6 +66,14 @@ export class JoinPageItemTemplateComponent implements OnInit {
       return;
     }
   }
+  statusReverted(data) {
+    let x = data.status.replace('reverted:', '');
+    if (x.search('not enough experts') != -1) {
+      return x + ' (' + this.getValidatorsAmount(data) + '/' + this.getValidatorsAmountLeft(data) + ')';
+    } else {
+      return x;
+    }
+  }
 
   avgBet(q) {
     let amount = 0;

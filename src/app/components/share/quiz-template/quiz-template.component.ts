@@ -187,6 +187,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           answered: null,
           amount:   this.question.usersAnswers.amount,
           betAmount: null,
+          payToken:null,
+          mintedToken:null
         };
       }
     }

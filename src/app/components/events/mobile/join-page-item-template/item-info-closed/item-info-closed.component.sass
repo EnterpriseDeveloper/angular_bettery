@@ -1,54 +1,3 @@
-.container
-  padding: 0
-  margin: 0
-  overflow: hidden
-
-.d_none
-  display: none
-
-.d_block
-  display: block
-
-.item-logo
-  background-size: cover
-  background-repeat: no-repeat
-  position: relative
-  width: 100%
-  height: 379px
-
-.item-info
-  position: absolute
-  bottom: 0
-  left: 0
-  width: 100%
-  background: rgba(0, 0, 0, 0.77)
-
-  div.item-info_container
-    display: flex
-    margin: 11px 26px 12px 17px
-    align-items: center
-    position: relative
-
-.social_img
-  background-image: url("../../../../../assets/descEvent/social.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 19px
-  height: 19px
-  margin-right: 11px
-  margin-bottom: auto
-
-.item_open_button_up
-  background-image: url("../../../../../assets/mobileJoinPage/open_buttun_up.png")
-  background-size: cover
-  background-repeat: no-repeat
-  width: 10px
-  height: 10px
-  margin-left: auto
-  cursor: pointer
-
-.item_open_button_up:active .item-info_detail
-  display: block
 
 .question_tittle
 
@@ -107,7 +56,7 @@
   left: 0
   width: 100%
   background: rgba(0, 0, 0, 0.77)
-  animation: 0.3s ease-in-out  detailOptionUp
+  animation: 0.3s linear  detailOptionUp
 
 @keyframes detailOptionUp
   0%
@@ -141,13 +90,6 @@
   height: 30px
   margin-right: 8px
 
-.item_open_button_down
-  background-image: url("../../../../../assets/mobileJoinPage/open_button_down.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 10px
-  height: 10px
-  margin-left: 5px
 
 .detail_question_info
   display: flex
@@ -183,13 +125,6 @@
 .event_info_joined
   display: flex
 
-.event_info_joined_img
-  background-image: url("../../../../../assets/eventFinish/Participant.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 17px
-  height: 17px
-  margin-right: 4px
 
 .event_info_joined_text
   display: flex
@@ -228,13 +163,7 @@
   align-items: center
   margin-top: 15px
 
-.event_info_comments_img
-  background-image: url("../../../../../assets/descEvent/comment.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 16.4px
-  height: 13px
-  margin-right: 10px
+
 
 .event_info_comments_text
   display: flex
@@ -263,19 +192,11 @@
     color: #FFFFFF
 
 .detail_question_theme_img
-  background-image: url("../../../../../assets/descEvent/social.png")
+  background-image: url("../../../../../../assets/descEvent/social.png")
   background-size: contain
   background-repeat: no-repeat
   width: 19px
   height: 19px
-
-.answer_circle
-  background-image: url("../../../../../assets/mobileJoinPage/answer_circle.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 14px
-  height: 14px
-  margin-right: 8px
 
 .d_flex_alight_justify_center
   display: flex
@@ -347,7 +268,7 @@
 .avengers_img
   width: 23px
   height: 17px
-  background-image: url("../../../../../assets/mobileJoinPage/avengers.png")
+  background-image: url("../../../../../../assets/mobileJoinPage/avengers.png")
   background-repeat: no-repeat
   background-size: cover
 
@@ -371,20 +292,13 @@
     color: #34DDDD
 
 .hand_bet_img
-  background-image: url("../../../../../assets/mobileJoinPage/user_bet_img.png")
+  background-image: url("../../../../../../assets/mobileJoinPage/user_bet_img.png")
   background-repeat: no-repeat
   background-size: cover
   width: 17px
   height: 17px
   margin-right: 8px
 
-.choosen_answer_circle
-  background-image: url("../../../../../assets/mobileJoinPage/blue_answer_circle.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 14px
-  height: 14px
-  margin-right: 8px
 
 .validateNow
   font-style: normal
@@ -396,7 +310,7 @@
   cursor: pointer
 
 .validated_img
-  background-image: url("../../../../../assets/mobileJoinPage/validated.png")
+  background-image: url("../../../../../../assets/mobileJoinPage/validated.png")
   background-repeat: no-repeat
   background-size: cover
   width: 15px
@@ -416,16 +330,8 @@
         color: #BF94E4
         text-transform: uppercase
 
-.validator_answer_circle
-  background-image: url("../../../../../assets/mobileJoinPage/purple_answer_circle.png")
-  background-size: contain
-  background-repeat: no-repeat
-  width: 14px
-  height: 14px
-  margin-right: 8px
 
 .user_win_participant
-  display: flex
   font-style: normal
   font-weight: bold
   font-size: 12px
@@ -457,5 +363,9 @@
   text-align: right
   text-transform: uppercase
 
-.user_win_validator
-  display: flex
+.status_text
+  font-style: normal
+  font-weight: 600
+  font-size: 12px
+  line-height: 16px
+  color: #FFFFFF

@@ -1,56 +1,110 @@
 <div style="display: flex">
-  <div class="question_options_block" *ngIf="!question.usersAnswers.answered && !question.status=='finished'">
+
+  <div class="question_options_block"
+       *ngIf="question.status!=='finished'|| question.status.includes('reverted') && !question.usersAnswers.answered">
     <div class=" question_option" *ngIf="question?.answers[0]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[0].toString(), 20)}}</span></div>
+      <span>{{makeShortenStr(question?.answers[0].toString(), 15)}}</span></div>
     <div class=" question_option" *ngIf="question.answers[1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[1]?.toString(), 20)}}</span></div>
+      <span>{{makeShortenStr(question?.answers[1]?.toString(), 15)}}</span></div>
     <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
     </div>
   </div>
 
   <div class="question_options_block"
-       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant'">
+       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status!=='finished' && !question.status.includes('reverted')">
+
     <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
       <div class="choosen_answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 20)}}</span></div>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
     <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 20)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
     </div>
   </div>
 
-  <div class="question_options_block" *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
-    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer]">
-      <div class="validator_answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 20)}}</span></div>
+  <div class="question_options_block"
+       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
+    <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
+      <div class="correct_answer_circle"></div>
+      <span style="color: #5DB145">{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
     <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 20)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+    </div>
+    <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
+      more outcomes</span>
+    </div>
+  </div>
+
+  <div class="question_options_block"
+       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
+    <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
+      <div class="correct_answer_circle"></div>
+      <span style="color: #5DB145">{{makeShortenStr(question?.answers[question.finalAnswer].toString(), 15)}}</span>
+    </div>
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer]">
+      <div class="wrong_answer_circle"></div>
+      <span
+        style="color: #C10000">{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+    </div>
+    <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
+      more outcomes</span>
+    </div>
+  </div>
+
+  <div class="question_options_block"
+       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status!=='finished' && !question.status.includes('reverted')">
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer]">
+      <div class="validator_answer_circle"></div>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
+      <div class="answer_circle"></div>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+    </div>
+    <div class="more_outcomes" *ngIf="question?.answers.length>2"><span>+ {{question.answers.length - 2}}
+      more outcomes</span>
+    </div>
+
+  </div>
+
+  <div class="question_options_block"
+       *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.finalAnswer==question.usersAnswers.answer">
+    <div class=" question_option" *ngIf="question.answers[question.finalAnswer]">
+      <div class="correct_answer_circle"></div>
+      <span style="color:#5DB145">{{makeShortenStr(question?.answers[question.finalAnswer].toString(), 15)}}</span>
+    </div>
+    <div class=" question_option" *ngIf="question.answers[question.finalAnswer - 1] || question.answers[question.finalAnswer + 1]">
+      <div class="answer_circle"></div>
+      <span>{{makeShortenStr(question?.answers[question.finalAnswer - 1] || question?.answers[question.finalAnswer + 1], 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question?.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
     </div>
   </div>
 
-  <div class="question_options_block" *ngIf="!timeValidating(question) && question?.host.id != userData?._id && !question.usersAnswers.from && question.status=='finished'">
+
+  <div class="question_options_block"
+       *ngIf="!timeValidating(question) && question?.host.id != userData?._id && !question.usersAnswers.from && question.status=='finished'">
 
     <div class=" question_option" *ngIf="question.answers[question.finalAnswer]">
       <div class="correct_answer_circle"></div>
-      <span style="color:#5DB145">{{makeShortenStr(question?.answers[question.finalAnswer].toString(), 20)}}</span></div>
+      <span style="color:#5DB145">{{makeShortenStr(question?.answers[question.finalAnswer].toString(), 15)}}</span>
+    </div>
     <div class=" question_option" *ngIf="question.answers[question.finalAnswer - 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.finalAnswer - 1].toString() || question?.answers[question.finalAnswer + 1].toString(), 20)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.finalAnswer - 1].toString() || question?.answers[question.finalAnswer + 1].toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question?.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
     </div>
   </div>
+
 
   <div class="event_info_block">
     <div class="event_info_joined">
@@ -58,10 +112,12 @@
       <div class="event_info_joined_text"><span>{{question?.validated + question?.answerAmount}} Joined</span>
       </div>
     </div>
+
     <div class="event_info_avg_bet">
       <div class="event_info_avg_bet_img"></div>
       <div class="event_info_avg_bet_text"><span>{{avgBet(question)}} BET Avg.Bet</span></div>
     </div>
+
     <div class="event_info_comments">
       <div class="event_info_comments_img"></div>
       <div class="event_info_comments_text" *ngIf="question.commentsAmount">
@@ -70,8 +126,9 @@
         </a></div>
       <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
     </div>
+
     <div class="item_ending_time_block">
-      <div>
+      <div class="validating_in_progress"  *ngIf="question.status!=='finished' && !question.status.includes('reverted')">
         <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px; color: #fff">
           <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
             ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
@@ -79,6 +136,19 @@
           <time class="event_date" [timer]="question?.endTime"></time>
         </div>
       </div>
+
+      <div class="event_canceled_ended"  *ngIf="question.status=='finished' || question.status.includes('reverted')">
+
+        <div *ngIf="question.finalAnswer !== null " >
+          <p class="status_text" style="color: #fff;font-weight: 600;font-size: 12px;line-height: 16px;">Ended on {{eventFinishDate(question)}}</p>
+        </div>
+
+        <div *ngIf="question.status.includes('reverted') && !question.finalAnswer">
+          <p class="status_text"  style="color: #fff;font-weight: 600;font-size: 12px;line-height: 16px;">Cancelled on {{eventFinishDate(question)}}</p>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </div>

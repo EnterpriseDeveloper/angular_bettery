@@ -3,25 +3,23 @@ import {Event} from '../../../../../models/Event.model';
 import {User} from '../../../../../models/User.model';
 
 @Component({
-  selector: 'app-question-options-block',
-  templateUrl: './question-options-block.component.html',
-  styleUrls: ['./question-options-block.component.sass']
+  selector: 'app-item-info-closed',
+  templateUrl: './item-info-closed.component.html',
+  styleUrls: ['./item-info-closed.component.sass']
 })
-export class QuestionOptionsBlockComponent implements OnInit {
-  @Input()question:Event
-  @Input('userData') userData: User;
+export class ItemInfoClosedComponent implements OnInit {
+@Input()question:Event
+@Input()userData: User;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  makeShortenStr(str: string, howMuch: number): string {
-    return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
-  }
   timeValidating(question) {
     const timeNow = Number((Date.now() / 1000).toFixed(0));
     return question.endTime - timeNow > 0;
   }
+
   getValidatorsAmount(q) {
     return q.validatorsAnswers === undefined ? 0 : q.validatorsAnswers.length;
   }
@@ -37,16 +35,15 @@ export class QuestionOptionsBlockComponent implements OnInit {
       return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
   }
-  avgBet(q) {
-    let amount = 0;
-    if (q.parcipiantAnswers == undefined) {
-      return amount;
-    } else {
-      q.parcipiantAnswers.forEach(e => {
-        amount = amount + e.amount;
-      });
-    }
-    return this.checkFractionalNumb(amount, q.parcipiantAnswers.length, '/');
+
+  getMinted(data) {
+    const sumMintedParc = data.parcipiantAnswers.reduce((sum, elem) => {
+      return sum + Number(elem.mintedToken);
+    }, 0);
+    const sumMintedValidator = data.validatorsAnswers.reduce((sum, elem) => {
+      return sum + Number(elem.mintedToken);
+    }, 0);
+    return this.checkFractionalNumb(sumMintedParc, sumMintedValidator, '+');
   }
 
   checkFractionalNumb(num1, num2, action) {
@@ -63,6 +60,7 @@ export class QuestionOptionsBlockComponent implements OnInit {
       return avg.toString().includes('.') ? avg.toFixed(1) : avg;
     }
   }
+
   eventFinishDate(data) {
     let d = new Date(Number(data.eventEnd) * 1000);
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
