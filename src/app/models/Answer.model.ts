@@ -5,4 +5,6 @@ export interface Answer {
   answered: boolean;
   amount: number | string;
   betAmount: number;
+  mintedToken: number;
+  payToken: number;
 }

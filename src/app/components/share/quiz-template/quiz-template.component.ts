@@ -22,7 +22,7 @@ import { Event } from '../../../models/Event.model';
 import { Coins } from '../../../models/Coins.model';
 import { RegistrationComponent } from '../../registration/registration.component';
 import { ClipboardService } from 'ngx-clipboard';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'quiz-template',
@@ -185,8 +185,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           answer: null,
           from: null,
           answered: null,
-          amount:   this.question.usersAnswers.amount,
+          amount: this.question.usersAnswers.amount,
           betAmount: null,
+          mintedToken: null,
+          payToken: null
         };
       }
     }
@@ -242,19 +244,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  playerAward(data) {
+  playerAward() {
     if (this.userData != undefined) {
-      if (this.myAnswers.from == 'validator') {
-        const findValid = data.validatorsAnswers.filter((x) => {
-          return x.userId == this.userData._id;
-        });
-        return this.checkFractionalNumb(findValid[0].mintedToken, findValid[0].payToken, '+') + ' BET';
-      } else {
-        const findParc = data.parcipiantAnswers.filter((x) => {
-          return x.userId == this.userData._id;
-        });
-        return this.checkFractionalNumb(findParc[0].payToken, findParc[0].mintedToken, '+') + ' BET';
-      }
+      return this.checkFractionalNumb(this.myAnswers.mintedToken, this.myAnswers.payToken, '+') + ' BET';
     } else {
       return;
     }
@@ -297,11 +289,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   getWinnerColor(data) {
     if (this.userData != undefined) {
       if (data.host.id === this.userData._id) {
-        return {'color': '#F7971E'};
+        return { 'color': '#F7971E' };
       } else if (this.myAnswers.from == 'validator') {
-        return {'color': '#A134FF'};
+        return { 'color': '#A134FF' };
       } else {
-        return {'color': '#10C9C9'};
+        return { 'color': '#10C9C9' };
       }
     } else {
       return;
@@ -337,7 +329,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     let answer = this.myAnswers;
     if (this.allUserData != undefined) {
       if (answer.answer === undefined) {
-        let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
         modalRef.componentInstance.title = 'Choose anwer';
         modalRef.componentInstance.description = 'Choose at least one answer';
@@ -347,7 +339,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           this.setToNetworkValidation(answer);
         } else {
           if (Number(answer.amount) < 0.01) {
-            const modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+            const modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'error';
             modalRef.componentInstance.title = 'Low amount';
             modalRef.componentInstance.description = 'Amount must be bigger than 0.01';
@@ -373,11 +365,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   async setToNetwork(answer) {
-    if(!this.coinInfo){
-      setTimeout(()=>{
+    if (!this.coinInfo) {
+      setTimeout(() => {
         this.setToNetwork(answer)
-      },1000)
-    }else if (Number(this.coinInfo.BET) < Number(answer.amount)) {
+      }, 1000)
+    } else if (Number(this.coinInfo.BET) < Number(answer.amount)) {
       let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
       modalRef.componentInstance.errType = 'error';
       modalRef.componentInstance.title = 'Insufficient BET';
@@ -402,16 +394,16 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       amount: Number(answer.amount)
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
-        this.updateUser();
-        this.callGetData.next();
-        this.disable = null;
-        this.betDisable = false;
-      },
+      this.updateUser();
+      this.callGetData.next();
+      this.disable = null;
+      this.betDisable = false;
+    },
       (err) => {
         console.log(err);
         if (err.error.includes('not valid time')) {
           if (this.timePart(this.question)) {
-            let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'time';
             modalRef.componentInstance.title = 'Event not start';
             modalRef.componentInstance.customMessage = 'Betting time for this event is not start.';
@@ -419,7 +411,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.nameButton = 'fine';
             this.disable = null;
           } else if (this.timeValidating(this.question)) {
-            let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'time';
             modalRef.componentInstance.title = 'Betting time’s over';
             modalRef.componentInstance.customMessage = 'Betting time for this event is over.';
@@ -429,7 +421,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           }
 
         } else {
-          let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
           modalRef.componentInstance.errType = 'error';
           modalRef.componentInstance.title = 'Unknown Error';
           modalRef.componentInstance.customMessage = String(err.error);
@@ -452,22 +444,22 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       answer: answer.answer,
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
-        this.updateUser();
-        this.callGetData.next();
-        this.validDisable = false;
-      },
+      this.updateUser();
+      this.callGetData.next();
+      this.validDisable = false;
+    },
       (err) => {
         console.log(err);
         if (err.error.includes('not valid time')) {
           if (this.timeValidating(this.question)) {
-            let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'time';
             modalRef.componentInstance.title = 'Validation time’s not start';
             modalRef.componentInstance.customMessage = 'Validation time for this event not start';
             modalRef.componentInstance.description = 'Expert can join when validating time is start';
             modalRef.componentInstance.nameButton = 'fine';
           } else if (!this.timeValidating(this.question)) {
-            let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+            let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
             modalRef.componentInstance.errType = 'time';
             modalRef.componentInstance.title = 'Validation time’s over';
             modalRef.componentInstance.customMessage = 'Validation time for this event is over, ';
@@ -475,14 +467,14 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
             modalRef.componentInstance.nameButton = 'fine';
           }
         } else if (err.error.includes('user participate')) {
-          let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
           modalRef.componentInstance.errType = 'error';
           modalRef.componentInstance.title = 'You participated in this event.';
           modalRef.componentInstance.customMessage = 'You have been like the participant in this event. ';
           modalRef.componentInstance.description = 'The participant can\'t be the Experts.';
           modalRef.componentInstance.nameButton = 'fine';
         } else {
-          let modalRef = this.modalService.open(QuizErrorsComponent, {centered: true});
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
           modalRef.componentInstance.errType = 'error';
           modalRef.componentInstance.title = 'Unknown Error';
           modalRef.componentInstance.customMessage = String(err.error);
@@ -537,7 +529,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (data.finalAnswer !== null) {
       if (this.userData != undefined) {
         if (data.host.id === this.userData._id) {
-          return {'background': 'rgb(255, 248, 206)'};
+          return { 'background': 'rgb(255, 248, 206)' };
         } else {
           return this.backgroundColorEventFinish(data);
         }
@@ -545,17 +537,17 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.backgroundColorEventFinish(data);
       }
     } else if (data.status.includes('reverted')) {
-      return {'background': '#F4F4F4'};
+      return { 'background': '#F4F4F4' };
     } else {
-      return {'background': '#E6FFF2'};
+      return { 'background': '#E6FFF2' };
     }
   }
 
   backgroundColorEventFinish(data) {
     if (this.userData && data.finalAnswer != this.myAnswers.answer && this.myAnswers.answer != undefined) {
-      return {'background': '#FFEDED'};
+      return { 'background': '#FFEDED' };
     } else {
-      return {'background': '#F4F4F4'};
+      return { 'background': '#F4F4F4' };
     }
   }
 
@@ -575,7 +567,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  imageHeight(){
+  imageHeight() {
     if (this.question) {
       return {
         'height': this.heightBlock + 'px'
