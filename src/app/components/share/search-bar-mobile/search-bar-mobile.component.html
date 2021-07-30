@@ -9,19 +9,19 @@
 <div style="display: flex">
   <div class="d-flex">
     <div (click)="changesActiveBtn('trending')" class="text-disactive"
-         [ngClass]="active === 'trending' && 'text-active'">
+         [ngClass]="active === 'trending' && comingSoonType=='social' && 'text-active'">
       <span>Trending</span>
     </div>
     <div (click)="changesActiveBtn('controversial')" class="text-disactive"
-         [ngClass]="active === 'controversial' && 'text-active'">
+         [ngClass]="active === 'controversial' && comingSoonType=='social' && 'text-active'">
       <span>Controversial</span>
     </div>
     <div (click)="changesActiveBtn('following')" class="text-disactive"
-         [ngClass]="active === 'following' && 'text-active'">
+         [ngClass]="active === 'following' && comingSoonType=='social' && 'text-active'">
       <span>Following</span>
     </div>
-    <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && 'text-active'">
-      <div [ngClass]="active=== 'pro' ? 'baksGreen-img' : 'baks-img'" class="baks-img"></div>
+    <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && comingSoonType=='social' && 'text-active'">
+      <div [ngClass]="active=== 'pro' ? 'baks-img_green' : 'baks-img'" class="baks-img"></div>
     </div>
   </div>
 </div>

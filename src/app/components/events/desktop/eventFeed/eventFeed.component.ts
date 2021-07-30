@@ -271,4 +271,5 @@ export class EventFeedComponent implements OnDestroy {
       this.isMobile = true;
     }
   }
+
 }

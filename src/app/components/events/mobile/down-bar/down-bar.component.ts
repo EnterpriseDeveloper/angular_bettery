@@ -46,8 +46,4 @@ export class DownBarComponent implements OnInit,DoCheck {
     }
   }
 
-  openCreateEventModal() {
-    this.modalService.open(EventsTemplatesDesktopComponent, {centered: true });
-  }
-
 }

@@ -15,6 +15,7 @@ export class SearchBarMobileComponent implements OnInit {
   @Input() allAmountEvents: number;
   @Input() amount: number;
   @Input() active = 'trending';
+  @Input() comingSoonType: string;
   constructor() {
   }
 
@@ -36,8 +37,5 @@ export class SearchBarMobileComponent implements OnInit {
     }, 300);
   }
 
-  openFilter() {
-    this.timelineActive.emit(true);
-  }
 
 }

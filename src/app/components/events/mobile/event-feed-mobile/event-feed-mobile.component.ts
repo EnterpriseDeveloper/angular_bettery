@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy} from '@angular/core';
+import {Component, DoCheck, HostListener, OnDestroy} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
 import {Answer} from '../../../../models/Answer.model';
@@ -35,6 +35,8 @@ export class EventFeedMobileComponent implements OnDestroy {
   scrollDistanceFrom = 0;
   scrollDistanceTo = 5;
   newQuestions = [];
+  comingSoonType = 'social';
+
 
   currentComment = 0;
   scrollTop = 0;
@@ -148,24 +150,6 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
   }
 
-  colorForRoom(color) {
-    if (this.newQuestions) {
-      return {
-        'background': color
-      };
-    } else {
-      return;
-    }
-  }
-
-  commentTopPosition() {
-    if (document.documentElement.scrollTop < 278) {
-      return {'top': (278 - this.scrollTop) + 'px'};
-    } else {
-      return {'top': 0};
-    }
-  }
-
   @HostListener('window:scroll', ['$event'])
   listenScroll() {
     this.scrollTop = document.documentElement.scrollTop;
@@ -239,6 +223,9 @@ export class EventFeedMobileComponent implements OnDestroy {
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
       }
     }
+    if(this.activeBtn==='pro'){
+      this.comingSoonType=this.activeBtn
+    }
   }
 
   openTimeline($event: any) {
@@ -273,14 +260,9 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.isMobile = true;
     }
   }
- onScrollNavBar(){
-    const curScrollPos = window.pageYOffset;
-    if(this.prevScrollPos>curScrollPos){
-      document.getElementById('bar_on_hide').style.top='0';
-    }else {
-      document.getElementById('bar_on_hide').style.top='-100px';
-    }
-    this.prevScrollPos= curScrollPos;
 
+
+  setComingType(type:string){
+    this.comingSoonType=type;
   }
 }

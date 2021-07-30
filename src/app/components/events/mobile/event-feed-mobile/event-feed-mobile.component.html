@@ -1,30 +1,30 @@
-<div class="container" (scroll)="onScrollNavBar()">
+<div class="container" >
   <div class="box">
     <div id="bar_on_hide">
       <div class="slideBar">
         <div class="navigation">
-          <div class="navItem">
+          <div class="navItem" (click)="setComingType('social')">
             <div>
               <div>
-                <div class="social-img"></div>
+                <div [ngClass]="comingSoonType=='social' ?'social-img_yellow': 'social-img'"></div>
               </div>
-              <span>Social</span>
+              <span [ngClass]="comingSoonType=='social'?'yellow_span':'default_span'">Social</span>
             </div>
           </div>
-          <div class="navItem">
+          <div class="navItem" (click)="setComingType('moments')">
             <div>
               <div>
-                <div class="moments-img"></div>
+                <div [ngClass]="comingSoonType=='moments' ?'moments-img_yellow': 'moments-img'"></div>
               </div>
-              <span>Moments</span>
+              <span [ngClass]="comingSoonType=='moments'?'yellow_span':'default_span'">Moments</span>
             </div>
           </div>
-          <div class="navItem">
+          <div class="navItem" (click)="setComingType('live')">
             <div>
               <div>
-                <div class="live-img"></div>
+                <div [ngClass]="comingSoonType=='live'?'live_img_yellow':'live_img'"></div>
               </div>
-              <span>Live</span>
+              <span [ngClass]="comingSoonType=='live'?'yellow_span':'default_span'">Live</span>
             </div>
           </div>
 
@@ -32,17 +32,19 @@
       </div>
       <nav id="navigation_bar">
 
-        <app-search-bar-mobile (activeItemEmit)="activeBtnFromSearchBar($event)"
+        <app-search-bar-mobile [comingSoonType]="comingSoonType"
+                               (activeItemEmit)="activeBtnFromSearchBar($event)"
                                (searchWordEmit)="letsFindNewQuestion($event)"
                                [allAmountEvents]=pureData?.allAmountEvents
                                [amount]=pureData?.amount
                                (timelineActive)="openTimeline($event)"
                                [active]=activeBtn>
 
+
         </app-search-bar-mobile>
       </nav>
     </div>
-    <div class="search-results" infiniteScroll
+    <div *ngIf="comingSoonType=='social'" class="search-results" infiniteScroll
          [infiniteScrollDistance]="1"
          [infiniteScrollThrottle]="50"
          (scrolled)="onScrollQuizTemplate()"
@@ -67,6 +69,10 @@
                              *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more>
         </div>
       </main>
+    </div>
+
+    <div class="d_flex_alight_justify_center" style="margin-top: 17%" *ngIf="comingSoonType!=='social'">
+      <app-coming-soon [comingSoonType]="comingSoonType"></app-coming-soon>
     </div>
     <app-down-bar></app-down-bar>
   </div>
