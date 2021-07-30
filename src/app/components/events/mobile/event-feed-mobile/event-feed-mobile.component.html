@@ -76,5 +76,9 @@
     </div>
     <app-down-bar></app-down-bar>
   </div>
-
+  <filterTimeline *ngIf="timelineActive"
+                  (closeEmmit)="openTimeline($event)"
+                  (filterData)="letsFilterData($event)"
+                  [statusMode]="filterMode"
+  ></filterTimeline>
 </div>

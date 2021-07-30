@@ -25,6 +25,7 @@ import {ImageLoaderComponent} from './image-loader/image-loader.component';
 import {TextareaComponent} from './textarea/textarea.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 import { SearchBarMobileComponent } from './search-bar-mobile/search-bar-mobile.component';
+import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { SearchBarMobileComponent } from './search-bar-mobile/search-bar-mobile.
     MobilePlugPageComponent,
     TextareaComponent,
     SearchBarComponent,
-    SearchBarMobileComponent
+    SearchBarMobileComponent,
+    FilterTimelineComponent
   ],
   imports: [
     CommonModule,
@@ -77,7 +79,8 @@ import { SearchBarMobileComponent } from './search-bar-mobile/search-bar-mobile.
     ImageLoaderComponent,
     TextareaComponent,
     SearchBarComponent,
-    SearchBarMobileComponent
+    SearchBarMobileComponent,
+    FilterTimelineComponent
   ]
 })
 

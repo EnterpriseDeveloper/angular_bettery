@@ -9,7 +9,6 @@ import {ShareModule} from '../../share/share.module';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
 import {NavigationModule} from '../../navigation/navigation.module';
-import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component';
 import {MobileEventsModule} from '../mobile/mobileEvents.module';
 
 
@@ -30,12 +29,10 @@ import {MobileEventsModule} from '../mobile/mobileEvents.module';
     MobileEventsModule
   ],
   exports: [
-    FilterTimelineComponent
   ],
   declarations: [
     EventFeedComponent,
 
-    FilterTimelineComponent
   ]
 })
 export class DesktopEventsModule {
