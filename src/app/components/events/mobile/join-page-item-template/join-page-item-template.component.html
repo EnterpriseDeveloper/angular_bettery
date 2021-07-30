@@ -3,7 +3,7 @@
   <div>
     <img *ngIf="!question.thumImage==='undefined'" class="item-logo" [src]="question?.thumImage" alt="">
     <div class="item-logo" [ngStyle]="colorForRoom(question.thumColor)">
-      <div *ngIf="question.thumImage === 'undefined'" class="unloadedImgBlock">
+      <div *ngIf="question.thumImage === 'undefined' && !question.detailOpened" class="unloadedImgBlock">
         <div style="height: 50% ; width: 100% ;background: rgba(0, 0, 0, 0.5);" class="d_flex_alight_justify_center">
           <div class="unloadedImgContent">
             <span class="unloadedImgQuestion">{{question?.question}}</span>

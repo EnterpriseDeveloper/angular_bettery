@@ -49,6 +49,7 @@ export class EventFeedMobileComponent implements OnDestroy {
   filterMode = false;
   finishLoading = false;
   isMobile: boolean;
+  prevScrollPos = window.pageYOffset;
 
   constructor(
     private store: Store<AppState>,
@@ -271,5 +272,15 @@ export class EventFeedMobileComponent implements OnDestroy {
 
       this.isMobile = true;
     }
+  }
+ onScrollNavBar(){
+    const curScrollPos = window.pageYOffset;
+    if(this.prevScrollPos>curScrollPos){
+      document.getElementById('bar_on_hide').style.top='0';
+    }else {
+      document.getElementById('bar_on_hide').style.top='-100px';
+    }
+    this.prevScrollPos= curScrollPos;
+
   }
 }

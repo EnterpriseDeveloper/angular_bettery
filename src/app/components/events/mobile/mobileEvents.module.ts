@@ -22,6 +22,7 @@ import { JoinPageItemTemplateComponent } from './join-page-item-template/join-pa
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import { QuestionOptionsBlockComponent } from './join-page-item-template/question-options-block/question-options-block.component';
 import { ItemInfoClosedComponent } from './join-page-item-template/item-info-closed/item-info-closed.component';
+import { DownBarComponent } from './down-bar/down-bar.component';
 
 
 
@@ -58,7 +59,8 @@ import { ItemInfoClosedComponent } from './join-page-item-template/item-info-clo
     EventFeedMobileComponent,
     JoinPageItemTemplateComponent,
     QuestionOptionsBlockComponent,
-    ItemInfoClosedComponent
+    ItemInfoClosedComponent,
+    DownBarComponent
 ]
 })
 export class MobileEventsModule { }
