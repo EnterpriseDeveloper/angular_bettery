@@ -27,19 +27,19 @@ import {ComingSoonComponent} from './coming-soon/coming-soon.component';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        BrowserModule,
-        NgbModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule.forChild([
-            {path: 'private_event/:id', component: PrivateMainComponent},
-            {path: 'public_event/:id', component: PublicMainComponent},
-        ]),
-        ShareModule,
-        InfiniteScrollModule,
-    ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild([
+      {path: 'private_event/:id', component: PrivateMainComponent},
+      {path: 'public_event/:id', component: PublicMainComponent},
+    ]),
+    ShareModule,
+    InfiniteScrollModule,
+  ],
   exports: [
     EventFeedMobileComponent
   ],

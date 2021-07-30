@@ -3,7 +3,7 @@
     <div class="search-img"></div>
     <input type="text"  name="searchWord" [(ngModel)]="searchWord" placeholder="What are you interested in?" aria-label="Username"
            aria-describedby="basic-addon1" (keyup)="letsFindEvent()">
-    <div class="lines_3_img"></div>
+    <div class="lines_3_img" (click)="openFilter()"></div>
   </div>
 </div>
 <div style="display: flex">

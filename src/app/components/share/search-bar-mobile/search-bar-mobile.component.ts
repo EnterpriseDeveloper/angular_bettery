@@ -36,6 +36,8 @@ export class SearchBarMobileComponent implements OnInit {
       this.searchWordEmit.emit(this.searchWord);
     }, 300);
   }
-
+  openFilter() {
+    this.timelineActive.emit(true);
+  }
 
 }
