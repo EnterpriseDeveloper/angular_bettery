@@ -47,7 +47,7 @@ export class EventFeedMobileComponent implements OnDestroy {
   queryPath = 'publicEvents/get_all';
 
   timelineActive: boolean;
-  showEnd = true;
+  showEnd = false;
   filterMode = false;
   finishLoading = false;
   isMobile: boolean;

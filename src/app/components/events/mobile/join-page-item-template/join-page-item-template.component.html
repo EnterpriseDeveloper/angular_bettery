@@ -1,29 +1,40 @@
 <div class="container">
 
   <div>
-    <img *ngIf="!question.thumImage==='undefined'" class="item-logo" [src]="question?.thumImage" alt="">
-    <div class="item-logo" [ngStyle]="colorForRoom(question.thumColor)">
-      <div *ngIf="question.thumImage === 'undefined' && !question.detailOpened" class="unloadedImgBlock">
+    <div class="item-logo" >
+      <div class="item-logo" *ngIf="question.thumImage === 'undefined'"  [ngStyle]="colorForRoom(question.thumColor)" [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
+        <div  *ngIf="question.thumImage === 'undefined' && !question.detailOpened" class="unloadedImgBlock"  [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
         <div style="height: 50% ; width: 100% ;background: rgba(0, 0, 0, 0.5);" class="d_flex_alight_justify_center">
           <div class="unloadedImgContent">
             <span class="unloadedImgQuestion">{{question?.question}}</span>
           </div>
         </div>
-      </div>
+      </div></div>
+
+      <img *ngIf="question.thumImage!=='undefined'" class="item-logo" [src]="question?.thumImage" alt="" [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
+
       <div class="item-info" [ngClass]="question.detailOpened?'d_none ':'d_block '">
-        <div class="item-info_container" (click)="toggleDetailOpened()">
+        <div class="item-info_container" >
 
           <app-item-info-closed [question]="question" [userData]="userData"></app-item-info-closed>
 
-          <div class="item_open_button_up"></div>
+          <div *ngIf="question.status!='finished' && !question.status.includes('reverted')" style="flex: 1" >
+            <div
+                 (click)="toggleDetailOpened();toggleCloseAnimation()" class="item_open_button_up"></div>
+          </div>
+
+          <a [href]="'public_event/'+question?.id.toString()" target="_blank" style="margin-left: auto" class="d_flex_alight_justify_center">
+            <div [class]="arrowType(question)"></div>
+          </a>
+
         </div>
       </div>
-      <div class="item-info_detail" [ngClass]="!question.detailOpened?'d_none':'d_block '">
+      <div class="item-info_detail"  [class.ng-hide]="addCloseAnimation">
         <div class="detail_question_block">
           <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
             <div class="detail_question_text"><span>{{question.question}}</span></div>
             <div>
-              <div class="item_open_button_down" (click)="toggleDetailOpened()"></div>
+              <div class="item_open_button_down" (click)="toggleDetailOpened();toggleCloseAnimation()"></div>
             </div>
           </div>
         </div>
@@ -55,15 +66,15 @@
           <div *ngIf="(!question.status.includes('reverted'))">
 
             <div class="join_event_button"
-                 *ngIf="!question.usersAnswers.answered && timeValidating(question) && question?.host.id != userData?._id">
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+                 *ngIf="!question.usersAnswers.answered && timeValidating(question) ">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
                 <span>Join Now</span>
               </a>
             </div>
 
             <div class="join_event_button_user_made_bet"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status!=='finished'">
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank"
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank"
                  class="d_flex_alight_justify_center">
                 <div class="hand_bet_img"></div>
                 <div><span>{{question?.usersAnswers?.betAmount.toString() + ' BET'}}</span></div>
@@ -72,7 +83,7 @@
 
             <div class="join_event_button_user_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank" *ngIf="question.status!=='finished'">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.status!=='finished'">
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow"
                      style="display: flex;">
                   VALIDATED
@@ -86,7 +97,7 @@
             <div class="user_win_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id" style="margin-right: 41px">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id" style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
                      style="display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -99,7 +110,7 @@ line-height: 14px;">
                   BET</span></div>
               </a>
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question)"
                      style="display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -116,7 +127,7 @@ line-height: 14px;">
             <div class="user_lost_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id" style="margin-right: 41px">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id" style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
                      style="display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -129,7 +140,7 @@ line-height: 14px;">
                   BET</span></div>
               </a>
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id"
                      style="color: #fff; display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -146,7 +157,7 @@ line-height: 14px;">
             <div class="user_win_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question)"
                      style="color: #fff ;display: flex;font-style: normal;justify-content: flex-end;font-weight: 600;font-size: 10px;line-height: 14px;">
                   You earned
@@ -161,7 +172,7 @@ line-height: 14px;">
             <div class="user_lost_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
 
                 <div style="display: flex; justify-content: flex-end"><span
                   style="color: #C10000;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">YOU WERE WRONG</span></div>
@@ -169,7 +180,7 @@ line-height: 14px;">
             </div>
 
             <div
-              *ngIf="!timeValidating(question) && question?.host.id != userData?._id && !question.usersAnswers.from && !question.status=='finished'"
+              *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished'"
               class="validateNow"
               style="display: flex;">
               VALIDATE NOW

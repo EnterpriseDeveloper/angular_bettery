@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Subscription} from 'rxjs';
 import {Event} from '../../../../models/Event.model';
@@ -6,12 +6,13 @@ import {Answer} from '../../../../models/Answer.model';
 import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 
+
 @Component({
   selector: 'app-join-page-item-template',
   templateUrl: './join-page-item-template.component.html',
   styleUrls: ['./join-page-item-template.component.sass']
 })
-export class JoinPageItemTemplateComponent implements OnInit {
+export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
 
   allUserData: User = undefined;
   amount: number;
@@ -25,6 +26,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   letsBet = false;
   viewEventFinishInfo = false;
   copyLinkFlag: boolean;
+  addCloseAnimation = true;
 
   @Input() joinRoom: boolean;
   @Input() index: number;
@@ -46,14 +48,21 @@ export class JoinPageItemTemplateComponent implements OnInit {
 
 
   constructor() {
+
   }
 
   ngOnInit(): void {
     console.log(this.question);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+  }
+
+
   toggleDetailOpened() {
     this.question.detailOpened = !this.question.detailOpened;
+    console.log(this.addCloseAnimation);
   }
 
   colorForRoom(color) {
@@ -66,6 +75,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
       return;
     }
   }
+
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {
@@ -128,4 +138,24 @@ export class JoinPageItemTemplateComponent implements OnInit {
     return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
   }
 
+  toggleCloseAnimation() {
+    this.addCloseAnimation = !this.addCloseAnimation;
+    this.question.detailOpened = !this.addCloseAnimation;
+  }
+
+  arrowType(question: Event) {
+
+    if ((question.status == 'finished' ) && question.usersAnswers.from == 'validator') {
+      return 'item_open_arrow_purple';
+    }
+    if ((question.status == 'finished' ) && question.usersAnswers.from == 'participant' && this.userData._id === question.host.id) {
+      return 'item_open_arrow_yellow';
+    }
+    if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id != question.host.id ) {
+      return 'item_open_arrow_blue';
+    }
+    if ((question.status == 'finished' || question.status.includes('reverted'))) {
+      return 'item_open_arrow_white';
+    }
+  }
 }

@@ -7,20 +7,20 @@
   </div>
 </div>
 <div style="display: flex">
-  <div class="d-flex">
-    <div (click)="changesActiveBtn('trending')" class="text-disactive"
+  <div class="d-flex" style="flex: 1">
+    <div (click)="changesActiveBtn('trending')" class="text-disactive" style="width: 30%"
          [ngClass]="active === 'trending' && comingSoonType=='social' && 'text-active'">
       <span>Trending</span>
     </div>
-    <div (click)="changesActiveBtn('controversial')" class="text-disactive"
+    <div (click)="changesActiveBtn('controversial')" class="text-disactive" style="width: 32%"
          [ngClass]="active === 'controversial' && comingSoonType=='social' && 'text-active'">
       <span>Controversial</span>
     </div>
-    <div (click)="changesActiveBtn('following')" class="text-disactive"
+    <div (click)="changesActiveBtn('following')" class="text-disactive" style="width: 25%"
          [ngClass]="active === 'following' && comingSoonType=='social' && 'text-active'">
       <span>Following</span>
     </div>
-    <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && comingSoonType=='social' && 'text-active'">
+    <div (click)="changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="active === 'pro' && comingSoonType=='social' && 'text-active'" style="flex: 1">
       <div [ngClass]="active=== 'pro' ? 'baks-img_green' : 'baks-img'" class="baks-img"></div>
     </div>
   </div>
