@@ -38,6 +38,7 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
 
   @Output() callGetData = new EventEmitter();
   @Output() commentIdEmmit = new EventEmitter<number>();
+  @Output() isDetailOpened = new EventEmitter();
   @ViewChild('div') div: ElementRef;
   heightBlock: number;
   disable: number = null;
@@ -62,7 +63,16 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
 
   toggleDetailOpened() {
     this.question.detailOpened = !this.question.detailOpened;
-    console.log(this.addCloseAnimation);
+    this.toggleItemInTempArr();
+  }
+
+  toggleItemInTempArr() {
+    if (this.question.detailOpened) {
+      this.isDetailOpened.emit({isOpened: true, index: this.index});
+
+    } else if (!this.question.detailOpened) {
+      this.isDetailOpened.emit({isOpened: false, index: this.index});
+    }
   }
 
   colorForRoom(color) {
@@ -77,7 +87,7 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
   }
 
   statusReverted(data) {
-    let x = data.status.replace('reverted:', '');
+    const x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {
       return x + ' (' + this.getValidatorsAmount(data) + '/' + this.getValidatorsAmountLeft(data) + ')';
     } else {
@@ -145,13 +155,13 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
 
   arrowType(question: Event) {
 
-    if ((question.status == 'finished' ) && question.usersAnswers.from == 'validator') {
+    if ((question.status == 'finished') && question.usersAnswers.from == 'validator') {
       return 'item_open_arrow_purple';
     }
-    if ((question.status == 'finished' ) && question.usersAnswers.from == 'participant' && this.userData._id === question.host.id) {
+    if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id === question.host.id) {
       return 'item_open_arrow_yellow';
     }
-    if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id != question.host.id ) {
+    if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id != question.host.id) {
       return 'item_open_arrow_blue';
     }
     if ((question.status == 'finished' || question.status.includes('reverted'))) {

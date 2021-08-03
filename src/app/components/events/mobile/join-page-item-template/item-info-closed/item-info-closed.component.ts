@@ -8,7 +8,7 @@ import {User} from '../../../../../models/User.model';
   styleUrls: ['./item-info-closed.component.sass']
 })
 export class ItemInfoClosedComponent implements OnInit {
-@Input()question:Event
+@Input()question: Event;
 @Input()userData: User;
 
   constructor() { }
@@ -62,7 +62,9 @@ export class ItemInfoClosedComponent implements OnInit {
   }
 
   eventFinishDate(data) {
-    let d = new Date(Number(data.eventEnd) * 1000);
+    const d = new Date(Number(data.eventEnd) * 1000);
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
   }
+
+
 }

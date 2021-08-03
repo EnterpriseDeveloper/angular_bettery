@@ -1,4 +1,4 @@
-import {Component, DoCheck, HostListener, OnDestroy} from '@angular/core';
+import {Component, HostListener, OnDestroy, ViewChild} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
 import {Answer} from '../../../../models/Answer.model';
@@ -17,7 +17,7 @@ import {EventModel} from '../../../../models/Event.model';
   styleUrls: ['./event-feed-mobile.component.sass']
 })
 export class EventFeedMobileComponent implements OnDestroy {
-  public spinner: boolean = true;
+  public spinner = true;
   myAnswers: Answer[] = [];
   userId: number = null;
   coinInfo: Coins = null;
@@ -36,10 +36,8 @@ export class EventFeedMobileComponent implements OnDestroy {
   scrollDistanceTo = 5;
   newQuestions = [];
   comingSoonType = 'social';
-
-
+  openedDetailArr = [];
   currentComment = 0;
-  scrollTop = 0;
   searchWord = '';
   commentResetFlag: boolean;
 
@@ -51,7 +49,7 @@ export class EventFeedMobileComponent implements OnDestroy {
   filterMode = false;
   finishLoading = false;
   isMobile: boolean;
-  prevScrollPos = window.pageYOffset;
+  prevScrollPos = window.scrollY;
 
   constructor(
     private store: Store<AppState>,
@@ -85,6 +83,7 @@ export class EventFeedMobileComponent implements OnDestroy {
     this.mobileCheck();
   }
 
+
   getData(path, from, to, search, sort) {
     let param;
     let data = {};
@@ -96,18 +95,18 @@ export class EventFeedMobileComponent implements OnDestroy {
 
     if (path === 'publicEvents/get_all') {
       data = {
-        from: from,
-        to: to,
+        from,
+        to,
         search: param,
-        sort: sort,
+        sort,
         finished: this.showEnd
       };
     }
 
     if (path === 'user/event_activites') {
       data = {
-        from: from,
-        to: to,
+        from,
+        to,
         search: param,
         userId: this.userData?._id,
         finished: this.showEnd
@@ -124,10 +123,16 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.pureData = x;
       if (from == 0) {
         this.newQuestions = this.pureData.events;
-        this.newQuestions.forEach(e => e.detailOpened = false);
+
+        this.newQuestions.forEach((e, i) => {
+          e.detailOpened = this.openedDetailArr.includes(i);
+        });
       } else {
         this.pureData.events.forEach(el => this.newQuestions.push(el));
-        this.newQuestions.forEach(e => e.detailOpened = false);
+
+        this.newQuestions.forEach((e, i) => {
+          e.detailOpened = this.openedDetailArr.includes(i);
+        });
       }
       if (this.timelineActive) {
         this.timelineActive = false;
@@ -141,6 +146,15 @@ export class EventFeedMobileComponent implements OnDestroy {
     });
   }
 
+  arrWithOpenedDetails(event) {
+    if (event.isOpened && !(this.openedDetailArr.includes(event.index))) {
+      this.openedDetailArr.push(event.index);
+    }
+    if (!event.isOpened && (this.openedDetailArr.includes(event.index))) {
+      this.openedDetailArr = this.openedDetailArr.filter(e => e !== event.index);
+    }
+  }
+
   commentById($event) {
     if ($event) {
       const list = this.newQuestions.find((o) => {
@@ -150,9 +164,17 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
   }
 
+
   @HostListener('window:scroll', ['$event'])
-  listenScroll() {
-    this.scrollTop = document.documentElement.scrollTop;
+  showHeader() {
+    if (this.prevScrollPos > window.pageYOffset ){
+      document.getElementById('bar_on_hide').className = 'block_pos_fix';
+
+    }else if (this.prevScrollPos < window.pageYOffset && (window.pageYOffset > 150)){
+      document.getElementById('bar_on_hide').className = 'd_none_pos_rel';
+    }
+    console.log(window.pageYOffset);
+    this.prevScrollPos = window.pageYOffset;
   }
 
   onScrollQuizTemplate() {
@@ -167,6 +189,7 @@ export class EventFeedMobileComponent implements OnDestroy {
     } else {
       return;
     }
+
   }
 
   ngOnDestroy() {
@@ -223,8 +246,8 @@ export class EventFeedMobileComponent implements OnDestroy {
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
       }
     }
-    if(this.activeBtn==='pro'){
-      this.comingSoonType=this.activeBtn
+    if (this.activeBtn === 'pro') {
+      this.comingSoonType = this.activeBtn;
     }
   }
 
@@ -261,8 +284,9 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
   }
 
-
-  setComingType(type:string){
-    this.comingSoonType=type;
+  setComingType(type: string) {
+    this.comingSoonType = type;
   }
+
+
 }

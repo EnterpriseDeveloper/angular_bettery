@@ -1,7 +1,7 @@
 .container
   padding: 0
   overflow: scroll
-  margin-top: 54px
+  margin-top: 53px
 .navigation
   display: flex
   column-gap: 15px
@@ -116,7 +116,7 @@
   width: 26px
 
 .slideBar
-  padding: 17px 16px 0 16px
+  padding: 18px 16px 0 16px
   background: #2E2E2B
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1)
 
@@ -147,6 +147,37 @@
   position: sticky
 
 #bar_on_hide
-  position: sticky
+  position: fixed
+  width: 100%
+  z-index: 3
+  transition: transform .3s linear
+  background-color: #2E2E2B
+
+@keyframes opacityAnim
+  from
+    opacity: 0
+  to
+    opacity: 1
 
 
+.search-results
+  margin-top: 198px
+
+.box
+  position: absolute
+  width: 100%
+  height: 90%
+
+.block_pos_fix
+  display: block
+  position: fixed
+  transform: translateY(0)
+
+.d_none_pos_rel
+  display: block
+  position: fixed
+  transform: translateY(-74%)
+
+@media (min-width: 576px)
+.container
+  max-width: inherit

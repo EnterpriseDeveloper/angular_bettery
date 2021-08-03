@@ -1,6 +1,6 @@
-<div class="container" >
-  <div class="box">
-    <div id="bar_on_hide">
+<div class="container" (scroll)="showHeader()">
+  <div class="box" >
+    <div id="bar_on_hide" >
       <div class="slideBar">
         <div class="navigation">
           <div class="navItem" (click)="setComingType('social')">
@@ -49,13 +49,14 @@
          [infiniteScrollThrottle]="50"
          (scrolled)="onScrollQuizTemplate()"
          [ngClass]="(activeBtn==='pro' || newQuestions.length === 0) && 'w-100'">
+
+
       <main>
-        <div *ngIf="spinner" style="margin: 50% auto">
-          <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>
-        </div>
+
         <div *ngIf="!spinner">
           <div *ngFor="let question of newQuestions; let index = index">
             <app-join-page-item-template
+              (isDetailOpened)="arrWithOpenedDetails($event)"
               [index]="index"
               [userData]="userData"
               [question]="question"
@@ -71,8 +72,11 @@
       </main>
     </div>
 
-    <div class="d_flex_alight_justify_center" style="margin-top: 17%" *ngIf="comingSoonType!=='social'">
+    <div class="d_flex_alight_justify_center" style="margin-top: 75%" *ngIf="comingSoonType!=='social'">
       <app-coming-soon [comingSoonType]="comingSoonType"></app-coming-soon>
+    </div>
+    <div *ngIf="spinner" style="position: relative;top: 18%">
+      <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>
     </div>
     <app-down-bar></app-down-bar>
   </div>
