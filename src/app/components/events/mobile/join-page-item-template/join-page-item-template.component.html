@@ -41,7 +41,7 @@
                class="item_open_button_up"></div>
           </div>
 
-          <a  (click)="navToEvent()" target="_blank" style="margin-left: auto"
+          <a  (click)="navToEvent()" style="margin-left: auto"
              class="d_flex_alight_justify_center">
             <div [class]="arrowType(question)"></div>
           </a>
@@ -86,14 +86,14 @@
 
             <div class="join_event_button"
                  *ngIf="!question.usersAnswers.answered && timeValidating(question) ">
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()">
                 <span>Join Now</span>
               </a>
             </div>
 
             <div class="join_event_button_user_made_bet"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status!=='finished'">
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank"
+              <a [routerLink]="'../public_event/'+question?.id.toString()"
                  class="d_flex_alight_justify_center">
                 <div class="hand_bet_img"></div>
                 <div><span>{{question?.usersAnswers?.betAmount.toFixed(2).toString() + ' BET'}}</span></div>
@@ -102,7 +102,7 @@
 
             <div class="join_event_button_user_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.status!=='finished'">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.status!=='finished'">
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow"
                      style="display: flex;">
                   VALIDATED
@@ -116,7 +116,7 @@
             <div class="user_win_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.host.id==userData._id"
                  style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
                      class="text_earn_validator">
@@ -127,7 +127,7 @@
                   BET</span></div>
               </a>
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()">
                 <div *ngIf="!timeValidating(question)"
                      style="display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -144,7 +144,7 @@ line-height: 14px;">
             <div class="user_lost_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.host.id==userData._id"
                  style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
                      class="text_earn_validator">
@@ -155,7 +155,7 @@ line-height: 14px;">
                   BET</span></div>
               </a>
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id"
                      class="text_lost_parti">
                   You lost
@@ -169,7 +169,7 @@ line-height: 14px;">
             <div class="user_win_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
                 <div *ngIf="!timeValidating(question)"
                      class="text_earn_validator">
                   You earned
@@ -184,7 +184,7 @@ line-height: 14px;">
             <div class="user_lost_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
 
                 <div class="d_flex_j_content"><span
                   class="tomato_text">YOU WERE WRONG</span>
