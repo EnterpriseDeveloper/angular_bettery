@@ -1,0 +1,19 @@
+<div *ngIf="comingSoonType && comingSoonImg()">
+  <div style="display: flex;justify-content: center">
+    <div [ngClass]="comingSoonImg().img"></div>
+  </div>
+  <div class="coming_soon" *ngIf="comingSoonType!=='following'"><span>COMING SOON!</span></div>
+  <div class="coming_soon" *ngIf="comingSoonType=='following'"><span>NO EVENTS AT THE MOMENT</span></div>
+  <div class="coming_s_about d_flex_alight_justify_center" >
+    <div style="width: 80%">
+      <span>{{comingSoonImg().about_title}}</span>
+      <span>{{comingSoonImg().about_text}}</span>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-top: 16px">
+    <a [routerLink]="'#'" style="cursor: pointer">
+    <div class="explore_button"><span>EXPLORE SOCIAL</span></div>
+  </a>
+  </div>
+</div>

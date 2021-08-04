@@ -1,0 +1,216 @@
+<div class="event_container">
+
+  <div>
+    <div class="item-logo">
+      <div class="item-logo" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)"
+           [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
+
+        <div [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))"
+             style="display: flex" [ngClass]="question.detailOpened?'top_0':'top_80'">
+
+          <div style="height: 50% ; width: 100% ;background: rgba(0, 0, 0, 0.5);" class="d_flex_alight_justify_center"
+               [class.top_left]="question.thumImage === 'undefined' && question.detailOpened">
+            <div class="unloadedImgContent">
+              <span class="unloadedImgQuestion">{{question?.question}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      <div [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))"-->
+<!--             style="display: flex; position: relative; top: 80px" *ngIf="!question.detailOpened">-->
+
+<!--          <div style="height: 50% ; width: 100% ;background: rgba(0, 0, 0, 0.5);" class="d_flex_alight_justify_center"-->
+<!--               >-->
+<!--            <div class="unloadedImgContent">-->
+<!--              <span class="unloadedImgQuestion">{{question?.question}}</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <img *ngIf="question.thumImage!=='undefined'" class="item-logo" [src]="question?.thumImage" alt=""
+           [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
+
+      <div class="item-info" [ngClass]="question.detailOpened?'d_none ':'d_block '">
+        <div class="item-info_container" (click)="showDetailWindow && toggleDetailOpened($event) ">
+
+          <app-item-info-closed [question]="question" [userData]="userData"></app-item-info-closed>
+
+          <div *ngIf="question.status!='finished' && !question.status.includes('reverted')" style="flex: 1">
+            <div
+               class="item_open_button_up"></div>
+          </div>
+
+          <a  (click)="navToEvent()" style="margin-left: auto"
+             class="d_flex_alight_justify_center">
+            <div [class]="arrowType(question)"></div>
+          </a>
+
+        </div>
+      </div>
+      <div class="item-info_detail" [class.ng-hide]="addCloseAnimation">
+        <div class="detail_question_block" (click)="toggleDetailOpened($event)">
+          <div class="detail_question_wraper">
+            <div class="detail_question_text"><span>{{question.question}}</span></div>
+            <div>
+              <div class="item_open_button_down" ></div>
+            </div>
+          </div>
+        </div>
+        <div class="detail_question_info">
+
+          <app-question-options-block [question]="question"
+                                      [userData]="userData"
+                                      style="width: 100%">
+
+          </app-question-options-block>
+        </div>
+        <div class="detail_hr"></div>
+        <div class="down_side_block">
+          <div style="display: flex ; flex: 1">
+            <div class="host_info" *ngIf="!question.host.payHostAmount">
+              <div class="avatar"><img [src]="question?.host?.avatat" alt="avatar">
+                <div class="host_name"><span>{{question.host.nickName}}</span></div>
+              </div>
+            </div>
+            <div class="host_info">
+              <div class="avengers">
+                <div class="avengers_img"></div>
+                <div class="host_name"><span>Avengers ({{question?.room?.eventAmount}})</span></div>
+              </div>
+
+            </div>
+          </div>
+
+          <div *ngIf="(!question.status.includes('reverted'))">
+
+            <div class="join_event_button"
+                 *ngIf="!question.usersAnswers.answered && timeValidating(question) ">
+              <a [routerLink]="'../public_event/'+question?.id.toString()">
+                <span>Join Now</span>
+              </a>
+            </div>
+
+            <div class="join_event_button_user_made_bet"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status!=='finished'">
+              <a [routerLink]="'../public_event/'+question?.id.toString()"
+                 class="d_flex_alight_justify_center">
+                <div class="hand_bet_img"></div>
+                <div><span>{{question?.usersAnswers?.betAmount.toFixed(2).toString() + ' BET'}}</span></div>
+              </a>
+            </div>
+
+            <div class="join_event_button_user_validator"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.status!=='finished'">
+                <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow"
+                     style="display: flex;">
+                  VALIDATED
+                </div>
+                <div class="d_flex_j_content"><span
+                  style="color: #fff"> ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}}
+                  )</span></div>
+              </a>
+            </div>
+
+            <div class="user_win_participant"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.host.id==userData._id"
+                 style="margin-right: 41px">
+                <div *ngIf="!timeValidating(question)"
+                     class="text_earn_validator">
+                  You earned
+                </div>
+                <div class="d_flex_j_content"><span class="earned_value"
+                >{{question.host.payHostAmount.toFixed(2)}}
+                  BET</span></div>
+              </a>
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()">
+                <div *ngIf="!timeValidating(question)"
+                     style="display: flex;font-style: normal;justify-content: flex-end;
+font-weight: 600;
+font-size: 10px;
+line-height: 14px;">
+                  You won
+                </div>
+                <div class="d_flex_j_content"><span
+                  style="color: #34DDDD;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">{{question.usersAnswers?.mintedToken + question.usersAnswers?.payToken}}
+                  BET</span></div>
+              </a>
+            </div>
+
+            <div class="user_lost_participant"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="question.host.id==userData._id"
+                 style="margin-right: 41px">
+                <div *ngIf="!timeValidating(question)"
+                     class="text_earn_validator">
+                  You earned
+                </div>
+                <div class="d_flex_j_content"><span class="earned_value"
+                >{{question.host.payHostAmount.toFixed(2)}}
+                  BET</span></div>
+              </a>
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
+                <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id"
+                     class="text_lost_parti">
+                  You lost
+                </div>
+                <div class="d_flex_j_content"><span
+                  class="tomato_text">{{question.usersAnswers.betAmount.toFixed(2)}}
+                  BET</span></div>
+              </a>
+            </div>
+
+            <div class="user_win_validator"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
+                <div *ngIf="!timeValidating(question)"
+                     class="text_earn_validator">
+                  You earned
+                </div>
+                <div class="d_flex_j_content"><span class="earned_value_validator"
+                >{{question.host.payHostAmount.toFixed(2)}}
+                  BET</span></div>
+              </a>
+
+            </div>
+
+            <div class="user_lost_validator"
+                 *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
+
+              <a [routerLink]="'../public_event/'+question?.id.toString()" >
+
+                <div class="d_flex_j_content"><span
+                  class="tomato_text">YOU WERE WRONG</span>
+                </div>
+              </a>
+            </div>
+
+            <div
+              *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished' && !question.usersAnswers.answered  "
+              class="validateNow"
+              style="display: flex;">
+              VALIDATE NOW
+              <div></div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="!timeValidating(question) && question.finalAnswer===null && (question.status=='finished' || question.status.includes('reverted'))"
+            class="validateNow"
+            style="display: flex; color: #fff">VIEW EVENT
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

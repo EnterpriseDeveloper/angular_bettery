@@ -5,12 +5,12 @@
   left: 0
   position: fixed
   background: rgba(0, 0, 0, 0.75)
-  z-index: 1
+  z-index: 3
+
 
 .form
   margin: auto
   width: 40%
-  //height: 506px
   position: relative
   transform: translateY(30%)
   background-color: #FFFFFF
@@ -65,7 +65,7 @@
 
   & input:checked + label::before
     content: ''
-    background: url("../../../../../assets/quiz-template/win.png") center center no-repeat
+    background: url("../../../../assets/quiz-template/win.png") center center no-repeat
     background-size: contain
     width: 17px
     height: 17px
@@ -114,42 +114,42 @@
 
 #beauty + label::before
   content: ''
-  background: url("../../../../../assets/navigation/beauty.png") center center no-repeat
+  background: url("../../../../assets/navigation/beauty.png") center center no-repeat
   background-size: contain
 
 #entertainment + label::before
   content: ''
-  background: url("../../../../../assets/navigation/entertainment.png") center center no-repeat
+  background: url("../../../../assets/navigation/entertainment.png") center center no-repeat
   background-size: contain
 
 #body + label::before
   content: ''
-  background: url("../../../../../assets/navigation/body.png") center center no-repeat
+  background: url("../../../../assets/navigation/body.png") center center no-repeat
   background-size: contain
 
 #travel + label::before
   content: ''
-  background: url("../../../../../assets/navigation/travel.png") center center no-repeat
+  background: url("../../../../assets/navigation/travel.png") center center no-repeat
   background-size: contain
 
 #commerce + label::before
   content: ''
-  background: url("../../../../../assets/navigation/commerce.png") center center no-repeat
+  background: url("../../../../assets/navigation/commerce.png") center center no-repeat
   background-size: contain
 
 #foodDrink + label::before
   content: ''
-  background: url("../../../../../assets/navigation/food.png") center center no-repeat
+  background: url("../../../../assets/navigation/food.png") center center no-repeat
   background-size: contain
 
 #science + label::before
   content: ''
-  background: url("../../../../../assets/navigation/science.png") center center no-repeat
+  background: url("../../../../assets/navigation/science.png") center center no-repeat
   background-size: contain
 
 #all + label::before
   content: ''
-  background: url("../../../../../assets/navigation/all.png") center center no-repeat
+  background: url("../../../../assets/navigation/all.png") center center no-repeat
   background-size: contain
 
 .checkButton
@@ -222,6 +222,8 @@
 @media (max-width: 666px)
   .form
     width: 90%
+    transform: translateY(12%)
+    height: 82%
 
 .deleteBg
   width: 100%

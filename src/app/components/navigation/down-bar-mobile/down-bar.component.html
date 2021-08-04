@@ -1,0 +1,30 @@
+<div  class="sidebar-wrap" >
+  <div class="menu-list">
+    <ul>
+      <li routerLink="/join" [ngClass]="detectPathForActive('join') && 'join-yellow_background'">
+        <div class="join-img" [ngClass]="detectPathForActive('join') && 'join-yellow'"></div>
+      </li>
+
+      <li style="cursor: auto">
+        <div class="host-img"  [ngClass]="detectPathForActive('host') && 'host-yellow'"></div>
+      </li>
+
+      <li style="cursor: auto">
+        <div class="rooms-img"  [ngClass]="detectPathForActive('rooms') && 'rooms-yellow'"></div>
+      </li>
+
+      <li style="cursor: auto">
+        <div class="myEvent-img" [ngClass]="detectPathForActive('my-events') && 'myEvent-yellow'"></div>
+      </li>
+
+    </ul>
+  </div>
+  <div >
+    <a [routerLink]="'/create-event'">
+      <button class="btn-creat-event">
+        <div class="plus_img"></div>
+      </button>
+    </a>
+
+  </div>
+</div>

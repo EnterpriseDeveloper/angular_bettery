@@ -1,0 +1,183 @@
+.container
+  padding: 0
+  overflow: scroll
+  margin-top: 53px
+.navigation
+  display: flex
+  column-gap: 15px
+
+.d_flex_alight_justify_center
+  display: flex
+  justify-content: center
+  align-items: center
+
+.navItem
+  display: flex
+  align-items: center
+  justify-content: center
+  height: 67px
+  width: 33%
+  background: #394146
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1)
+  border-radius: 8px
+  div
+    div
+      display: flex
+      align-items: center
+      justify-content: center
+
+    span
+      font-style: normal
+      font-weight: bold
+      font-size: 12px
+      line-height: 16px
+      text-align: center
+
+.yellow_span
+  color: #FFD300
+
+.default_span
+  color: #C4C4C4
+
+.social-img_yellow
+  background-image: url("../../../../../assets/mobileJoinPage/social_yellow.png")
+  height: 30px
+  width: 30px
+  background-repeat: no-repeat
+  background-size: contain
+
+.social-img
+  background-image: url("../../../../../assets/mobileJoinPage/social.png")
+  height: 30px
+  width: 30px
+  background-repeat: no-repeat
+  background-size: contain
+
+.moments-img
+  background-image: url("../../../../../assets/mobileJoinPage/moments.png")
+  height: 31px
+  width: 30px
+  background-repeat: no-repeat
+  background-size: contain
+
+.moments-img_yellow
+  background-image: url("../../../../../assets/mobileJoinPage/moments_yellow.png")
+  height: 31px
+  width: 30px
+  background-repeat: no-repeat
+  background-size: contain
+
+.live_img
+  background-image: url("../../../../../assets/mobileJoinPage/live.png")
+  height: 30px
+  width: 23px
+  background-repeat: no-repeat
+  background-size: contain
+
+.live_img_yellow
+  background-image: url("../../../../../assets/mobileJoinPage/live_yellow.png")
+  height: 30px
+  width: 23px
+  background-repeat: no-repeat
+  background-size: contain
+
+.search_block
+  margin-top: 27px
+  div
+    display: flex
+    input
+      border: 0 solid
+      flex: 1
+      background-color: #2E2E2B
+      color: #CACACA
+    input:focus
+      outline: none
+
+.search-img
+  background-image: url("../../../../../assets/descEvent/searchDesc.png")
+  width: 24px
+  height: 24px
+  background-repeat: no-repeat
+  background-size: cover
+  margin-right: 9px
+
+.lines_3_img
+  background-image: url("../../../../../assets/mobileJoinPage/3linesIcon.png")
+  width: 25px
+  height: 18px
+  background-repeat: no-repeat
+  background-size: cover
+
+.baks-img
+  background-image: url("../../../../../assets/descEvent/baks.png")
+  background-repeat: no-repeat
+  background-size: cover
+  height: 27px
+  width: 26px
+
+.slideBar
+  padding: 18px 16px 0 16px
+  background: #2E2E2B
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1)
+
+.text-active
+  border-bottom: 2px solid #40D186
+  span
+    color: #40D186
+
+.text-disactive
+  font-weight: normal
+  font-size: 14px
+  line-height: 19px
+  color: #90ABBF
+  padding: 11px 14px
+  cursor: pointer
+  position: relative
+
+.text-disactive::after
+  content: ""
+  height: 50%
+  width: 0.5px
+  position: absolute
+  right: 0
+  top: 10px
+  background-color: #465057
+
+#navigation_bar
+  position: sticky
+
+#bar_on_hide
+  position: fixed
+  width: 100%
+  z-index: 3
+  transition: transform .3s linear
+  background-color: #2E2E2B
+
+@keyframes opacityAnim
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+
+.search-results
+  margin-top: 198px
+
+.box
+  position: absolute
+  width: 100%
+  height: 90%
+
+.block_pos_fix
+  display: block
+  position: fixed
+  transform: translateY(0)
+
+.d_none_pos_rel
+  display: block
+  position: fixed
+  transform: translateY(-74%)
+
+@media (min-width: 576px)
+.container
+  max-width: inherit

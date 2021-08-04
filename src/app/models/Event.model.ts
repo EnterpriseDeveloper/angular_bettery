@@ -8,6 +8,7 @@ export interface EventModel {
 
 export interface Event {
   answerAmount: number;
+  detailOpened: boolean;
   answers: object[];
   commentsAmount: number;
   currencyType: string;

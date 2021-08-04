@@ -71,7 +71,7 @@
                placeholder="If result can be checked on the Internet, give source...">
       </div>
       <div class="buttonBox" [ngStyle]="styleButtonBox()">
-        <button type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
+        <button [routerLink]="'join'" type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
         <button type="button" class="next" (click)="onSubmit()">NEXT</button>
       </div>
       <div class="privacy-text"><p routerLink="/privacy-policy">Privacy Policy</p></div>

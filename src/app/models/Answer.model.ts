@@ -1,4 +1,6 @@
 export interface Answer {
+  payToken:number;
+  mintedToken: number;
   event_id: number;
   answer: number;
   from: string;

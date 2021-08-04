@@ -1,0 +1,530 @@
+.event_container
+  padding: 0
+  margin: 0
+  overflow: hidden
+
+.d_none
+  display: none
+
+.d_block
+  display: block
+
+.d_flex_j_content
+  display: flex
+  justify-content: center
+
+.tomato_text
+  color: #C10000
+  font-style: normal
+  font-weight: bold
+  font-size: 14px
+  line-height: 114.1%
+
+.text_earn_validator
+  color: #fff
+  display: flex
+  font-style: normal
+  justify-content: flex-end
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+
+.detail_question_wraper
+  padding: 19px 17px 13px 11px
+  display: flex
+  align-items: center
+  width: 100%
+
+.text_lost_parti
+  color: #fff
+  display: flex
+  font-style: normal
+  justify-content: flex-end
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+
+.item-logo
+  background-size: cover
+  background-repeat: no-repeat
+  position: relative
+  width: 100%
+  height: 379px
+
+.item-info
+  position: absolute
+  bottom: 0
+  left: 0
+  width: 100%
+  background: rgba(0, 0, 0, 0.77)
+
+  div.item-info_container
+    display: flex
+    margin: 11px 26px 12px 17px
+    align-items: center
+    position: relative
+
+.social_img
+  background-image: url("../../../../../assets/descEvent/social.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 19px
+  height: 19px
+  margin-right: 11px
+  margin-bottom: auto
+
+.item_open_button_up
+  background-image: url("../../../../../assets/mobileJoinPage/open_buttun_up.png")
+  background-size: cover
+  background-repeat: no-repeat
+  width: 10px
+  height: 10px
+  margin-left: auto
+  cursor: pointer
+
+.question_tittle
+
+  span.question_text
+    font-style: normal
+    font-weight: bold
+    font-size: 14px
+    line-height: 19px
+    color: #0094FF
+
+.item_ending_time
+  span
+    font-style: normal
+    font-weight: normal
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+  p
+    display: inline
+    margin: 0
+    padding: 0
+    font-style: normal
+    font-weight: bold
+    font-size: 14px
+    line-height: 19px
+    color: #FFFFFF
+
+.unloadedImgBlock
+  display: flex
+  align-items: center
+  justify-content: center
+  height: 75%
+  width: 100%
+//background: rgba(0, 0, 0, 0.5)
+
+.unloadedImgContent
+  display: flex
+  align-items: center
+  justify-content: center
+
+.unloadedImgQuestion
+  display: flex
+  align-items: center
+  color: #FFFFFF
+  height: 120px
+  margin: 9px 12px
+  font-style: normal
+  font-weight: 800
+  font-size: 15px
+  line-height: 20px
+  text-align: center
+
+.item-info_detail
+  position: absolute
+  bottom: 0
+  left: 0
+  visibility: visible
+  -webkit-transition: all  ease-out .4s
+  transition: all  ease-out .4s
+  max-height: 450px
+  opacity: 1
+  width: 100%
+  background: rgba(0, 0, 0, 0.77)
+  animation: 0.4s ease-out  detailOptionUp
+
+@keyframes detailOptionUp
+  0%
+    max-height: 95px
+  100%
+    max-height: 70%
+
+.item-info_detail.ng-hide
+  max-height: 95px
+  opacity: 0
+  visibility: hidden
+
+.detail_question_block
+  display: flex
+
+.pepper_img
+  background-size: cover
+  background-repeat: no-repeat
+  width: 30px
+  height: 30px
+  margin-right: 8px
+
+.item_open_button_down
+  background-image: url("../../../../../assets/mobileJoinPage/open_button_down.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 10px
+  height: 10px
+  margin-left: 5px
+
+.detail_question_info
+  display: flex
+.detail_question_text
+  flex: 1
+  span
+    font-style: normal
+    font-weight: bold
+    font-size: 14px
+    line-height: 19px
+    color: #FFD300
+
+.question_option
+  display: flex
+  margin-bottom: 15px
+  input
+    margin-right: 8px
+  span
+    font-style: normal
+    font-weight: bold
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+
+.more_outcomes
+  span
+    font-style: normal
+    font-weight: normal
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+
+.event_info_joined
+  display: flex
+
+.event_info_joined_img
+  background-image: url("../../../../../assets/eventFinish/Participant.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 17px
+  height: 17px
+  margin-right: 4px
+
+.event_info_joined_text
+  display: flex
+  align-items: center
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+
+.question_options_block
+  width: 50%
+  margin-left: 16px
+
+.event_info_block
+  width: 50%
+  margin-right: 44px
+
+.event_info_avg_bet_text
+  display: flex
+  align-items: center
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+
+.event_info_avg_bet
+  display: flex
+  margin-top: 15px
+
+.event_info_comments
+  display: flex
+  align-items: center
+  margin-top: 15px
+
+.event_info_comments_img
+  background-image: url("../../../../../assets/descEvent/comment.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 16.4px
+  height: 13px
+  margin-right: 10px
+
+.event_info_comments_text
+  display: flex
+  align-items: center
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    text-decoration-line: underline
+    color: #FFFFFF
+    margin-bottom: 4px
+
+.detail_question_ending_time
+  display: flex
+  align-items: center
+
+.detail_question_theme
+  display: flex
+  align-items: center
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    color: #FFFFFF
+
+.detail_question_theme_img
+  background-image: url("../../../../../assets/descEvent/social.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 19px
+  height: 19px
+
+.answer_circle
+  background-image: url("../../../../../assets/mobileJoinPage/answer_circle.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 14px
+  height: 14px
+  margin-right: 8px
+
+.d_flex_alight_justify_center
+  display: flex
+  align-items: center
+  justify-content: center
+
+.item_ending_time_block
+  margin-top: 18px
+.event_date
+  color: #FFFFFF
+  p
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+
+.w-100
+  width: auto
+
+.time_style
+  margin-left: 0
+
+.detail_hr
+  margin: 22px 11px 0 15px
+  height: 1px
+  border-top: 1px solid rgba(255, 255, 255, 0.25)
+
+.down_side_block
+  margin: 13px 11px 17px 16px
+  display: flex
+
+.host_info
+  display: flex
+
+.avatar
+  display: flex
+  margin-right: 16px
+  align-items: center
+  img
+    width: 17px
+    height: 17px
+    margin-right: 4px
+    border-radius: 50%
+    border: 1px solid #FFFFFF
+
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 10px
+    line-height: 14px
+    text-align: center
+    color: #FFFFFF
+
+.host_name
+  display: flex
+  align-items: center
+
+.avengers
+  display: flex
+  align-items: center
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 10px
+    line-height: 14px
+    text-align: center
+    color: #FFFFFF
+
+.avengers_img
+  width: 23px
+  height: 17px
+  background-image: url("../../../../../assets/mobileJoinPage/avengers.png")
+  background-repeat: no-repeat
+  background-size: cover
+
+.join_event_button
+  span
+    font-style: normal
+    font-weight: bold
+    font-size: 14px
+    line-height: 19px
+    text-transform: uppercase
+    color: #FFD300
+
+.join_event_button_user_made_bet
+  display: flex
+  span
+    font-style: normal
+    font-weight: bold
+    font-size: 14px
+    line-height: 19px
+    text-transform: uppercase
+    color: #34DDDD
+
+.hand_bet_img
+  background-image: url("../../../../../assets/mobileJoinPage/user_bet_img.png")
+  background-repeat: no-repeat
+  background-size: cover
+  width: 17px
+  height: 17px
+  margin-right: 8px
+
+.choosen_answer_circle
+  background-image: url("../../../../../assets/mobileJoinPage/blue_answer_circle.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 14px
+  height: 14px
+  margin-right: 8px
+
+.validateNow
+  font-style: normal
+  font-weight: 800
+  font-size: 14px
+  line-height: 19px
+  color: #BF94E4
+  text-transform: uppercase
+  cursor: pointer
+
+.validated_img
+  background-image: url("../../../../../assets/mobileJoinPage/validated.png")
+  background-repeat: no-repeat
+  background-size: cover
+  width: 15px
+  height: 15px
+  margin-right: 4px
+
+.join_event_button_user_validator
+  font-style: normal
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  color: #BF94E4
+  a
+    div
+
+      span
+        color: #BF94E4
+        text-transform: uppercase
+
+.validator_answer_circle
+  background-image: url("../../../../../assets/mobileJoinPage/purple_answer_circle.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 14px
+  height: 14px
+  margin-right: 8px
+
+.user_win_participant
+  display: flex
+  font-style: normal
+  font-weight: bold
+  font-size: 12px
+  line-height: 16px
+  color: #BF94E4
+  a
+    color: #fff
+    div
+
+      span
+        color: #BF94E4
+        text-transform: uppercase
+
+.earned_value
+  display: inline
+  font-size: 14px
+  background: -webkit-linear-gradient(#F7971E, #FFD200)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+
+.earned_value_validator
+  display: inline
+  background: -webkit-linear-gradient(#BF94E4, #D9AFFE)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  font-weight: bold
+  font-size: 14px
+  line-height: 114.1%
+  text-align: right
+  text-transform: uppercase
+
+.user_win_validator
+  display: flex
+
+.item_open_arrow_white
+  background-image: url("../../../../../assets/mobileJoinPage/white_arrow.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 25px
+  height: 25px
+
+.item_open_arrow_blue
+  background-image: url("../../../../../assets/mobileJoinPage/blue_arrow.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 25px
+  height: 25px
+
+.item_open_arrow_purple
+  background-image: url("../../../../../assets/mobileJoinPage/purple_arrow.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 25px
+  height: 25px
+
+.item_open_arrow_yellow
+  background-image: url("../../../../../assets/mobileJoinPage/yellow_arrow.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 25px
+  height: 25px
+
+.grey_scaled_img
+  -webkit-filter: grayscale(100%)
+  filter: grayscale(100%)
+
+.top_80
+  position: relative
+  top: 80px
+
+.top_0
+  position: relative
+  top: 0
+
+
+
