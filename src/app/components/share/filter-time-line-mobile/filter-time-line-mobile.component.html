@@ -1,0 +1,98 @@
+
+<div class="wrapper"  (click)="closeWindow()">
+  <form (click)="stopPropagation($event)" action="#" [formGroup]="form" (ngSubmit)="sendForm(form, $event)" class="form">
+    <button (click)="closeWindow()" type="button" class=" soonClose close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="title">
+      <h1>What do you want on your timeline?</h1>
+    </div>
+
+    <div class="endOrJoin">
+      <div class="form-check mr-4" style="padding-bottom: 0">
+        <input [(ngModel)]="value" formControlName="showEnd" name="showEnd" class="form-check-input checkBoxClass" type="checkbox" id="blankCheckbox" value="showEnd">
+        <label for="blankCheckbox">Show ended Events</label>
+      </div>
+      <div class="form-check" style="padding-bottom: 0">
+        <input class="form-check-input checkBoxClass" disabled type="checkbox" id="blankCheckbox2" value="option1">
+        <label for="blankCheckbox2">Show Events that I joined</label>
+      </div>
+    </div>
+    <div style="position: relative">
+      <div class="btnsBox row ml-0 mr-0">
+        <div class="col-6 filter" style="padding-left: 16px; padding-right: 0">
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="beauty" value="option1">
+              <label for="beauty" class="checkButtonLabel">Beauty & Fashion</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="entertainment" value="option1">
+              <label for="entertainment" class="checkButtonLabel">Entertainment</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="body" value="option1">
+              <label for="body" class="checkButtonLabel">Mind & Body</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="travel" value="option1">
+              <label for="travel" class="checkButtonLabel">Travel & Leisure</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 filter" style="padding:0 16px">
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="commerce" value="option1">
+              <label for="commerce" class="checkButtonLabel">Commerce</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="foodDrink" value="option1">
+              <label for="foodDrink" class="checkButtonLabel">Food & Drink</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="science" value="option1">
+              <label for="science" class="checkButtonLabel">Science & Technology</label>
+            </div>
+          </div>
+          <div class="checkButton">
+            <div class="form-check pl-4">
+              <input class="form-check-input checkBoxClass" type="checkbox" id="all" value="option1">
+              <label for="all" class="checkButtonLabel">Select All </label>
+            </div>
+          </div>
+        </div>
+        <div class="deleteBg">
+          <h1>COMING SOON</h1>
+        </div>
+      </div>
+
+      <div class="location" style="display: block">
+        <label for="location" style="margin: 0 10px">Location:</label>
+        <div style="display: flex">
+          <input type="text" id="location">
+          <button>Add Location</button>
+        </div>
+      </div>
+    </div>
+    <!--    <div>-->
+    <!--  Ho Chi Minh City X   New York X   -->
+    <!--    </div>-->
+    <div class="mainButton">
+      <button type="submit" [ngClass]="disabled && 'disable_confirm'">Confirm</button>
+    </div>
+
+  </form>
+</div>
+
