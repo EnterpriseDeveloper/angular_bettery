@@ -30,7 +30,6 @@ export class EventFeedMobileComponent implements OnDestroy {
   historyFilter = false;
   fromComponent = 'eventFeed';
   commentList;
-  newCommentList;
   pureData: EventModel;
   scrollDistanceFrom = 0;
   scrollDistanceTo = 5;
@@ -67,6 +66,7 @@ export class EventFeedMobileComponent implements OnDestroy {
         this.userId = x[0]._id;
         this.userData = x[0];
         if (this.activeBtn === 'following') {
+          this.openedDetailArr = [];
           this.queryPath = 'user/event_activites';
           this.getData(this.queryPath, 0, 5, this.searchWord, '');
         } else {
@@ -155,15 +155,6 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
   }
 
-  commentById($event) {
-    if ($event) {
-      const list = this.newQuestions.find((o) => {
-        return o.id == $event;
-      });
-      this.commentList = list;
-    }
-  }
-
 
   @HostListener('window:scroll', ['$event'])
   showHeader() {
@@ -173,7 +164,6 @@ export class EventFeedMobileComponent implements OnDestroy {
     }else if (this.prevScrollPos < window.pageYOffset && (window.pageYOffset > 150)){
       document.getElementById('bar_on_hide').className = 'd_none_pos_rel';
     }
-    console.log(window.pageYOffset);
     this.prevScrollPos = window.pageYOffset;
   }
 
@@ -224,9 +214,8 @@ export class EventFeedMobileComponent implements OnDestroy {
     this.scrollDistanceFrom = 0;
     this.scrollDistanceTo = 5;
 
-
     if (this.activeBtn === 'controversial' || this.activeBtn === 'trending') {
-
+      this.openedDetailArr = [];
       if (this.searchWord.length >= 3) {
         this.queryPath = 'publicEvents/get_all';
         this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
@@ -239,6 +228,7 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
 
     if (this.activeBtn === 'following') {
+      this.openedDetailArr = [];
       if (!this.userData) {
         this.modalService.open(RegistrationComponent, {centered: true});
       } else {
@@ -247,7 +237,10 @@ export class EventFeedMobileComponent implements OnDestroy {
       }
     }
     if (this.activeBtn === 'pro') {
-      this.comingSoonType = this.activeBtn;
+      console.log(this.openedDetailArr);
+
+      this.comingSoonType = 'social';
+
     }
   }
 
@@ -285,8 +278,11 @@ export class EventFeedMobileComponent implements OnDestroy {
   }
 
   setComingType(type: string) {
+    console.log(this.openedDetailArr);
+    this.newQuestions = null;
+    this.spinner = true;
+    this.activeBtnFromSearchBar(this.activeBtn);
     this.comingSoonType = type;
   }
-
 
 }

@@ -1,19 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-coming-soon',
   templateUrl: './coming-soon.component.html',
   styleUrls: ['./coming-soon.component.sass']
 })
-export class ComingSoonComponent implements OnInit {
+export class ComingSoonComponent implements OnInit, OnChanges {
 
   @Input() comingSoonType: string;
+  @Input() activeBtn: string;
 
   constructor() {
   }
 
   ngOnInit(): void {
 
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.activeBtn);
+    console.log(this.comingSoonType);
+    console.log('1111');
+    this.comingSoonImg();
   }
 
   comingSoonImg() {
@@ -33,7 +41,7 @@ export class ComingSoonComponent implements OnInit {
       };
     }
 
-    if (this.comingSoonType === 'pro') {
+    if (this.comingSoonType == 'social' && this.activeBtn == 'pro') {
       return {
         img: 'pro_img',
         about_title: 'Pro events,',

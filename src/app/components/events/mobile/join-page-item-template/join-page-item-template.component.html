@@ -32,16 +32,16 @@
            [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
 
       <div class="item-info" [ngClass]="question.detailOpened?'d_none ':'d_block '">
-        <div class="item-info_container">
+        <div class="item-info_container" (click)="showDetailWindow && toggleDetailOpened($event) ">
 
           <app-item-info-closed [question]="question" [userData]="userData"></app-item-info-closed>
 
           <div *ngIf="question.status!='finished' && !question.status.includes('reverted')" style="flex: 1">
             <div
-              (click)="toggleDetailOpened();toggleCloseAnimation()" class="item_open_button_up"></div>
+               class="item_open_button_up"></div>
           </div>
 
-          <a [href]="'public_event/'+question?.id.toString()" target="_blank" style="margin-left: auto"
+          <a  (click)="navToEvent()" target="_blank" style="margin-left: auto"
              class="d_flex_alight_justify_center">
             <div [class]="arrowType(question)"></div>
           </a>
@@ -49,11 +49,11 @@
         </div>
       </div>
       <div class="item-info_detail" [class.ng-hide]="addCloseAnimation">
-        <div class="detail_question_block">
-          <div style="padding: 19px 17px 13px 11px ;display: flex; align-items: center; width: 100%">
+        <div class="detail_question_block" (click)="toggleDetailOpened($event)">
+          <div class="detail_question_wraper">
             <div class="detail_question_text"><span>{{question.question}}</span></div>
             <div>
-              <div class="item_open_button_down" (click)="toggleDetailOpened();toggleCloseAnimation()"></div>
+              <div class="item_open_button_down" ></div>
             </div>
           </div>
         </div>
@@ -86,28 +86,28 @@
 
             <div class="join_event_button"
                  *ngIf="!question.usersAnswers.answered && timeValidating(question) ">
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
                 <span>Join Now</span>
               </a>
             </div>
 
             <div class="join_event_button_user_made_bet"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status!=='finished'">
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank"
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank"
                  class="d_flex_alight_justify_center">
                 <div class="hand_bet_img"></div>
-                <div><span>{{question?.usersAnswers?.betAmount.toString() + ' BET'}}</span></div>
+                <div><span>{{question?.usersAnswers?.betAmount.toFixed(2).toString() + ' BET'}}</span></div>
               </a>
             </div>
 
             <div class="join_event_button_user_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator'">
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.status!=='finished'">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.status!=='finished'">
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id" class="validateNow"
                      style="display: flex;">
                   VALIDATED
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span
+                <div class="d_flex_j_content"><span
                   style="color: #fff"> ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}}
                   )</span></div>
               </a>
@@ -116,21 +116,18 @@
             <div class="user_win_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
                  style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
-                     style="display: flex;font-style: normal;justify-content: flex-end;
-font-weight: 600;
-font-size: 10px;
-line-height: 14px;">
+                     class="text_earn_validator">
                   You earned
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span class="earned_value"
-                >{{question.host.payHostAmount}}
+                <div class="d_flex_j_content"><span class="earned_value"
+                >{{question.host.payHostAmount.toFixed(2)}}
                   BET</span></div>
               </a>
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question)"
                      style="display: flex;font-style: normal;justify-content: flex-end;
 font-weight: 600;
@@ -138,7 +135,7 @@ font-size: 10px;
 line-height: 14px;">
                   You won
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span
+                <div class="d_flex_j_content"><span
                   style="color: #34DDDD;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">{{question.usersAnswers?.mintedToken + question.usersAnswers?.payToken}}
                   BET</span></div>
               </a>
@@ -147,30 +144,24 @@ line-height: 14px;">
             <div class="user_lost_participant"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank" *ngIf="question.host.id==userData._id"
                  style="margin-right: 41px">
                 <div *ngIf="!timeValidating(question)"
-                     style="display: flex;font-style: normal;justify-content: flex-end;
-font-weight: 600;
-font-size: 10px;
-line-height: 14px;">
+                     class="text_earn_validator">
                   You earned
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span class="earned_value"
-                >{{question.host.payHostAmount}}
+                <div class="d_flex_j_content"><span class="earned_value"
+                >{{question.host.payHostAmount.toFixed(2)}}
                   BET</span></div>
               </a>
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question) && question?.host.id != userData?._id"
-                     style="color: #fff; display: flex;font-style: normal;justify-content: flex-end;
-font-weight: 600;
-font-size: 10px;
-line-height: 14px;">
+                     class="text_lost_parti">
                   You lost
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span
-                  style="color: #C10000;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">{{question.usersAnswers.betAmount}}
+                <div class="d_flex_j_content"><span
+                  class="tomato_text">{{question.usersAnswers.betAmount.toFixed(2)}}
                   BET</span></div>
               </a>
             </div>
@@ -178,13 +169,13 @@ line-height: 14px;">
             <div class="user_win_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer===question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
                 <div *ngIf="!timeValidating(question)"
-                     style="color: #fff ;display: flex;font-style: normal;justify-content: flex-end;font-weight: 600;font-size: 10px;line-height: 14px;">
+                     class="text_earn_validator">
                   You earned
                 </div>
-                <div style="display: flex; justify-content: flex-end"><span class="earned_value_validator"
-                >{{question.host.payHostAmount}}
+                <div class="d_flex_j_content"><span class="earned_value_validator"
+                >{{question.host.payHostAmount.toFixed(2)}}
                   BET</span></div>
               </a>
 
@@ -193,16 +184,16 @@ line-height: 14px;">
             <div class="user_lost_validator"
                  *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='validator' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
 
-              <a [href]="'public_event/'+question?.id.toString()" target="_blank">
+              <a [routerLink]="'../public_event/'+question?.id.toString()" target="_blank">
 
-                <div style="display: flex; justify-content: flex-end"><span
-                  style="color: #C10000;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">YOU WERE WRONG</span>
+                <div class="d_flex_j_content"><span
+                  class="tomato_text">YOU WERE WRONG</span>
                 </div>
               </a>
             </div>
 
             <div
-              *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished'"
+              *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished' && !question.usersAnswers.answered  "
               class="validateNow"
               style="display: flex;">
               VALIDATE NOW

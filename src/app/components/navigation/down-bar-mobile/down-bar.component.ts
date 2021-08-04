@@ -1,13 +1,13 @@
 import {Component, DoCheck, HostListener, OnInit} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
-import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
+import {EventsTemplatesDesktopComponent} from '../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 
 @Component({
-  selector: 'app-down-bar',
+  selector: 'app-down-bar-mobile',
   templateUrl: './down-bar.component.html',
   styleUrls: ['./down-bar.component.sass']
 })
-export class DownBarComponent implements OnInit,DoCheck {
+export class DownBarComponentMobile implements OnInit, DoCheck {
 
   display: boolean;
   scrollTop: number;

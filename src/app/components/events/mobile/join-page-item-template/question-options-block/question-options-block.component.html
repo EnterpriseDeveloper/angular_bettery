@@ -1,7 +1,7 @@
 <div style="display: flex">
 
   <div class="question_options_block"
-       *ngIf="question.status!=='finished'|| question.status.includes('reverted') && !question.usersAnswers.answered">
+       *ngIf="(question.status!=='finished'|| question.status.includes('reverted')) && !question.usersAnswers.answered">
     <div class=" question_option" *ngIf="question?.answers[0]">
       <div class="answer_circle"></div>
       <span>{{makeShortenStr(question?.answers[0].toString(), 15)}}</span></div>
@@ -19,9 +19,9 @@
     <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
       <div class="choosen_answer_circle"></div>
       <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
-    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1] || question.answers[question.usersAnswers.answer + 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1]?.toString() || question?.answers[question.usersAnswers.answer + 1]?.toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
@@ -33,9 +33,9 @@
     <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
       <div class="correct_answer_circle"></div>
       <span style="color: #5DB145">{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
-    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1] || question.answers[question.usersAnswers.answer + 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1]?.toString() || question?.answers[question.usersAnswers.answer + 1]?.toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
@@ -46,12 +46,12 @@
        *ngIf="question.usersAnswers.answered && question.usersAnswers.from=='participant' && question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer">
     <div class=" question_option" *ngIf="question?.answers[question.usersAnswers.answer]">
       <div class="correct_answer_circle"></div>
-      <span style="color: #5DB145">{{makeShortenStr(question?.answers[question.finalAnswer].toString(), 15)}}</span>
+      <span style="color: #5DB145">{{makeShortenStr(question?.answers[question.finalAnswer]?.toString(), 15)}}</span>
     </div>
     <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer]">
       <div class="wrong_answer_circle"></div>
       <span
-        style="color: #C10000">{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+        style="color: #C10000">{{makeShortenStr(question?.answers[question.usersAnswers.answer]?.toString() || question?.answers[question.usersAnswers.answer + 1]?.toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
@@ -63,9 +63,9 @@
     <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer]">
       <div class="validator_answer_circle"></div>
       <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer].toString(), 15)}}</span></div>
-    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1]">
+    <div class=" question_option" *ngIf="question.answers[question.usersAnswers.answer - 1] || question.answers[question.usersAnswers.answer + 1]">
       <div class="answer_circle"></div>
-      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1].toString() || question?.answers[question.usersAnswers.answer + 1].toString(), 15)}}</span>
+      <span>{{makeShortenStr(question?.answers[question.usersAnswers.answer - 1]?.toString() || question?.answers[question.usersAnswers.answer + 1]?.toString(), 15)}}</span>
     </div>
     <div class="more_outcomes" *ngIf="question?.answers.length>2"><span>+ {{question.answers.length - 2}}
       more outcomes</span>
@@ -121,7 +121,7 @@
     <div class="event_info_comments">
       <div class="event_info_comments_img"></div>
       <div class="event_info_comments_text" *ngIf="question.commentsAmount">
-        <a [href]="'public_event/'+question?.room?.id.toString()" target="_blank">
+        <a [routerLink]="'../public_event/'+question?.room?.id.toString()" target="_blank">
           <span>{{question?.commentsAmount}}Comments</span>
         </a></div>
       <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>

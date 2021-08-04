@@ -10,6 +10,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ReferalsComponent } from './referals/referals.component';
 import { ChainTransferComponent } from './chainTransfer/chainTransfer.component';
 import { SwapBetComponent } from './swap-bet/swap-bet.component';
+import {DownBarComponentMobile} from './down-bar-mobile/down-bar.component';
 
 
 @NgModule({
@@ -19,12 +20,14 @@ import { SwapBetComponent } from './swap-bet/swap-bet.component';
     NotificationsComponent,
     ReferalsComponent,
     ChainTransferComponent,
-    SwapBetComponent
+    SwapBetComponent,
+    DownBarComponentMobile
   ],
     exports: [
         NavbarComponent,
         SidebarComponent,
-        ReferalsComponent
+        ReferalsComponent,
+        DownBarComponentMobile
     ],
   imports: [
     CommonModule,

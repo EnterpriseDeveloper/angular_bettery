@@ -8,20 +8,23 @@ import {User} from '../../../../../models/User.model';
   styleUrls: ['./question-options-block.component.sass']
 })
 export class QuestionOptionsBlockComponent implements OnInit {
-  @Input()question:Event
-  @Input('userData') userData: User;
+  @Input()question: Event;
+  @Input('userData')userData: User;
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
   makeShortenStr(str: string, howMuch: number): string {
     return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
   }
+
   timeValidating(question) {
     const timeNow = Number((Date.now() / 1000).toFixed(0));
     return question.endTime - timeNow > 0;
   }
+
   getValidatorsAmount(q) {
     return q.validatorsAnswers === undefined ? 0 : q.validatorsAnswers.length;
   }
@@ -29,6 +32,7 @@ export class QuestionOptionsBlockComponent implements OnInit {
   getValidatorsAmountLeft(eventData) {
     return eventData.validatorsAmount == 0 ? this.expertAmount(eventData) : eventData.validatorsAmount;
   }
+
   expertAmount(eventData) {
     const part = eventData.parcipiantAnswers == undefined ? 0 : eventData.parcipiantAnswers.length;
     if (part < 11) {
@@ -37,6 +41,7 @@ export class QuestionOptionsBlockComponent implements OnInit {
       return Math.round(part / (Math.pow(part, 0.5) + 2 - (Math.pow(2, 0.5))));
     }
   }
+
   avgBet(q) {
     let amount = 0;
     if (q.parcipiantAnswers == undefined) {
@@ -63,8 +68,9 @@ export class QuestionOptionsBlockComponent implements OnInit {
       return avg.toString().includes('.') ? avg.toFixed(1) : avg;
     }
   }
+
   eventFinishDate(data) {
-    let d = new Date(Number(data.eventEnd) * 1000);
+    const d = new Date(Number(data.eventEnd) * 1000);
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
   }
 }

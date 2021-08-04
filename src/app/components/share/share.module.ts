@@ -26,6 +26,7 @@ import {TextareaComponent} from './textarea/textarea.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 import { SearchBarMobileComponent } from './search-bar-mobile/search-bar-mobile.component';
 import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component';
+import { FilterTimeLineMobileComponent } from './filter-time-line-mobile/filter-time-line-mobile.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component
     TextareaComponent,
     SearchBarComponent,
     SearchBarMobileComponent,
-    FilterTimelineComponent
+    FilterTimelineComponent,
+    FilterTimeLineMobileComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +82,8 @@ import {FilterTimelineComponent} from './filterTimeline/filterTimeline.component
     TextareaComponent,
     SearchBarComponent,
     SearchBarMobileComponent,
-    FilterTimelineComponent
+    FilterTimelineComponent,
+    FilterTimeLineMobileComponent
   ]
 })
 

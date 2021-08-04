@@ -25,6 +25,8 @@ export class SearchBarMobileComponent implements OnInit {
   changesActiveBtn(str): void {
     this.active = str;
     this.activeItemEmit.emit(this.active);
+
+
   }
 
   letsFindEvent() {

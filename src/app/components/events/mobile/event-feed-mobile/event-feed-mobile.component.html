@@ -6,9 +6,9 @@
           <div class="navItem" (click)="setComingType('social')">
             <div>
               <div>
-                <div [ngClass]="comingSoonType=='social' ?'social-img_yellow': 'social-img'"></div>
+                <div [ngClass]="(comingSoonType=='social' || comingSoonType=='pro') ?'social-img_yellow': 'social-img'"></div>
               </div>
-              <span [ngClass]="comingSoonType=='social'?'yellow_span':'default_span'">Social</span>
+              <span [ngClass]="(comingSoonType=='social' || comingSoonType=='pro') ?'yellow_span':'default_span'">Social</span>
             </div>
           </div>
           <div class="navItem" (click)="setComingType('moments')">
@@ -44,7 +44,7 @@
         </app-search-bar-mobile>
       </nav>
     </div>
-    <div *ngIf="comingSoonType=='social'" class="search-results" infiniteScroll
+    <div *ngIf="!spinner && comingSoonType=='social' && activeBtn!=='pro' && newQuestions" class="search-results" infiniteScroll
          [infiniteScrollDistance]="1"
          [infiniteScrollThrottle]="50"
          (scrolled)="onScrollQuizTemplate()"
@@ -53,7 +53,7 @@
 
       <main>
 
-        <div *ngIf="!spinner">
+        <div >
           <div *ngFor="let question of newQuestions; let index = index">
             <app-join-page-item-template
               (isDetailOpened)="arrWithOpenedDetails($event)"
@@ -72,17 +72,19 @@
       </main>
     </div>
 
-    <div class="d_flex_alight_justify_center" style="margin-top: 75%" *ngIf="comingSoonType!=='social'">
-      <app-coming-soon [comingSoonType]="comingSoonType"></app-coming-soon>
+    <div class="d_flex_alight_justify_center" style="margin-top: 75%" >
+      <app-coming-soon [comingSoonType]="comingSoonType" [activeBtn]="activeBtn"></app-coming-soon>
     </div>
-    <div *ngIf="spinner" style="position: relative;top: 18%">
+    <div *ngIf="spinner && comingSoonType=='social' && activeBtn !== 'pro'" style="position: relative;bottom: -12%">
       <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>
     </div>
-    <app-down-bar></app-down-bar>
+    <div >
+      <app-down-bar-mobile></app-down-bar-mobile>
+    </div>
   </div>
-  <filterTimeline *ngIf="timelineActive"
+  <app-filter-time-line-mobile *ngIf="timelineActive"
                   (closeEmmit)="openTimeline($event)"
                   (filterData)="letsFilterData($event)"
                   [statusMode]="filterMode"
-  ></filterTimeline>
+  ></app-filter-time-line-mobile>
 </div>

@@ -5,6 +5,8 @@ import {Event} from '../../../../models/Event.model';
 import {Answer} from '../../../../models/Answer.model';
 import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
+import {link} from 'fs';
 
 
 @Component({
@@ -12,7 +14,7 @@ import {FormGroup} from '@angular/forms';
   templateUrl: './join-page-item-template.component.html',
   styleUrls: ['./join-page-item-template.component.sass']
 })
-export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
+export class JoinPageItemTemplateComponent implements OnInit {
 
   allUserData: User = undefined;
   amount: number;
@@ -21,12 +23,10 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
   updateSub: Subscription;
   openIndex: number = null;
   joinPlayer = false;
-  becomeExpert = false;
   details = true;
-  letsBet = false;
-  viewEventFinishInfo = false;
   copyLinkFlag: boolean;
-  addCloseAnimation = true;
+  addCloseAnimation: boolean;
+  showDetailWindow = true;
 
   @Input() joinRoom: boolean;
   @Input() index: number;
@@ -39,7 +39,6 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
   @Output() callGetData = new EventEmitter();
   @Output() commentIdEmmit = new EventEmitter<number>();
   @Output() isDetailOpened = new EventEmitter();
-  @ViewChild('div') div: ElementRef;
   heightBlock: number;
   disable: number = null;
   validDisable = false;
@@ -48,22 +47,21 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
   form: FormGroup;
 
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
   ngOnInit(): void {
     console.log(this.question);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
+    this.addCloseAnimation= !this.question.detailOpened
   }
 
 
-  toggleDetailOpened() {
+  toggleDetailOpened($event) {
+    $event.stopPropagation();
     this.question.detailOpened = !this.question.detailOpened;
     this.toggleItemInTempArr();
+    this.toggleCloseAnimation();
   }
 
   toggleItemInTempArr() {
@@ -83,15 +81,6 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
       };
     } else {
       return;
-    }
-  }
-
-  statusReverted(data) {
-    const x = data.status.replace('reverted:', '');
-    if (x.search('not enough experts') != -1) {
-      return x + ' (' + this.getValidatorsAmount(data) + '/' + this.getValidatorsAmountLeft(data) + ')';
-    } else {
-      return x;
     }
   }
 
@@ -153,18 +142,27 @@ export class JoinPageItemTemplateComponent implements OnInit, OnChanges {
     this.question.detailOpened = !this.addCloseAnimation;
   }
 
+  navToEvent(){
+    console.log(3333);
+    this.router.navigate([]).then(result => {window.open('/public_event/' + this.question.id.toString(),'_blank')});
+  }
+
   arrowType(question: Event) {
 
     if ((question.status == 'finished') && question.usersAnswers.from == 'validator') {
+      this.showDetailWindow = false;
       return 'item_open_arrow_purple';
     }
     if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id === question.host.id) {
+      this.showDetailWindow = false;
       return 'item_open_arrow_yellow';
     }
     if ((question.status == 'finished') && question.usersAnswers.from == 'participant' && this.userData._id != question.host.id) {
+      this.showDetailWindow = false;
       return 'item_open_arrow_blue';
     }
     if ((question.status == 'finished' || question.status.includes('reverted'))) {
+      this.showDetailWindow = false;
       return 'item_open_arrow_white';
     }
   }

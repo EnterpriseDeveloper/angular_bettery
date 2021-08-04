@@ -149,7 +149,7 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     this.formData.question = '';
     this.formData.answers = [];
     this.store.dispatch(formDataAction({formData: this.formData}));
-    this.router.navigate(['/']);
+    this.router.navigate(['/join']);
   }
 
   limitError(param, i) {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MobileEventsModule } from './mobile/mobileEvents.module';
-import { DesktopEventsModule } from './desktop/desktopEvents.module'
+import { DesktopEventsModule } from './desktop/desktopEvents.module';
 
 
 

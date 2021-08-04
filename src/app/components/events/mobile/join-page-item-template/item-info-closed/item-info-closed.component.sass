@@ -31,7 +31,7 @@
   justify-content: center
   height: 75%
   width: 100%
-//background: rgba(0, 0, 0, 0.5)
+
 
 .unloadedImgContent
   display: flex
@@ -204,7 +204,12 @@
   justify-content: center
 
 .item_ending_time_block
-  margin-top: 18px
+  display: flex
+  width: 100%
+  white-space: pre
+  position: relative
+  left: -7px
+
 .event_date
   color: #FFFFFF
   p
@@ -381,3 +386,44 @@
   text-transform: uppercase
   position: relative
   top: 1px
+
+.d_flex_j_content
+  display: flex
+  align-items: center
+
+.white_text
+  text-transform: none !important
+  color: #fff!important
+  font-weight: 600!important
+  font-size: 10px!important
+  line-height: 14px!important
+
+.joined_block
+  display: flex
+  align-items: center
+  margin-left: 36px
+  position: relative
+  span
+    margin-left: 6px
+    text-transform: none !important
+    font-style: normal!important
+    font-weight: 600
+    font-size: 14px
+    line-height: 19px
+    color: #FFFFFF
+
+
+
+.joined_img_close
+  background-image: url("../../../../../../assets/descEvent/social.png")
+  background-size: contain
+  background-repeat: no-repeat
+  width: 10px
+  height: 10px
+
+.joined_img_close::before
+  content: ' '
+  border-left: 0.5px solid rgba(255, 255, 255, 0.5)
+  height: 10px
+  position: absolute
+  left: -17px

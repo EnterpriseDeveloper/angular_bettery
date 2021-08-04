@@ -12,7 +12,7 @@ export class ComingSoonComponent implements OnInit {
 
   constructor() {
     this.currentPath = window.location.pathname;
-    this.mobileCheck()
+    this.mobileCheck();
   }
 
   ngOnInit(): void {
