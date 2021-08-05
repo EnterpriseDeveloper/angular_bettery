@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComingSoonComponent } from './coming-soon.component';
+import { ComingSoonComponent } from './coming-soon-mobile.component';
 
 describe('ComingSoonComponent', () => {
   let component: ComingSoonComponent;

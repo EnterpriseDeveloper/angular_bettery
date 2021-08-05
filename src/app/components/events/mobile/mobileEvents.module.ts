@@ -22,7 +22,6 @@ import {JoinPageItemTemplateComponent} from './join-page-item-template/join-page
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {QuestionOptionsBlockComponent} from './join-page-item-template/question-options-block/question-options-block.component';
 import {ItemInfoClosedComponent} from './join-page-item-template/item-info-closed/item-info-closed.component';
-import {ComingSoonComponent} from './coming-soon/coming-soon.component';
 import {NavigationModule} from '../../navigation/navigation.module';
 
 
@@ -61,7 +60,6 @@ import {NavigationModule} from '../../navigation/navigation.module';
     JoinPageItemTemplateComponent,
     QuestionOptionsBlockComponent,
     ItemInfoClosedComponent,
-    ComingSoonComponent
 ]
 })
 export class MobileEventsModule { }

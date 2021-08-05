@@ -73,7 +73,7 @@
     </div>
 
     <div class="d_flex_alight_justify_center" style="margin-top: 75%" >
-      <app-coming-soon [comingSoonType]="comingSoonType" [activeBtn]="activeBtn"></app-coming-soon>
+      <app-coming-soon-mobile [comingSoonType]="comingSoonType" [activeBtn]="activeBtn"></app-coming-soon-mobile>
     </div>
     <div *ngIf="spinner && comingSoonType=='social' && activeBtn !== 'pro'" style="position: relative;bottom: -12%">
       <app-spinner-loading class="lds-ripple" [desktop]="true"></app-spinner-loading>

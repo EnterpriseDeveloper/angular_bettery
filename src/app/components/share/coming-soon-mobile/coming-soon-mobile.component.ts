@@ -1,11 +1,11 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges,  SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'app-coming-soon',
-  templateUrl: './coming-soon.component.html',
-  styleUrls: ['./coming-soon.component.sass']
+  selector: 'app-coming-soon-mobile',
+  templateUrl: './coming-soon-mobile.component.html',
+  styleUrls: ['./coming-soon-mobile.component.sass']
 })
-export class ComingSoonComponent implements  OnChanges {
+export class ComingSoonMobileComponent implements  OnChanges {
 
   @Input() comingSoonType: string;
   @Input() activeBtn: string;

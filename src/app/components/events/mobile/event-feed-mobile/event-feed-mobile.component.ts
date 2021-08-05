@@ -237,8 +237,6 @@ export class EventFeedMobileComponent implements OnDestroy {
       }
     }
     if (this.activeBtn === 'pro') {
-      console.log(this.openedDetailArr);
-
       this.comingSoonType = 'social';
 
     }
@@ -278,7 +276,6 @@ export class EventFeedMobileComponent implements OnDestroy {
   }
 
   setComingType(type: string) {
-    console.log(this.openedDetailArr);
     this.newQuestions = null;
     this.spinner = true;
     this.activeBtnFromSearchBar(this.activeBtn);
