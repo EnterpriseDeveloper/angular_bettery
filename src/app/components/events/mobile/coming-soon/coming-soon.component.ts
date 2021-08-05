@@ -5,7 +5,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
   templateUrl: './coming-soon.component.html',
   styleUrls: ['./coming-soon.component.sass']
 })
-export class ComingSoonComponent implements OnInit, OnChanges {
+export class ComingSoonComponent implements  OnChanges {
 
   @Input() comingSoonType: string;
   @Input() activeBtn: string;
@@ -13,14 +13,8 @@ export class ComingSoonComponent implements OnInit, OnChanges {
   constructor() {
   }
 
-  ngOnInit(): void {
-
-  }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.activeBtn);
-    console.log(this.comingSoonType);
-    console.log('1111');
     this.comingSoonImg();
   }
 

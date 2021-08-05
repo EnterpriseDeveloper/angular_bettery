@@ -52,8 +52,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.question);
-    this.addCloseAnimation= !this.question.detailOpened
+    this.addCloseAnimation = !this.question.detailOpened;
   }
 
 
