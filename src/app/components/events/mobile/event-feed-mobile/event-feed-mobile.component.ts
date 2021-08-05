@@ -67,6 +67,8 @@ export class EventFeedMobileComponent implements OnDestroy {
         this.userData = x[0];
         if (this.activeBtn === 'following') {
           this.openedDetailArr = [];
+          this.newQuestions = null;
+          this.spinner = true;
           this.queryPath = 'user/event_activites';
           this.getData(this.queryPath, 0, 5, this.searchWord, '');
         } else {
@@ -198,12 +200,14 @@ export class EventFeedMobileComponent implements OnDestroy {
     this.searchWord = $event;
     this.scrollDistanceFrom = 0;
     this.scrollDistanceTo = 5;
-
+    this.newQuestions = null;
+    this.spinner = true;
     if (this.searchWord.length >= 3) {
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
       this.commentResetFlag = true;
 
     } else {
+
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, '', this.activeBtn);
       this.commentResetFlag = true;
     }
@@ -216,6 +220,8 @@ export class EventFeedMobileComponent implements OnDestroy {
 
     if (this.activeBtn === 'controversial' || this.activeBtn === 'trending') {
       this.openedDetailArr = [];
+      this.newQuestions = null;
+      this.spinner = true;
       if (this.searchWord.length >= 3) {
         this.queryPath = 'publicEvents/get_all';
         this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
@@ -228,6 +234,8 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
 
     if (this.activeBtn === 'following') {
+      this.newQuestions = null;
+      this.spinner = true;
       this.openedDetailArr = [];
       if (!this.userData) {
         this.modalService.open(RegistrationComponent, {centered: true});

@@ -189,8 +189,7 @@
               </a>
             </div>
 
-            <div
-              *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished' && !question.usersAnswers.answered  "
+            <div [routerLink]="'../public_event/'+question?.id.toString()" *ngIf="!timeValidating(question) && (question?.host.id != userData?._id)  && question.status!='finished' && !question.usersAnswers.answered  "
               class="validateNow"
               style="display: flex;">
               VALIDATE NOW

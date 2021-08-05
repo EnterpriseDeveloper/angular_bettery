@@ -63,6 +63,7 @@ export class TimeComponent implements OnInit {
       this.statusTime = 'end';
     }
 
+
     setTimeout(() => {
       this.calculateDate();
     }, 1000);

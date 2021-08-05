@@ -6,8 +6,8 @@
   <div class="item_ending_time" *ngIf="!question.usersAnswers.answered && !question.status.includes('reverted')">
     <div>
       <div class="item_ending_time_block">
-        <time class="event_date" [timer]="question?.endTime"></time>
-        <div style="color: #fff" *ngIf="!timeValidating(question)">
+        <time class="event_date" [timer]="question?.endTime" ></time>
+        <div style="color: #fff;font-size: 12px" *ngIf="!timeValidating(question)">
           ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
         </div>
         <div class="joined_block">

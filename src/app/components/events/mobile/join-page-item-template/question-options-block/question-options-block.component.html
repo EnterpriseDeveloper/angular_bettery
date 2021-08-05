@@ -130,10 +130,10 @@
     <div class="item_ending_time_block">
       <div class="validating_in_progress"  *ngIf="question.status!=='finished' && !question.status.includes('reverted')">
         <div class="validator_in_progress_wraper">
-          <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
+          <div style="position: absolute; left: 75px; color: #fff;font-size: 12px" *ngIf="!timeValidating(question)">
             ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
           </div>
-          <time class="event_date" [timer]="question?.endTime"></time>
+          <time class="event_date" [timer]="question?.endTime" ></time>
         </div>
       </div>
 
