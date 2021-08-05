@@ -1,0 +1,450 @@
+.addCommentBox
+  background: #545454
+  border-radius: 8px
+  width: 100%
+  border: none
+  height: 45px
+  font-style: normal
+  font-weight: 600
+  font-size: 16px
+  line-height: 19px
+  text-align: left
+  color: #FFFFFF
+  padding: 13px 40px 13px 10px
+  margin-bottom: 0
+  resize: none
+
+.addCommentBoxWhite
+  background-color: #F0F0F0
+  color: #0B1511
+
+.addCommentBoxWhite:focus
+  outline: none
+
+.addCommentBox::placeholder
+  font-style: normal
+  font-weight: 600
+  font-size: 14px
+  line-height: 19px
+  text-align: left
+  color: #FFFFFF
+  padding-left: 19px
+  margin-bottom: 0
+
+.addCommentBoxWhite::placeholder
+  font-style: normal
+  font-weight: 600
+  font-size: 10px
+  padding-top: 3px
+  line-height: 14px
+  color: #C4C4C4
+
+.sendCommentBox
+  display: flex
+  margin-top: 16px
+  margin-bottom: 22px
+  position: relative
+  width: 100%
+  & button
+    width: 100%
+    background: #FFFDF1
+    border: 1px solid #FFD300
+    font-weight: bold
+    font-size: 12px
+    line-height: 16px
+    text-align: center
+    text-transform: uppercase
+    color: #FFD300
+    padding: 11px 0
+    border-radius: 8px
+    cursor: pointer
+  & button:active
+    outline: none
+
+.sendImg
+  background: url(../../../../../assets/share/send.png) left center no-repeat
+  background-size: contain
+  width: 24px
+  height: 24px
+  margin-left: 20px
+  margin-right: 5px
+  margin-top: 10px
+  position: absolute
+  right: 5px
+
+.sendImg-blue
+  background: url(../../../../../assets/share/sendBlue.png) left center no-repeat
+  background-size: contain
+  width: 24px
+  height: 24px
+  cursor: pointer
+
+
+.senderBox
+  display: flex
+  width: 80%
+
+.commentImg
+  width: 28px
+  height: 28px
+  border-radius: 100%
+
+.face1
+  background: url(../../../../../assets/mobile-private-public/face1.png) left center no-repeat
+  background-size: contain
+
+.face2
+  background: url(../../../../../assets/mobile-private-public/face2.png) left center no-repeat
+  background-size: contain
+
+.commentName
+  font-style: normal
+  font-weight: 600
+  font-size: 14px
+  line-height: 19px
+  //display: flex
+  align-items: center
+  color: #FFFFFF
+  margin-left: 8px
+  margin-bottom: 0px
+
+.timeBox
+  font-family: 'Open Sans', sans-serif
+  font-style: normal
+  font-weight: normal
+  font-size: 9px
+  line-height: 10px
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  color: #979797
+  text-align: right
+
+.comment
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 19px
+  align-items: center
+  color: #C4C4C4
+  margin-left: 2px
+  margin-top: 6px
+  text-align: left !important
+  overflow-wrap: break-word
+  & a
+    color: #54A3DD
+
+.commentHeader
+  display: flex
+  justify-content: space-between
+
+.bgWhite
+  background-color: #FFFFFF
+
+.bgDark
+  background-color: #242521
+
+.angryIcon
+  background: url(../../../../../assets/share/angryIcon.png) left center no-repeat
+  background-size: contain
+  width: 13px
+  height: 13px
+  cursor: pointer
+
+.smileIcon
+  background: url(../../../../../assets/share/smailIcon.png) left center no-repeat
+  background-size: contain
+  width: 13px
+  height: 13px
+  cursor: pointer
+
+.winkyIcon
+  background: url(../../../../../assets/share/winkyIcon.png) left center no-repeat
+  background-size: contain
+  width: 13px
+  height: 13px
+  cursor: pointer
+
+.starIcon
+  background: url(../../../../../assets/share/starIcon.png) left center no-repeat
+  background-size: contain
+  width: 13px
+  height: 13px
+  cursor: pointer
+
+.countIcon
+  font-style: normal
+  font-weight: normal
+  font-size: 10px
+  line-height: 14px
+  color: rgba(11, 21, 17, 0.62)
+  margin: 0 9px 0 7px
+
+.icon-wrap
+  display: flex
+
+.reply
+  font-style: normal
+  font-weight: normal
+  font-size: 10px
+  line-height: 14px
+  display: flex
+  align-items: center
+  color: #54A3DD
+  justify-content: center
+
+.comment-warp .commentBox:nth-last-child(n+3)
+  border-bottom: 0.5px solid #585858
+  padding-top: 30px
+  padding-bottom: 30px
+
+.commentBoxChange:nth-last-child(n+2)
+  border-bottom: 0.5px solid #585858
+
+.hr
+  border-bottom: 0.5px solid #EEEEEE
+  padding-bottom: 10px
+  margin-bottom: 0
+
+.sortHead
+  font-style: normal
+  font-weight: normal
+  font-size: 10px
+  line-height: 14px
+  display: flex
+  align-items: center
+  color: #C4C4C4
+  justify-content: space-around
+
+.sortHeadDark
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 14px
+  display: flex
+  align-items: center
+  color: #C4C4C4
+  justify-content: space-around
+  margin-bottom: 26px
+
+.sortHead-item
+  padding: 5px 13px
+
+.sortHead-item-dark
+  padding: 13px 23px
+  cursor: pointer
+
+.activeWhite
+  background: #C8EDFF
+  border-radius: 5px
+  color: rgba(11, 21, 17, 0.62)
+  transition: all 0.3s
+
+.activeDark
+  background: #394146
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08)
+  border-radius: 5px
+  color: #ffffff
+  transition: all 0.8s
+
+.colorWhite
+  color: #FFFFFF !important
+
+.replyDark
+  font-style: normal
+  font-weight: bold
+  font-size: 10px
+  line-height: 16px
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  cursor: pointer
+  & a
+    color: #54A3DD
+
+.darkSize
+  width: 16px
+  height: 16px
+  font-size: 12px
+  line-height: 16px
+
+.visible
+  visibility: visible
+
+.hidden
+  visibility: hidden
+
+//===========================
+
+.soonClose
+  text-align: right
+  margin-top: 10px
+  color: #000000
+  margin-right: 10px
+  opacity: 1
+  font-weight: 300
+  outline: none
+  border: none
+
+.title-soon
+  margin: 10px 0 13px 0
+  font-style: normal
+  font-weight: 800
+  font-size: 24px
+  line-height: 33px
+  display: flex
+  text-transform: uppercase
+  justify-content: center
+  color: #FFD300
+
+.text-soon
+  margin-bottom: 50px
+  font-style: normal
+  font-weight: 600
+  line-height: 27px
+  font-size: 20px
+  display: flex
+  align-items: center
+  text-align: center
+  color: #0B1511
+
+.angryBorder
+  background-color: #FF8B8B
+  height: 2px
+  width: 71%
+  border-radius: 3px
+  margin-top: 5px
+
+.starBorder
+  background-color: #54DD96
+  height: 2px
+  width: 71%
+  border-radius: 3px
+  margin-top: 5px
+
+.winkBorder
+  background-color: #34DDDD
+  height: 2px
+  width: 71%
+  border-radius: 3px
+  margin-top: 5px
+
+
+.smileBorder
+  background-color: #FFD300
+  height: 2px
+  width: 71%
+  border-radius: 3px
+  margin-top: 5px
+
+//====typing spinner====
+
+.someoneTyping
+  display: flex
+  align-items: center
+
+.typeCircle-1
+  border-radius: 100%
+  width: 11px
+  height: 11px
+  margin-right: 5px
+
+.active1
+  background-color: #54A3DD
+  transition: 0.3s
+
+.active2
+  background-color: #8BCEFF
+  transition: 0.3s
+
+.active3
+  background-color: #BFE4FF
+  transition: 0.3s
+
+//====================================
+.arrowImg
+  background: url("../../../../../assets/share/commentArrowUp.png") left center no-repeat
+  background-size: contain
+  width: 16px
+  height: 16px
+  margin-right: 8px
+
+.wrapCommentDown
+  display: flex
+  justify-content: space-between
+  padding-bottom: 18px
+
+.showMore
+  font-weight: normal
+  font-size: 12px
+  line-height: 16px
+  display: flex
+  align-items: center
+  color: #54A3DD
+  padding-top: 5px
+  & p
+    margin: auto
+
+.commentBox
+  padding: 16px 5px 24px 5px
+
+.comingSoon
+    font-weight: normal
+    font-size: 10px
+    line-height: 14px
+    text-align: center
+    color: #A8A8A8 !important
+
+.soonTitle
+  font-weight: bold
+  font-size: 11px
+  line-height: 15px
+  text-align: center
+  text-transform: uppercase
+  color: #54DD96
+  margin-bottom: 2px
+  & p
+    margin-bottom: 2px
+
+.closeWhite
+  display: none
+  font-weight: 600
+  font-size: 10px
+  line-height: 14px
+  align-items: center
+  text-align: center
+  color: #C4C4C4
+  cursor: pointer
+
+.plusClose
+  display: flex
+  align-items: center
+
+.plusWhite-img
+  background: url("../../../../../assets/share/plus.png") center center no-repeat
+  background-size: contain
+  width: 20px
+  height: 20px
+
+.mr-1
+  cursor: pointer
+
+.noComments
+  padding: 15px 40px 15px 40px
+  & h4
+    font-style: normal
+    font-weight: 600
+    font-size: 11px
+    line-height: 15px
+    text-align: center
+    color: #0B1511
+    margin: 0
+    padding: 0 0 4px 0
+  & p
+    font-weight: normal
+    font-size: 10px
+    line-height: 14px
+    text-align: center
+    color: #A8A8A8
+    padding: 0
+    margin: 0

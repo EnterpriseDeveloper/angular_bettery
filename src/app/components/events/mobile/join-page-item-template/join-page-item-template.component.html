@@ -129,14 +129,11 @@
 
               <a [routerLink]="'../public_event/'+question?.id.toString()">
                 <div *ngIf="!timeValidating(question)"
-                     style="display: flex;font-style: normal;justify-content: flex-end;
-font-weight: 600;
-font-size: 10px;
-line-height: 14px;">
+                     class="you_won_text">
                   You won
                 </div>
                 <div class="d_flex_j_content"><span
-                  style="color: #34DDDD;font-style: normal;font-weight: bold;font-size: 14px;line-height: 114.1%;">{{question.usersAnswers?.mintedToken + question.usersAnswers?.payToken}}
+                  class="blue_text_bet">{{question.usersAnswers?.mintedToken + question.usersAnswers?.payToken}}
                   BET</span></div>
               </a>
             </div>

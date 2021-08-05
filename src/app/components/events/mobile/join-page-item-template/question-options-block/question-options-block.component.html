@@ -129,7 +129,7 @@
 
     <div class="item_ending_time_block">
       <div class="validating_in_progress"  *ngIf="question.status!=='finished' && !question.status.includes('reverted')">
-        <div style="display: flex; width: 100%; white-space: pre; position: relative; left: -7px; color: #fff">
+        <div class="validator_in_progress_wraper">
           <div style="position: absolute; left: 75px; color: #fff" *ngIf="!timeValidating(question)">
             ({{this.getValidatorsAmount(question)}}/{{getValidatorsAmountLeft(question)}})
           </div>
@@ -140,11 +140,11 @@
       <div class="event_canceled_ended"  *ngIf="question.status=='finished' || question.status.includes('reverted')">
 
         <div *ngIf="question.finalAnswer !== null " >
-          <p class="status_text" style="color: #fff; margin-bottom: 0;font-size: 12px;line-height: 16px;">Ended on {{eventFinishDate(question)}}</p>
+          <p class="status_text event_canceled_ended_text" >Ended on {{eventFinishDate(question)}}</p>
         </div>
 
         <div *ngIf="question.status.includes('reverted') && !question.finalAnswer">
-          <p class="status_text"  style="color: #fff; margin-bottom: 0; font-size: 12px; line-height: 16px;">Cancelled on {{eventFinishDate(question)}}</p>
+          <p class="status_text event_canceled_ended_text"  >Cancelled on {{eventFinishDate(question)}}</p>
         </div>
       </div>
 

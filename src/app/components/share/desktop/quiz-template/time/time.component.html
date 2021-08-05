@@ -1,0 +1,13 @@
+<p *ngIf="statusTime === 'end'" class="time_style endTime">{{future}}</p>
+
+<p *ngIf="statusTime === 'green'" class="time_style">{{future}}
+  <span class="timeStyle" [ngStyle]="styleTime('green')">{{day}} days</span>
+</p>
+
+<p *ngIf="statusTime === 'yellow'" class="time_style">{{future}}
+  <span  class="time_Style" [ngStyle]="styleTime('yellow')">{{hour}}:{{minutes}}:{{seconds}}</span>
+</p>
+
+<p  *ngIf="statusTime === 'red'" class="time_style">{{future}}
+  <span class="time_Style" [ngStyle]="styleTime('red')">{{minutes}}:{{seconds}}</span>
+</p>
