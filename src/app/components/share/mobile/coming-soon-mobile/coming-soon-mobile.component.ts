@@ -1,4 +1,5 @@
-import {Component, Input, OnChanges,  SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, Output, SimpleChanges, EventEmitter} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-coming-soon-mobile',
@@ -9,8 +10,11 @@ export class ComingSoonMobileComponent implements  OnChanges {
 
   @Input() comingSoonType: string;
   @Input() activeBtn: string;
+  exploreHref = 'https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-2-play-your-way-earn-your-way-4252acbfae21';
 
-  constructor() {
+  @Output() setComingSoonFromComponent = new EventEmitter();
+
+  constructor(private router: Router) {
   }
 
 
@@ -39,7 +43,7 @@ export class ComingSoonMobileComponent implements  OnChanges {
       return {
         img: 'pro_img',
         about_title: 'Pro events,',
-        about_text: ' hosted by Influencers and Businesses, will let you earn massively - if you meet the Reputation level for them that is ;-)'
+        about_text: ' hosted by Influencers and Businesses, will let you earn massively - if you meet the Reputation level for them that is ;-)',
       };
     }
 
@@ -52,4 +56,15 @@ export class ComingSoonMobileComponent implements  OnChanges {
     }
   }
 
+  outPutComingSoonType(){
+    if (this.activeBtn === 'pro' && this.comingSoonType == 'social'){
+
+      this.router.navigate([]).then(result => {
+        window.open(this.exploreHref, '_self' );
+      });
+
+    }else {
+      this.setComingSoonFromComponent.emit('social');
+    }
+  }
 }
