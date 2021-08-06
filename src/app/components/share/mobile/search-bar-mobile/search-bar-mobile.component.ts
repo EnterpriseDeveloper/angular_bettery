@@ -31,7 +31,7 @@ export class SearchBarMobileComponent implements OnInit {
 
   }
 
-  letsFindEvent() {
+  letsFindEvent($event) {
     if (this.timeout !== undefined) {
       clearTimeout(this.timeout);
     }
@@ -39,6 +39,11 @@ export class SearchBarMobileComponent implements OnInit {
     this.timeout = setTimeout(() => {
       this.searchWordEmit.emit(this.searchWord);
     }, 300);
+    console.log($event);
+    if ($event.keyCode == 13 ){
+      const input = document.getElementById('search_input');
+      input.blur();
+    }
   }
   openFilter() {
     this.timelineActive.emit(true);

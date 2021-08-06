@@ -1,8 +1,8 @@
 <div class="search_block">
   <div>
     <div class="search-img"></div>
-    <input type="text"  name="searchWord" [(ngModel)]="searchWord" placeholder="What are you interested in?" aria-label="Username"
-           aria-describedby="basic-addon1" (keyup)="letsFindEvent()">
+    <input id="search_input" type="text"  name="searchWord" [(ngModel)]="searchWord" placeholder="What are you interested in?" aria-label="Username"
+           aria-describedby="basic-addon1" (keyup)="letsFindEvent($event)">
     <div class="lines_3_img" (click)="openFilter()"></div>
   </div>
 </div>
