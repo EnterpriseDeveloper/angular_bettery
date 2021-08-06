@@ -75,7 +75,7 @@
       </main>
     </div>
 
-    <div *ngIf="comingSoonType!=='social'"
+    <div *ngIf="comingSoonType!=='social' || activeBtn=='pro'"
        class="d_flex_alight_justify_center"
          style="margin-top: 75%" >
       <app-coming-soon-mobile (setComingSoonFromComponent)="setComingType($event)"
