@@ -242,6 +242,7 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.openedDetailArr = [];
       if (!this.userData) {
         this.modalService.open(RegistrationComponent, {centered: true});
+        this.spinner = false;
       } else {
         this.queryPath = 'user/event_activites';
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
