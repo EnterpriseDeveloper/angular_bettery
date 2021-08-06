@@ -1,26 +1,26 @@
 <div class="search_block">
   <div>
     <div class="search-img"></div>
-    <input type="text"  name="searchWord" [(ngModel)]="searchWord" placeholder="What are you interested in?" aria-label="Username"
-           aria-describedby="basic-addon1" (keyup)="letsFindEvent()">
+    <input id="search_input" type="text"  name="searchWord" [(ngModel)]="searchWord" placeholder="What are you interested in?" aria-label="Username"
+           aria-describedby="basic-addon1" (keyup)="letsFindEvent($event)">
     <div class="lines_3_img" (click)="openFilter()"></div>
   </div>
 </div>
 <div style="display: flex; background: #242421;" >
   <div class="d-flex" style="flex: 1">
-    <div (click)="comingSoonType =='social' && changesActiveBtn('trending')" class="text-disactive" style="width: 30%"
-         [ngClass]="active === 'trending' && (comingSoonType!=='moments' && comingSoonType!=='live') && 'text-active'">
+    <div (click)="(comingSoonType =='social' && isLoading) && changesActiveBtn('trending')" class="text-disactive" style="width: 30%"
+         [ngClass]="active === 'trending' && (comingSoonType!=='moments' && comingSoonType!=='live' ) && 'text-active'">
       <span>Trending</span>
     </div>
-    <div (click)="comingSoonType =='social' && changesActiveBtn('controversial')" class="text-disactive" style="width: 32%"
-         [ngClass]="active === 'controversial' && (comingSoonType!=='moments' && comingSoonType!=='live') && 'text-active'">
+    <div (click)="(comingSoonType =='social' && isLoading) && changesActiveBtn('controversial')" class="text-disactive" style="width: 32%"
+         [ngClass]="active === 'controversial' && (comingSoonType!=='moments' && comingSoonType!=='live' ) && 'text-active'">
       <span>Controversial</span>
     </div>
-    <div (click)="comingSoonType =='social' && changesActiveBtn('following')" class="text-disactive" style="width: 25%"
-         [ngClass]="active === 'following' && (comingSoonType!=='moments' && comingSoonType!=='live') && 'text-active'">
+    <div (click)="(comingSoonType =='social' && isLoading) && changesActiveBtn('following')" class="text-disactive" style="width: 25%"
+         [ngClass]="active === 'following' && (comingSoonType!=='moments' && comingSoonType!=='live' ) && 'text-active'">
       <span>Following</span>
     </div>
-    <div (click)="comingSoonType =='social' && changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="(active === 'pro' && comingSoonType =='social' ) && 'text-active'" style="flex: 1">
+    <div (click)="(comingSoonType =='social' && isLoading) && changesActiveBtn('pro')" class="text-disactive d-flex" [ngClass]="(active === 'pro' && comingSoonType =='social' ) && 'text-active'" style="flex: 1">
       <div [ngClass]="(active=== 'pro' && comingSoonType =='social' ) ? 'baks-img_green' : 'baks-img'" class="baks-img"></div>
     </div>
   </div>

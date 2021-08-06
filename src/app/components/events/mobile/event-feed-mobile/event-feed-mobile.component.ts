@@ -201,7 +201,10 @@ export class EventFeedMobileComponent implements OnDestroy {
     this.scrollDistanceFrom = 0;
     this.scrollDistanceTo = 5;
     this.newQuestions = null;
-    this.spinner = true;
+    if (this.activeBtn !== 'pro' || this.comingSoonType === 'moments' || this.comingSoonType === 'live'){
+
+      this.spinner = true;
+    }
     if (this.searchWord.length >= 3) {
       this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
       this.commentResetFlag = true;
@@ -239,12 +242,15 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.openedDetailArr = [];
       if (!this.userData) {
         this.modalService.open(RegistrationComponent, {centered: true});
+        this.spinner = false;
       } else {
         this.queryPath = 'user/event_activites';
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
       }
     }
     if (this.activeBtn === 'pro') {
+      this.newQuestions = null;
+      this.spinner = false;
       this.comingSoonType = 'social';
 
     }
