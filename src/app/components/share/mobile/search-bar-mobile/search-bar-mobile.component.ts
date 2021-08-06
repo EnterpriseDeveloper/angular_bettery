@@ -16,6 +16,8 @@ export class SearchBarMobileComponent implements OnInit {
   @Input() amount: number;
   @Input() active = 'trending';
   @Input() comingSoonType: string;
+  @Input() isLoading: boolean;
+
   constructor() {
   }
 

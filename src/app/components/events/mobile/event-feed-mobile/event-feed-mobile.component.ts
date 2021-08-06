@@ -245,6 +245,8 @@ export class EventFeedMobileComponent implements OnDestroy {
       }
     }
     if (this.activeBtn === 'pro') {
+      this.newQuestions = null;
+      this.spinner = false;
       this.comingSoonType = 'social';
 
     }
