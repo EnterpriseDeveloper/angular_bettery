@@ -36,11 +36,14 @@ export class SearchBarMobileComponent implements OnInit {
       clearTimeout(this.timeout);
     }
 
-    this.timeout = setTimeout(() => {
-      this.searchWordEmit.emit(this.searchWord);
-    }, 300);
-    console.log($event);
+    if ($event.keyCode !== 13) {
+      this.timeout = setTimeout(() => {
+        this.searchWordEmit.emit(this.searchWord);
+      }, 300);
+    }
+
     if ($event.keyCode == 13 ){
+      this.searchWordEmit.emit(this.searchWord);
       const input = document.getElementById('search_input');
       input.blur();
     }

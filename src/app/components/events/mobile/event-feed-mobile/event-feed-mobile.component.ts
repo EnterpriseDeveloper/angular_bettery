@@ -10,6 +10,7 @@ import {RegistrationComponent} from '../../../registration/registration.componen
 import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import {Coins} from '../../../../models/Coins.model';
 import {EventModel} from '../../../../models/Event.model';
+import {$e} from 'codelyzer/angular/styles/chars';
 
 @Component({
   selector: 'app-event-feed-mobile',
@@ -136,12 +137,11 @@ export class EventFeedMobileComponent implements OnDestroy {
           e.detailOpened = this.openedDetailArr.includes(i);
         });
       }
-      if (this.timelineActive) {
-        this.timelineActive = false;
+      if (this.timelineActive === false) {
+        this.openTimeline(this.timelineActive);
       }
       this.spinner = false;
       this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
-
     }, (err) => {
       this.spinner = false;
       console.log(err);
@@ -160,10 +160,10 @@ export class EventFeedMobileComponent implements OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   showHeader() {
-    if (this.prevScrollPos > window.pageYOffset ){
+    if (this.prevScrollPos > window.pageYOffset) {
       document.getElementById('bar_on_hide').className = 'block_pos_fix';
 
-    }else if (this.prevScrollPos < window.pageYOffset && (window.pageYOffset > 150)){
+    } else if (this.prevScrollPos < window.pageYOffset && (window.pageYOffset > 150)) {
       document.getElementById('bar_on_hide').className = 'd_none_pos_rel';
     }
     this.prevScrollPos = window.pageYOffset;
@@ -200,8 +200,9 @@ export class EventFeedMobileComponent implements OnDestroy {
     this.searchWord = $event;
     this.scrollDistanceFrom = 0;
     this.scrollDistanceTo = 5;
+
     this.newQuestions = null;
-    if (this.activeBtn !== 'pro' || this.comingSoonType === 'moments' || this.comingSoonType === 'live'){
+    if (this.activeBtn !== 'pro' || this.comingSoonType === 'moments' || this.comingSoonType === 'live') {
 
       this.spinner = true;
     }
@@ -268,8 +269,13 @@ export class EventFeedMobileComponent implements OnDestroy {
 
     this.showEnd = data.showEnd;
 
-    this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
-    this.filterMode = data.showEnd;
+    if (data.showEnd !== this.filterMode) {
+      this.spinner = true;
+      this.newQuestions = null;
+      this.getData(this.queryPath, this.scrollDistanceFrom, this.scrollDistanceTo, this.searchWord, this.activeBtn);
+      this.filterMode = data.showEnd;
+    }
+
   }
 
   openCreateEventModal() {
@@ -289,11 +295,20 @@ export class EventFeedMobileComponent implements OnDestroy {
     }
   }
 
-  setComingType(type: string) {
-    this.newQuestions = null;
-    this.spinner = true;
-    this.activeBtnFromSearchBar(this.activeBtn);
-    this.comingSoonType = type;
+  setComingType($event) {
+    if (!$event.active) {
+      this.newQuestions = null;
+      this.spinner = true;
+      this.activeBtnFromSearchBar(this.activeBtn);
+      this.comingSoonType = $event.type;
+
+    } else if ($event.active) {
+      this.newQuestions = null;
+      this.spinner = true;
+      this.activeBtn = $event.active;
+      this.activeBtnFromSearchBar(this.activeBtn);
+      this.comingSoonType = $event.type;
+    }
   }
 
 }
