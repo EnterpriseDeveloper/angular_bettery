@@ -137,8 +137,8 @@ export class EventFeedMobileComponent implements OnDestroy {
           e.detailOpened = this.openedDetailArr.includes(i);
         });
       }
-      if (this.timelineActive) {
-        this.timelineActive = false;
+      if (this.timelineActive === false) {
+        this.openTimeline(this.timelineActive);
       }
       this.spinner = false;
       this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
@@ -146,7 +146,6 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.spinner = false;
       console.log(err);
     });
-
   }
 
   arrWithOpenedDetails(event) {

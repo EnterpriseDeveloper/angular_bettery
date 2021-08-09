@@ -47,7 +47,7 @@ export class ComingSoonMobileComponent implements  OnChanges {
       };
     }
 
-    if (this.comingSoonType === 'following') {
+    if (this.comingSoonType === 'social' && this.activeBtn == 'following') {
       return {
         img: 'following_img',
         about_title: '',

@@ -23,6 +23,7 @@ export class FilterTimeLineMobileComponent implements OnInit {
   ngOnInit(): void {
     this.value = this.statusMode;
     this.initializeForm();
+    this.closeEmmit.emit(false);
   }
 
   initializeForm() {
