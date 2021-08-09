@@ -64,7 +64,7 @@ export class ComingSoonMobileComponent implements  OnChanges {
       });
 
     }else {
-      this.setComingSoonFromComponent.emit('social');
+      this.setComingSoonFromComponent.emit({type: 'social', active: 'trending'});
     }
   }
 }

@@ -142,7 +142,6 @@ export class JoinPageItemTemplateComponent implements OnInit {
   }
 
   navToEvent(){
-    console.log(3333);
     this.router.navigate([]).then(result => {window.open('/public_event/' + this.question.id.toString(),'_blank')});
   }
 

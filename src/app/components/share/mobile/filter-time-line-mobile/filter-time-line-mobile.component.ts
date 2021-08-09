@@ -41,6 +41,10 @@ export class FilterTimeLineMobileComponent implements OnInit {
       return;
     }
     this.disabled = true;
+
+    if (form.value.showEnd === this.statusMode){
+     this.closeWindow();
+    }
     const data = {
       showEnd: form.value.showEnd
     };
