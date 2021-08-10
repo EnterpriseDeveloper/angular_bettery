@@ -11,9 +11,6 @@
               <a href="#social" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
             </li>
             <li class="nav_bar_item">
-              <a href="#getStarted" (click)="styleHideMen()" pageScroll>{{'NAVBAR.ITEM_2' | translate}}</a>
-            </li>
-            <li class="nav_bar_item">
               <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
                 translate}}</a>
             </li>
@@ -35,13 +32,31 @@
             <li class="nav_bar_item">
               <a href="https://friendlybets.medium.com/" target="_blank">{{'NAVBAR.ITEM_8' | translate}}</a>
             </li>
-            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">
-              <a class="questionMark-img" href="#">{{'NAVBAR.ITEM_9' | translate}}</a>
+            <li class="nav_bar_item">
+              <a href="https://docs.bettery.io" target="_blank">{{'NAVBAR.ITEM_11' | translate}}</a>
             </li>
-            <li class="nav_bar_item position-relative ml-3">
-              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io">{{'NAVBAR.ITEM_10' | translate}}</a>
+<!--            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">-->
+<!--              <a class="questionMark-img" href="#"></a>-->
+<!--            </li>-->
+<!--            <li class="nav_bar_item position-relative ml-3">-->
+<!--              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io"></a>-->
+<!--            </li>-->
+            <li class="nav_bar_item">
+              <div class="icons-block">
+                <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
+
+                </a>
+                <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
+
+                </a>
+                <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
+
+                </a>
+              </div>
             </li>
+
           </ul>
+
         </div>
         <!--  DO NOT HAVE TRANSLATE FOR VETNAMESE LANGUAGE -->
         <!-- <div class="d-flex align-items-center pb-3 col-lg-1 lang-1 mt-4">
@@ -49,6 +64,7 @@
             <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
           </select>
         </div> -->
+        <div class="launch-app"></div>
       </nav>
 
       <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
@@ -126,21 +142,23 @@
                 <p>{{'HEADER.TEXT' | translate}}</p>
               </div>
 
-              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
-                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
-                (preStringTyped)="renovationDefaultEvent()">
-                <div class="pencil">
-                  <div class="text">
-                    <span class="typing a" (mouseenter)="showPopover()"></span>
+              <div>
+                <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
+                              [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                              (preStringTyped)="renovationDefaultEvent()">
+                  <div class="pencil">
+                    <div class="text">
+                      <span class="typing a" (mouseenter)="showPopover()"></span>
+                    </div>
+                    <div class="popover" [ngClass]=" triggerPopover && 'open'">
+                      <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
+                      <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
+                      <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
+                      <span>{{'HEADER.POPOVER.4' | translate}}</span>
+                    </div>
                   </div>
-                  <div class="popover" [ngClass]=" triggerPopover && 'open'">
-                    <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
-                    <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
-                    <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
-                    <span>{{'HEADER.POPOVER.4' | translate}}</span>
-                  </div>
-                </div>
-              </ngx-typed-js>
+                </ngx-typed-js>
+              </div>
 
               <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'" [strings]="topQuestions"
                 [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
@@ -248,7 +266,7 @@
             </div>
             <div>
               <p>{{'SECOND.TEXT_1' | translate}}</p> <br>
-              <p>{{'SECOND.TEXT_2' | translate}}</p>
+              <p><span style="font-weight: 600">{{'SECOND.TEXT_3' | translate}}</span>{{'SECOND.TEXT_2' | translate}}</p>
             </div>
           </div>
         </div>
@@ -306,7 +324,11 @@
               <div class="third-title title_h2 text-center text-lg-left">
                 <h2>{{'THIRD.TITLE' | translate}}</h2>
                 <div class="mt-3 third-text">
-                  <p>{{'THIRD.TEXT' | translate}}</p>
+                  <div class="role-list"><div class="yellow_host"></div><p>{{'THIRD.TEXT' | translate}}</p></div>
+                  <div class="role-list"><div class="blue_winner"></div><p>{{'THIRD.TEXT_2' | translate}}</p></div>
+                  <div class="role-list"><div class="purple_validator"></div><p>{{'THIRD.TEXT_3' | translate}}</p></div>
+                  <div class="role-list"><div class="dark_blue_advisor"></div><p>{{'THIRD.TEXT_4' | translate}}</p></div>
+                  <div class="pick_role_text"><p>{{'THIRD.TEXT_5' | translate}}</p></div>
                 </div>
               </div>
             </div>
@@ -317,13 +339,13 @@
 
       <section class="four" id="whyBettery">
         <div class="four_top row justify-content-center mb-3">
-          <div class="col-lg-6 col-md-10">
+          <div class="col-lg-8 col-md-10">
             <div>
               <h2 class="pb-3">{{'FOUR.TITLE' | translate}}</h2>
             </div>
             <div class="px-lg-5">
               <p>{{'FOUR.TEXT_1' | translate}}</p> <br>
-              <p>{{'FOUR.TEXT_2' | translate}}</p>
+
             </div>
           </div>
         </div>
@@ -398,7 +420,7 @@
 
       <section id="tokenSale" class="tokenSale">
         <div class="container-fluid">
-          <div class="row">
+
             <div class="col-lg-7 col-md-10 col-xs-12 tokenSale-left">
               <div>
                 <h2>{{'TOKEN_SALE.TITLE' | translate}}</h2>
@@ -406,32 +428,36 @@
               <div>
                 <p>{{'TOKEN_SALE.TEXT' | translate}}</p>
               </div>
-              <div class="tokenSale-btn">
-                <button routerLink="/tokensale">{{'TOKEN_SALE.JOIN_TOKEN_SALE' | translate}}</button>
-                <a class="mt-1"
-                  href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
-                  target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
-              </div>
-            </div>
-            <div class="col-lg-5 col-xs-12 tokenSale-right">
               <div>
-                <p>{{'TOKEN_SALE.FULL_TOKENOMICS' | translate}}</p>
+                <p>{{'TOKEN_SALE.TEXT_2' | translate}}</p>
               </div>
-              <div class="token-timer">
-                <div class="day">
-                  <div class="mx-1 semi-bg"><span>{{timer?.days[0]}}</span></div>
-                  <div class="mx-1 semi-bg"><span>{{timer?.days[1]}}</span></div>
-                </div>
+              <div class="tokenSale-btn">
                 <div>
-                  <span class="point">:</span>
-                </div>
-                <div class="hours">
-                  <div class="mx-1 semi-bg"><span>{{timer?.hours[0]}}</span></div>
-                  <div class="mx-1 semi-bg"><span>{{timer?.hours[1]}}</span></div>
-                </div>
+                  <button routerLink="/tokensale">{{'TOKEN_SALE.JOIN_TOKEN_SALE' | translate}}</button>
+                  <a class="mt-1"
+                     href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
+                     target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a></div>
               </div>
             </div>
-          </div>
+<!--            <div class="col-lg-5 col-xs-12 tokenSale-right">-->
+<!--              <div>-->
+<!--                <p>{{'TOKEN_SALE.FULL_TOKENOMICS' | translate}}</p>-->
+<!--              </div>-->
+<!--              <div class="token-timer">-->
+<!--                <div class="day">-->
+<!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[0]}}</span></div>-->
+<!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[1]}}</span></div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <span class="point">:</span>-->
+<!--                </div>-->
+<!--                <div class="hours">-->
+<!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[0]}}</span></div>-->
+<!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[1]}}</span></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
         </div>
       </section>
 

@@ -37,6 +37,8 @@ nav
   width: 169px
   height: 80px
 
+.d-flex
+  display: flex
 .nav_bar
   padding-left: 0
   & li
@@ -57,7 +59,7 @@ nav
       line-height: 20px
       color: #000000
 
-.questionMark-img:before
+.questionMark-img
   content: ''
   background: url("../../../assets/landingPage/questionMark.png") center center no-repeat
   background-size: 24px 24px
@@ -68,16 +70,27 @@ nav
   top: 1%
   left: -28px
 
-.tgr-img:before
-  content: ''
-  background: url("../../../assets/landingPage/Path-yellowe.png.png") center center no-repeat
+.tgr-img
+  background: url("../../../assets/landingPage/telegram_green.png") center center no-repeat
   background-size: 24px 24px
-  width: 24px
-  height: 24px
+  width: 27px
+  height: 27px
   border-radius: 100%
-  position: absolute
-  top: 1%
-  left: -28px
+
+.twitter-img
+  background: url("../../../assets/landingPage/twiter_green.png") center center no-repeat
+  background-size: 24px 24px
+  width: 27px
+  height: 27px
+  border-radius: 100%
+
+.linkedin-img
+  background: url("../../../assets/landingPage/linkedin_green.png") center center no-repeat
+  background-size: 24px 24px
+  width: 27px
+  height: 27px
+  border-radius: 100%
+
 
 .dropdown-toggle:empty::after
   display: none
@@ -92,6 +105,21 @@ nav
     width: 14px
     height: 12px
     margin-bottom: 3px
+
+.icons-block
+  display: flex
+  position: relative
+  top: 9px
+
+.launch-app
+  background: url("../../../assets/landingPage/launch_app.png") left center no-repeat
+  background-size: contain
+  width: 164px
+  height: 46px
+  cursor: pointer
+  position: absolute
+  right: 1%
+  top: 27%
 
 .icon-bar-img
   background: url("../../../assets/landingPage/btn-nav.png") left center no-repeat
@@ -447,10 +475,57 @@ header
   padding-right: 110px
 
 .img-choose
-  background: url("../../../assets/landingPage/Group31.png") left center no-repeat
+  background: url("../../../assets/landingPage/Group 31(2).png") left center no-repeat
   background-size: contain
   width: 600px
   height: 592px
+
+.yellow_host
+  background: url("../../../assets/landingPage/yellow_host.png") left center no-repeat
+  background-size: contain
+  width: 46px
+  height: 46px
+
+.blue_winner
+  background: url("../../../assets/landingPage/blue_winner.png") left center no-repeat
+  background-size: contain
+  width: 46px
+  height: 46px
+
+.purple_validator
+  background: url("../../../assets/landingPage/purple_validator.png") left center no-repeat
+  background-size: contain
+  width: 46px
+  height: 46px
+
+.dark_blue_advisor
+  background: url("../../../assets/landingPage/dark_blue_advisor.png") left center no-repeat
+  background-size: contain
+  width: 46px
+  height: 46px
+
+.role-list
+  display: flex
+  align-items: center
+  margin-top: 10px
+  div
+    margin-right: 21px
+  span
+    font-style: normal
+    font-weight: normal
+    font-size: 18px
+    line-height: 28px
+    color: #0B1511
+
+.pick_role_text
+  margin-top: 24px
+
+  p
+    font-style: normal
+    font-weight: bold
+    font-size: 20px
+    line-height: 28px
+    color: #54DD96
 
 .title_h2
   & h2
@@ -462,7 +537,7 @@ header
 
 .four
   padding-bottom: 259px
-  background: url("../../../assets/landingPage/bg4.png") 10% 90% no-repeat
+  background: url("../../../assets/landingPage/bg4.png") 49% 90% no-repeat
   background-size: 86px 58px
 
 .four_top
@@ -480,12 +555,14 @@ header
   width: 90%
   margin: auto
 
+
+
 .four_card
   display: flex
   flex-direction: column
   align-items: center
   text-align: center
-  padding: 16px 20px 16px 20px
+  padding: 16px 5px 16px 5px
   margin: 22px 20px 0 20px
   background: #FFFFFF
   border: 1px solid #EEEEEE
@@ -528,7 +605,6 @@ header
   padding-bottom: 146px
   background: url("../../../assets/landingPage/bg3.png") 90% bottom no-repeat
   background-size: 80px 69px
-  padding-left: 60px
 
 .tokenSale-left
   & h2
@@ -538,15 +614,22 @@ header
     line-height: 48px
     color: #0B1511
     margin-bottom: 16px
+    text-align: center
 
   & p
     font-size: 18px
     line-height: 28px
     color: #0B1511
     margin-bottom: 17px
+    text-align: center
+
+.container-fluid
+  display: flex
+  justify-content: center
 
 .tokenSale-btn
   display: flex
+  justify-content: center
   & button
     font-weight: bold
     font-size: 16px
@@ -554,18 +637,22 @@ header
     text-align: center
     color: #0B1511
     padding: 7px 19px
-    background: #54DD96
+    background: #FDD92A
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16)
     border-radius: 22px
     border: none
     outline: none
     margin-right: 21px
+    width: 250px
   & a
     font-weight: bold
+    text-align: center
     font-size: 16px
     line-height: 30px
     text-decoration-line: underline
     color: #8ED3A8
+    margin: 0 10px 0 0
+    display: block
 
 .tokenSale-right
   & p
@@ -1291,10 +1378,38 @@ footer
   transform: translateY(-2%)
   z-index: 9
 
+.card-text
+  span
+
+
 .ngx-typed
   padding-right: 50%
   display: flex
   position: relative
+
+.typing_mark
+  position: relative
+  background-color: #BCFFDC
+  border-radius: 8px
+  max-width: 180px
+  padding: 10px 8px 9px 13px
+  span
+    font-family: Source Sans Pro
+    font-style: normal
+    font-weight: normal
+    font-size: 12px
+    line-height: 16px
+
+.typing_mark::before
+  content: " "
+  position: absolute
+  left: -8%
+  top: 32%
+  background: #BCFFDC
+  width: 20px
+  height: 20px
+  transform-origin: 0 100%
+  transform: rotate(45deg)
 
 .popover.open
   opacity: 1
@@ -1373,7 +1488,7 @@ footer
     line-height: 28px
 
 .phone-img
-  background: url("../../../assets/landingPage/phone-img.png") center center no-repeat
+  background: url("../../../assets/landingPage/phone_img(2).png") center center no-repeat
   background-size: contain
   width: 1139px
   height: 429px
@@ -1504,3 +1619,4 @@ footer
   .text-adap
     & a
       font-size: 14px
+
