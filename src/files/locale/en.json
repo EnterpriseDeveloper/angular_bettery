@@ -1,6 +1,6 @@
 {
   "NAVBAR": {
-    "ITEM_1": "Why Social Betting",
+    "ITEM_1": "Social Betting",
     "ITEM_2": "Get Started",
     "ITEM_3": "Why Bettery",
     "ITEM_4": "Token Sale",
@@ -9,13 +9,17 @@
     "ITEM_7": "Business Demo",
     "ITEM_8": "Blog",
     "ITEM_9": "FAQ",
-    "ITEM_10": "Join us on Telegram"
+    "ITEM_10": "Telegram",
+    "ITEM_11": "Docs",
+    "ITEM_12": "Twitter",
+    "ITEM_13": "Linkedin"
+
   },
 
   "HEADER": {
     "TITLE_PART_1": "Bring Everyone Together",
     "TITLE_PART_2": "on what matters to you",
-    "TEXT": "Bet in future events made for your friends or community. Host your own topics and invite anyone to bet their opinions or vote for the final truth.",
+    "TEXT": "Feature an event that matters to your friends or community, and let everyone bet or say the truth.",
     "HEADER_QUESTION": "What will be the weather tomorrow in ",
     "QUESTION_END": "Saigon?",
     "BUTTON_TEXT": "Create Event",
@@ -27,47 +31,53 @@
     "TOP_QUESTIONS": ["Which team will win El Clásico at 3am tonight?", "What will be the weather tomorrow in Saigon?", "When will the corona virus end?"],
     "TOP_PLACEHOLDER": "Please input your questions ...",
     "POPOVER": {
-      "1": "What's unpredictable that",
-      "2": "will happen soon? Type it here,",
-      "3": "click Create Event, and bet with",
-      "4": "friends on how things will go!"
+      "1": "Have something unpredictable",
+      "2": "happening soon? Ask here and,",
+      "3": "click Create Event to bet on it",
+      "4": "with friends!"
     }
   },
 
   "SECOND": {
     "TITLE": "Social Betting is Fun",
-    "TEXT_1": "Friendship is all about experiencing what’s coming together with friends. Enjoy it your way - have fun betting on the future that’s just yours! Predict what's going to happen in your topics of interest with other enthusiasts. Bet with friends in private events or go viral on any social media. Down with the silly gambling stigma - Social Betting is finally for everyone! ",
-    "TEXT_2": "Love discussing opinions with others? Prefer taking in facts only at your own pace? Or simply want to grow your social media follower base? We’re all different, united by the future we foresee together on Bettery.",
+    "TEXT_1": "Have fun betting on the future that’s just yours in private events with friends or publicly with online communities on any social media content.",
+    "TEXT_2": " Start with free tokens, earn when taking risk or not, and cash out anytime.",
+    "TEXT_3": "Play to earn, always for free!",
     "CARD_TITLE_1": "Influencers",
     "CARD_TITLE_2": "On My Own",
     "CARD_TITLE_3": "Friends",
-    "CARD_TEXT_1": "Engage with followers in any social media or Bettery users. Turn your content interactive to create conversations and crank up the hype.",
-    "CARD_TEXT_2": "Alone, not lonely! Create viral topics for others to host and pay you or join events as an Expert to say the truth.",
-    "CARD_TEXT_3": "Enjoy geeking out with pals? Create a private room and bet a dinner on persnalized topics you all care and love."
+    "CARD_TEXT_1": "Engage with followers in social media. Turn your content interactive and create conversations.",
+    "CARD_TEXT_2": "Join public events as an expert to say the truth, or create viral events for Bettery community.",
+    "CARD_TEXT_3": "Bet a dinner or free tokens on personalized topics you all care and love, publicly or in private."
   },
 
   "THIRD": {
-    "TITLE": "Get Started",
-    "TEXT": "Pick a role that fits your day, and it's not always about betting! Be a Host and promote your own events to social media community. Bet as a Player with free tokens to cash out or get free dinner. Join as a knowledgeable Expert to vote for the truth. Unleash your creativity and suggest viral topics as an Advisor."
+    "TITLE": "Go Risky, or Risk-Free",
+    "TEXT": "Create your own events and invite friends or social media to join.",
+    "TEXT_2": "Bet with free tokens to cash out wins or receive a friend’s promise.",
+    "TEXT_3": "Validate the outcome as expert of truth after betting is over.",
+    "TEXT_4": "Advise viral event topics for others and earn from your creativity.",
+    "TEXT_5": "Pick a role that fits your day and start earning for free!"
   },
 
   "FOUR": {
     "TITLE": "Why Bettery?",
-    "TEXT_1": "Bettery is the first ever platform where Players use their opinion and skills - not luck - to bet with free tokens (BET) and cash out their winnings, but never run out of BET when they lose in events. By participating in social betting, users also grow their reputation and earn extra in Premium events hosted by businesses and influencers.",
+    "TEXT_1": "Bet with your opinion and skills - not luck - using free BET tokens and earn while enjoying your hobby. Cash out earnings but never run out of BET when losing in events. Grow reputations and earn extra in Pemium and Pro events hosted by businesses and influencers.",
     "TEXT_2": "To ensure that no one, not even Bettery team can manipulate events or user balance, Bettery is the first social application with its logic entirely executed on Smart Contracts and events data stored in a tamper-proof storage, and only users can access their own registered wallets.",
     "CARD_TITLE_1": "Uncompromised Outcomes",
     "CARD_TITLE_2": "Trustless Knowledge",
-    "CARD_TITLE_3": "Passive Earnings",
-    "CARD_TITLE_4": "Data Privacy Minus Fraud",
-    "CARD_TEXT_1": "Our smart data from knowledgeable users can never be altered by anyone, not even ourselves.",
-    "CARD_TEXT_2": "User reputation is a trustless \"proof-of-knowledge\" to price user engagement for businesses.",
-    "CARD_TEXT_3": "Enjoy great content in events and use your skills to earn tokens you can trade for money. ",
-    "CARD_TEXT_4": "Event activities are always open for fraud verification. Users solely control access to their data."
+    "CARD_TITLE_3": "Free-to-Play-To-Earn ",
+    "CARD_TITLE_4": "Truly Personalized",
+    "CARD_TEXT_1": "Events data and funds stored on Smart Contracts can never be altered by anyone, not even Bettery.",
+    "CARD_TEXT_2": "User reputation is a trustless \"proof-of-knowledge\" for businesses paying to engage with “pro” users.",
+    "CARD_TEXT_3": "Start with free Tokens and earn more as your reputations grow in business-made events.",
+    "CARD_TEXT_4": "Create or join in topics that matter to you in public or private rooms, and play risky or risk-free."
   },
 
   "TOKEN_SALE": {
     "TITLE": "Bettery Token Sale",
-    "TEXT": "By joining events, users of all roles earn BET tokens, which can be swapped one-way into BTY tokens at a 1:1 ratio and sold on exchanges. To engage high-profile users, event organizers (Hosts) may purchase and use BTY as rewards for participants in Premium events. BTY and BET are key components of the Bettery tokenomics. Hosts and Investors can purchase BTY through Bettery official Token Sale.",
+    "TEXT": "Bettery users join events for free to earn BET tokens, which can be swapped into BTY tokens and sold on exchanges. To engage high-profile users, Hosts can use BTY as reward for participants in Premium and Pro events. BTY and BET are key components of the Bettery Tokenomy. \n\n",
+    "TEXT_2": "Early Hosts and Investors can purchase BTY through Bettery Token Sale",
     "JOIN_TOKEN_SALE": "Join Token Sale",
     "MORE_ON_BETTERY": "More on Bettery tokenomy",
     "FULL_TOKENOMICS": "Bettery full tokenomics will be launched in:"
@@ -75,21 +85,29 @@
 
   "ROADMAP": {
     "TITLE": "Roadmap",
-    "TEXT_1": "Bettery is designed to be a digital playground for people and brands to build genuine relationships with one another in an exciting, highly personalized way. All our development activities - past, present, and future - are always",
-    "TEXT_2": " available ",
-    "TEXT_3": "to the public.",
-    "DATE_1": "FEB - 2021",
-    "DATE_2": "Q2 - 2021",
-    "DATE_3": "Q3 - 2021",
-    "DATE_4": "Q4 - 2021",
+    "TEXT_1": "All our development activities - past, present, and future - are always available to the public in our detailed ",
+    "TEXT_2": " product roadmap",
+    "TEXT_3": ".",
+    "DATE_1": "Q3 - 2021",
+    "DATE_2": "Q4 - 2021",
+    "DATE_3": "Q1 - 2022",
+    "DATE_4": "Q2 - 2022",
     "ROADMAP_UP_TEXT-1": "Public Prototype",
     "ROADMAP_UP_TEXT-2": "Tokenomics",
     "ROADMAP_UP_TEXT-3": "  Social Media Integration",
     "ROADMAP_UP_TEXT-4": "Mobile Application",
-    "ROADMAP_TEXT-1": "Public prototype: Hosts, Players, and Experts in Public + Private Events.",
-    "ROADMAP_TEXT-2": "User Reputation system. Tokenomy. Premium Events.",
-    "ROADMAP_TEXT-3": "Mobile Web App. Advisor & Moderator roles. Pro Events.",
-    "ROADMAP_TEXT-4": "Mobile application. Integration to Social Media. Live Events."
+    "ROADMAP_TEXT-1": "Mobile Web App.",
+    "ROADMAP_TEXT-1.1": "Referral Program.",
+    "ROADMAP_TEXT-1.2": "BTY Token Sale.",
+    "ROADMAP_TEXT-2": "Premium & Pro Events.",
+    "ROADMAP_TEXT-2.1": "Live Streaming Content.",
+    "ROADMAP_TEXT-2.2": "BET - BTY Swap.",
+    "ROADMAP_TEXT-3": "Advisor & Moderator.",
+    "ROADMAP_TEXT-3.1": "Appealing in Events.",
+    "ROADMAP_TEXT-3.2": "Smart Contracts Audit.",
+    "ROADMAP_TEXT-4": "Mobile Application.",
+    "ROADMAP_TEXT-4.1": "Fiat in Pro Events.",
+    "ROADMAP_TEXT-4.2": "Revenue Generation."
   },
 
   "TEAM": {
@@ -137,9 +155,9 @@
   },
 
   "FORM": {
-    "TITLE": "Book a Demo",
-    "TEXT": "Are you an influencer looking to boost engagement with followers with every piece of your content? We’ll show you how, hands-on based right on your content.",
-    "FIRST_NAME": "First Name",
+    "TITLE": "Are you an Influencer?",
+    "TEXT": "We’ll show you how to boost engagement with your followers with every piece of your content, hands-on based right on what matters to you.",
+    "FIRST_NAME": "How we may call you?",
     "LAST_NAME": "Last Name",
     "EMAIL" : "Email",
     "PHONE_NUMBER": "Best way to contact you (Telegram, Whatsapp, etc.)",
