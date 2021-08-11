@@ -9,7 +9,7 @@
 
         <form action="#" [formGroup]="form" (ngSubmit)="sendForm(form, $event)">
           <div class="row">
-            <div class="form-group col-6">
+            <div class="form-group col-12">
               <label for="firstName">{{'FORM.FIRST_NAME' | translate}}</label>
               <input type="text" formControlName="firstName" name="firstName" class="form-control"
                      [ngClass]="submitted && f.firstName.errors && 'validator'"
@@ -19,30 +19,22 @@
               </div>
             </div>
 
-            <div class="form-group col-6">
-              <label for="lastName">{{'FORM.LAST_NAME' | translate}}</label>
-              <input type="text" formControlName="lastName" name="lastName" class="form-control"
-                     [ngClass]="submitted && f.lastName.errors && 'validator'" id="lastName"
-                     placeholder="{{'FORM.LAST_NAME' | translate}}">
-              <div *ngIf="submitted && f.lastName.errors">
-                <small *ngIf="f.lastName.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
-              </div>
-            </div>
+
           </div>
 
-          <div class="form-group">
-            <label for="email">{{'FORM.EMAIL' | translate}}</label>
-            <input type="email" formControlName="email" name="email" class="form-control"
-                   [ngClass]="submitted && f.email.errors && 'validator'" id="email" placeholder="{{'FORM.EMAIL' | translate}}">
-            <div *ngIf="submitted && f.email.errors">
-              <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
-              <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' | translate}}</small>
-            </div>
-          </div>
+<!--          <div class="form-group">-->
+<!--            <label for="email">{{'FORM.EMAIL' | translate}}</label>-->
+<!--            <input type="email" formControlName="email" name="email" class="form-control"-->
+<!--                   [ngClass]="submitted && f.email.errors && 'validator'" id="email" placeholder="{{'FORM.EMAIL' | translate}}">-->
+<!--            <div *ngIf="submitted && f.email.errors">-->
+<!--              <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>-->
+<!--              <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' | translate}}</small>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="form-group">
             <label for="phone">{{'FORM.PHONE_NUMBER' | translate}}</label>
-            <input type="number" formControlName="phoneNumber" name="phoneNumber" class="form-control"
-                   [ngClass]="submitted && f.phoneNumber.errors && 'validator'" id="phone" placeholder="{{'FORM.PHONE_NUMBER' | translate}}">
+            <input type="text" formControlName="phoneNumber" name="phoneNumber" class="form-control"
+                   [ngClass]="submitted && f.phoneNumber.errors && 'validator'" id="phone" placeholder="{{'FORM.EMAIL' | translate}}">
             <div *ngIf="submitted && f.phoneNumber.errors">
               <small *ngIf="f.phoneNumber.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
             </div>
@@ -51,7 +43,7 @@
           <div class="form-group">
             <label for="firm">{{'FORM.FIRM' | translate}}</label>
             <input type="text" formControlName="firm" name="firm" class="form-control"
-                   [ngClass]="submitted && f.firm.errors && 'validator'" id="firm" placeholder="{{'FORM.FIRM' | translate}} (optional)">
+                   [ngClass]="submitted && f.firm.errors && 'validator'" id="firm" placeholder="Phone Number">
             <div *ngIf="submitted && f.firm.errors">
               <small *ngIf="f.firm.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
             </div>

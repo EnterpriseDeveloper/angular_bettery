@@ -9,14 +9,17 @@
     "ITEM_7": "Business Demo",
     "ITEM_8": "Blog",
     "ITEM_9": "FAQ",
-    "ITEM_10": "Join us on Telegram",
-    "ITEM_11": "Docs"
+    "ITEM_10": "Telegram",
+    "ITEM_11": "Docs",
+    "ITEM_12": "Twitter",
+    "ITEM_13": "Linkedin"
+
   },
 
   "HEADER": {
     "TITLE_PART_1": "Bring Everyone Together",
     "TITLE_PART_2": "on what matters to you",
-    "TEXT": "Bet in future events made for your friends or community. Host your own topics and invite anyone to bet their opinions or vote for the final truth.",
+    "TEXT": "Feature an event that matters to your friends or community, and let everyone bet or say the truth.",
     "HEADER_QUESTION": "What will be the weather tomorrow in ",
     "QUESTION_END": "Saigon?",
     "BUTTON_TEXT": "Create Event",
@@ -82,21 +85,29 @@
 
   "ROADMAP": {
     "TITLE": "Roadmap",
-    "TEXT_1": "Bettery is designed to be a digital playground for people and brands to build genuine relationships with one another in an exciting, highly personalized way. All our development activities - past, present, and future - are always",
-    "TEXT_2": " available ",
-    "TEXT_3": "to the public.",
-    "DATE_1": "FEB - 2021",
-    "DATE_2": "Q2 - 2021",
-    "DATE_3": "Q3 - 2021",
-    "DATE_4": "Q4 - 2021",
+    "TEXT_1": "All our development activities - past, present, and future - are always available to the public in our detailed ",
+    "TEXT_2": " product roadmap",
+    "TEXT_3": ".",
+    "DATE_1": "Q3 - 2021",
+    "DATE_2": "Q4 - 2021",
+    "DATE_3": "Q1 - 2022",
+    "DATE_4": "Q2 - 2022",
     "ROADMAP_UP_TEXT-1": "Public Prototype",
     "ROADMAP_UP_TEXT-2": "Tokenomics",
     "ROADMAP_UP_TEXT-3": "  Social Media Integration",
     "ROADMAP_UP_TEXT-4": "Mobile Application",
-    "ROADMAP_TEXT-1": "Public prototype: Hosts, Players, and Experts in Public + Private Events.",
-    "ROADMAP_TEXT-2": "User Reputation system. Tokenomy. Premium Events.",
-    "ROADMAP_TEXT-3": "Mobile Web App. Advisor & Moderator roles. Pro Events.",
-    "ROADMAP_TEXT-4": "Mobile application. Integration to Social Media. Live Events."
+    "ROADMAP_TEXT-1": "Mobile Web App.",
+    "ROADMAP_TEXT-1.1": "Referral Program.",
+    "ROADMAP_TEXT-1.2": "BTY Token Sale.",
+    "ROADMAP_TEXT-2": "Premium & Pro Events.",
+    "ROADMAP_TEXT-2.1": "Live Streaming Content.",
+    "ROADMAP_TEXT-2.2": "BET - BTY Swap.",
+    "ROADMAP_TEXT-3": "Advisor & Moderator.",
+    "ROADMAP_TEXT-3.1": "Appealing in Events.",
+    "ROADMAP_TEXT-3.2": "Smart Contracts Audit.",
+    "ROADMAP_TEXT-4": "Mobile Application.",
+    "ROADMAP_TEXT-4.1": "Fiat in Pro Events.",
+    "ROADMAP_TEXT-4.2": "Revenue Generation."
   },
 
   "TEAM": {
@@ -144,9 +155,9 @@
   },
 
   "FORM": {
-    "TITLE": "Book a Demo",
-    "TEXT": "Are you an influencer looking to boost engagement with followers with every piece of your content? We’ll show you how, hands-on based right on your content.",
-    "FIRST_NAME": "First Name",
+    "TITLE": "Are you an Influencer?",
+    "TEXT": "We’ll show you how to boost engagement with your followers with every piece of your content, hands-on based right on what matters to you.",
+    "FIRST_NAME": "How we may call you?",
     "LAST_NAME": "Last Name",
     "EMAIL" : "Email",
     "PHONE_NUMBER": "Best way to contact you (Telegram, Whatsapp, etc.)",
