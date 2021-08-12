@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
 import {Answer} from '../../../../models/Answer.model';
@@ -7,10 +7,8 @@ import {PostService} from '../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RegistrationComponent} from '../../../registration/registration.component';
-import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import {Coins} from '../../../../models/Coins.model';
 import {EventModel} from '../../../../models/Event.model';
-import {$e} from 'codelyzer/angular/styles/chars';
 
 @Component({
   selector: 'app-event-feed-mobile',
@@ -276,10 +274,6 @@ export class EventFeedMobileComponent implements OnDestroy {
       this.filterMode = data.showEnd;
     }
 
-  }
-
-  openCreateEventModal() {
-    this.modalService.open(EventsTemplatesDesktopComponent, {centered: true});
   }
 
   mobileCheck() {

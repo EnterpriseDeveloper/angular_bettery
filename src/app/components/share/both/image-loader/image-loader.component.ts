@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import GradientJSON from '../../../../files/gradients.json';
+import GradientJSON from '../../../../../files/gradients.json';
 import {FormGroup} from '@angular/forms';
 
 @Component({

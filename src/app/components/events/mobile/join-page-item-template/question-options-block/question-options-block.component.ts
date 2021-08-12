@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Event} from '../../../../../models/Event.model';
 import {User} from '../../../../../models/User.model';
 
@@ -7,14 +7,9 @@ import {User} from '../../../../../models/User.model';
   templateUrl: './question-options-block.component.html',
   styleUrls: ['./question-options-block.component.sass']
 })
-export class QuestionOptionsBlockComponent implements OnInit {
+export class QuestionOptionsBlockComponent{
   @Input()question: Event;
   @Input('userData')userData: User;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   makeShortenStr(str: string, howMuch: number): string {
     return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
