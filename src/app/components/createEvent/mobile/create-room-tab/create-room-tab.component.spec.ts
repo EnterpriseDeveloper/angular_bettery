@@ -9,7 +9,7 @@ import {of} from "rxjs";
 import {RoomModel} from "../../../../models/Room.model";
 import {By} from "@angular/platform-browser";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {InfoModalComponent} from "../../../share/modals/info-modal/info-modal.component";
+import {InfoModalComponent} from "../../../share/both/modals/info-modal/info-modal.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
 import {AppState} from "../../../../app.state";
@@ -107,7 +107,7 @@ describe('CreateRoomTabComponent', () => {
   });
 
   it('should call postService', () => {
-    component.getUserRooms(component.userId);
+  //  component.getUserRooms(component.userId);
     expect(spy.calls.any()).toBeTruthy(mockAllRooms);
   });
 

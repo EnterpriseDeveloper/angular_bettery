@@ -5,11 +5,11 @@ import { AppState } from '../../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../../share/modals/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../../share/both/modals/info-modal/info-modal.component';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 import {User} from '../../../../../models/User.model';
 import { RegistrationComponent } from '../../../../registration/registration.component';
-import {JustANoteModalComponent} from '../../../../share/modals/just-note-modal/just-anote-modal.component';
+import {JustANoteModalComponent} from '../../../../share/mobile/just-note-modal/just-anote-modal.component';
 
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import GradientJSON from '../../../../../files/gradients.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component'
+import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component'
 import { PostService } from '../../../../services/post.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';

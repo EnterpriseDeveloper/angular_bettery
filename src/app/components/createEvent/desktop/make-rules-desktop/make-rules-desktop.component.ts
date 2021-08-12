@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbTimepickerConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/modals/info-modal/info-modal.component';
+import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component';
 
 
 type Time = { name: string, date: any, value: number };

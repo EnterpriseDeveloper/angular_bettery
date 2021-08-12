@@ -4,9 +4,8 @@ import { PostService } from '../../services/post.service';
 import { Subscription } from 'rxjs';
 import USDTToken from '../../../../build/contracts/IERC20.json';
 import TokenSale from '../../../../build/contracts/QuizeTokenSale.json';
-import { environment } from '../../../environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MetaMaskModalComponent } from '../share/modals/meta-mask-modal/meta-mask-modal.component';
+import { MetaMaskModalComponent } from '../share/desktop/meta-mask-modal/meta-mask-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {TokenSaleInfo} from '../../models/TokenSaleInfo.model';
 

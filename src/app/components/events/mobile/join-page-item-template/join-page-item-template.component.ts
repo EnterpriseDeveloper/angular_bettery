@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Subscription} from 'rxjs';
 import {Event} from '../../../../models/Event.model';
@@ -6,7 +6,6 @@ import {Answer} from '../../../../models/Answer.model';
 import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
-import {link} from 'fs';
 
 
 @Component({
