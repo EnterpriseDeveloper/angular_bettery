@@ -92,7 +92,7 @@
     "ROADMAP_UP_TEXT-1": "Public Prototype",
     "ROADMAP_UP_TEXT-2": "Tokenomics",
     "ROADMAP_UP_TEXT-3": "  Social Media Integration",
-    "ROADMAP_UP_TEXT-4": "Mobile Application",
+    "ROADMAP_UP_TEXT-4": "Business Revenue",
     "ROADMAP_TEXT-1": "Mobile Web App.",
     "ROADMAP_TEXT-1.1": "Referral Program.",
     "ROADMAP_TEXT-1.2": "BTY Token Sale.",
@@ -128,13 +128,13 @@
     "SIM": {
       "NAME": "Sim",
       "STATUS": "Business Analyst, Founding Team",
-      "EXPERTISE": "Know what users want financially and psychologically based on his previous experience running a mining farm and moderating Facebook content.",
+      "EXPERTISE": "Know what users want based on his previous experience running a mining farm and moderating Facebook content.",
       "PASSION": "Countrysides, Yachts. "
     },
     "MAXIM": {
       "NAME": "Maxim",
       "STATUS": "Development Lead, Founding Team",
-      "EXPERTISE": "Give life to ideas and designs mapped out on graphics and slides with the power of coding. ",
+      "EXPERTISE": "Give life to ideas and designs mapped out on graphics editors and Powerpoint slides with the power of coding.",
       "PASSION": "Blockchain Programming."
     },
     "SHANE": {
@@ -152,7 +152,7 @@
     "KEN": {
       "NAME": "Ken",
       "STATUS": "Legal Advisor",
-      "EXPERTISE": "Evolving regulations of blockchain and cryptocurrency, able to turn risky into riskless and bring forth its value to the public.",
+      "EXPERTISE": " Evolving regulations of blockchain and cryptocurrency, turning risky into riskless and bring forth its value to the public.",
       "PASSION": "World Affairs, Video Games"
     }
   },
@@ -171,8 +171,8 @@
   "FOOTER": {
     "TITLE_1": "About Bettery",
     "TITLE_2": "Stay in touch",
-    "TEXT_1": "Bettery is a social pool betting platform for friends and online communities to have fun on what matters to you. Through betting events, collective social knowledge is created for businesses, influencers, and advertisers, while users earn from their opinions.",
-    "TEXT_2": "Subscribe to our monthly newsletter. No spam. No ads. Just valuable content that’s a pleasure to read.",
+    "TEXT_1": "Bettery is a social pool betting platform for friends and online communities to have fun on what matters to you. Through betting events, collective social knowledge is created for businesses and influencers, while users earn from their opinions.",
+    "TEXT_2": "No spam. No ads. Just valuable content that’s a pleasure to read.",
     "BUTTON_TEXT": "Subscribe",
     "BUTTON_TEXT_2": "You're in!",
     "PLACE_HOLDER": "Enter email address"
