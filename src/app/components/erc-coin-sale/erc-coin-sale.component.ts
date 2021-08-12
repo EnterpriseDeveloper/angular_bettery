@@ -220,5 +220,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
 
   onSwiper($event: any) {
     this.slideIndex = $event.activeIndex;
+    $event.$wrapperEl[0].click()
+
   }
 }
