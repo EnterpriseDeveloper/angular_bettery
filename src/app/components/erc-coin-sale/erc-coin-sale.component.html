@@ -4,12 +4,13 @@
       <div class="logo" routerLink="/"></div>
       <div class="nav-list">
         <ul>
-          <li><a href="#usage" pageScrollOffset="200" pageScroll>Token Usage</a></li>
-          <li><a href="#Tokenomics" pageScrollOffset="200" pageScroll>Bettery Tokenomics</a></li>
+          <li><a routerLink="../" pageScrollOffset="200" pageScroll>Back to Bettery.io</a></li>
+          <li><a href="#usage" pageScrollOffset="200" pageScroll>Token Utilities</a></li>
+          <li><a href="#Tokenomics" pageScrollOffset="200" pageScroll>Tokenomics</a></li>
           <li><a href="#Buy" pageScrollOffset="200" pageScroll>Buy BTY</a></li>
           <li><a href="#Roadmap" pageScrollOffset="200" pageScroll>Roadmap</a></li>
-          <li class="mr-5"><a href="#Resources" pageScroll>Bettery Resources</a></li>
-          <li class=" ar-img position-relative"><a routerLink="/join">Bettery Platform</a></li>
+          <li class="mr-5"><a href="#Resources" pageScroll>Resources</a></li>
+          <li class=" ar-img position-relative" pageScroll><a routerLink="/join">LAUNCH APP</a></li>
         </ul>
       </div>
       <div class="nav-icon">
@@ -23,6 +24,9 @@
 
         <div class="position-relative mr-2">
           <a href="https://friendlybets.medium.com/" target="_blank" class="nav-img-letter"></a>
+        </div>
+        <div class="position-relative mr-2">
+          <a href="https://twitter.com/BetteryOfficial" target="_blank" class="nav-img-twitter"></a>
         </div>
       </div>
       <div class="position-relative">
@@ -38,24 +42,27 @@
           <div class="position-relative mr-2">
             <a href="https://friendlybets.medium.com/" target="_blank" class="nav-img-letter"></a>
           </div>
+          <div class="position-relative mr-2">
+            <a href="https://twitter.com/BetteryOfficial" target="_blank" class="nav-img-twitter"></a>
+          </div>
         </div>
         <div ngbDropdown class="mobile-menu">
           <div class="mob-menu-img" id="dropdownBasic1" ngbDropdownToggle></div>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="correct-left">
-            <a class="mb-4" pageScrollOffset="100" href="#usage" pageScroll ngbDropdownItem>Token Usage</a>
+            <a class="mb-4" pageScrollOffset="100" routerLink="../" pageScroll ngbDropdownItem>Back to Bettery.io</a>
 
-            <a class="mb-4" pageScrollOffset="100" pageScroll href="#Tokenomics" pageScroll ngbDropdownItem>Bettery
-              Tokenomics</a>
+            <a class="mb-4" pageScrollOffset="100" href="#usage" pageScroll ngbDropdownItem>Token Utilities</a>
+
+            <a class="mb-4" pageScrollOffset="100" pageScroll href="#Tokenomics" pageScroll ngbDropdownItem>Tokenomics</a>
 
             <a class="mb-4" pageScrollOffset="100" pageScroll href="#Buy" pageScroll ngbDropdownItem>Buy BTY</a>
 
 
             <a class="mb-4" pageScrollOffset="100" pageScroll href="#Roadmap" pageScroll ngbDropdownItem>Roadmap</a>
 
-            <a class="mb-4" pageScrollOffset="100" pageScroll href="#Resources" pageScroll ngbDropdownItem>Bettery
-              Resources</a>
+            <a class="mb-4" pageScrollOffset="100" pageScroll href="#Resources" pageScroll ngbDropdownItem>Resources</a>
 
-            <a class="mb-4 mob-platform" routerLink="/join" ngbDropdownItem>Bettery Platform</a>
+            <a class="mb-4 mob-platform" routerLink="/join" ngbDropdownItem>LAUNCH APP</a>
           </div>
         </div>
       </div>
@@ -95,8 +102,8 @@
                         <!--                        </div>-->
 
                         <div class="font-s">
-                          <span>0 BTY</span> / 70,000,000 BTY
-                          (0%)
+                          <span>0 BTY</span> / 25,000,000 BTY
+                          <span style="font-weight: 400;color: #fff">(0%)</span>
                         </div>
 
                       </div>
@@ -104,7 +111,7 @@
                     <div class=" col-12 col-sm-10 col-xl-8 token-left">
                       <h4 class="mb-4">BTY Token left</h4>
                       <!--                      <div class="tk-left">{{tokensaleInfo?.balance}} BTY</div>-->
-                      <div class="tk-left">70,000,000 BTY</div>
+                      <div class="tk-left">25,000,000 BTY</div>
                     </div>
                     <div class=" col-10 col-xl-8 main-button">
                       <!--                      <button>BUY BTY NOW</button>-->
@@ -125,8 +132,8 @@
                         </div>
                         <div class="ml-2">
                           <h3>HOW BTY TOKEN IS USED</h3>
-                          <p>Early investors benefit from increasing BTY demand for Token Utilities.
-                            Learn the social science behind Bettery from our <a href="#">resources.</a>
+                          <p>Early investors benefit from increasing BTY demand from Advertisers, Influencers, and
+                            Businesses. Learn why from our <a href="#">resources.</a>
                           </p>
                         </div>
                       </div>
@@ -136,10 +143,9 @@
                     <div class="col-12 col-md-10 col-xl-4 bottom-item">
                       <div class=" item-color-1">
                         <h4>Advertisers</h4>
-                        <p>Embrace CPE marketing: promote to a highly concentrated target audience that only cost once
-                          they
-                          commit
-                          your target action of engagement.
+                        <p>Embrace CPE marketing: promote to a highly targeted audience that only cost once they commit
+                          your target action - which they will.
+
                         </p>
                       </div>
                       <div class="gramophone-img white6-img-1"></div>
@@ -180,76 +186,76 @@
                     <ul class="tokenomics-list">
                       <li>
                         <span style="color: #FDD92A">what is BTY?</span><br>
-                        Bettery’s unique currency that gives everyone equal opportunities to create collective knowledge
-                        and
-                        earn.
+                        An extra reward for event participants, spent by the event Host to engage user community.
                       </li>
                       <li>
                         <span style="color: #FF9900">BTY supply</span><br>
-                        BTY are converted 1:1 from BET Tokens that users grow through social betting events.
+                        BTY is swapped 1:1 from BET, which users earn from events via wins or minting and use to bet.
+
                       </li>
                       <li>
                         <span style="color: #54DD96">BTY demand</span><br>
-                        Businesses, advertisers, and influencers buy BTY to access Bettery community through paid
-                        events.
+                        Businesses, advertisers, and influencers buy BTY to access Bettery community via paid events.
+
                       </li>
                     </ul>
                   </div>
                 </div>
 
-                <div class="timerr row">
-                  <div class="title-time col-12 col-xl-6">
-                    <h4>Bettery full tokenomics
-                      will be launched in:</h4>
-                    <a href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
-                      class="learMore-li" target="_blank">
-                      Learn tokenomics details >></a>
-                  </div>
+                <!--                <div class="timerr row">-->
+                <!--                  <div class="title-time col-12 col-xl-6">-->
+                <!--                    <h4>Bettery full tokenomics-->
+                <!--                      will be launched in:</h4>-->
+                <!--                    <a-->
+                <!--                      href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"-->
+                <!--                      class="learMore-li" target="_blank">-->
+                <!--                      Learn tokenomics details >></a>-->
+                <!--                  </div>-->
 
-                  <div class="col-12 col-xl-6">
-                    <div class="time-wrap">
-                      <div id="el-1" class="time-el">
-                        <div style="display: flex; position: relative">
-                          <div class="time-number semi-bg"><span>{{timer?.days[0]}}</span></div>
-                          <div class="time-number semi-bg"><span>{{timer?.days[1]}}</span></div>
-                        </div>
-                      </div>
+                <!--                  <div class="col-12 col-xl-6">-->
+                <!--                    <div class="time-wrap">-->
+                <!--                      <div id="el-1" class="time-el">-->
+                <!--                        <div style="display: flex; position: relative">-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.days[0]}}</span></div>-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.days[1]}}</span></div>-->
+                <!--                        </div>-->
+                <!--                      </div>-->
 
-                      <span class="time-point">:</span>
+                <!--                      <span class="time-point">:</span>-->
 
-                      <div id="el-2" class="time-el">
-                        <div style="display: flex; position: relative">
-                          <div class="time-number semi-bg"><span>{{timer?.hours[0]}}</span></div>
-                          <div class="time-number semi-bg"><span>{{timer?.hours[1]}}</span></div>
-                        </div>
-                      </div>
+                <!--                      <div id="el-2" class="time-el">-->
+                <!--                        <div style="display: flex; position: relative">-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.hours[0]}}</span></div>-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.hours[1]}}</span></div>-->
+                <!--                        </div>-->
+                <!--                      </div>-->
 
-                      <span class="time-point">:</span>
+                <!--                      <span class="time-point">:</span>-->
 
-                      <div id="el-3" class="time-el">
-                        <div style="display: flex; position: relative">
-                          <div class="time-number semi-bg"><span>{{timer?.minutes[0]}}</span></div>
-                          <div class="time-number semi-bg"><span>{{timer?.minutes[1]}}</span></div>
-                        </div>
-                      </div>
+                <!--                      <div id="el-3" class="time-el">-->
+                <!--                        <div style="display: flex; position: relative">-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.minutes[0]}}</span></div>-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.minutes[1]}}</span></div>-->
+                <!--                        </div>-->
+                <!--                      </div>-->
 
-                      <span class="time-point">:</span>
+                <!--                      <span class="time-point">:</span>-->
 
-                      <div id="el-4" class="time-el">
-                        <div style="display: flex; position: relative">
-                          <div class="time-number semi-bg"><span>{{timer?.seconds[0]}}</span></div>
-                          <div class="time-number semi-bg"><span>{{timer?.seconds[1]}}</span></div>
-                        </div>
-                      </div>
-                    </div>
+                <!--                      <div id="el-4" class="time-el">-->
+                <!--                        <div style="display: flex; position: relative">-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.seconds[0]}}</span></div>-->
+                <!--                          <div class="time-number semi-bg"><span>{{timer?.seconds[1]}}</span></div>-->
+                <!--                        </div>-->
+                <!--                      </div>-->
+                <!--                    </div>-->
 
-                  </div>
-                  <div><a
-                      href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
-                      target="_blank" class="learMore-li-new">
-                      Learn tokenomics details >></a></div>
+                <!--                  </div>-->
+                <!--                  <div><a-->
+                <!--                    href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"-->
+                <!--                    target="_blank" class="learMore-li-new">-->
+                <!--                    Learn tokenomics details >></a></div>-->
 
-                </div>
+                <!--                </div>-->
               </section>
             </div>
             <section id="Buy" class="input-box">
@@ -260,29 +266,34 @@
                       <div class="test-img test-img-buy"></div>
                       <h3>HOW TO BUY BTY AND WHY?</h3>
                     </div>
-                    <p>BTY assigns real-world value to opinions. As Bettery grows, demand for more engagements and
-                      opinions
-                      goes
-                      up
-                      while BTY supply is deccelerated, increasing its value for Users and Investors.
-                    </p>
+                    <!--                    <p>BTY assigns real-world value to opinions. As Bettery grows, demand for more engagements and-->
+                    <!--                      opinions-->
+                    <!--                      goes-->
+                    <!--                      up-->
+                    <!--                      while BTY supply is deccelerated, increasing its value for Users and Investors.-->
+                    <!--                    </p>-->
                   </div>
-                  <div class="input-xl input-group">
-                    <input onkeydown="return event.keyCode !== 69" id="buyInput" class="form-control" type="number"
-                      pattern="[0-9]*" placeholder="BTY Sale is Coming Soon" [(ngModel)]="numberOfTokens">
-                    <button class="disabled" [ngStyle]="spinner && {'background': '#a4a4a4'}"
-                      [disabled]="checkValidBtn()" [ngClass]="checkValidBtn() && 'disabled'"
-                      (click)="connectToMetamask()">
-                      <span *ngIf="!spinner" style=" color: #1E1E1E; font-size: 20px">BUY WITH METAMASK</span>
-                      <span *ngIf="spinner" class="d-flex align-items-center">
-                        <span class="spinner spinner--steps icon-spinner img" aria-hidden="true"></span>
-                        <span id="spinner-text">
-                          Processing your request</span>
-                      </span>
-                    </button>
-                    <p class="mt-4"><span>*</span>You will immediately receive BTY to your purchasing address directly.
-                      On mobile, open this page in the MetaMask app browser.
-                    </p>
+                  <!--                  <div class="input-xl input-group">-->
+                  <!--                    <input onkeydown="return event.keyCode !== 69" id="buyInput" class="form-control" type="number"-->
+                  <!--                           pattern="[0-9]*" placeholder="BTY Sale is Coming Soon" [(ngModel)]="numberOfTokens">-->
+                  <!--                    <button class="disabled" [ngStyle]="spinner && {'background': '#a4a4a4'}"-->
+                  <!--                            [disabled]="checkValidBtn()" [ngClass]="checkValidBtn() && 'disabled'"-->
+                  <!--                            (click)="connectToMetamask()">-->
+                  <!--                      <span *ngIf="!spinner" style=" color: #1E1E1E; font-size: 20px">BUY WITH METAMASK</span>-->
+                  <!--                      <span *ngIf="spinner" class="d-flex align-items-center">-->
+                  <!--                        <span class="spinner spinner&#45;&#45;steps icon-spinner img" aria-hidden="true"></span>-->
+                  <!--                        <span id="spinner-text">-->
+                  <!--                          Processing your request</span>-->
+                  <!--                      </span>-->
+                  <!--                    </button>-->
+                  <!--                    <p class="mt-4"><span>*</span>You will immediately receive BTY to your purchasing address directly.-->
+                  <!--                      On mobile, open this page in the MetaMask app browser.-->
+                  <!--                    </p>-->
+                  <!--                  </div>-->
+                  <div>
+                    <div class="bty_sale">
+
+                    </div>
                   </div>
                 </div>
                 <div class="input-right col-12 col-xl-5">
@@ -290,34 +301,37 @@
                     <div class="bettery6-img"></div>
                     <ul>
                       <li><span>Token Specification: <br class="br"></span> <b>ERC20 Utility Token</b></li>
-                      <li><span>Total Supply: <br class="br"> </span> <b>Unlimited</b>, decelerated by community.</li>
-                      <li><span>Left for Sale: <br class="br"> </span>
-                        <b>{{tokensaleInfo?.balance - tokensaleInfo?.tokenSold}} BTY</b>
+                      <li><span>Total Supply: <br class="br"> </span> <b>10,000,000,000</b>, <a href="https://bty.bet/metrics"
+                                                                                                style="color: #fff; text-decoration: underline">minted</a>
+                        by Events.
                       </li>
-                      <li><span>Purchase method: <br class="br"> </span> Directly with <b>Ethereum</b></li>
+                      <li><span>Left for Sale: <br class="br"> </span>
+                        <!--                        <b>{{tokensaleInfo?.balance - tokensaleInfo?.tokenSold}} BTY</b>-->
+                        <b>25,000,000 BTY</b>
+                      </li>
                       <li><span>Token Price: <br class="br"> </span> <b>0.1 USD</b> for <b>1 BTY</b></li>
                     </ul>
-                    <div class="input-sm">
-                      <input onkeydown="return event.keyCode !== 69" [(ngModel)]="numberOfTokens" type="number"
-                        pattern="[0-9]*" placeholder="BTY Sale is Coming Soon">
-                      <button style="padding : 14px 50px 15px 18px"
-                        [ngStyle]="spinner && {'background': '#a4a4a4', 'padding' : '19px 50px 18px 18px'}"
-                        [disabled]="checkValidBtn()" [ngClass]="checkValidBtn() && 'disabled'"
-                        (click)="connectToMetamask()" class="btn-2 disabled">
-                        <span class="d-flex justify-content-center">
-                          <span *ngIf="!spinner" style=" color: #1E1E1E; font-size: 20px" class="fs-input2">BUY WITH
-                            METAMASK</span>
-                          <span *ngIf="spinner" class="d-flex align-items-center">
-                            <span class="spinner spinner--steps icon-spinner img" aria-hidden="true"></span>
-                            <span id="spinner-text2">
-                              Processing your request</span>
-                          </span>
-                        </span>
-                      </button>
-                      <p style="color: white" class="mt-3"><span style="color: #FFD300">*</span>You will immediately
-                        receive BTY to your purchasing address directly. On mobile, open this page in the MetaMask app
-                        browser.</p>
-                    </div>
+                    <!--                    <div class="input-sm">-->
+                    <!--                      <input onkeydown="return event.keyCode !== 69" [(ngModel)]="numberOfTokens" type="number"-->
+                    <!--                             pattern="[0-9]*" placeholder="BTY Sale is Coming Soon">-->
+                    <!--                      <button style="padding : 14px 50px 15px 18px"-->
+                    <!--                              [ngStyle]="spinner && {'background': '#a4a4a4', 'padding' : '19px 50px 18px 18px'}"-->
+                    <!--                              [disabled]="checkValidBtn()" [ngClass]="checkValidBtn() && 'disabled'"-->
+                    <!--                              (click)="connectToMetamask()" class="btn-2 disabled">-->
+                    <!--                        <span class="d-flex justify-content-center">-->
+                    <!--                          <span *ngIf="!spinner" style=" color: #1E1E1E; font-size: 20px" class="fs-input2">BUY WITH-->
+                    <!--                            METAMASK</span>-->
+                    <!--                          <span *ngIf="spinner" class="d-flex align-items-center">-->
+                    <!--                            <span class="spinner spinner&#45;&#45;steps icon-spinner img" aria-hidden="true"></span>-->
+                    <!--                            <span id="spinner-text2">-->
+                    <!--                              Processing your request</span>-->
+                    <!--                          </span>-->
+                    <!--                        </span>-->
+                    <!--                      </button>-->
+                    <!--                      <p style="color: white" class="mt-3"><span style="color: #FFD300">*</span>You will immediately-->
+                    <!--                        receive BTY to your purchasing address directly. On mobile, open this page in the MetaMask app-->
+                    <!--                        browser.</p>-->
+                    <!--                    </div>-->
                   </div>
                 </div>
               </div>
@@ -337,29 +351,37 @@
               <div class="road-map-warp row">
                 <div class="col-12 col-lg-6 col-xl-3 road-item-active">
                   <div class="road-map-item">
-                    <span id="active2" class="mb-2">FEB - 2021</span>
-                    <p>Public prototype: Hosts, Players, and Experts in Public + Private Events.</p>
-                  </div>
-                </div>
-
-                <div class="col-12 col-lg-6 col-xl-3">
-                  <div class="road-map-item">
-                    <span class="mb-2">Q2 - 2021</span>
-                    <p>User Reputation system. Tokenomy. Premium Events.</p>
-                  </div>
-                </div>
-
-                <div class="col-12 col-lg-6 col-xl-3">
-                  <div class="road-map-item">
-                    <span class="mb-2">Q3 - 2021</span>
-                    <p>Mobile Web App. Advisor & Moderator roles. Pro Events.</p>
+                    <span id="active2" class="mb-2">Q3 - 2021</span>
+                    <p class="mar_t_15">Mobile Web App.</p>
+                    <p>Referral Program.</p>
+                    <p>BTY Token Sale.</p>
                   </div>
                 </div>
 
                 <div class="col-12 col-lg-6 col-xl-3">
                   <div class="road-map-item">
                     <span class="mb-2">Q4 - 2021</span>
-                    <p>Mobile application. Integration to Social Media. Live Events.</p>
+                    <p class="mar_t_15">Premium & Pro Events.</p>
+                    <p>Live Streaming Content.</p>
+                    <p>BET - BTY Swap.</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6 col-xl-3">
+                  <div class="road-map-item">
+                    <span class="mb-2">Q1 - 2022</span>
+                    <p class="mar_t_15">Advisor & Moderator.</p>
+                    <p>Appealing in Events.</p>
+                    <p>Smart Contracts Audit.</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6 col-xl-3">
+                  <div class="road-map-item">
+                    <span class="mb-2">Q2 - 2022</span>
+                    <p class="mar_t_15">Mobile Application.</p>
+                    <p>Fiat in Pro Events.</p>
+                    <p>Revenue Generation.</p>
                   </div>
                 </div>
 
@@ -369,26 +391,10 @@
                 <ng-template swiperSlide>
                   <div class="col-12 col-lg-6 col-xl-3 road-item-active">
                     <div class="road-map-item">
-                      <span id="active" class="mb-2">FEB - 2021</span>
-                      <p>Public prototype: Hosts, Players, and Experts in Public + Private Events.</p>
-                    </div>
-                  </div>
-                </ng-template>
-
-                <ng-template swiperSlide>
-                  <div class="col-12">
-                    <div class="road-map-item">
-                      <span class="mb-2">Q2 - 2021</span>
-                      <p>User Reputation system. Tokenomy. Premium Events.</p>
-                    </div>
-                  </div>
-                </ng-template>
-
-                <ng-template swiperSlide>
-                  <div class="col-12">
-                    <div class="road-map-item">
-                      <span class="mb-2">Q3 - 2021</span>
-                      <p>Mobile Web App. Advisor & Moderator roles. Pro Events.</p>
+                      <span id="active" class="mb-2">Q3 - 2021</span>
+                      <p class="mar_t_15">Mobile Web App.</p>
+                      <p>Referral Program.</p>
+                      <p>BTY Token Sale.</p>
                     </div>
                   </div>
                 </ng-template>
@@ -397,7 +403,31 @@
                   <div class="col-12">
                     <div class="road-map-item">
                       <span class="mb-2">Q4 - 2021</span>
-                      <p>Mobile application. Integration to Social Media. Live Events.</p>
+                      <p class="mar_t_15">Premium & Pro Events.</p>
+                      <p>Live Streaming Content.</p>
+                      <p>BET - BTY Swap.</p>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <ng-template swiperSlide>
+                  <div class="col-12">
+                    <div class="road-map-item">
+                      <span class="mb-2">Q1 - 2022</span>
+                      <p class="mar_t_15">Advisor & Moderator.</p>
+                      <p>Appealing in Events.</p>
+                      <p>Smart Contracts Audit.</p>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <ng-template swiperSlide>
+                  <div class="col-12">
+                    <div class="road-map-item">
+                      <span class="mb-2">Q2 - 2022</span>
+                      <p class="mar_t_15">Mobile Application.</p>
+                      <p>Fiat in Pro Events.</p>
+                      <p>Revenue Generation.</p>
                     </div>
                   </div>
                 </ng-template>
@@ -406,10 +436,13 @@
 
               <div class="pagin">
                 <ul>
-                  <li [ngClass]="slideIndex === 0 ? 'activeSlide' : ''"></li>
-                  <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>
-                  <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>
-                  <li [ngClass]="slideIndex === 3 ? 'activeSlide' : ''"></li>
+                  <li [class.activeSlide]="slideIndex == 0 "></li>
+                  <li [class.activeSlide]="slideIndex == 1 "></li>
+                  <li [class.activeSlide]="slideIndex == 2 "></li>
+                  <li [class.activeSlide]="slideIndex == 3 "></li>
+<!--                  <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>-->
+<!--                  <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>-->
+<!--                  <li [ngClass]="slideIndex === 3 ? 'activeSlide' : ''"></li>-->
                 </ul>
               </div>
 
@@ -426,14 +459,31 @@
                     <div class="test-img  test-img-resources"></div>
                     <h2>Bettery Resources</h2>
                   </div>
-                  <p class="p-60">Instead of a lengthy, brain-numbing whitepaper filled with marketing bluffs, we cover
-                    all info
-                    about
-                    Bettery and BTY tokens through meaningful articles that’ll give you a pleasant read.</p>
+                  <!--                  <p class="p-60">Instead of a lengthy, brain-numbing whitepaper filled with marketing bluffs, we cover-->
+                  <!--                    all info-->
+                  <!--                    about-->
+                  <!--                    Bettery and BTY tokens through meaningful articles that’ll give you a pleasant read.</p>-->
                   <div class="res-icon-wrap row">
                     <div class="icon-set col-6 col-md-3">
-                      <div class="group-world-img"></div>
-                      <a routerLink="/join">Platform</a>
+                      <div class="group-document-img"></div>
+                      <a href="https://docs.bettery.io" target="_blank">Documents</a>
+                    </div>
+                    <div class="icon-set col-6 col-md-3">
+                      <div class="group-document-img"></div>
+                      <a href="https://bty.bet/whitepaper" target="_blank">Whitepaper</a>
+                    </div>
+                    <div class="icon-set col-6 col-md-3">
+                      <div class="group-document-img"></div>
+                      <a href="https://bty.bet/onepager" target="_blank">One Pager</a>
+                    </div>
+                    <div class="icon-set col-6 col-md-3">
+                      <div class="group-document-img"></div>
+                      <a href="https://bty.bet/pitch" target="_blank">Pitch Deck</a>
+                    </div>
+
+                    <div class="icon-set col-6 col-md-3">
+                      <div class="group-twitter-img"></div>
+                      <a href="https://twitter.com/BetteryOfficial" target="_blank">Twitter</a>
                     </div>
                     <div class="icon-set col-6 col-md-3">
                       <div class="group-letter-img"></div>
@@ -449,31 +499,39 @@
                       <div class="group-mail-img"></div>
                       <a href="mailto:hello@bettery.io" target="_blank">Email</a>
                     </div>
+
+
                   </div>
                 </div>
 
                 <div class="col-12 col-xl-6">
+                  <div class="from-bettery_blog">
+                    <h3>FROM BETTERY BLOG</h3>
+                  </div>
                   <ul>
                     <li>
                       <a href="https://friendlybets.medium.com/is-betting-gambling-an-objective-look-7350328125e7"
-                        target="_blank">
+                         target="_blank">
                         Not Gambling: Bettery Social Betting is Fun and Risk-Free
                       </a>
                     </li>
                     <li>
-                      <a href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-1-why-your-opinion-matters-cf0cd384def8"
+                      <a
+                        href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-1-why-your-opinion-matters-cf0cd384def8"
                         target="_blank">
                         How Bettery Enables Everyone to Sell Their Knowledge
                       </a>
                     </li>
                     <li>
-                      <a href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-2-play-your-way-earn-your-way-4252acbfae21"
+                      <a
+                        href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-2-play-your-way-earn-your-way-4252acbfae21"
                         target="_blank">
                         Bettery User Journey: Choose Your Favorite Role, Grow Reputation, and Earn
                       </a>
                     </li>
                     <li>
-                      <a href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
+                      <a
+                        href="https://friendlybets.medium.com/from-social-betting-to-collective-knowledge-part-3-bettery-tokenomy-86924595febb"
                         target="_blank">
                         How Bettery Grows the Value of BTY Organically: Bettery Tokenomics Explained
                       </a>
@@ -482,33 +540,46 @@
                 </div>
               </div>
               <div class="footer row">
-                <div class="footer-logo-img col-12 col-md-2">
-                  <a class="logoLink" href="https://www.bettery.io" target="_blank"></a>
+                <div>
+                  <div class="footer-logo-img col-12 col-md-2">
+                    <a class="logoLink" href="https://www.bettery.io" target="_blank"></a>
+                  </div>
+                  <div class="privacy-policy">
+                    <span routerLink="/privacy-policy">Privacy Policy</span>
+                  </div>
+                  <div class="copyright">
+                    <span>Copyright © 2021 Bettery. All Rights Reserved</span>
+                  </div>
                 </div>
                 <div class="footer-middle col-12 col-md-4">
                   <h4>About Us</h4>
                   <p>Bettery is a social pool betting platform for friends and online communities to have fun on what
-                    matters
-                    to
-                    you. Through betting events, collective social knowledge is created for businesses, influencers, and
-                    advertisers, while users earn from their opinions.</p>
+                    matters to you. Through betting events, collective social knowledge is created for businesses,
+                    influencers, and advertisers, while users earn from their opinions.</p>
                 </div>
                 <div class="footer-subscribe col-12 col-md-4">
                   <h4>Stay in touch</h4>
-                  <p>Subscribe to our monthly newsletter. No spam. No ads.
-                    Just valuable content that’s a pleasure to read.</p>
+                  <p>No spam. No ads. Just valuable content that’s a pleasure to read.</p>
 
                   <form [formGroup]="form" (ngSubmit)="subscribe()">
                     <div class="input-group mb-3">
                       <input id="subscribe-input" type="text" class="form-control subscribe-input"
-                        placeholder="Enter email address" aria-label="Recipient's username" formControlName="email"
-                        [ngClass]="submitted && f.email.errors && 'subscibeError'" aria-describedby="basic-addon2">
+                             placeholder="Enter email address" aria-label="Recipient's username" formControlName="email"
+                             [ngClass]="submitted && f.email.errors && 'subscibeError'" aria-describedby="basic-addon2">
                       <div class="input-group-append btn-sub">
                         <button *ngIf="!afterSubType" class="btn btn-outline-secondary" type="submit"
-                          [disabled]="subscribed">Subscribe</button>
+                                [disabled]="subscribed">Subscribe
+                        </button>
                         <button *ngIf="afterSubType" class="btn btn-outline-secondary" type="submit"
-                          [disabled]="subscribed">You're in!</button>
+                                [disabled]="subscribed">You're in!
+                        </button>
                       </div>
+                    </div>
+                    <div class="privacy-policy-mobile">
+                      <span routerLink="/privacy-policy">Privacy Policy</span>
+                    </div>
+                    <div class="copyright-mobile">
+                      <span>Copyright © 2021 Bettery. All Rights Reserved</span>
                     </div>
                     <div *ngIf="submitted && f.email.errors">
                       <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">Email is

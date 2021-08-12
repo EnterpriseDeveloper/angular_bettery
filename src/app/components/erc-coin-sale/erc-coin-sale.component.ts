@@ -143,12 +143,12 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
 
   showPercentSlid() {
     // return { 'left': this.percent + '%' };
-    return { 'left': 0 + '%' };
+    return { 'left': 45 + '%' };
   }
 
   yellowLineW() {
     // return { 'width': this.percent + '%' };
-    return  { 'width': 0 + '%' };
+    return  { 'width': 45 + '%' };
   }
 
   openMetamaskModal(message, title) {
@@ -219,5 +219,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
 
   onSwiper($event: any) {
     this.slideIndex = $event.activeIndex;
+    $event.$wrapperEl[0].click()
+
   }
 }
