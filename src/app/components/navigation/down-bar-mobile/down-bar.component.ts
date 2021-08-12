@@ -1,6 +1,5 @@
-import {Component, DoCheck, HostListener, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
-import {EventsTemplatesDesktopComponent} from '../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 
 @Component({
   selector: 'app-down-bar-mobile',
