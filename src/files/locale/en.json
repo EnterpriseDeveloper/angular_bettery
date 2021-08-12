@@ -13,9 +13,7 @@
     "ITEM_11": "Docs",
     "ITEM_12": "Twitter",
     "ITEM_13": "Linkedin"
-
   },
-
   "HEADER": {
     "TITLE_PART_1": "Bring Everyone Together",
     "TITLE_PART_2": "on what matters to you",
@@ -28,7 +26,11 @@
       "2": "events"
     },
     "JOIN": "Join",
-    "TOP_QUESTIONS": ["Which team will win El Clásico at 3am tonight?", "What will be the weather tomorrow in Saigon?", "When will the corona virus end?"],
+    "TOP_QUESTIONS": [
+      "Which team will win El Clásico at 3am tonight?",
+      "What will be the weather tomorrow in Saigon?",
+      "When will the corona virus end?"
+    ],
     "TOP_PLACEHOLDER": "Please input your questions ...",
     "POPOVER": {
       "1": "Have something unpredictable",
@@ -37,7 +39,6 @@
       "4": "with friends!"
     }
   },
-
   "SECOND": {
     "TITLE": "Social Betting is Fun",
     "TEXT_1": "Have fun betting on the future that’s just yours in private events with friends or publicly with online communities on any social media content.",
@@ -50,7 +51,6 @@
     "CARD_TEXT_2": "Join public events as an expert to say the truth, or create viral events for Bettery community.",
     "CARD_TEXT_3": "Bet a dinner or free tokens on personalized topics you all care and love, publicly or in private."
   },
-
   "THIRD": {
     "TITLE": "Go Risky, or Risk-Free",
     "TEXT": "Create your own events and invite friends or social media to join.",
@@ -59,7 +59,6 @@
     "TEXT_4": "Advise viral event topics for others and earn from your creativity.",
     "TEXT_5": "Pick a role that fits your day and start earning for free!"
   },
-
   "FOUR": {
     "TITLE": "Why Bettery?",
     "TEXT_1": "Bet with your opinion and skills - not luck - using free BET tokens and earn while enjoying your hobby. Cash out earnings but never run out of BET when losing in events. Grow reputations and earn extra in Pemium and Pro events hosted by businesses and influencers.",
@@ -73,7 +72,6 @@
     "CARD_TEXT_3": "Start with free Tokens and earn more as your reputations grow in business-made events.",
     "CARD_TEXT_4": "Create or join in topics that matter to you in public or private rooms, and play risky or risk-free."
   },
-
   "TOKEN_SALE": {
     "TITLE": "Bettery Token Sale",
     "TEXT": "Bettery users join events for free to earn BET tokens, which can be swapped into BTY tokens and sold on exchanges. To engage high-profile users, Hosts can use BTY as reward for participants in Premium and Pro events. BTY and BET are key components of the Bettery Tokenomy. \n\n",
@@ -82,7 +80,6 @@
     "MORE_ON_BETTERY": "More on Bettery tokenomy",
     "FULL_TOKENOMICS": "Bettery full tokenomics will be launched in:"
   },
-
   "ROADMAP": {
     "TITLE": "Roadmap",
     "TEXT_1": "All our development activities - past, present, and future - are always available to the public in our detailed ",
@@ -109,64 +106,68 @@
     "ROADMAP_TEXT-4.1": "Fiat in Pro Events.",
     "ROADMAP_TEXT-4.2": "Revenue Generation."
   },
-
   "TEAM": {
+
     "TEXT": "Bettery is a platform for enthusiasts, built by enthusiasts. Our humble yet passionate team consists of experts with mastery in distributed systems, creative design, and most importantly, satisfactory user experience.",
-    "NAME_7": "Secret Advisor",
-    "STATUS_7": "Advisor",
+    "NAME_7": "Allan",
+    "STATUS_7": "Strategic Advisor",
     "EXPERTISE": "Experience:",
     "PASSION": "Passion:",
-    "FEDOR":  {
+    "ALAN": {
+      "NAME": "Alan",
+      "STATUS": "Strategic Advisor",
+      "EXPERTISE": " Applying strategic mind to guide aspiring teams in delivering innovative and market-demanded Blockchain products.",
+      "PASSION": "Entrepreneurship"
+    },
+    "FEDOR": {
       "NAME": "Fedor",
       "STATUS": "Product Owner, Founder",
       "EXPERTISE": "Synergize software development and international B2B sales, worked with the team for years before starting Bettery.",
       "PASSION": "Ownerless Business, Smart Devices."
     },
-    "SIM":  {
+    "SIM": {
       "NAME": "Sim",
       "STATUS": "Business Analyst, Founding Team",
       "EXPERTISE": "Know what users want financially and psychologically based on his previous experience running a mining farm and moderating Facebook content.",
       "PASSION": "Countrysides, Yachts. "
     },
-    "MAXIM":  {
+    "MAXIM": {
       "NAME": "Maxim",
       "STATUS": "Development Lead, Founding Team",
       "EXPERTISE": "Give life to ideas and designs mapped out on graphics and slides with the power of coding. ",
       "PASSION": "Blockchain Programming."
     },
-    "SHANE":  {
+    "SHANE": {
       "NAME": "Shane",
       "STATUS": "Content Marketer",
       "EXPERTISE": "Transform endless walls of text into user-friendly and meaningful content that you’ll have a blast reading.",
       "PASSION": "Writing, Literary Analysis, Gaming."
     },
-    "NELSON":  {
+    "NELSON": {
       "NAME": "Nelson",
       "STATUS": "UX/UI Designer",
       "EXPERTISE": "Transform rough wireframe sketches into vivid, intuitive interfaces and designs you’ll never grow tired of using.",
       "PASSION": "Technology, Sports, Gaming."
     },
-    "KEN":  {
+    "KEN": {
       "NAME": "Ken",
       "STATUS": "Legal Advisor",
       "EXPERTISE": "Evolving regulations of blockchain and cryptocurrency, able to turn risky into riskless and bring forth its value to the public.",
       "PASSION": "World Affairs, Video Games"
     }
   },
-
   "FORM": {
     "TITLE": "Are you an Influencer?",
     "TEXT": "We’ll show you how to boost engagement with your followers with every piece of your content, hands-on based right on what matters to you.",
     "FIRST_NAME": "How we may call you?",
     "LAST_NAME": "Last Name",
-    "EMAIL" : "Email",
+    "EMAIL": "Email",
     "PHONE_NUMBER": "Best way to contact you (Telegram, Whatsapp, etc.)",
     "FIRM": "Your channel (Where to boost engagements, a public channel)",
     "VALIDATOR": "this field is required",
     "EMAIL_ERROR": "this is not email",
     "BUTTON_TEXT": "Book a Demo"
   },
-
   "FOOTER": {
     "TITLE_1": "About Bettery",
     "TITLE_2": "Stay in touch",
@@ -176,14 +177,12 @@
     "BUTTON_TEXT_2": "You're in!",
     "PLACE_HOLDER": "Enter email address"
   },
-
   "MODAL": {
     "TITLE": "For Investors",
     "TEXT": "Shared experiences bring people together, not just past memories",
     "TEXT-2": "- this is why we create Bettery. Our team is happy to discuss opportunities with startup investors who share our vision.",
     "DOWNLOAD": "Download"
   },
-
   "LANGUAGES": {
     "EN": "English",
     "VN": "Vietnam",
