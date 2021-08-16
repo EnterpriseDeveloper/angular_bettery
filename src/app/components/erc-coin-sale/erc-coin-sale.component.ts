@@ -22,7 +22,7 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
   tokensaleInfo: TokenSaleInfo;
   spinner: boolean = false;
 
-  percent: number;
+  percent: number = 0;
   time: any;
   timer: any;
   timeInterval: any;
@@ -142,13 +142,13 @@ export class ErcCoinSaleComponent implements OnInit, OnDestroy {
   }
 
   showPercentSlid() {
-    // return { 'left': this.percent + '%' };
-    return { 'left': 45 + '%' };
+
+    return { 'left': this.percent + '%' };
   }
 
   yellowLineW() {
-    // return { 'width': this.percent + '%' };
-    return  { 'width': 45 + '%' };
+
+    return  { 'width': this.percent + '%' };
   }
 
   openMetamaskModal(message, title) {
