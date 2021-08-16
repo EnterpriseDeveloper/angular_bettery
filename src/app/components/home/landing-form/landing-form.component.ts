@@ -27,8 +27,6 @@ export class LandingFormComponent implements OnInit, OnDestroy {
   ) {
     this.form = formBuilder.group({
       firstName: ['', Validators.required],
-      // lastName: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
       firm: [''],
     });
@@ -48,8 +46,6 @@ export class LandingFormComponent implements OnInit, OnDestroy {
         if (result.text === 'OK') {
           this.submitted = false;
           this.form.controls.firstName.setValue('');
-          // this.form.controls.lastName.setValue('');
-          // this.form.controls.email.setValue('');
           this.form.controls.phoneNumber.setValue('');
           this.form.controls.firm.setValue('');
           this.sendMessage = true;
@@ -67,7 +63,6 @@ export class LandingFormComponent implements OnInit, OnDestroy {
           return;
         }
         this.sendEmail($event);
-        console.log(form);
       });
   }
 
