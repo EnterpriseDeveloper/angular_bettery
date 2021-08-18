@@ -20,7 +20,7 @@ import { QuizErrorsComponent } from './quiz-errors/quiz-errors.component';
 import { Subscription } from 'rxjs';
 import { Event } from '../../../../models/Event.model';
 import { Coins } from '../../../../models/Coins.model';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import { RegistrationComponent } from '../../../registration/registration/registration.component';
 import { ClipboardService } from 'ngx-clipboard';
 import { FormBuilder, FormGroup } from '@angular/forms';
 

@@ -7,7 +7,7 @@ import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { EventEmitter } from '@angular/core';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import { RegistrationComponent } from '../../../registration/registration/registration.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 

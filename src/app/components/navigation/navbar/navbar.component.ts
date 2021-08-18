@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import web3Obj from '../../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
-import { RegistrationComponent } from '../../registration/registration.component';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
 import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component';
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { PostService } from '../../../services/post.service';

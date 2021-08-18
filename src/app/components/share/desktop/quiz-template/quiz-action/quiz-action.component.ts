@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizErrorsComponent} from '../quiz-errors/quiz-errors.component';
 import {Subscription} from 'rxjs';
 import {User} from '../../../../../models/User.model';
-import {RegistrationComponent} from '../../../../registration/registration.component';
+import {RegistrationComponent} from '../../../../registration/registration/registration.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 

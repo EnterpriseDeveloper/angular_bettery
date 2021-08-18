@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
 import { PostService } from '../../../services/post.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../registration/registration.component';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
 import Web3 from 'web3';
 import maticInit from '../../../contract/maticInit';
 import { environment } from '../../../../environments/environment';

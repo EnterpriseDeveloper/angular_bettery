@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { User } from '../../../models/User.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../registration/registration.component';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
 import { Router } from '@angular/router';
 
 @Component({
