@@ -1,438 +1,452 @@
 <div class="main_wrapper">
-  <div class="main bg-main">
-    <div class="bg-basic-img">
-      <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-        [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
-        class="container-fluid row d-flex align-items-center pb-2">
-        <div class="col-3 col-lg-2 logo"></div>
-        <div class="d-flex align-items-center col-lg-9  pl-pr-0">
-          <ul class="nav_bar">
-            <li class="nav_bar_item">
-              <a href="#social" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
-                translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' |
-                translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' |
-                translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' |
-                translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="https://friendlybets.medium.com/" target="_blank">{{'NAVBAR.ITEM_8' | translate}}</a>
-            </li>
-            <li class="nav_bar_item">
-              <a href="https://docs.bettery.io" target="_blank">{{'NAVBAR.ITEM_11' | translate}}</a>
-            </li>
-<!--            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">-->
-<!--              <a class="questionMark-img" href="#"></a>-->
-<!--            </li>-->
-<!--            <li class="nav_bar_item position-relative ml-3">-->
-<!--              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io"></a>-->
-<!--            </li>-->
-            <li class="nav_bar_item">
-              <div class="icons-block">
-                <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
+  <div class="images">
+    <div class="main bg-main">
 
-                </a>
-                <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
+      <div class="bg-basic-img">
+        <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
+             [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
+             class="container-fluid row d-flex align-items-center pb-2">
+          <div class="col-3 col-lg-2 logo"></div>
+          <div class="d-flex align-items-center col-lg-9  pl-pr-0">
+            <ul class="nav_bar">
+              <li class="nav_bar_item">
+                <a href="#social" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
+                  translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' |
+                  translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' |
+                  translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' |
+                  translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="https://friendlybets.medium.com/" target="_blank">{{'NAVBAR.ITEM_8' | translate}}</a>
+              </li>
+              <li class="nav_bar_item">
+                <a href="https://docs.bettery.io" target="_blank">{{'NAVBAR.ITEM_11' | translate}}</a>
+              </li>
+              <!--            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">-->
+              <!--              <a class="questionMark-img" href="#"></a>-->
+              <!--            </li>-->
+              <!--            <li class="nav_bar_item position-relative ml-3">-->
+              <!--              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io"></a>-->
+              <!--            </li>-->
+              <li class="nav_bar_item">
+                <div class="icons-block">
+                  <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
 
-                </a>
-                <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
+                  </a>
+                  <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
 
-                </a>
-              </div>
-            </li>
+                  </a>
+                  <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
 
-          </ul>
+                  </a>
+                </div>
+              </li>
 
-        </div>
-        <!--  DO NOT HAVE TRANSLATE FOR VETNAMESE LANGUAGE -->
-        <!-- <div class="d-flex align-items-center pb-3 col-lg-1 lang-1 mt-4">
-          <select id="language1" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
-            <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
-          </select>
-        </div> -->
-        <div routerLink="./join" class="launch-app"></div>
-      </nav>
+            </ul>
 
-      <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-        [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
-        class="mobile_nav container-fluid">
-        <div class="d-flex align-items-center justify-content-between row">
-          <div class="logo col-4 my-2"></div>
+          </div>
+          <!--  DO NOT HAVE TRANSLATE FOR VETNAMESE LANGUAGE -->
+          <!-- <div class="d-flex align-items-center pb-3 col-lg-1 lang-1 mt-4">
+            <select id="language1" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
+              <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
+            </select>
+          </div> -->
+          <div routerLink="./join" class="launch-app"></div>
+        </nav>
 
-          <div class="btn_short col-4 d-flex justify-content-end">
-            <div class="d-flex align-items-center">
-<!--              <div (click)="open(content)" class="mr-3">-->
-<!--                <a href="#">-->
-<!--                  <div class="questionMark"></div>-->
-<!--                </a>-->
-<!--              </div>-->
-<!--              <div class="mobile_img_path mr-3"><a href="https://t.me/bettery_io" target="_blank">-->
-<!--                  <div class="pathYellow"></div>-->
-<!--                </a></div>-->
-              <div routerLink="./join" class="launch-app_mobile"></div>
-              <div class="mr-2">
-                <select style="display: none" id="language" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
-                  <option *ngFor="let language of languages" [value]="language.id">{{ language.id }}</option>
-                </select>
-              </div>
-              <div ngbDropdown class="d-inline-block">
-                <div class="icon-bar-img" id="dropdownBasic1" ngbDropdownToggle></div>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="correct-left">
-                  <a href="#social2" ngbDropdownItem pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#getStarted" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_2' |
-                    translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#whyBettery" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_3' |
-                    translate}}</a>
+        <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
+             [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
+             class="mobile_nav container-fluid">
+          <div class="d-flex align-items-center justify-content-between row">
+            <div class="logo col-4 my-2"></div>
 
-                  <div class="dropdown-divider"></div>
-                  <a href="#tokenSale" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_4' |
-                    translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#roadmap" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_5' |
-                    translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#team" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_6' |
-                    translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#BusinessDemo" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_7' | translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="https://friendlybets.medium.com/" target="_blank" ngbDropdownItem>{{'NAVBAR.ITEM_8' |
-                    translate}}</a>
-                  <div class="dropdown-divider"></div>
-                  <div class="icons-block_mobile">
-                    <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
+            <div class="btn_short col-4 d-flex justify-content-end">
+              <div class="d-flex align-items-center">
+                <!--              <div (click)="open(content)" class="mr-3">-->
+                <!--                <a href="#">-->
+                <!--                  <div class="questionMark"></div>-->
+                <!--                </a>-->
+                <!--              </div>-->
+                <!--              <div class="mobile_img_path mr-3"><a href="https://t.me/bettery_io" target="_blank">-->
+                <!--                  <div class="pathYellow"></div>-->
+                <!--                </a></div>-->
+                <div routerLink="./join" class="launch-app_mobile"></div>
+                <div class="mr-2">
+                  <select style="display: none" id="language" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
+                    <option *ngFor="let language of languages" [value]="language.id">{{ language.id }}</option>
+                  </select>
+                </div>
+                <div ngbDropdown class="d-inline-block">
+                  <div class="icon-bar-img" id="dropdownBasic1" ngbDropdownToggle></div>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="correct-left">
+                    <a href="#social2" ngbDropdownItem pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#getStarted" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_2' |
+                      translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#whyBettery" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_3' |
+                      translate}}</a>
 
-                    </a>
-                    <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
+                    <div class="dropdown-divider"></div>
+                    <a href="#tokenSale" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_4' |
+                      translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#roadmap" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_5' |
+                      translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#team" (click)="styleHideMen()" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_6' |
+                      translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#BusinessDemo" pageScroll ngbDropdownItem>{{'NAVBAR.ITEM_7' | translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="https://friendlybets.medium.com/" target="_blank" ngbDropdownItem>{{'NAVBAR.ITEM_8' |
+                      translate}}</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="icons-block_mobile">
+                      <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
 
-                    </a>
-                    <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
+                      </a>
+                      <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
 
-                    </a>
+                      </a>
+                      <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
+
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <header id="header" class="row mr-0 ml-0">
-        <div class="container-fluid m-2">
-          <div class="row d-flex">
-            <div class="title_block col-lg-9 col-12 pr-0 pl-0">
-              <div class="title">
-                <div>
-                  <h1>
-                    {{ 'HEADER.TITLE_PART_1' | translate }}
-                  </h1>
-                </div>
-                <div>
-                  <h1>
+        <header id="header" class="row mr-0 ml-0">
+          <div class="container-fluid m-2">
+            <div class="row d-flex">
+              <div class="title_block col-lg-9 col-12 pr-0 pl-0">
+                <div class="title">
+                  <div>
+                    <h1>
+                      {{ 'HEADER.TITLE_PART_1' | translate }}
+                    </h1>
+                  </div>
+                  <div>
+                    <h1>
                     <span class="green_wrapper">
                       <span class="green">{{ 'HEADER.TITLE_PART_2' | translate }}</span>
                       <span class="green-text">{{ 'HEADER.TITLE_PART_2' | translate }}</span>
                     </span>
-                  </h1>
+                    </h1>
+                  </div>
                 </div>
-              </div>
-              <div class="title_text">
-                <p>{{'HEADER.TEXT' | translate}}</p>
-              </div>
+                <div class="title_text">
+                  <p>{{'HEADER.TEXT' | translate}}</p>
+                </div>
 
-              <div>
-                <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
+                <div>
+                  <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
+                                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                                (preStringTyped)="renovationDefaultEvent()">
+                    <div class="pencil">
+                      <div class="text">
+                        <span class="typing a" (mouseenter)="showPopover()"></span>
+                      </div>
+                      <div class="popover" [ngClass]=" triggerPopover && 'open'">
+                        <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
+                        <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
+                        <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
+                        <span>{{'HEADER.POPOVER.4' | translate}}</span>
+                      </div>
+                    </div>
+                  </ngx-typed-js>
+                </div>
+
+                <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'" [strings]="topQuestions"
                               [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
                               (preStringTyped)="renovationDefaultEvent()">
                   <div class="pencil">
                     <div class="text">
-                      <span class="typing a" (mouseenter)="showPopover()"></span>
+                      <span class="typing" (mouseenter)="showPopover()" (mouseleave)="hidePopover()"></span>
                     </div>
-                    <div class="popover" [ngClass]=" triggerPopover && 'open'">
-                      <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
-                      <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
-                      <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
-                      <span>{{'HEADER.POPOVER.4' | translate}}</span>
-                    </div>
+                  </div>
+
+                  <div class="popover" [ngClass]=" triggerPopover && 'open'">
+                    <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
+                    <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
+                    <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
+                    <span>{{'HEADER.POPOVER.4' | translate}}</span>
                   </div>
                 </ngx-typed-js>
-              </div>
 
-              <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'" [strings]="topQuestions"
-                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
-                (preStringTyped)="renovationDefaultEvent()">
-                <div class="pencil">
-                  <div class="text">
-                    <span class="typing" (mouseenter)="showPopover()" (mouseleave)="hidePopover()"></span>
+                <input [(ngModel)]="newCreateEvent" *ngIf="active" autofocus class="headerInput" type="text"
+                       id="newEvent"
+                       name="newEvent" placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
+                <div class="btn_title row">
+                  <div class="col-lg-3 col-12 pr-0">
+                    <button *ngIf="isMobile" class="btn btn-success" routerLink="/create-event"
+                            (click)="sendEvent()">{{'HEADER.BUTTON_TEXT' | translate}}
+                    </button>
+                    <button *ngIf="!isMobile" class="btn btn-success" (click)="sendEventDesktop()"
+                            routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
+                    </button>
+                  </div>
+                  <div *ngIf="eventData && eventData?.length != 0" class="dropText col-lg-5 col-12 px-0">
+                    <div (click)="dropDown()" style="display: inline-flex;">{{'HEADER.OR_JOIN.1' | translate}}
+                      ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})
+                      <div class="ml-1" style="margin-top: 8px;"
+                           [ngClass]="{'toggleDown' : dropDownSwitch, 'toggleUp': !dropDownSwitch}"
+                           alt="triangle"></div>
+                    </div>
                   </div>
                 </div>
-
-                <div class="popover" [ngClass]=" triggerPopover && 'open'">
-                  <span>{{'HEADER.POPOVER.1' | translate}} </span> <br>
-                  <span>{{'HEADER.POPOVER.2' | translate}}</span> <br>
-                  <span>{{'HEADER.POPOVER.3' | translate}}</span> <br>
-                  <span>{{'HEADER.POPOVER.4' | translate}}</span>
+                <div [class]="dropDownSwitch ? 'dropdown_box_show' : ''" class="dropdown_box col-lg-7 col-12 mt-3">
+                  <ul class="dropdown_list ">
+                    <li *ngFor="let event of eventData">
+                      <p>{{event['publicEvents/question']}}</p>
+                      <button *ngIf="isMobile" class="btn" routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' |
+                        translate}}</button>
+                      <button *ngIf="!isMobile" class="btn" (click)="getSaveId(event?._id)"
+                              routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
+                    </li>
+                  </ul>
                 </div>
-              </ngx-typed-js>
 
-              <input [(ngModel)]="newCreateEvent" *ngIf="active" autofocus class="headerInput" type="text" id="newEvent"
-                name="newEvent" placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
-              <div class="btn_title row">
-                <div class="col-lg-3 col-12 pr-0">
-                  <button *ngIf="isMobile" class="btn btn-success" routerLink="/create-event"
-                    (click)="sendEvent()">{{'HEADER.BUTTON_TEXT' | translate}}
-                  </button>
-                  <button *ngIf="!isMobile" class="btn btn-success" (click)="sendEventDesktop()"
-                    routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
-                  </button>
+              </div>
+              <div class="player col-lg-4 col-md-12">
+              </div>
+              <div id="social2" class="mobile_img col-12">
+                <div class="bg_header"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section id="social" class=" row container-fluid ml-0 mr-0">
+          <div class="bettery_work_box col-lg-6 col-12 row order-lg-first">
+            <div class="box_left col-12 col-lg-6">
+              <div class="row">
+                <div class="card_item mb-5 bg-hover col-12 col-lg-10 col-xl-8">
+                  <div class="mb-3">
+                    <div class="img-section2"></div>
+                  </div>
+                  <h3 class="mb-2">{{'SECOND.CARD_TITLE_1' | translate}}</h3>
+                  <div class="card-text">
+                    <p>{{'SECOND.CARD_TEXT_1' | translate}}</p>
+                  </div>
                 </div>
-                <div *ngIf="eventData && eventData?.length != 0" class="dropText col-lg-5 col-12 px-0">
-                  <div (click)="dropDown()" style="display: inline-flex;">{{'HEADER.OR_JOIN.1' | translate}}
-                    ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})<div class="ml-1" style="margin-top: 8px;"
-                      [ngClass]="{'toggleDown' : dropDownSwitch, 'toggleUp': !dropDownSwitch}" alt="triangle"></div>
+                <div class="card_item mb-5 bg-hover col-12 col-lg-10 col-xl-8">
+                  <div class="mb-3">
+                    <div class="round">
+                      <div class="img_man"></div>
+                    </div>
+                  </div>
+                  <h3 class="mb-2">{{'SECOND.CARD_TITLE_2' | translate}}</h3>
+                  <div class="card-text">
+                    <p>{{'SECOND.CARD_TEXT_2' | translate}}</p>
                   </div>
                 </div>
               </div>
-              <div [class]="dropDownSwitch ? 'dropdown_box_show' : ''" class="dropdown_box col-lg-7 col-12 mt-3">
-                <ul class="dropdown_list ">
-                  <li *ngFor="let event of eventData">
-                    <p>{{event['publicEvents/question']}}</p>
-                    <button *ngIf="isMobile" class="btn" routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' |
-                      translate}}</button>
-                    <button *ngIf="!isMobile" class="btn" (click)="getSaveId(event?._id)"
-                      routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
-                  </li>
+            </div>
+            <div class="box_right col-12 col-lg-6 ">
+              <div class="row">
+                <div class="card_item bg-hover mb-5 col-12 col-lg-10 col-xl-8 ml-lg-0">
+                  <div class="mb-2">
+                    <div class="round correct">
+                      <div class="img_mans2"></div>
+                    </div>
+                  </div>
+                  <h3 class="mb-2">{{'SECOND.CARD_TITLE_3' | translate}}</h3>
+                  <div class="card-text">
+                    <p>{{'SECOND.CARD_TEXT_3' | translate}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-12  bettery_work_title order-first mb-5 text-center text-lg-left ml-lg-5">
+            <div>
+              <div class="mb-3">
+                <h2>{{'SECOND.TITLE' | translate}}</h2>
+              </div>
+              <div>
+                <p>{{'SECOND.TEXT_1' | translate}}</p> <br>
+                <p><span style="font-weight: 600">{{'SECOND.TEXT_3' | translate}}</span>{{'SECOND.TEXT_2' | translate}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="social-media">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12 social-media-title">
+                <h2>Made for all your social media</h2>
+                <p>Bring more fun into every post you make. Enjoy social betting with friends and all your online
+                  communities.</p>
+              </div>
+              <div class="col-12 d-flex justify-content-center">
+                <div class="phone-img"></div>
+              </div>
+
+              <swiper class="slide-bg" (slideChange)="onSwiper($event)">
+                <ng-template swiperSlide>
+                  <div class="d-flex justify-content-center">
+                    <div class="phone1-img"></div>
+                  </div>
+                </ng-template>
+
+                <ng-template swiperSlide>
+                  <div class="d-flex justify-content-center">
+                    <div class="phone2-img"></div>
+                  </div>
+                </ng-template>
+
+                <ng-template swiperSlide>
+                  <div class="d-flex justify-content-center">
+                    <div class="phone3-img"></div>
+                  </div>
+                </ng-template>
+
+              </swiper>
+
+              <div class="pagin">
+                <ul>
+                  <li [ngClass]="slideIndex === 0 ? 'activeSlide' : ''"></li>
+                  <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>
+                  <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>
                 </ul>
               </div>
 
             </div>
-            <div class="player col-lg-4 col-md-12">
-            </div>
-            <div id="social2" class="mobile_img col-12">
-              <div class="bg_header"></div>
-            </div>
           </div>
-        </div>
-      </header>
+        </section>
 
-      <section id="social" class=" row container-fluid ml-0 mr-0">
-        <div class="bettery_work_box col-lg-6 col-12 row order-lg-first">
-          <div class="box_left col-12 col-lg-6">
+        <section id="getStarted" class="third">
+          <div class="container-fluid">
             <div class="row">
-              <div class="card_item mb-5 bg-hover col-12 col-lg-10 col-xl-8">
-                <div class="mb-3">
-                  <div class="img-section2"></div>
-                </div>
-                <h3 class="mb-2">{{'SECOND.CARD_TITLE_1' | translate}}</h3>
-                <div class="card-text">
-                  <p>{{'SECOND.CARD_TEXT_1' | translate}}</p>
-                </div>
-              </div>
-              <div class="card_item mb-5 bg-hover col-12 col-lg-10 col-xl-8">
-                <div class="mb-3">
-                  <div class="round">
-                    <div class="img_man"></div>
+              <div class="third-left col-lg-7 col-xs-12">
+                <div class="third-title title_h2 text-center text-lg-left">
+                  <h2>{{'THIRD.TITLE' | translate}}</h2>
+                  <div class="mt-3 third-text">
+                    <div class="role-list">
+                      <div class="yellow_host"></div>
+                      <p>{{'THIRD.TEXT' | translate}}</p></div>
+                    <div class="role-list">
+                      <div class="blue_winner"></div>
+                      <p>{{'THIRD.TEXT_2' | translate}}</p></div>
+                    <div class="role-list">
+                      <div class="purple_validator"></div>
+                      <p>{{'THIRD.TEXT_3' | translate}}</p></div>
+                    <div class="role-list">
+                      <div class="dark_blue_advisor"></div>
+                      <p>{{'THIRD.TEXT_4' | translate}}</p></div>
+                    <div class="pick_role_text"><p>{{'THIRD.TEXT_5' | translate}}</p></div>
                   </div>
                 </div>
-                <h3 class="mb-2">{{'SECOND.CARD_TITLE_2' | translate}}</h3>
-                <div class="card-text">
-                  <p>{{'SECOND.CARD_TEXT_2' | translate}}</p>
-                </div>
+              </div>
+              <div class="third-right img-choose col-lg-5 col-xs-12"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="four" id="whyBettery">
+          <div class="four_top row justify-content-center mb-3">
+            <div class="col-lg-8 col-md-10">
+              <div>
+                <h2 class="pb-3">{{'FOUR.TITLE' | translate}}</h2>
+              </div>
+              <div class="px-lg-5" style="padding: 0 15px">
+                <p>{{'FOUR.TEXT_1' | translate}}</p> <br>
+
               </div>
             </div>
           </div>
-          <div class="box_right col-12 col-lg-6 ">
-            <div class="row">
-              <div class="card_item bg-hover mb-5 col-12 col-lg-10 col-xl-8 ml-lg-0">
-                <div class="mb-2">
-                  <div class="round correct">
-                    <div class="img_mans2"></div>
+          <div class="four_bottom  w-90">
+            <div class="row justify-content-center mx-auto">
+              <div class="col-lg-6 col-xs-12 col-xl-3">
+                <div class="four_card bg-hover">
+                  <div class="mb-2">
+                    <div class="img_bg_yellow d-flex justify-content-center align-items-center">
+                      <div class="fillImg"></div>
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <h3>{{'FOUR.CARD_TITLE_1' | translate}}</h3>
+                  </div>
+                  <div>
+                    <p>{{'FOUR.CARD_TEXT_1' | translate}}</p>
                   </div>
                 </div>
-                <h3 class="mb-2">{{'SECOND.CARD_TITLE_3' | translate}}</h3>
-                <div class="card-text">
-                  <p>{{'SECOND.CARD_TEXT_3' | translate}}</p>
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-5 col-12  bettery_work_title order-first mb-5 text-center text-lg-left ml-lg-5">
-          <div>
-            <div class="mb-3">
-              <h2>{{'SECOND.TITLE' | translate}}</h2>
-            </div>
-            <div>
-              <p>{{'SECOND.TEXT_1' | translate}}</p> <br>
-              <p><span style="font-weight: 600">{{'SECOND.TEXT_3' | translate}}</span>{{'SECOND.TEXT_2' | translate}}</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="social-media">
-        <div class="container-fluid">
-          <div class="row justify-content-center">
-            <div class="col-12 social-media-title">
-              <h2>Made for all your social media</h2>
-              <p>Bring more fun into every post you make. Enjoy social betting with friends and all your online
-                communities.</p>
-            </div>
-            <div class="col-12 d-flex justify-content-center">
-              <div class="phone-img"></div>
-            </div>
-
-            <swiper class="slide-bg" (slideChange)="onSwiper($event)">
-              <ng-template swiperSlide>
-                <div class="d-flex justify-content-center">
-                  <div class="phone1-img"></div>
-                </div>
-              </ng-template>
-
-              <ng-template swiperSlide>
-                <div class="d-flex justify-content-center">
-                  <div class="phone2-img"></div>
-                </div>
-              </ng-template>
-
-              <ng-template swiperSlide>
-                <div class="d-flex justify-content-center">
-                  <div class="phone3-img"></div>
-                </div>
-              </ng-template>
-
-            </swiper>
-
-            <div class="pagin">
-              <ul>
-                <li [ngClass]="slideIndex === 0 ? 'activeSlide' : ''"></li>
-                <li [ngClass]="slideIndex === 1 ? 'activeSlide' : ''"></li>
-                <li [ngClass]="slideIndex === 2 ? 'activeSlide' : ''"></li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section id="getStarted" class="third">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="third-left col-lg-7 col-xs-12">
-              <div class="third-title title_h2 text-center text-lg-left">
-                <h2>{{'THIRD.TITLE' | translate}}</h2>
-                <div class="mt-3 third-text">
-                  <div class="role-list"><div class="yellow_host"></div><p>{{'THIRD.TEXT' | translate}}</p></div>
-                  <div class="role-list"><div class="blue_winner"></div><p>{{'THIRD.TEXT_2' | translate}}</p></div>
-                  <div class="role-list"><div class="purple_validator"></div><p>{{'THIRD.TEXT_3' | translate}}</p></div>
-                  <div class="role-list"><div class="dark_blue_advisor"></div><p>{{'THIRD.TEXT_4' | translate}}</p></div>
-                  <div class="pick_role_text"><p>{{'THIRD.TEXT_5' | translate}}</p></div>
-                </div>
-              </div>
-            </div>
-            <div class="third-right img-choose col-lg-5 col-xs-12"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="four" id="whyBettery">
-        <div class="four_top row justify-content-center mb-3">
-          <div class="col-lg-8 col-md-10">
-            <div>
-              <h2 class="pb-3">{{'FOUR.TITLE' | translate}}</h2>
-            </div>
-            <div class="px-lg-5" style="padding: 0 15px">
-              <p>{{'FOUR.TEXT_1' | translate}}</p> <br>
-
-            </div>
-          </div>
-        </div>
-        <div class="four_bottom  w-90">
-          <div class="row justify-content-center mx-auto">
-            <div class="col-lg-6 col-xs-12 col-xl-3">
-              <div class="four_card bg-hover">
-                <div class="mb-2">
-                  <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <div class="fillImg"></div>
+              <div class="col-lg-6 col-xs-12 col-xl-3">
+                <div class="four_card bg-hover">
+                  <div class="mb-2">
+                    <div class="img_bg_yellow d-flex justify-content-center align-items-center correct-img">
+                      <div class="between_img"></div>
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <h3>{{'FOUR.CARD_TITLE_2' | translate}}</h3>
+                  </div>
+                  <div>
+                    <p>{{'FOUR.CARD_TEXT_2' | translate}}</p>
                   </div>
                 </div>
-                <div class="mb-2">
-                  <h3>{{'FOUR.CARD_TITLE_1' | translate}}</h3>
-                </div>
-                <div>
-                  <p>{{'FOUR.CARD_TEXT_1' | translate}}</p>
-                </div>
               </div>
-            </div>
 
-            <div class="col-lg-6 col-xs-12 col-xl-3">
-              <div class="four_card bg-hover">
-                <div class="mb-2">
-                  <div class="img_bg_yellow d-flex justify-content-center align-items-center correct-img">
-                    <div class="between_img"></div>
+              <div class="col-lg-6 col-xs-12 col-xl-3">
+                <div class="four_card bg-hover">
+                  <div class="mb-2">
+                    <div class="img_bg_yellow d-flex justify-content-center align-items-center">
+                      <div class="money_img"></div>
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <h3>{{'FOUR.CARD_TITLE_3' | translate}}</h3>
+                  </div>
+                  <div>
+                    <p>{{'FOUR.CARD_TEXT_3' | translate}}</p>
                   </div>
                 </div>
-                <div class="mb-2">
-                  <h3>{{'FOUR.CARD_TITLE_2' | translate}}</h3>
-                </div>
-                <div>
-                  <p>{{'FOUR.CARD_TEXT_2' | translate}}</p>
-                </div>
               </div>
-            </div>
 
-            <div class="col-lg-6 col-xs-12 col-xl-3">
-              <div class="four_card bg-hover">
-                <div class="mb-2">
-                  <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <div class="money_img"></div>
+              <div class="col-lg-6 col-xs-12 col-xl-3">
+                <div class="four_card bg-hover">
+                  <div class="mb-2">
+                    <div class="img_bg_yellow d-flex justify-content-center align-items-center">
+                      <div class="last_img"></div>
+                    </div>
                   </div>
-                </div>
-                <div class="mb-2">
-                  <h3>{{'FOUR.CARD_TITLE_3' | translate}}</h3>
-                </div>
-                <div>
-                  <p>{{'FOUR.CARD_TEXT_3' | translate}}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6 col-xs-12 col-xl-3">
-              <div class="four_card bg-hover">
-                <div class="mb-2">
-                  <div class="img_bg_yellow d-flex justify-content-center align-items-center">
-                    <div class="last_img"></div>
+                  <div class="mb-2">
+                    <h3>{{'FOUR.CARD_TITLE_4' | translate}}</h3>
                   </div>
-                </div>
-                <div class="mb-2">
-                  <h3>{{'FOUR.CARD_TITLE_4' | translate}}</h3>
-                </div>
-                <div>
-                  <p>{{'FOUR.CARD_TEXT_4' | translate}}</p>
+                  <div>
+                    <p>{{'FOUR.CARD_TEXT_4' | translate}}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="tokenSale" class="tokenSale">
-        <div class="container-fluid d-flex_just-centr">
+        <section id="tokenSale" class="tokenSale">
+          <div class="container-fluid d-flex_just-centr">
 
             <div class="col-lg-7 col-md-10 col-xs-12 tokenSale-left">
               <div>
@@ -452,444 +466,459 @@
                      target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a></div>
               </div>
             </div>
-<!--            <div class="col-lg-5 col-xs-12 tokenSale-right">-->
-<!--              <div>-->
-<!--                <p>{{'TOKEN_SALE.FULL_TOKENOMICS' | translate}}</p>-->
-<!--              </div>-->
-<!--              <div class="token-timer">-->
-<!--                <div class="day">-->
-<!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[0]}}</span></div>-->
-<!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[1]}}</span></div>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <span class="point">:</span>-->
-<!--                </div>-->
-<!--                <div class="hours">-->
-<!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[0]}}</span></div>-->
-<!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[1]}}</span></div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="col-lg-5 col-xs-12 tokenSale-right">-->
+            <!--              <div>-->
+            <!--                <p>{{'TOKEN_SALE.FULL_TOKENOMICS' | translate}}</p>-->
+            <!--              </div>-->
+            <!--              <div class="token-timer">-->
+            <!--                <div class="day">-->
+            <!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[0]}}</span></div>-->
+            <!--                  <div class="mx-1 semi-bg"><span>{{timer?.days[1]}}</span></div>-->
+            <!--                </div>-->
+            <!--                <div>-->
+            <!--                  <span class="point">:</span>-->
+            <!--                </div>-->
+            <!--                <div class="hours">-->
+            <!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[0]}}</span></div>-->
+            <!--                  <div class="mx-1 semi-bg"><span>{{timer?.hours[1]}}</span></div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
 
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section class="road-map container-fluid" id="roadmap">
-        <div class="road-map-top row justify-content-center">
-          <div class="col-lg-6 col-md-10">
-            <div>
-              <h2>{{'ROADMAP.TITLE' | translate}}</h2>
-            </div>
-            <div class="px-lg-5">
-              <p>{{'ROADMAP.TEXT_1' | translate}}<a style="color: inherit; text-decoration: underline"
-                  href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">{{'ROADMAP.TEXT_2' |
+        <section class="road-map container-fluid" id="roadmap">
+          <div class="road-map-top row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+              <div>
+                <h2>{{'ROADMAP.TITLE' | translate}}</h2>
+              </div>
+              <div class="px-lg-5">
+                <p>{{'ROADMAP.TEXT_1' | translate}}<a style="color: inherit; text-decoration: underline"
+                                                      href="https://trello.com/b/ttywM11r/bettery-roadmap"
+                                                      target="_blank">{{'ROADMAP.TEXT_2' |
                   translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
-              </p>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class=" px-lg-5 road-map-desctop">
-          <div class="row mb-5 text_road position-relative balls-rest">
+          <div class=" px-lg-5 road-map-desctop">
+            <div class="row mb-5 text_road position-relative balls-rest">
 
-            <div class="col-lg-3 col-xs-12 col-sm-6">
-              <div class="img-yellow_5 mb-2">
-                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+              <div class="col-lg-3 col-xs-12 col-sm-6">
+                <div class="img-yellow_5 mb-2">
+                  <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                    <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+                  </a>
+                </div>
+                <div class="text-center">
+                  <p><span>{{'ROADMAP.DATE_1' | translate}}</span></p>
+                </div>
+                <div class="green-box before-correct" style="color: #ffffff">
+                  <span class="road-map_text" style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</span><br>
+                  <span class="road-map_text"
+                        style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1.1' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-1.2' | translate}}</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-xs-12 col-sm-6">
+                <div class="img-yellow_5 mb-2">
+                  <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                    <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
+                  </a>
+                </div>
+                <div class="text-center">
+                  <p>{{'ROADMAP.DATE_2' | translate}}</p>
+                </div>
+                <div class="green-box before-correct">
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2.1' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2.2' | translate}}</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-xs-12 col-sm-6">
+                <div class="img-yellow_5 mb-2">
+                  <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                    <p class="pr-3 pl-2">{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
+                  </a>
+                </div>
+                <div class="text-center">
+                  <p>{{'ROADMAP.DATE_3' | translate}}</p>
+                </div>
+                <div class="green-box">
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3.1' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3.2' | translate}}</span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-xs-12 col-sm-6">
+                <div class="img-yellow_5 mb-2">
+                  <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                    <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p>
+                  </a>
+                </div>
+                <div class="text-center">
+                  <p>{{'ROADMAP.DATE_4' | translate}}</p>
+                </div>
+                <div class="green-box">
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4.1' | translate}}</span><br>
+                  <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4.2' | translate}}</span>
+                </div>
+              </div>
+              <div class="hr"></div>
+              <div class="hr-green"></div>
+              <div class="balls"></div>
+              <div class="balls"></div>
+              <div class="balls"></div>
+              <div class="green-ball"></div>
+            </div>
+
+          </div>
+
+          <div class="container road-map-mobile">
+            <div class="row">
+              <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
+                <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <div class="card-date pt-2 pb-2 acti">
+                    <span>{{'ROADMAP.DATE_1' | translate}}</span>
+                  </div>
+                  <div class="card-mob-text pt-4  pb-1">
+                    <div>
+                      <b>
+                        <p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+                      </b>
+                    </div>
+                    <div class="p-3 ">
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-1.1' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-1.2' | translate}}</span>
+                    </div>
+                  </div>
                 </a>
               </div>
-              <div class="text-center">
-                <p><span>{{'ROADMAP.DATE_1' | translate}}</span></p>
-              </div>
-              <div class="green-box before-correct" style="color: #ffffff">
-                <span class="road-map_text" style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</span><br>
-                <span class="road-map_text" style="color: #ffffff">{{'ROADMAP.ROADMAP_TEXT-1.1' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-1.2' | translate}}</span>
-              </div>
-            </div>
+              <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
+                <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <div class="card-date pt-2 pb-2">
+                    <span>{{'ROADMAP.DATE_2' | translate}}</span>
+                  </div>
+                  <div class="card-mob-text pt-4  pb-1">
+                    <div>
+                      <b>
+                        <p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
+                      </b>
+                    </div>
+                    <div class="p-3 ">
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-2.1' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-2.2' | translate}}</span>
+                    </div>
 
-            <div class="col-lg-3 col-xs-12 col-sm-6">
-              <div class="img-yellow_5 mb-2">
-                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
+                  </div>
                 </a>
               </div>
-              <div class="text-center">
-                <p>{{'ROADMAP.DATE_2' | translate}}</p>
-              </div>
-              <div class="green-box before-correct">
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2.1' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-2.2' | translate}}</span>
-              </div>
-            </div>
+              <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
+                <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <div class="card-date pt-2 pb-2">
+                    <span>{{'ROADMAP.DATE_3' | translate}}</span>
+                  </div>
+                  <div class="card-mob-text pt-4  pb-1">
+                    <div>
+                      <b>
+                        <p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
+                      </b>
+                    </div>
+                    <div class="p-3 ">
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-3.1' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-3.2' | translate}}</span>
+                    </div>
 
-            <div class="col-lg-3 col-xs-12 col-sm-6">
-              <div class="img-yellow_5 mb-2">
-                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                  <p class="pr-3 pl-2">{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
+                  </div>
                 </a>
               </div>
-              <div class="text-center">
-                <p>{{'ROADMAP.DATE_3' | translate}}</p>
-              </div>
-              <div class="green-box">
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3.1' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-3.2' | translate}}</span></div>
-            </div>
-
-            <div class="col-lg-3 col-xs-12 col-sm-6">
-              <div class="img-yellow_5 mb-2">
-                <a class="linkRoadmap" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                  <p class="pr-2">{{'ROADMAP.ROADMAP_UP_TEXT-4' | translate}}</p>
+              <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
+                <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
+                  <div class="card-date pt-2 pb-2">
+                    <span>{{'ROADMAP.DATE_4' | translate}}</span>
+                  </div>
+                  <div class="card-mob-text pt-4  pb-1">
+                    <div>
+                      <b>
+                        <p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
+                      </b>
+                    </div>
+                    <div class="p-3 ">
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-4.1' | translate}}</span><br>
+                      <span class="road-map_text_mobile">{{'ROADMAP.ROADMAP_TEXT-4.2' | translate}}</span>
+                    </div>
+                  </div>
                 </a>
               </div>
-              <div class="text-center">
-                <p>{{'ROADMAP.DATE_4' | translate}}</p>
-              </div>
-              <div class="green-box">
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4.1' | translate}}</span><br>
-                <span class="road-map_text" style="color: #000">{{'ROADMAP.ROADMAP_TEXT-4.2' | translate}}</span>
-              </div>
-            </div>
-            <div class="hr"></div>
-            <div class="hr-green"></div>
-            <div class="balls"></div>
-            <div class="balls"></div>
-            <div class="balls"></div>
-            <div class="green-ball"></div>
-          </div>
-
-        </div>
-
-        <div class="container road-map-mobile">
-          <div class="row">
-            <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                <div class="card-date pt-2 pb-2 acti">
-                  <span>{{'ROADMAP.DATE_1' | translate}}</span>
-                </div>
-                <div class="card-mob-text pt-4  pb-1">
-                  <div>
-                    <b>
-                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
-                    </b>
-                  </div>
-                  <div class="p-3 ">
-                    <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-1' | translate}}</span><br>
-                    <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-1.1' | translate}}</span><br>
-                    <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-1.2' | translate}}</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                <div class="card-date pt-2 pb-2">
-                  <span>{{'ROADMAP.DATE_2' | translate}}</span>
-                </div>
-                <div class="card-mob-text pt-4  pb-1">
-                  <div>
-                    <b>
-                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-2' | translate}}</p>
-                    </b>
-                  </div>
-                  <div class="p-3 ">
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-2' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-2.1' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-2.2' | translate}}</span>
-                  </div>
-
-                </div>
-              </a>
-            </div>
-            <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                <div class="card-date pt-2 pb-2">
-                  <span>{{'ROADMAP.DATE_3' | translate}}</span>
-                </div>
-                <div class="card-mob-text pt-4  pb-1">
-                  <div>
-                    <b>
-                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-3' | translate}}</p>
-                    </b>
-                  </div>
-                  <div class="p-3 ">
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-3' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-3.1' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-3.2' | translate}}</span>
-                  </div>
-
-                </div>
-              </a>
-            </div>
-            <div class="col-lg-3 col-xs-12 col-sm-6 mt-3">
-              <a class="linkRoadmapMob" href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">
-                <div class="card-date pt-2 pb-2">
-                  <span>{{'ROADMAP.DATE_4' | translate}}</span>
-                </div>
-                <div class="card-mob-text pt-4  pb-1">
-                  <div>
-                    <b>
-                      <p>{{'ROADMAP.ROADMAP_UP_TEXT-1' | translate}}</p>
-                    </b>
-                  </div>
-                  <div class="p-3 ">
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-4' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-4.1' | translate}}</span><br>
-                      <span class="road-map_text_mobile" >{{'ROADMAP.ROADMAP_TEXT-4.2' | translate}}</span>
-                  </div>
-                </div>
-              </a>
             </div>
           </div>
-        </div>
 
-      </section>
+        </section>
 
-      <section class="team" id="team">
-        <div class="container-fluid px-lg-5">
-          <div class="row justify-content-center">
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_logo mb-2"></div>
-              <div class="team_card_text text-align" >
-                <p>{{'TEAM.TEXT' | translate}}</p>
+        <section class="team" id="team">
+          <div class="container-fluid px-lg-5">
+            <div class="row justify-content-center">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_logo mb-2"></div>
+                <div class="team_card_text text-align">
+                  <p>{{'TEAM.TEXT' | translate}}</p>
+                </div>
               </div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.FEDOR.NAME' | translate}}</h4>
-                <p>{{'TEAM.FEDOR.STATUS' | translate}}</p>
-              </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.FEDOR.EXPERTISE' |
-                  translate}}</p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.FEDOR.PASSION' | translate}}
-                </p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/bushlanov/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.FEDOR.NAME' | translate}}</h4>
+                  <p>{{'TEAM.FEDOR.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.FEDOR.EXPERTISE' |
+                    translate}}</p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.FEDOR.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/bushlanov/" target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar2"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.SIM.NAME' | translate}}</h4>
-                <p>{{'TEAM.SIM.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SIM.EXPERTISE' | translate}}
-                </p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SIM.PASSION' | translate}}</p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/phuocsim/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar2"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.SIM.NAME' | translate}}</h4>
+                  <p>{{'TEAM.SIM.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span
+                    class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SIM.EXPERTISE' | translate}}
+                  </p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SIM.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/phuocsim/" target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar3"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.MAXIM.NAME' | translate}}</h4>
-                <p>{{'TEAM.MAXIM.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.MAXIM.EXPERTISE' |
-                  translate}}</p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.MAXIM.PASSION' | translate}}
-                </p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/maksim-voroshilov-063652177/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar3"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.MAXIM.NAME' | translate}}</h4>
+                  <p>{{'TEAM.MAXIM.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.MAXIM.EXPERTISE' |
+                    translate}}</p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.MAXIM.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/maksim-voroshilov-063652177/"
+                                                  target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar4"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.SHANE.NAME' | translate}}</h4>
-                <p>{{'TEAM.SHANE.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SHANE.EXPERTISE' |
-                  translate}}</p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SHANE.PASSION' | translate}}
-                </p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/tr%C3%A2n-shane-th%C3%A1i-5bb089159/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar4"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.SHANE.NAME' | translate}}</h4>
+                  <p>{{'TEAM.SHANE.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.SHANE.EXPERTISE' |
+                    translate}}</p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.SHANE.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a
+                  href="https://www.linkedin.com/in/tr%C3%A2n-shane-th%C3%A1i-5bb089159/" target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar5"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.NELSON.NAME' | translate}}</h4>
-                <p>{{'TEAM.NELSON.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.NELSON.EXPERTISE' |
-                  translate}}</p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.NELSON.PASSION' | translate}}
-                </p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/nguyen-nguyen-19ab28ba/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar5"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.NELSON.NAME' | translate}}</h4>
+                  <p>{{'TEAM.NELSON.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.NELSON.EXPERTISE' |
+                    translate}}</p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.NELSON.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/nguyen-nguyen-19ab28ba/"
+                                                  target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar6"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.KEN.NAME' | translate}}</h4>
-                <p>{{'TEAM.KEN.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.KEN.EXPERTISE' | translate}}
-                </p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.KEN.PASSION' | translate}}</p>
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/ken-g-06980381/" target="_blank">
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar6"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.KEN.NAME' | translate}}</h4>
+                  <p>{{'TEAM.KEN.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span
+                    class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.KEN.EXPERTISE' | translate}}
+                  </p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.KEN.PASSION' | translate}}
+                  </p>
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/ken-g-06980381/" target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
-            </div>
-            <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
-              <div class="img_team_avatar7"></div>
-              <div class="team_card_name">
-                <h4>{{'TEAM.ALAN.NAME' | translate}}</h4>
-                <p>{{'TEAM.ALAN.STATUS' | translate}}</p>
               </div>
-              <div class="team_card_text">
-                <p><span class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.ALAN.EXPERTISE' | translate}}
-                </p>
-                <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.ALAN.PASSION' | translate}}</p>
+              <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
+                <div class="img_team_avatar7"></div>
+                <div class="team_card_name">
+                  <h4>{{'TEAM.ALAN.NAME' | translate}}</h4>
+                  <p>{{'TEAM.ALAN.STATUS' | translate}}</p>
+                </div>
+                <div class="team_card_text">
+                  <p><span
+                    class="team-span">{{'TEAM.EXPERTISE' | translate}}</span> {{'TEAM.ALAN.EXPERTISE' | translate}}
+                  </p>
+                  <p><span class="team-span">{{'TEAM.PASSION' | translate}}</span> {{'TEAM.ALAN.PASSION' | translate}}
+                  </p>
 
-              </div>
-              <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/allanta/" target="_blank">
+                </div>
+                <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/allanta/" target="_blank">
                   <div class="linkedin_img"></div>
                 </a></div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <app-landing-form id="BusinessDemo"></app-landing-form>
-       <section class="build_with">
-         <div class="build_with_title col-12">
-           <h3>Build with</h3>
-         </div>
-         <div class="row build_with_list">
-           <a class="build_with_item" href="https://tor.us/">
-             <div class="torus_img" >
-
-             </div>
-           </a>
-           <a class="build_with_item" href="https://polygon.technology/">
-             <div class="polygon_img">
-
-             </div>
-           </a>
-           <a class="build_with_item " href="https://openzeppelin.com/">
-             <div class="openZep_img">
-
-             </div>
-           </a>
-           <a class="build_with_item " href="https://www.biconomy.io/">
-             <div class="biconomy_img">
-
-             </div>
-           </a>
-           <a class="build_with_item " href="https://ethereum.org/">
-             <div class="ethereum_img">
-
-             </div>
-           </a>
-           <a class="build_with_item" href="https://flur.ee/">
-             <div class="fluree_img">
-
-             </div>
-           </a>
-           <a class="build_with_item " href="https://www.quicknode.com/">
-             <div class="quikNode_img">
-
-             </div>
-           </a>
-
-         </div>
-
-       </section>
-      <footer class="container-fluid">
-        <div class="row justify-content-around footer-left">
-          <div class="col-lg-6 col-xs-12 order-lg-first">
-            <div>
-              <h4 class="h4">{{'FOOTER.TITLE_1' | translate}}</h4>
-            </div>
-            <div>
-              <p>{{'FOOTER.TEXT_1' | translate}}</p>
-            </div>
-            <div class="row text-adap" style="margin-bottom: 20px">
-              <div class="col-lg-3 col-6 d-flex mt-2">
-                <div class="img_telegram"></div>
-                <div class="pt-1 ml-2 mt-2">
-                  <a href="https://t.me/bettery_io" target="_blank">{{'NAVBAR.ITEM_10' | translate}}</a>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6 d-flex mt-2">
-                <div class="img_twitter"></div>
-                <div class="pt-1 ml-2 mt-2">
-                  <a href="https://twitter.com/BetteryOfficial" target="_blank">{{'NAVBAR.ITEM_12' | translate}}</a>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6 d-flex mt-2">
-                <div class="img_linkedin"></div>
-                <div class="pt-1 ml-2 mt-2">
-                  <a href="https://www.linkedin.com/company/bettery-io" target="_blank">{{'NAVBAR.ITEM_13' | translate}}</a>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6 d-flex mt-2">
-                <div class="img_mail"></div>
-                <div class="pt-1 ml-2 mt-2">
-                  <a href="mailto:hello@bettery.io"> hello@bettery.io</a>
-                </div>
-              </div>
-            </div>
-            <div class="policy-box-mobile">
-              <div class="policy-text pointer mb-3" routerLink="/privacy-policy">Privacy Policy</div>
-              <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
-            </div>
+        <app-landing-form id="BusinessDemo"></app-landing-form>
+        <section class="build_with">
+          <div class="build_with_title col-12">
+            <h3>Build with</h3>
           </div>
-          <div class="col-lg-4 col-xs-12 order-first">
-            <div>
-              <h4 class="h4">{{'FOOTER.TITLE_2' | translate}} </h4>
-            </div>
-            <div>
-              <p>{{'FOOTER.TEXT_2' | translate}}</p>
-            </div>
-            <form [formGroup]="form" (ngSubmit)="subscribe()">
-              <div class="input-group mb-3 focus">
-                <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
-                  formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
-                  aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
-                    <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
-                    <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
-                  </button>
-                </div>
+          <div class="row build_with_list">
+            <a class="build_with_item" href="https://tor.us/">
+              <div class="torus_img">
+
               </div>
-              <div *ngIf="submitted && f.email.errors">
-                <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' |
-                  translate}}</small>
-                <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' |
-                  translate}}</small>
+            </a>
+            <a class="build_with_item" href="https://polygon.technology/">
+              <div class="polygon_img">
+
               </div>
-            </form>
-            <div class="policy-box">
-              <div class="policy-text pointer" routerLink="/privacy-policy">Privacy Policy</div>
-              <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
-            </div>
+            </a>
+            <a class="build_with_item " href="https://openzeppelin.com/">
+              <div class="openZep_img">
+
+              </div>
+            </a>
+            <a class="build_with_item " href="https://www.biconomy.io/">
+              <div class="biconomy_img">
+
+              </div>
+            </a>
+            <a class="build_with_item " href="https://ethereum.org/">
+              <div class="ethereum_img">
+
+              </div>
+            </a>
+            <a class="build_with_item" href="https://flur.ee/">
+              <div class="fluree_img">
+
+              </div>
+            </a>
+            <a class="build_with_item " href="https://www.quicknode.com/">
+              <div class="quikNode_img">
+
+              </div>
+            </a>
 
           </div>
-        </div>
-      </footer>
+
+        </section>
+        <footer class="container-fluid">
+          <div class="row justify-content-around footer-left">
+            <div class="col-lg-6 col-xs-12 order-lg-first">
+              <div>
+                <h4 class="h4">{{'FOOTER.TITLE_1' | translate}}</h4>
+              </div>
+              <div>
+                <p>{{'FOOTER.TEXT_1' | translate}}</p>
+              </div>
+              <div class="row text-adap" style="margin-bottom: 20px">
+                <div class="col-lg-3 col-6 d-flex mt-2">
+                  <div class="img_telegram"></div>
+                  <div class="pt-1 ml-2 mt-2">
+                    <a href="https://t.me/bettery_io" target="_blank">{{'NAVBAR.ITEM_10' | translate}}</a>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6 d-flex mt-2">
+                  <div class="img_twitter"></div>
+                  <div class="pt-1 ml-2 mt-2">
+                    <a href="https://twitter.com/BetteryOfficial" target="_blank">{{'NAVBAR.ITEM_12' | translate}}</a>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6 d-flex mt-2">
+                  <div class="img_linkedin"></div>
+                  <div class="pt-1 ml-2 mt-2">
+                    <a href="https://www.linkedin.com/company/bettery-io"
+                       target="_blank">{{'NAVBAR.ITEM_13' | translate}}</a>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6 d-flex mt-2">
+                  <div class="img_mail"></div>
+                  <div class="pt-1 ml-2 mt-2">
+                    <a href="mailto:hello@bettery.io"> hello@bettery.io</a>
+                  </div>
+                </div>
+              </div>
+              <div class="policy-box-mobile">
+                <div class="policy-text pointer mb-3" routerLink="/privacy-policy">Privacy Policy</div>
+                <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xs-12 order-first">
+              <div>
+                <h4 class="h4">{{'FOOTER.TITLE_2' | translate}} </h4>
+              </div>
+              <div>
+                <p>{{'FOOTER.TEXT_2' | translate}}</p>
+              </div>
+              <form [formGroup]="form" (ngSubmit)="subscribe()">
+                <div class="input-group mb-3 focus">
+                  <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
+                         formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
+                         aria-label="Recipient's username" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
+                      <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
+                      <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="submitted && f.email.errors">
+                  <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' |
+                    translate}}</small>
+                  <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' |
+                    translate}}</small>
+                </div>
+              </form>
+              <div class="policy-box">
+                <div class="policy-text pointer" routerLink="/privacy-policy">Privacy Policy</div>
+                <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
+              </div>
+
+            </div>
+          </div>
+        </footer>
+      </div>
+
     </div>
   </div>
 </div>
