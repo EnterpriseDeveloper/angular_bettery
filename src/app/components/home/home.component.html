@@ -1,73 +1,76 @@
 <div class="main_wrapper">
   <div class="images">
+    <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
+         [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
+         class="container-fluid">
+      <div class="max-width_1920 container-fluid row d-flex align-items-center ">
+        <div class="col-3 col-lg-2 logo"></div>
+        <div class="d-flex align-items-center col-lg-9  pl-pr-0">
+          <ul class="nav_bar">
+            <li class="nav_bar_item">
+              <a href="#social" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
+                translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' |
+                translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' |
+                translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' |
+                translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="https://friendlybets.medium.com/" target="_blank">{{'NAVBAR.ITEM_8' | translate}}</a>
+            </li>
+            <li class="nav_bar_item">
+              <a href="https://docs.bettery.io" target="_blank">{{'NAVBAR.ITEM_11' | translate}}</a>
+            </li>
+            <!--            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">-->
+            <!--              <a class="questionMark-img" href="#"></a>-->
+            <!--            </li>-->
+            <!--            <li class="nav_bar_item position-relative ml-3">-->
+            <!--              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io"></a>-->
+            <!--            </li>-->
+            <li class="nav_bar_item">
+              <div class="icons-block">
+                <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
+
+                </a>
+                <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
+
+                </a>
+                <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
+
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+        <!--  DO NOT HAVE TRANSLATE FOR VETNAMESE LANGUAGE -->
+        <!-- <div class="d-flex align-items-center pb-3 col-lg-1 lang-1 mt-4">
+          <select id="language1" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
+            <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
+          </select>
+        </div> -->
+        <div routerLink="./join" class="launch-app"></div>
+      </div>
+    </nav>
     <div class="main bg-main">
 
       <div class="bg-basic-img">
-        <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-             [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
-             class="container-fluid row d-flex align-items-center pb-2">
-          <div class="col-3 col-lg-2 logo"></div>
-          <div class="d-flex align-items-center col-lg-9  pl-pr-0">
-            <ul class="nav_bar">
-              <li class="nav_bar_item">
-                <a href="#social" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_1' | translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="#whyBettery" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_3' |
-                  translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="#tokenSale" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_4' |
-                  translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="#roadmap" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_5' |
-                  translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="#team" (click)="styleHideMen()" pageScrollOffset="100" pageScroll>{{'NAVBAR.ITEM_6' |
-                  translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="#BusinessDemo" pageScroll>{{'NAVBAR.ITEM_7' | translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="https://friendlybets.medium.com/" target="_blank">{{'NAVBAR.ITEM_8' | translate}}</a>
-              </li>
-              <li class="nav_bar_item">
-                <a href="https://docs.bettery.io" target="_blank">{{'NAVBAR.ITEM_11' | translate}}</a>
-              </li>
-              <!--            <li (click)="open(content)" class="nav_bar_item position-relative ml-3">-->
-              <!--              <a class="questionMark-img" href="#"></a>-->
-              <!--            </li>-->
-              <!--            <li class="nav_bar_item position-relative ml-3">-->
-              <!--              <a class="tgr-img" target="_blank" href="https://t.me/bettery_io"></a>-->
-              <!--            </li>-->
-              <li class="nav_bar_item">
-                <div class="icons-block">
-                  <a href="https://t.me/bettery_io" target="_blank" class="tgr-img">
 
-                  </a>
-                  <a href="https://twitter.com/BetteryOfficial" target="_blank" class="twitter-img">
-
-                  </a>
-                  <a href="https://www.linkedin.com/company/bettery-io" target="_blank" class="linkedin-img">
-
-                  </a>
-                </div>
-              </li>
-
-            </ul>
-
-          </div>
-          <!--  DO NOT HAVE TRANSLATE FOR VETNAMESE LANGUAGE -->
-          <!-- <div class="d-flex align-items-center pb-3 col-lg-1 lang-1 mt-4">
-            <select id="language1" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
-              <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
-            </select>
-          </div> -->
-          <div routerLink="./join" class="launch-app"></div>
-        </nav>
 
         <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
              [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
