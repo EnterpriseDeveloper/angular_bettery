@@ -797,129 +797,134 @@
           </div>
         </section>
 
-        <app-landing-form id="BusinessDemo"></app-landing-form>
-        <section class="build_with">
-          <div class="build_with_title col-12">
-            <h3>Build with</h3>
-          </div>
-          <div class="row build_with_list">
-            <a class="build_with_item" href="https://tor.us/">
-              <div class="torus_img">
 
-              </div>
-            </a>
-            <a class="build_with_item" href="https://polygon.technology/">
-              <div class="polygon_img">
 
-              </div>
-            </a>
-            <a class="build_with_item " href="https://openzeppelin.com/">
-              <div class="openZep_img">
 
-              </div>
-            </a>
-            <a class="build_with_item " href="https://www.biconomy.io/">
-              <div class="biconomy_img">
-
-              </div>
-            </a>
-            <a class="build_with_item " href="https://ethereum.org/">
-              <div class="ethereum_img">
-
-              </div>
-            </a>
-            <a class="build_with_item" href="https://flur.ee/">
-              <div class="fluree_img">
-
-              </div>
-            </a>
-            <a class="build_with_item " href="https://www.quicknode.com/">
-              <div class="quikNode_img">
-
-              </div>
-            </a>
-
-          </div>
-
-        </section>
-        <footer class="container-fluid">
-          <div class="row justify-content-around footer-left">
-            <div class="col-lg-6 col-xs-12 order-lg-first">
-              <div>
-                <h4 class="h4">{{'FOOTER.TITLE_1' | translate}}</h4>
-              </div>
-              <div>
-                <p>{{'FOOTER.TEXT_1' | translate}}</p>
-              </div>
-              <div class="row text-adap" style="margin-bottom: 20px">
-                <div class="col-lg-3 col-6 d-flex mt-2">
-                  <div class="img_telegram"></div>
-                  <div class="pt-1 ml-2 mt-2">
-                    <a href="https://t.me/bettery_io" target="_blank">{{'NAVBAR.ITEM_10' | translate}}</a>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-6 d-flex mt-2">
-                  <div class="img_twitter"></div>
-                  <div class="pt-1 ml-2 mt-2">
-                    <a href="https://twitter.com/BetteryOfficial" target="_blank">{{'NAVBAR.ITEM_12' | translate}}</a>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-6 d-flex mt-2">
-                  <div class="img_linkedin"></div>
-                  <div class="pt-1 ml-2 mt-2">
-                    <a href="https://www.linkedin.com/company/bettery-io"
-                       target="_blank">{{'NAVBAR.ITEM_13' | translate}}</a>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-6 d-flex mt-2">
-                  <div class="img_mail"></div>
-                  <div class="pt-1 ml-2 mt-2">
-                    <a href="mailto:hello@bettery.io"> hello@bettery.io</a>
-                  </div>
-                </div>
-              </div>
-              <div class="policy-box-mobile">
-                <div class="policy-text pointer mb-3" routerLink="/privacy-policy">Privacy Policy</div>
-                <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-xs-12 order-first">
-              <div>
-                <h4 class="h4">{{'FOOTER.TITLE_2' | translate}} </h4>
-              </div>
-              <div>
-                <p>{{'FOOTER.TEXT_2' | translate}}</p>
-              </div>
-              <form [formGroup]="form" (ngSubmit)="subscribe()">
-                <div class="input-group mb-3 focus">
-                  <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
-                         formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
-                         aria-label="Recipient's username" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
-                      <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
-                      <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
-                    </button>
-                  </div>
-                </div>
-                <div *ngIf="submitted && f.email.errors">
-                  <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' |
-                    translate}}</small>
-                  <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' |
-                    translate}}</small>
-                </div>
-              </form>
-              <div class="policy-box">
-                <div class="policy-text pointer" routerLink="/privacy-policy">Privacy Policy</div>
-                <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
-              </div>
-
-            </div>
-          </div>
-        </footer>
       </div>
 
     </div>
+    <app-landing-form id="BusinessDemo"></app-landing-form>
+    <section class="build_with">
+      <div class="build_with_title col-12">
+        <h3>Build with</h3>
+      </div>
+      <div class="row build_with_list">
+        <a class="build_with_item" href="https://tor.us/">
+          <div class="torus_img">
+
+          </div>
+        </a>
+        <a class="build_with_item" href="https://polygon.technology/">
+          <div class="polygon_img">
+
+          </div>
+        </a>
+        <a class="build_with_item " href="https://openzeppelin.com/">
+          <div class="openZep_img">
+
+          </div>
+        </a>
+        <a class="build_with_item " href="https://www.biconomy.io/">
+          <div class="biconomy_img">
+
+          </div>
+        </a>
+        <a class="build_with_item " href="https://ethereum.org/">
+          <div class="ethereum_img">
+
+          </div>
+        </a>
+        <a class="build_with_item" href="https://flur.ee/">
+          <div class="fluree_img">
+
+          </div>
+        </a>
+        <a class="build_with_item " href="https://www.quicknode.com/">
+          <div class="quikNode_img">
+
+          </div>
+        </a>
+
+      </div>
+
+    </section>
+    <footer class="container-fluid ">
+      <div class="footer-content">
+        <div class="row justify-content-around footer-left">
+          <div class="col-lg-6 col-xs-12 order-lg-first">
+            <div>
+              <h4 class="h4">{{'FOOTER.TITLE_1' | translate}}</h4>
+            </div>
+            <div>
+              <p>{{'FOOTER.TEXT_1' | translate}}</p>
+            </div>
+            <div class="row text-adap" style="margin-bottom: 20px">
+              <div class="col-lg-3 col-6 d-flex mt-2">
+                <div class="img_telegram"></div>
+                <div class="pt-1 ml-2 mt-2">
+                  <a href="https://t.me/bettery_io" target="_blank">{{'NAVBAR.ITEM_10' | translate}}</a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6 d-flex mt-2">
+                <div class="img_twitter"></div>
+                <div class="pt-1 ml-2 mt-2">
+                  <a href="https://twitter.com/BetteryOfficial" target="_blank">{{'NAVBAR.ITEM_12' | translate}}</a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6 d-flex mt-2">
+                <div class="img_linkedin"></div>
+                <div class="pt-1 ml-2 mt-2">
+                  <a href="https://www.linkedin.com/company/bettery-io"
+                     target="_blank">{{'NAVBAR.ITEM_13' | translate}}</a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6 d-flex mt-2">
+                <div class="img_mail"></div>
+                <div class="pt-1 ml-2 mt-2">
+                  <a href="mailto:hello@bettery.io"> hello@bettery.io</a>
+                </div>
+              </div>
+            </div>
+            <div class="policy-box-mobile">
+              <div class="policy-text pointer mb-3" routerLink="/privacy-policy">Privacy Policy</div>
+              <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-xs-12 order-first">
+            <div>
+              <h4 class="h4">{{'FOOTER.TITLE_2' | translate}} </h4>
+            </div>
+            <div>
+              <p>{{'FOOTER.TEXT_2' | translate}}</p>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="subscribe()">
+              <div class="input-group mb-3 focus">
+                <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
+                       formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
+                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
+                    <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>
+                    <span *ngIf="afterSubType"> {{'FOOTER.BUTTON_TEXT_2' | translate}}</span>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="submitted && f.email.errors">
+                <small *ngIf="f.email.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' |
+                  translate}}</small>
+                <small *ngIf="f.email.errors.email" class="valid_text quize_validation_error">{{'FORM.EMAIL_ERROR' |
+                  translate}}</small>
+              </div>
+            </form>
+            <div class="policy-box">
+              <div class="policy-text pointer" routerLink="/privacy-policy">Privacy Policy</div>
+              <div class="policy-text right-policy">Copyright © 2021 Bettery.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 
