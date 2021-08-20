@@ -191,8 +191,8 @@ export class RegistrationComponent implements OnDestroy {
       this.linkSub.unsubscribe();
     }
   }
-
   loginWithAuth0(param: string) {
+    // todo with linkUser
     this.webAuth.authorize({
       connection: param,
     });
