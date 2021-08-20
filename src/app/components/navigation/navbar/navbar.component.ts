@@ -168,6 +168,19 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     });
   }
 
+  async newlogOut() {
+    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+      // web3Obj.logOut();
+      localStorage.removeItem('_buserlog');
+      this.store.dispatch(new UserActions.RemoveUser(0));
+      this.nickName = undefined;
+      this.openNavBar = false;
+      this.logoutBox = false;
+    }, err => {
+      console.log(err);
+    });
+  }
+
   async loginWithTorus() {
     const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
     modalRef.componentInstance.openSpinner = true;

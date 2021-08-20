@@ -50,9 +50,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             authHelp.walletInit().then(() => {
               wallet = authHelp.walletUser.pubKey;
 
-
               const refId = sessionStorage.getItem('bettery_ref');
-
 
               const newUser = {
                 nickName: authResult.idTokenPayload.nickname,
@@ -67,7 +65,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.registerSub$ = this.postService.post('user/auth0_register', newUser).subscribe((x: any) => {
                 if (x) {
                   this.sendUserToStore(x);
-                  authHelp.saveAccessTokenLS(x.accessToken);  // save accessToken to LocalStorage from autoLogin
+                  authHelp.saveAccessTokenLS(x.accessToken);  //? save accessToken to LocalStorage from autoLogin
                 }
               });
             });
@@ -79,6 +77,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               console.log('enter seed phrase');
             }
             if (data.walletVerif === 'success') {
+              console.log('success success success');
               this.sendUserToStore(data);
               authHelp.saveAccessTokenLS(data.accessToken); // save accessToken to LocalStorage from autoLogin
             }
