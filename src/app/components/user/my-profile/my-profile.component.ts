@@ -4,13 +4,11 @@ import { User } from '../../../models/User.model';
 import { PostService } from '../../../services/post.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationComponent } from '../../registration/registration/registration.component';
-import Web3 from 'web3';
-import maticInit from '../../../contract/maticInit';
-import { environment } from '../../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
+import {GetService} from '../../../services/get.service';
 
 @Component({
   selector: 'my-profile',
@@ -42,6 +40,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
+    private getService: GetService
   ) {
 
   }
@@ -94,38 +93,14 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   }
 
   async updateBalance() {
-    let web3 = new Web3();
-
-    let matic = new maticInit(this.userData.verifier);
-    let BTYToken = await matic.getBTYTokenBalance();
-    let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = '0';
-
-    if (!environment.production) {
-      // TODO
-      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
-    }
-
-    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
-    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
-    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
+    this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      MainBTY: MainBTYBalance,
-      BTY: BTYBalance,
-      BET: BETBalance
+      // TODO check bty on main chain
+      MainBTY: "0",
+      BTY: e.bty,
+      BET: e.bet
     }));
-    this.sendBalanceToDB(BTYBalance, BETBalance);
-  }
-
-  sendBalanceToDB(bty, bet): void {
-    const data = {
-      bty: bty,
-      bet: bet,
-      id: this.userData._id
-    };
-
-    this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
     }, error => {
       console.log(error);
     });

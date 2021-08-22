@@ -4,7 +4,6 @@ import { AppState } from '../../../app.state';
 import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
-import maticInit from "../../../contract/maticInit";
 import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
@@ -15,9 +14,7 @@ import { User } from '../../../models/User.model';
 import { RegistrationComponent } from '../../registration/registration/registration.component';
 import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component';
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
-import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
-import biconomyInit from '../../../contract/biconomy';
 import {GetService} from '../../../services/get.service';
 
 
@@ -55,7 +52,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
-    private postService: PostService,
     private getService: GetService
   ) {
 
@@ -105,44 +101,20 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async updateBalance() {
-    let web3 = new Web3();
-    if (!window.biconomy) {
-      await biconomyInit();
-    }
-    let matic = new maticInit(this.verifier);
-    let BTYToken = await matic.getBTYTokenBalance();
-    let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = "0";
-
-    if (!environment.production) {
-      // TODO
-      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
-    }
-
-    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
-    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
-    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
+    this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      MainBTY: MainBTYBalance,
-      BTY: BTYBalance,
-      BET: BETBalance
+      // TODO check bty on main chain
+      MainBTY: "0",
+      BTY: e.bty,
+      BET: e.bet
     }));
     this.amountSpinner = false;
-    this.sendBalanceToDB(BTYBalance, BETBalance);
-  }
-
-  sendBalanceToDB(bty, bet): void {
-    const data = {
-      bty: bty,
-      bet: bet,
-    };
-
-    this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
     }, error => {
       console.log(error);
     });
   }
+
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
