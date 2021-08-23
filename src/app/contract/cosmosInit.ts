@@ -1,10 +1,18 @@
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { MsgCreateSwipeBet } from "./funds/tx";
+import { MsgCreateSwipeBet } from "./funds/tx"; 
+import {MsgCreateValidPubEvents, MsgCreateCreatePubEvents, MsgCreatePartPubEvents} from './pubEvents/tx'
+import {MsgCreateValidPrivEvents, MsgCreatePartPrivEvents, MsgCreateCreatePrivEvents} from './privEvents/tx'
 
 
 const types = [
-    ["/VoroshilovMax.bettery.funds.MsgCreateSwipeBet", MsgCreateSwipeBet]
+    ["/VoroshilovMax.bettery.funds.MsgCreateSwipeBet", MsgCreateSwipeBet],
+    ["/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents", MsgCreateValidPubEvents],
+    ["/VoroshilovMax.bettery.publicevents.MsgCreateCreatePubEvents", MsgCreateCreatePubEvents],
+    ["/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents", MsgCreatePartPubEvents],
+    ["/VoroshilovMax.bettery.privateevents.MsgCreateValidPrivEvents", MsgCreateValidPrivEvents],
+    ["/VoroshilovMax.bettery.privateevents.MsgCreatePartPrivEvents", MsgCreatePartPrivEvents],
+    ["/VoroshilovMax.bettery.privateevents.MsgCreateCreatePrivEvents", MsgCreateCreatePrivEvents],
   ];
 
 const registry = new Registry(<any>types);
