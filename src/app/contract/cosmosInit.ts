@@ -3,6 +3,7 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { MsgCreateSwipeBet } from "./funds/tx"; 
 import {MsgCreateValidPubEvents, MsgCreateCreatePubEvents, MsgCreatePartPubEvents} from './pubEvents/tx'
 import {MsgCreateValidPrivEvents, MsgCreatePartPrivEvents, MsgCreateCreatePrivEvents} from './privEvents/tx'
+import authHelp from '../helpers/auth-help'
 
 
 const types = [
@@ -19,15 +20,20 @@ const registry = new Registry(<any>types);
 
 
 const connectToSign = async () => {
-    let memonic = "raw happy comic priority that neglect tree wheel east maid bag shiver emotion nerve animal upper video elbow bind swap eager annual burst find"
-    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(
-        memonic
-    );
-
-    let addr = "http://localhost:26657";
-    const [{ address }] = await wallet.getAccounts();
-    const client = await SigningStargateClient.connectWithSigner(addr, wallet, { registry });
-    return { memonic, address, client }
+    let memonic = authHelp.walletUser.mnemonic
+    if(memonic){
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(
+            memonic
+        );
+    
+        let addr = "http://localhost:26657";
+        const [{ address }] = await wallet.getAccounts();
+        const client = await SigningStargateClient.connectWithSigner(addr, wallet, { registry });
+        return { memonic, address, client }
+    }else{
+        console.log("error getting memonic")
+    }
+    
 }
 
 export {

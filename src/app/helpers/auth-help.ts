@@ -38,6 +38,9 @@ const authHelp = {
     obj.accessToken = token;
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(obj), environment.secretKey);
     localStorage.setItem('_buserlog', bytes.toString());
+  },
+  setMemo: (data: any) =>{
+    authHelp.walletUser = {mnemonic: data.mnemonic, pubKey: data.pubKey.address};
   }
 };
 

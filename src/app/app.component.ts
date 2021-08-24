@@ -77,6 +77,7 @@ export class AppComponent implements OnDestroy {
           x.verifierId,
           x.accessToken
         );
+        authHelp.setMemo(walletDectypt)
       }, (err) => {
         console.log('from auto login', err);
       });
