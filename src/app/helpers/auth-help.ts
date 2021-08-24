@@ -26,6 +26,12 @@ const authHelp = {
 
   walletUser: null,
 
+  generatePubKey: async (mnemonic) => {
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic);
+    const [pubKey] = await wallet.getAccounts();
+    return pubKey;
+  },
+
   walletDectypt: () => {
     const data = localStorage.getItem('_buserlog');
     if (data) {
@@ -33,9 +39,18 @@ const authHelp = {
     }
   },
 
-  saveAccessTokenLS: (token) => {
-    let obj = authHelp.walletDectypt();
-    obj.accessToken = token;
+  saveAccessTokenLS: (token, pubKey, mnemonic) => {
+    let obj: any = authHelp.walletDectypt();
+    if (obj === undefined) {
+      obj = {};
+    }
+    if (token) {
+      obj.accessToken = token;
+    }
+    if (pubKey && mnemonic) {
+      obj.pubKey = pubKey;
+      obj.mnemonic = mnemonic;
+    }
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(obj), environment.secretKey);
     localStorage.setItem('_buserlog', bytes.toString());
   }

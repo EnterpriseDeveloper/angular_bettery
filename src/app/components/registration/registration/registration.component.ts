@@ -58,7 +58,7 @@ export class RegistrationComponent implements OnDestroy {
     if (this.linkUser) {
       if (!this.linVerification(selectedVerifier)) {
         this.spinner = true;
-        let {data, err} = await web3Obj.linkUser(selectedVerifier);
+        let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ?????
         if (!err) {
           await this.linkAccount(data);
         } else {
