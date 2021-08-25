@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnDestroy {
   linkSub: Subscription;
   spinner: boolean;
   saveUserLocStorage = [];
-  alreadyRegister = undefined;
+  @Input() alreadyRegister = undefined;
   webAuth: any;
 
   constructor(
@@ -54,11 +54,20 @@ export class RegistrationComponent implements OnDestroy {
     this.activeModal.close();
   }
 
+  loginWithAuth0(param: string) {
+    // todo with linkUser
+    param = param === 'email' ? null : param;
+    this.webAuth.authorize({
+      connection: param,
+    });
+    sessionStorage.setItem('betteryPath', window.location.pathname);
+  }
+
   async loginWithTorus(selectedVerifier) {
     if (this.linkUser) {
       if (!this.linVerification(selectedVerifier)) {
         this.spinner = true;
-        let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ?????
+        let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ????? check
         if (!err) {
           await this.linkAccount(data);
         } else {
@@ -190,12 +199,5 @@ export class RegistrationComponent implements OnDestroy {
     if (this.linkSub) {
       this.linkSub.unsubscribe();
     }
-  }
-  loginWithAuth0(param: string) {
-    // todo with linkUser
-    this.webAuth.authorize({
-      connection: param,
-    });
-    sessionStorage.setItem('betteryPath', window.location.pathname);
   }
 }

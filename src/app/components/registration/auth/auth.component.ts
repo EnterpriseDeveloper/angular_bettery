@@ -2,11 +2,12 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {Router} from '@angular/router';
 import {PostService} from '../../../services/post.service';
 import {Store} from '@ngrx/store';
-import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppState} from '../../../app.state';
 import authHelp from '../../../helpers/auth-help';
 import * as UserActions from '../../../actions/user.actions';
 import {Subscription} from 'rxjs';
+import {RegistrationComponent} from '../registration/registration.component';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private postService: PostService,
+    private modalService: NgbModal,
     private store: Store<AppState>) {
   }
 
@@ -53,16 +55,16 @@ export class AuthComponent implements OnInit, OnDestroy {
       if (authResult) {
 
         const dataForSend = {
-            email: authResult.idTokenPayload.email,
-            nickname: authResult.idTokenPayload.nickname,
-            verifierId: authResult.idTokenPayload.sub,
-            pubKey: pubKey,
-            accessToken: authResult.accessToken
+          email: authResult.idTokenPayload.email,
+          nickname: authResult.idTokenPayload.nickname,
+          verifierId: authResult.idTokenPayload.sub,
+          pubKey: pubKey,
+          accessToken: authResult.accessToken
         };
         this.authResultGlobal = dataForSend;
         this.loginSub$ = this.postService.post('user/auth0_login', dataForSend).subscribe((data: any) => {
           if (!data) {
-            // todo == NEW USER ==
+            // ? == NEW USER ==
             authHelp.walletInit().then(() => {
               wallet = authHelp.walletUser.pubKey;
               mnemonic = authHelp.walletUser.mnemonic;
@@ -82,12 +84,11 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.registerSub$ = this.postService.post('user/auth0_register', newUser).subscribe((x: any) => {
                 this.dataRegist = x;
                 if (x) {
-                  // ?show seed phrase
+                  // ?  == show seed phrase ==
                   this.modalOpen = true;
                   this.modalStatus = false;
                   this.spinner = false;
                   this.seedPhrase = mnemonic;
-                  // ?====================
                 }
               });
             });
@@ -107,6 +108,12 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.sendUserToStore(data);
               authHelp.saveAccessTokenLS(data.accessToken, null, null); // save accessToken to LocalStorage from autoLogin
             }
+          }
+        }, (error) => {
+          if (error.status == 302) {
+            console.log('error', error.status);
+          } else {
+            console.log(error);
           }
         });
       }
@@ -129,7 +136,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       if (this.walletFromDB === pubKeyActual.address) {
         authHelp.saveAccessTokenLS(null, pubKeyActual, $event.seedPh);
         this.authResultGlobal.pubKeyActual = pubKeyActual.address;
-        this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal ).subscribe((data: any) => {
+        this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal).subscribe((data: any) => {
 
           if (data && data.walletVerif === 'success') {
             this.sendUserToStore(data);
@@ -142,11 +149,21 @@ export class AuthComponent implements OnInit, OnDestroy {
             // todo может очистить локал стор
             console.error('error from "user/auth0_login"');
           }
+        }, (error) => {
+          if (error.status == 302) {
+            localStorage.removeItem('_buserlog');
+            const path = sessionStorage.getItem('betteryPath');
+            this.router.navigate([path]);
+            const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
+            modalRef.componentInstance.alreadyRegister = error.error;
+          } else {
+            console.log(error);
+          }
         });
       }
     }
 
-    if ($event === 'Cancel') {
+    if ($event.btn === 'Cancel') {
       const path = sessionStorage.getItem('betteryPath');
       this.router.navigate([path]);
     }

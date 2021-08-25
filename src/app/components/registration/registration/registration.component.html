@@ -1,4 +1,4 @@
-<div *ngIf="!spinner">
+<div *ngIf="!spinner && alreadyRegister == undefined">
   <div *ngIf="!openSpinner">
     <div style="padding: 0 40px; border: none">
       <div>
@@ -99,7 +99,7 @@
     </div>
 
     <div style="padding: 10px 24px">
-      <button (click)="loginWithTorus('email')" class="btn-with-email" type="submit">
+      <button (click)="loginWithAuth0('email')" class="btn-with-email" type="submit">
         CONTINUE with email
       </button>
     </div>
@@ -141,7 +141,7 @@
     using one of these platforms:</div>
   <div class="already_regist_icon_box">
     <div class="wrapCard icon_width" *ngFor="let link of alreadyRegister.linkedAccounts">
-      <div class="bg-{{link}} card w-100" (click)="loginWithTorus(link)">
+      <div class="bg-{{link}} card w-100" (click)="loginWithAuth0(link == 'google' ? 'google-oauth2' : link)">
         <div class="{{link}}-img"></div>
       </div>
     </div>
