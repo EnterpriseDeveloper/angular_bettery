@@ -10,7 +10,6 @@ import {
 import { User } from '../../../../models/User.model';
 import { Answer } from '../../../../models/Answer.model';
 import Web3 from 'web3';
-import Contract from '../../../../contract/contract';
 import * as UserActions from '../../../../actions/user.actions';
 import { PostService } from '../../../../services/post.service';
 import { Store } from '@ngrx/store';
@@ -23,6 +22,7 @@ import { Coins } from '../../../../models/Coins.model';
 import { RegistrationComponent } from '../../../registration/registration/registration.component';
 import { ClipboardService } from 'ngx-clipboard';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { connectToSign } from '../../../../contract/cosmosInit';
 
 @Component({
   selector: 'quiz-template',
@@ -188,15 +188,17 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           amount: this.question.usersAnswers.amount,
           betAmount: null,
           mintedToken: null,
-          payToken: null
+          payToken: null,
+          answerName: null
         };
       }
     }
   }
 
-  makeAnswer(i) {
+  makeAnswer(i, answer) {
     this.letsRegistration();
     this.myAnswers.answer = i;
+    this.myAnswers.answerName = answer
   }
 
   avgBet(q) {
@@ -365,11 +367,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   async setToNetwork(answer) {
-    if (!this.coinInfo) {
-      setTimeout(() => {
-        this.setToNetwork(answer)
-      }, 1000)
-    } else if (Number(this.coinInfo.BET) < Number(answer.amount)) {
+    if (Number(this.coinInfo.BET) < Number(answer.amount)) {
       let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
       modalRef.componentInstance.errType = 'error';
       modalRef.componentInstance.title = 'Insufficient BET';
@@ -379,19 +377,53 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.disable = null;
     } else {
       let web3 = new Web3();
-      let contract = new Contract();
       var _money = web3.utils.toWei(String(answer.amount), 'ether');
-      await contract.approveBETToken(this.allUserData.wallet, _money);
+      let { memonic, address, client } = await connectToSign()
 
-      this.setToDB(answer);
+      const msg = {
+        typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents",
+        value: {
+          creator: address,
+          pubId: answer.event_id,
+          answers: answer.answerName,
+          amount: _money
+        }
+      };
+      const fee = {
+        amount: [],
+        gas: "1000000",
+      };
+      try {
+        let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+        if(transact.transactionHash && transact.code == 0){
+          this.setToDB(transact.transactionHash, answer);
+        }else{
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+          modalRef.componentInstance.errType = 'error';
+          modalRef.componentInstance.title = 'Unknown Error';
+          modalRef.componentInstance.customMessage = String(transact);
+          modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+          modalRef.componentInstance.nameButton = 'report error';
+          this.disable = null;
+        }
+      } catch (err) {
+        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+        modalRef.componentInstance.errType = 'error';
+        modalRef.componentInstance.title = 'Unknown Error';
+        modalRef.componentInstance.customMessage = String(err.error);
+        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+        modalRef.componentInstance.nameButton = 'report error';
+        this.disable = null;
+      }
     }
   }
 
-  setToDB(answer) {
+  setToDB(transactionHash, answer) {
     let data = {
       event_id: answer.event_id,
       answerIndex: answer.answer,
-      amount: Number(answer.amount)
+      amount: Number(answer.amount),
+      transactionHash: "0x"+transactionHash
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
       this.updateUser();

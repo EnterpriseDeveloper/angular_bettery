@@ -27,7 +27,7 @@
                   <div *ngIf="!finalAnswerGuard(question)">
                     <div class="d-flex align-items-center" [ngClass]="answersStructure()">
                       <div class="each_answer" [ngClass]="answersStructure() == 'in_row_6' && 'col-4'" *ngFor="let answer of question.answers; let i = index">
-                        <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i)"
+                        <input class="checkbox_answer" id="{{question.id}}{{i}}" (click)="this.makeAnswer(i, answer)"
                           value="{{i}}" type="radio" name="{{question.id}}">
                         <label for="{{question.id}}{{i}}" class="label answer-checkbox" style="cursor: pointer">{{answer}}</label>
                       </div>

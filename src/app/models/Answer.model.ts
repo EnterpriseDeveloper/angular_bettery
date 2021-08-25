@@ -7,4 +7,5 @@ export interface Answer {
   betAmount: number;
   mintedToken: number;
   payToken: number;
+  answerName: string;
 }
