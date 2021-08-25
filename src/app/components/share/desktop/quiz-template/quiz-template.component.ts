@@ -467,13 +467,51 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
 
   async setToNetworkValidation(answer) {
-    this.setToDBValidation(answer);
+    let { memonic, address, client } = await connectToSign()
+    const msg = {
+      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents",
+      value: {
+        creator: address,
+        pubId: answer.event_id,
+        answers: answer.answerName,
+        reput: 1 // TODO get reput
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+
+    console.log(msg);
+    try {
+      let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      console.log(transact)
+      if(transact.transactionHash && transact.code == 0){
+        this.setToDBValidation(transact.transactionHash, answer);
+      }else{
+        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+        modalRef.componentInstance.errType = 'error';
+        modalRef.componentInstance.title = 'Unknown Error';
+        modalRef.componentInstance.customMessage = JSON.stringify(transact);
+        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+        modalRef.componentInstance.nameButton = 'report error';
+      }
+    } catch (err) {
+      let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+      modalRef.componentInstance.errType = 'error';
+      modalRef.componentInstance.title = 'Unknown Error';
+      modalRef.componentInstance.customMessage = String(err.error);
+      modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+      modalRef.componentInstance.nameButton = 'report error';
+    }
   }
 
-  setToDBValidation(answer) {
+  setToDBValidation(transactionHash, answer) {
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
+      reputation: 1, // TODO get reputation
+      transactionHash: "0x"+transactionHash
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.updateUser();
@@ -482,6 +520,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     },
       (err) => {
         console.log(err);
+        // TODO change error handler
         if (err.error.includes('not valid time')) {
           if (this.timeValidating(this.question)) {
             let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });

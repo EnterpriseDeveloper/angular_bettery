@@ -7,6 +7,7 @@ import { PostService } from '../../../../../services/post.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../../../../models/User.model';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
+import { connectToSign } from '../../../../../contract/cosmosInit';
 
 @Component({
   selector: 'validate',
@@ -111,20 +112,48 @@ export class ValidateComponent implements OnInit, OnDestroy {
     }
   }
 
-  validate() {
+  async validate() {
     this.submitted = true;
     if (this.answerForm.invalid) {
       return
     }
-    this.setToDBValidation(this.eventData)
+    let { memonic, address, client } = await connectToSign()
+
+    const msg = {
+      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents",
+      value: {
+        creator: address,
+        pubId: this.eventData.id,
+        answers: this.answerForm.value.answer,
+        reput: 1 // TODO get reput
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+    try {
+      let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      if(transact.transactionHash && transact.code == 0){
+        this.setToDBValidation(this.eventData, transact.transactionHash);
+      }else{
+        this.spinnerLoading = false
+        this.errorMessage = String(transact)
+      }
+    } catch (err) {
+      this.spinnerLoading = false
+      this.errorMessage = String(err.error);
+    }
   }
 
-  setToDBValidation(dataAnswer) {
+  setToDBValidation(dataAnswer, transactionHash) {
     this.spinnerLoading = true;
     var _whichAnswer = this.eventData.answers.findIndex((o) => { return o == this.answerForm.value.answer; });
     let data = {
       event_id: dataAnswer.id,
       answer: _whichAnswer,
+      reputation: 1, // TODO get reputation
+      transactionHash: "0x"+transactionHash
     }
     this.postSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.errorMessage = undefined;
