@@ -51,8 +51,16 @@ export class AuthComponent implements OnInit, OnDestroy {
         pubKey = pubKeyFromLS.pubKey.address;
       }
       if (authResult) {
-        this.authResultGlobal = authResult;
-        this.loginSub$ = this.postService.post('user/auth0_login', {data: authResult, pubKey}).subscribe((data: any) => {
+
+        const dataForSend = {
+            email: authResult.idTokenPayload.email,
+            nickname: authResult.idTokenPayload.nickname,
+            verifierId: authResult.idTokenPayload.sub,
+            pubKey: pubKey,
+            accessToken: authResult.accessToken
+        };
+        this.authResultGlobal = dataForSend;
+        this.loginSub$ = this.postService.post('user/auth0_login', dataForSend).subscribe((data: any) => {
           if (!data) {
             // todo == NEW USER ==
             authHelp.walletInit().then(() => {
@@ -120,11 +128,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
       if (this.walletFromDB === pubKeyActual.address) {
         authHelp.saveAccessTokenLS(null, pubKeyActual, $event.seedPh);
-
-        this.loginSub$ = this.postService.post('user/auth0_login', {
-          data: this.authResultGlobal,
-          pubKeyActual: pubKeyActual.address
-        }).subscribe((data: any) => {
+        this.authResultGlobal.pubKeyActual = pubKeyActual.address;
+        this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal ).subscribe((data: any) => {
 
           if (data && data.walletVerif === 'success') {
             this.sendUserToStore(data);
