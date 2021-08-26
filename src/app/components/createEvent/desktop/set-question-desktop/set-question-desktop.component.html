@@ -14,6 +14,7 @@
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
           question</small>
+        <small *ngIf="f.question.errors.maxlength" class="form-text quize_validation_error">Too long!<br>Make sure you don't exceed the character limits for Topic.</small>
       </div>
     </div>
 
