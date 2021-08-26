@@ -1,1 +1,60 @@
-<p>my-payouts works!</p>
+<div  class="payouts_container">
+  <div class="wrapper">
+    <div class="title_box">
+      <div>
+        <span class="title_name">my payouts</span>
+        <!--      <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET TOTAL,</span>-->
+        <!--      <span class="last24h_bet">{{payouts?.totalBet24.toFixed(2)}} BET <span>LAST 24H</span></span>-->
+        <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET TOTAL,</span>
+        <span class="last24h_bet">{{payouts?.totalBet24.toFixed(2)}} BET <span>LAST 24H</span></span>
+      </div>
+
+    </div>
+    <div class="events_table">
+      <div class="table_header">
+        <div class="date_title">
+          <span>Date</span>
+        </div>
+        <div class="event_title">
+          <span>Event</span>
+        </div>
+        <div class="room_title">
+          <span>Room</span>
+        </div>
+        <div class="participant_title">
+          <span>Participant</span>
+        </div>
+        <div class="payout_title">
+          <span>Payout</span>
+        </div>
+      </div>
+
+      <div class="event_item" *ngFor="let payout of payouts.data">
+        <div class="finish_time" >
+          <span>{{payout?.finishTime* 1000 |date:'MMM d, y'}},<br><span>{{payout.finishTime* 1000 |date:'h:mm a'}}</span></span>
+
+        </div>
+        <div class="event_question">
+          <span>{{payout?.question}} </span>
+
+        </div>
+        <div class="event_room">
+          <div class="avengers_img"></div>
+          <span>Avengers </span>
+
+        </div>
+        <div class="event_participant">
+
+          <span>389(12)</span>
+
+        </div>
+        <div class="event_payout">
+
+          <span>32 BET</span>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
