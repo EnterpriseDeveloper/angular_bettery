@@ -4,6 +4,9 @@
       <p>Enter your seed phrase</p>
       <input class="form-control" type="text" [(ngModel)]="seedPhrase">
     </div>
+    <div *ngIf="modalStatus && isCorrectPhrase" class="errStyle">
+      <p>Seed phrase is not correct!</p>
+    </div>
     <div *ngIf="!modalStatus">
       <p>{{showSeedPhrase}}</p>
     </div>

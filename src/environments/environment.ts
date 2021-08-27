@@ -15,7 +15,8 @@ export const environment = {
   torusVerifierId: "betteryAuth0",
   etherUrl: "https://goerli.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
   gasStationAPI: "https://gasstation-mumbai.matic.today",
-  secretKey: "791351803491091234"
+  secretKey: "791351803491091234",
+  auth0_URI: "http://localhost:4200"
 };
 
 /*

@@ -55,44 +55,54 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   loginWithAuth0(param: string) {
-    // todo with linkUser
-    param = param === 'email' ? null : param;
-    this.webAuth.authorize({
-      connection: param,
-    });
-    sessionStorage.setItem('betteryPath', window.location.pathname);
-  }
-
-  async loginWithTorus(selectedVerifier) {
     if (this.linkUser) {
-      if (!this.linVerification(selectedVerifier)) {
-        this.spinner = true;
-        let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ????? check
-        if (!err) {
-          await this.linkAccount(data);
-        } else {
-          this.logOut(err);
-        }
+      if (!this.linVerification(param)) {
+        sessionStorage.setItem('linkUser', 'linkUser');
+        param = param === 'email' ? null : param;
+        this.webAuth.authorize({
+          connection: param,
+        });
+        sessionStorage.setItem('betteryPath', window.location.pathname);
       }
-    } else {
-      this.spinner = true;
-      let login = await web3Obj.login(selectedVerifier);
-      if (login == null) {
-        this.setTorusInfoToDB();
-      } else {
-        this.logOut(login);
-      }
+    }else {
+      param = param === 'email' ? null : param;
+      this.webAuth.authorize({
+        connection: param,
+      });
+      sessionStorage.setItem('betteryPath', window.location.pathname);
     }
   }
 
-  async logOut(x) {
-    if (JSON.stringify(x).search('user closed popup') != -1) {
-      this.closedWindow.next();
-    }
-    this.spinner = false;
-    this.closeModal();
-    await web3Obj.logOut();
-  }
+  // async loginWithTorus(selectedVerifier) {
+  //   if (this.linkUser) {
+  //     if (!this.linVerification(selectedVerifier)) {
+  //       this.spinner = true;
+  //       let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ????? check
+  //       if (!err) {
+  //         await this.linkAccount(data);
+  //       } else {
+  //         this.logOut(err);
+  //       }
+  //     }
+  //   } else {
+  //     this.spinner = true;
+  //     let login = await web3Obj.login(selectedVerifier);
+  //     if (login == null) {
+  //       this.setTorusInfoToDB();
+  //     } else {
+  //       this.logOut(login);
+  //     }
+  //   }
+  // }
+
+  // async logOut(x) {
+  //   if (JSON.stringify(x).search('user closed popup') != -1) {
+  //     this.closedWindow.next();
+  //   }
+  //   this.spinner = false;
+  //   this.closeModal();
+  //   await web3Obj.logOut();
+  // }
 
   async linkAccount(data) {
     let post = {
@@ -112,64 +122,65 @@ export class RegistrationComponent implements OnDestroy {
     return this.linkedAccouns.includes(z);
   }
 
-  async setTorusInfoToDB() {
-    let userInfo = web3Obj.loginDetails;
-    if (userInfo != null) {
-      console.log(userInfo);
-
-      this.localStoreUser(userInfo.userInfo);
-
-      let refId = sessionStorage.getItem('bettery_ref');
-
-      let data: Object = {
-        _id: null,
-        wallet: userInfo.publicAddress,
-        nickName: userInfo.userInfo.name,
-        email: userInfo.userInfo.email,
-        avatar: userInfo.userInfo.profileImage,
-        verifier: userInfo.userInfo.typeOfLogin,
-        verifierId: userInfo.userInfo.verifierId,
-        refId: refId == null ? 'undefined' : refId,
-        accessToken: userInfo.userInfo.accessToken,
-      };
-
-      this.torusRegistSub = this.http.post('user/torus_regist', data)
-        .subscribe(
-          (x: User) => {
-            this.store.dispatch(new UserActions.AddUser({
-              _id: x._id,
-              email: x.email,
-              nickName: x.nickName,
-              wallet: x.wallet,
-              avatar: x.avatar,
-              verifier: x.verifier,
-              sessionToken: x.sessionToken,
-              verifierId: x.verifierId,
-              accessToken: x.accessToken
-            }));
-            this.spinner = false;
-            this.alreadyRegister = undefined;
-            this.submitted = false;
-            this.activeModal.dismiss('Cross click');
-          }, async (err) => {
-            if (err.status == 302) {
-              this.alreadyRegister = err.error;
-              this.spinner = false;
-            } else {
-              this.activeModal.dismiss('Cross click');
-              this.spinner = false;
-              console.log(err);
-            }
-          });
-    }
-  }
+  // async setTorusInfoToDB() {
+  //   let userInfo = web3Obj.loginDetails;
+  //   if (userInfo != null) {
+  //     console.log(userInfo);
+  //
+  //     this.localStoreUser(userInfo.userInfo);
+  //
+  //     let refId = sessionStorage.getItem('bettery_ref');
+  //
+  //     let data: Object = {
+  //       _id: null,
+  //       wallet: userInfo.publicAddress,
+  //       nickName: userInfo.userInfo.name,
+  //       email: userInfo.userInfo.email,
+  //       avatar: userInfo.userInfo.profileImage,
+  //       verifier: userInfo.userInfo.typeOfLogin,
+  //       verifierId: userInfo.userInfo.verifierId,
+  //       refId: refId == null ? 'undefined' : refId,
+  //       accessToken: userInfo.userInfo.accessToken,
+  //     };
+  //
+  //     this.torusRegistSub = this.http.post('user/torus_regist', data)
+  //       .subscribe(
+  //         (x: User) => {
+  //           this.store.dispatch(new UserActions.AddUser({
+  //             _id: x._id,
+  //             email: x.email,
+  //             nickName: x.nickName,
+  //             wallet: x.wallet,
+  //             avatar: x.avatar,
+  //             verifier: x.verifier,
+  //             sessionToken: x.sessionToken,
+  //             verifierId: x.verifierId,
+  //             accessToken: x.accessToken
+  //           }));
+  //           this.spinner = false;
+  //           this.alreadyRegister = undefined;
+  //           this.submitted = false;
+  //           this.activeModal.dismiss('Cross click');
+  //         }, async (err) => {
+  //           if (err.status == 302) {
+  //             this.alreadyRegister = err.error;
+  //             this.spinner = false;
+  //           } else {
+  //             this.activeModal.dismiss('Cross click');
+  //             this.spinner = false;
+  //             console.log(err);
+  //           }
+  //         });
+  //   }
+  // }
 
   goBack() {
     this.alreadyRegister = undefined;
   }
 
   alreadyRegistCloseModal() {
-    web3Obj.logOut();
+    // web3Obj.logOut();
+    localStorage.removeItem('_buserlog');
     this.closeModal();
   }
 
@@ -179,18 +190,18 @@ export class RegistrationComponent implements OnDestroy {
     this.activeModal.dismiss('Cross click');
   }
 
-  localStoreUser(userInfo): void {
-    if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
-      localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
-    }
-    const getItem = JSON.parse(localStorage.getItem('userBettery'));
-    if (getItem.length === 0 || !getItem.includes(userInfo.email)) {
-      const array = JSON.parse(localStorage.getItem('userBettery'));
-      array.push(userInfo.email);
-      localStorage.setItem('userBettery', JSON.stringify(array));
-      this.modalService.open(WelcomePageComponent, {centered: true});
-    }
-  }
+  // localStoreUser(userInfo): void { //! check
+  //   if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
+  //     localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
+  //   }
+  //   const getItem = JSON.parse(localStorage.getItem('userBettery'));
+  //   if (getItem.length === 0 || !getItem.includes(userInfo.email)) {
+  //     const array = JSON.parse(localStorage.getItem('userBettery'));
+  //     array.push(userInfo.email);
+  //     localStorage.setItem('userBettery', JSON.stringify(array));
+  //     this.modalService.open(WelcomePageComponent, {centered: true});
+  //   }
+  // }
 
   ngOnDestroy() {
     if (this.torusRegistSub) {

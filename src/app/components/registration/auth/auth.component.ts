@@ -8,6 +8,7 @@ import authHelp from '../../../helpers/auth-help';
 import * as UserActions from '../../../actions/user.actions';
 import {Subscription} from 'rxjs';
 import {RegistrationComponent} from '../registration/registration.component';
+import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
 
 
 @Component({
@@ -20,12 +21,15 @@ export class AuthComponent implements OnInit, OnDestroy {
   webAuth: any;
   loginSub$: Subscription;
   registerSub$: Subscription;
+  linkAccount$: Subscription;
   authResultGlobal: any;
   seedPhrase: string;
   walletFromDB;
   modalStatus: boolean;
   modalOpen: boolean;
   dataRegist: any;
+  saveUserLocStorage = [];
+  isCorrectPhrase: boolean;
 
   constructor(
     private router: Router,
@@ -36,14 +40,43 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.webAuth = authHelp.init;
-    this.auth0Registration();
+    if (sessionStorage.getItem('linkUser') === 'linkUser') {
+      this.auth0RegistrationWithLink();
+    } else {
+      this.auth0Registration();
+    }
+  }
+
+  auth0RegistrationWithLink() {
+    sessionStorage.removeItem('linkUser');
+    this.webAuth.parseHash({hash: window.location.hash}, (err, authResult) => {
+      if (err) {
+        return console.log(err);
+      }
+
+      if (authResult) {
+        this.linkAccount(authResult.idTokenPayload.sub);
+      }
+    });
+  }
+
+  async linkAccount(data) {
+    const post = {
+      verifierId: data
+    };
+    this.linkAccount$ = this.postService.post('user/link_account', post).subscribe((x) => {
+      //? this.linkedDone.next([{status: 'done'}]);  update balance check
+      this.goBack();
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   auth0Registration() {
     let wallet;
     let pubKey;
     let mnemonic;
-    this.webAuth.parseHash({hash: window.location.hash}, (err, authResult) => {
+    this.webAuth.parseHash({hash: window.location.hash}, (err, userInfo) => {
       if (err) {
         return console.log(err);
       }
@@ -52,14 +85,15 @@ export class AuthComponent implements OnInit, OnDestroy {
       if (pubKeyFromLS) {
         pubKey = pubKeyFromLS.pubKey.address;
       }
-      if (authResult) {
-
+      if (userInfo) {
+        console.log(userInfo, 'userInfo');
+        this.localStoreUser(userInfo);
         const dataForSend = {
-          email: authResult.idTokenPayload.email,
-          nickname: authResult.idTokenPayload.nickname,
-          verifierId: authResult.idTokenPayload.sub,
+          email: userInfo.idTokenPayload.email,
+          nickname: userInfo.idTokenPayload.nickname,
+          verifierId: userInfo.idTokenPayload.sub,
           pubKey: pubKey,
-          accessToken: authResult.accessToken
+          accessToken: userInfo.accessToken
         };
         this.authResultGlobal = dataForSend;
         this.loginSub$ = this.postService.post('user/auth0_login', dataForSend).subscribe((data: any) => {
@@ -72,13 +106,13 @@ export class AuthComponent implements OnInit, OnDestroy {
               const refId = sessionStorage.getItem('bettery_ref');
 
               const newUser = {
-                nickName: authResult.idTokenPayload.nickname,
-                email: authResult.idTokenPayload.email,
+                nickName: userInfo.idTokenPayload.nickname,
+                email: userInfo.idTokenPayload.email,
                 wallet,
-                avatar: authResult.idTokenPayload.picture,
+                avatar: userInfo.idTokenPayload.picture,
                 refId: refId ? refId : null,
-                verifierId: authResult.idTokenPayload.sub,
-                accessToken: authResult.accessToken
+                verifierId: userInfo.idTokenPayload.sub,
+                accessToken: userInfo.accessToken
               };
 
               this.registerSub$ = this.postService.post('user/auth0_register', newUser).subscribe((x: any) => {
@@ -90,6 +124,8 @@ export class AuthComponent implements OnInit, OnDestroy {
                   this.spinner = false;
                   this.seedPhrase = mnemonic;
                 }
+              }, error => {
+                console.log(error.message);
               });
             });
 
@@ -110,7 +146,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             }
           }
         }, (error) => {
-          if (error.status == 302) {
+          if (error.status === 302) {
             console.log('error', error.status);
           } else {
             console.log(error);
@@ -130,10 +166,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     if ($event.btn === 'Ok') {
-
       const pubKeyActual = await authHelp.generatePubKey($event.seedPh);
 
+      if (pubKeyActual.address === 'not correct') {
+        this.isCorrectPhrase = true;
+      }
       if (this.walletFromDB === pubKeyActual.address) {
+        this.isCorrectPhrase = false;
         authHelp.saveAccessTokenLS(null, pubKeyActual, $event.seedPh);
         this.authResultGlobal.pubKeyActual = pubKeyActual.address;
         this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal).subscribe((data: any) => {
@@ -143,8 +182,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             authHelp.saveAccessTokenLS(data.accessToken, null, null);
             this.spinner = true;
             this.modalOpen = false;
-            const path = sessionStorage.getItem('betteryPath');
-            this.router.navigate([path]);
+            this.goBack();
           } else {
             // todo может очистить локал стор
             console.error('error from "user/auth0_login"');
@@ -152,8 +190,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         }, (error) => {
           if (error.status == 302) {
             localStorage.removeItem('_buserlog');
-            const path = sessionStorage.getItem('betteryPath');
-            this.router.navigate([path]);
+            this.goBack();
             const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
             modalRef.componentInstance.alreadyRegister = error.error;
           } else {
@@ -164,8 +201,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     if ($event.btn === 'Cancel') {
-      const path = sessionStorage.getItem('betteryPath');
-      this.router.navigate([path]);
+      this.goBack();
     }
   }
 
@@ -181,7 +217,24 @@ export class AuthComponent implements OnInit, OnDestroy {
       verifierId: data.verifierId,
       accessToken: data.accessToken
     }));
+    this.goBack();
+  }
 
+  localStoreUser(userInfo): void {
+    console.log('localStoreUser works');
+    if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
+      localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
+    }
+    const getItem = JSON.parse(localStorage.getItem('userBettery'));
+    if (getItem.length === 0 || !getItem.includes(userInfo.idTokenPayload.email)) {
+      const array = JSON.parse(localStorage.getItem('userBettery'));
+      array.push(userInfo.idTokenPayload.email);
+      localStorage.setItem('userBettery', JSON.stringify(array));
+      this.modalService.open(WelcomePageComponent, {centered: true});
+    }
+  }
+
+  goBack(): void {
     const path = sessionStorage.getItem('betteryPath');
     this.router.navigate([path]);
   }
@@ -192,6 +245,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     if (this.loginSub$) {
       this.loginSub$.unsubscribe();
+    }
+    if (this.linkAccount$) {
+      this.linkAccount$.unsubscribe();
     }
   }
 }

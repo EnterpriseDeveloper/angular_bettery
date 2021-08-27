@@ -6,8 +6,9 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./seed-phrase-modal.component.sass']
 })
 export class SeedPhraseModalComponent implements OnInit {
-  @Input() modalStatus;
-  @Input() showSeedPhrase;
+  @Input() modalStatus: boolean;
+  @Input() showSeedPhrase: string;
+  @Input() isCorrectPhrase: boolean;
   seedPhrase: string;
   @Output() okEmmit = new EventEmitter<object>();
 

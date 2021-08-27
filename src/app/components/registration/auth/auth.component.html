@@ -1,28 +1,7 @@
 <app-spinner-loading *ngIf="spinner" [desktop]="true"></app-spinner-loading>
 
-<app-seed-phrase-modal *ngIf="!spinner && modalOpen" [modalStatus]="modalStatus" [showSeedPhrase]="seedPhrase" (okEmmit)="emmitFromModal($event)"></app-seed-phrase-modal>
+<app-seed-phrase-modal *ngIf="!spinner && modalOpen" [modalStatus]="modalStatus" [showSeedPhrase]="seedPhrase"
+                       [isCorrectPhrase]="isCorrectPhrase" (okEmmit)="emmitFromModal($event)"></app-seed-phrase-modal>
 
-<!--<ng-template *ngIf="!spinner" #content let-c="close" let-d="dismiss">-->
-<!--  <div class="modal-header">-->
-<!--    <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>-->
-<!--    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">-->
-<!--      <span aria-hidden="true">&times;</span>-->
-<!--    </button>-->
-<!--  </div>-->
-<!--  <div  *ngIf="modalStatus" class="modal-body">-->
-<!--    <p>Enter your seed phrase</p>-->
-<!--    <input type="text" [(ngModel)]="seedPhrase">-->
-<!--  </div>-->
-<!--  <div  *ngIf="!modalStatus" class="modal-body">-->
-<!--    <p>{{seedPhrase}}</p>-->
-<!--  </div>-->
-<!--  <div *ngIf="modalStatus" class="modal-footer">-->
-<!--    <button type="button" class="btn btn-outline-dark" (click)="modalBtnAction('OK')">OK</button>-->
-<!--    <button type="button" class="btn btn-outline-dark" (click)="modalBtnAction('Cancel')">Cancel</button>-->
-<!--  </div>-->
-<!--  <div *ngIf="!modalStatus" class="modal-footer">-->
-<!--    <button type="button" class="btn btn-outline-dark" (click)="modalBtnAction('Save')">OK</button>-->
-<!--  </div>-->
-<!--</ng-template>-->
 
 

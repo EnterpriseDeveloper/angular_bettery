@@ -11,7 +11,7 @@ const authHelp = {
     domain: 'bettery.us.auth0.com',
     clientID: '49atoPMGb9TWoaDflncmvPQOCccRWPyf',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:4200/auth'
+    redirectUri: `${environment.auth0_URI}/auth`
   }),
 
   walletInit: async () => {
@@ -27,9 +27,13 @@ const authHelp = {
   walletUser: null,
 
   generatePubKey: async (mnemonic) => {
-    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic);
-    const [pubKey] = await wallet.getAccounts();
-    return pubKey;
+    try {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic);
+      const [pubKey] = await wallet.getAccounts();
+      return pubKey;
+    }catch (err){
+      return {address: 'not correct'};
+    }
   },
 
   walletDectypt: () => {
