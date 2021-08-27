@@ -4,6 +4,7 @@ import { MsgCreateSwipeBet } from "./funds/tx";
 import {MsgCreateValidPubEvents, MsgCreateCreatePubEvents, MsgCreatePartPubEvents} from './pubEvents/tx'
 import {MsgCreateValidPrivEvents, MsgCreatePartPrivEvents, MsgCreateCreatePrivEvents} from './privEvents/tx'
 import authHelp from '../helpers/auth-help'
+import { environment } from "../../environments/environment";
 
 
 const types = [
@@ -26,7 +27,7 @@ const connectToSign = async () => {
             memonic
         );
     
-        let addr = "http://localhost:26657";
+        let addr = `http://${environment}:26657`;
         const [{ address }] = await wallet.getAccounts();
         const client = await SigningStargateClient.connectWithSigner(addr, wallet, { registry });
         return { memonic, address, client }
