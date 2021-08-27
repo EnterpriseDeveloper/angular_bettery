@@ -14,19 +14,38 @@
   color: #0B1511
 
 .last24h_bet_yellow
+  font-style: normal
+  font-weight: bold
+  font-size: 16px
+  line-height: 22px
+  text-transform: uppercase
   color: #FFD300
 
+.last24h_bet
+  font-style: normal
+  font-weight: 600
+  font-size: 16px
+  line-height: 22px
+  text-transform: uppercase
+  color: #0B1511
+
 .total_bet
+  font-style: normal
+  font-weight: bold
+  font-size: 16px
+  line-height: 22px
+  text-transform: uppercase
   color: #54DD96
 
 .wrapper
-  background: #FFFFFF
+
 
 .events_table
   box-sizing: border-box
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1)
   border-radius: 8px
   border: 0.5px solid #E8E8E8
+  background-color: #ffffff
 
 .table_header
   height: 63px
@@ -53,6 +72,22 @@
     line-height: 22px
     text-align: center
     color: #0B1511
+
+.total_participant
+  font-style: normal
+  font-weight: bold
+  font-size: 16px
+  line-height: 22px
+  color: #0B1511
+
+
+.my_invited_parts
+  font-style: normal
+  font-weight: normal!important
+  font-size: 16px
+  line-height: 22px
+  color: #0B1511
+  margin-left: 6px
 
 .event_title
   min-width: 40%
@@ -166,18 +201,18 @@
   min-width: 40%
   border-bottom: 0.5px solid #E8E8E8
   border-right: 0.5px solid #E8E8E8
-
-  display: flex
+  word-wrap: break-word
+  //display: flex
   flex: 1
   align-items: center
-  padding: 0 16px
+  padding: 17px 16px
   box-sizing: unset
-  span
-    font-style: normal
-    font-weight: bold
-    font-size: 16px
-    line-height: 22px
-    color: #0094FF
+
+  font-style: normal
+  font-weight: bold
+  font-size: 16px
+  line-height: 22px
+  color: #0094FF
 
 .event_room
   min-width: 20%
@@ -264,6 +299,9 @@
 .pagination
   display: flex
   align-items: center
+  margin-top: 21px
+  padding-bottom: 48px
+  justify-content: flex-end
 
 
 .arrow_left
@@ -284,22 +322,52 @@
   background-repeat: no-repeat
   margin-left: 7px
 
+.events_table::-webkit-scrollbar
+  background-color: transparent
+  height: 20px
+
+
+.events_table::-webkit-scrollbar-track
+  background-color: transparent
+
+.events_table::-webkit-scrollbar-thumb
+  background: #54DD96
+  height: 5px
+  z-index: 5
+
 .page
   margin-right: 7px
   cursor: pointer
 
 .page_bold
   font-weight: bold
+@media screen and (max-width: 1366px)
+  .title_name, .last24h_bet, .pagination
+    color: #FFFFFF
 
-@media screen and (max-width: 1043px)
+
+
+@media screen and (max-width: 1300px)
   .events_table
     overflow-x: scroll
+  .event_room, .room_title
+    min-width: 80px
 
   .event_participant,.participant_title
     min-width: 100px
   .event_payout,.payout_title
     min-width: 67px
 
-//@media screen and (min-width: 1043px)
-//  .events_table
-//    overflow-x: scroll
+@media screen and (max-width: 1200px)
+  .avengers_img
+    display: none
+  .avengers-text
+    margin-top: 9px
+
+.last
+  margin-left: 7px
+  cursor: pointer
+
+.first
+  margin-right: 7px
+  cursor: pointer

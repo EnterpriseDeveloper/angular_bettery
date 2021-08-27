@@ -5,7 +5,7 @@
         <span class="title_name">my payouts </span>
         <!--      <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET TOTAL,</span>-->
         <!--      <span class="last24h_bet">{{payouts?.totalBet24.toFixed(2)}} BET <span>LAST 24H</span></span>-->
-        <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET <span style="color: #0B1511">TOTAL</span>, </span>
+        <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET <span class="last24h_bet">TOTAL, </span> </span>
         <span class="last24h_bet"><span class="last24h_bet_yellow">{{payouts?.totalBet24.toFixed(2)}} BET</span> <span> LAST 24H</span></span>
       </div>
 
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div *ngIf="payouts">
+        <div *ngIf="payouts" style="background-color: #ffffff ">
           <div class="event_item " *ngFor="let payout of payouts?.data">
             <div class="finish_time ">
             <span>{{payout?.finishTime * 1000 |date:'MMM d, y'}}
@@ -39,7 +39,7 @@
 
             </div>
             <div class="event_question ">
-              <span>{{payout?.question}} </span>
+              <span >adasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadas</span>
 
             </div>
             <div class="event_room ">
@@ -49,7 +49,8 @@
             </div>
             <div class="event_participant ">
 
-              <span>{{payout?.allReferals}}({{myReferralsCalculate(payout)}})</span>
+              <span class="total_participant">{{payout?.allReferals}}<span
+                class="my_invited_parts">({{myReferralsCalculate(payout)}})</span></span>
 
             </div>
             <div class="event_payout ">
@@ -64,17 +65,24 @@
     </div>
 
     <div class="pagination">
-      <div class="arrow_left"></div>
+      <div class="arrow_left" (click)="goToPage(currentPage - 1)"></div>
 
       <div style="display: flex">
-        <div *ngFor="let event of payouts.data; let i = index" class="page"
-             [ngClass]="i+1===currentPage && 'page_bold'"
-              (click)="goToPage(i+1)"
-        >{{i + 1}}
+        <div (click)="goToPage(1)" class="first">First</div>
+
+        <div *ngFor="let page of pagesToShow" class="page"
+             [ngClass]="page===currentPage && 'page_bold'"
+             (click)="goToPage(page)"
+        >{{page}}
         </div>
-        <span *ngIf="payouts.eventsAmount>4|| true"> </span>
+
+        <!--        <span *ngIf="payouts.eventsAmount>4">..</span>-->
+        <!--        <span *ngIf="payouts.eventsAmount>4 ">{{allPages()}}</span>-->
+        <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">..</span>
+        <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">{{allPages()}}</span>
+        <div (click)="goToPage(allPages())" class="last">Last</div>
       </div>
-      <div class="arrow_right"></div>
+      <div class="arrow_right" (click)="goToPage(currentPage + 1)"></div>
 
     </div>
   </div>
