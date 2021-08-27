@@ -27,7 +27,7 @@ const connectToSign = async () => {
             memonic
         );
     
-        let addr = `http://${environment}:26657`;
+        let addr = `http://${environment.demon}:26657`;
         const [{ address }] = await wallet.getAccounts();
         const client = await SigningStargateClient.connectWithSigner(addr, wallet, { registry });
         return { memonic, address, client }
