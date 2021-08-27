@@ -221,7 +221,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   localStoreUser(userInfo): void {
-    console.log('localStoreUser works');
     if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
       localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
     }
