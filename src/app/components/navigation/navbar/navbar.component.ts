@@ -128,21 +128,21 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  async logOut() {
-    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-      web3Obj.logOut();
-      this.store.dispatch(new UserActions.RemoveUser(0));
-      this.nickName = undefined;
-      this.openNavBar = false;
-      this.logoutBox = false;
-    }, err => {
-      console.log(err);
-    });
-  }
+  // async logOut() {
+  //   this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+  //     web3Obj.logOut();
+  //     this.store.dispatch(new UserActions.RemoveUser(0));
+  //     this.nickName = undefined;
+  //     this.openNavBar = false;
+  //     this.logoutBox = false;
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // }
 
   async newlogOut() {
     this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-      // web3Obj.logOut();
+      // web3Obj.logOut(); !todo =========
       localStorage.removeItem('_buserlog');
       this.store.dispatch(new UserActions.RemoveUser(0));
       this.nickName = undefined;

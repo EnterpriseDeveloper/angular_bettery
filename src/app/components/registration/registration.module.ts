@@ -6,12 +6,14 @@ import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthComponent } from './auth/auth.component';
+import { SeedPhraseModalComponent } from './auth/seed-phrase-modal/seed-phrase-modal.component';
 
 
 @NgModule({
   declarations: [
     RegistrationComponent,
-    AuthComponent
+    AuthComponent,
+    SeedPhraseModalComponent,
   ],
   imports: [
     RouterModule,

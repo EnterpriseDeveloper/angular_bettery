@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PostService } from '../../../services/post.service';
-import { Store } from '@ngrx/store';
-
-import { AppState } from '../../../app.state';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {PostService} from '../../../services/post.service';
+import {Store} from '@ngrx/store';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppState} from '../../../app.state';
 import authHelp from '../../../helpers/auth-help';
 import * as UserActions from '../../../actions/user.actions';
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
+import {RegistrationComponent} from '../registration/registration.component';
+import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
 
 
 @Component({
@@ -19,22 +21,62 @@ export class AuthComponent implements OnInit, OnDestroy {
   webAuth: any;
   loginSub$: Subscription;
   registerSub$: Subscription;
+  linkAccount$: Subscription;
+  authResultGlobal: any;
+  seedPhrase: string;
+  walletFromDB;
+  modalStatus: boolean;
+  modalOpen: boolean;
+  dataRegist: any;
+  saveUserLocStorage = [];
+  isCorrectPhrase: boolean;
 
   constructor(
     private router: Router,
     private postService: PostService,
+    private modalService: NgbModal,
     private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
     this.webAuth = authHelp.init;
-    this.auth0Registration();
+    if (sessionStorage.getItem('linkUser') === 'linkUser') {
+      this.auth0RegistrationWithLink();
+    } else {
+      this.auth0Registration();
+    }
+  }
+
+  auth0RegistrationWithLink() {
+    sessionStorage.removeItem('linkUser');
+    this.webAuth.parseHash({hash: window.location.hash}, (err, authResult) => {
+      if (err) {
+        return console.log(err);
+      }
+
+      if (authResult) {
+        this.linkAccount(authResult.idTokenPayload.sub);
+      }
+    });
+  }
+
+  async linkAccount(data) {
+    const post = {
+      verifierId: data
+    };
+    this.linkAccount$ = this.postService.post('user/link_account', post).subscribe((x) => {
+      //? this.linkedDone.next([{status: 'done'}]);  update balance check
+      this.goBack();
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   auth0Registration() {
     let wallet;
     let pubKey;
-    this.webAuth.parseHash({ hash: window.location.hash }, (err, authResult) => {
+    let mnemonic;
+    this.webAuth.parseHash({hash: window.location.hash}, (err, userInfo) => {
       if (err) {
         return console.log(err);
       }
@@ -43,30 +85,47 @@ export class AuthComponent implements OnInit, OnDestroy {
       if (pubKeyFromLS) {
         pubKey = pubKeyFromLS.pubKey.address;
       }
-      if (authResult) {
-        this.loginSub$ = this.postService.post('user/auth0_login', { data: authResult, pubKey }).subscribe((data: any) => {
+      if (userInfo) {
+        console.log(userInfo, 'userInfo');
+        this.localStoreUser(userInfo);
+        const dataForSend = {
+          email: userInfo.idTokenPayload.email,
+          nickname: userInfo.idTokenPayload.nickname,
+          verifierId: userInfo.idTokenPayload.sub,
+          pubKey: pubKey,
+          accessToken: userInfo.accessToken
+        };
+        this.authResultGlobal = dataForSend;
+        this.loginSub$ = this.postService.post('user/auth0_login', dataForSend).subscribe((data: any) => {
           if (!data) {
-            // todo == NEW USER ==
+            // ? == NEW USER ==
             authHelp.walletInit().then(() => {
               wallet = authHelp.walletUser.pubKey;
+              mnemonic = authHelp.walletUser.mnemonic;
 
               const refId = sessionStorage.getItem('bettery_ref');
 
               const newUser = {
-                nickName: authResult.idTokenPayload.nickname,
-                email: authResult.idTokenPayload.email,
+                nickName: userInfo.idTokenPayload.nickname,
+                email: userInfo.idTokenPayload.email,
                 wallet,
-                avatar: authResult.idTokenPayload.picture,
+                avatar: userInfo.idTokenPayload.picture,
                 refId: refId ? refId : null,
-                verifierId: authResult.idTokenPayload.sub,
-                accessToken: authResult.accessToken
+                verifierId: userInfo.idTokenPayload.sub,
+                accessToken: userInfo.accessToken
               };
 
               this.registerSub$ = this.postService.post('user/auth0_register', newUser).subscribe((x: any) => {
+                this.dataRegist = x;
                 if (x) {
-                  this.sendUserToStore(x);
-                  authHelp.saveAccessTokenLS(x.accessToken);  //? save accessToken to LocalStorage from autoLogin
+                  // ?  == show seed phrase ==
+                  this.modalOpen = true;
+                  this.modalStatus = false;
+                  this.spinner = false;
+                  this.seedPhrase = mnemonic;
                 }
+              }, error => {
+                console.log(error.message);
               });
             });
 
@@ -74,17 +133,76 @@ export class AuthComponent implements OnInit, OnDestroy {
 
           if (data) {
             if (data.walletVerif === 'failure') {
-              console.log('enter seed phrase');
+              console.log('need enter seed phrase');
+              this.walletFromDB = data.wallet;
+              this.modalStatus = true;
+              this.modalOpen = true;
+              this.spinner = false;
             }
             if (data.walletVerif === 'success') {
-              console.log('success success success');
+              console.log('success');
               this.sendUserToStore(data);
-              authHelp.saveAccessTokenLS(data.accessToken); // save accessToken to LocalStorage from autoLogin
+              authHelp.saveAccessTokenLS(data.accessToken, null, null); // save accessToken to LocalStorage from autoLogin
             }
+          }
+        }, (error) => {
+          if (error.status === 302) {
+            console.log('error', error.status);
+          } else {
+            console.log(error);
           }
         });
       }
     });
+  }
+
+  async emmitFromModal($event) {
+    if ($event.btn === 'Save') {
+      this.modalOpen = false;
+      this.spinner = true;
+
+      this.sendUserToStore(this.dataRegist);
+      authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null);  //? save accessToken to LocalStorage from autoLogin
+    }
+
+    if ($event.btn === 'Ok') {
+      const pubKeyActual = await authHelp.generatePubKey($event.seedPh);
+
+      if (pubKeyActual.address === 'not correct') {
+        this.isCorrectPhrase = true;
+      }
+      if (this.walletFromDB === pubKeyActual.address) {
+        this.isCorrectPhrase = false;
+        authHelp.saveAccessTokenLS(null, pubKeyActual, $event.seedPh);
+        this.authResultGlobal.pubKeyActual = pubKeyActual.address;
+        this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal).subscribe((data: any) => {
+
+          if (data && data.walletVerif === 'success') {
+            this.sendUserToStore(data);
+            authHelp.saveAccessTokenLS(data.accessToken, null, null);
+            this.spinner = true;
+            this.modalOpen = false;
+            this.goBack();
+          } else {
+            // todo может очистить локал стор
+            console.error('error from "user/auth0_login"');
+          }
+        }, (error) => {
+          if (error.status == 302) {
+            localStorage.removeItem('_buserlog');
+            this.goBack();
+            const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
+            modalRef.componentInstance.alreadyRegister = error.error;
+          } else {
+            console.log(error);
+          }
+        });
+      }
+    }
+
+    if ($event.btn === 'Cancel') {
+      this.goBack();
+    }
   }
 
   sendUserToStore(data): void {
@@ -94,12 +212,29 @@ export class AuthComponent implements OnInit, OnDestroy {
       nickName: data.nickName,
       wallet: data.wallet,
       avatar: data.avatar,
-      verifier: data.verifier ? data.verifier : 'jwt', // !check
-      sessionToken: data.sessionToken, // !check
-      verifierId: data.verifierId, // !check
-      accessToken: data.accessToken // !check
+      verifier: data.verifier ? data.verifier : 'jwt',
+      sessionToken: data.sessionToken,
+      verifierId: data.verifierId,
+      accessToken: data.accessToken
     }));
+    this.goBack();
+  }
 
+  localStoreUser(userInfo): void {
+    console.log('localStoreUser works');
+    if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
+      localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
+    }
+    const getItem = JSON.parse(localStorage.getItem('userBettery'));
+    if (getItem.length === 0 || !getItem.includes(userInfo.idTokenPayload.email)) {
+      const array = JSON.parse(localStorage.getItem('userBettery'));
+      array.push(userInfo.idTokenPayload.email);
+      localStorage.setItem('userBettery', JSON.stringify(array));
+      this.modalService.open(WelcomePageComponent, {centered: true});
+    }
+  }
+
+  goBack(): void {
     const path = sessionStorage.getItem('betteryPath');
     this.router.navigate([path]);
   }
@@ -110,6 +245,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     if (this.loginSub$) {
       this.loginSub$.unsubscribe();
+    }
+    if (this.linkAccount$) {
+      this.linkAccount$.unsubscribe();
     }
   }
 }

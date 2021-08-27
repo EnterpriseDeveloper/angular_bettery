@@ -11,7 +11,7 @@ const authHelp = {
     domain: 'bettery.us.auth0.com',
     clientID: '49atoPMGb9TWoaDflncmvPQOCccRWPyf',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:4200/auth'
+    redirectUri: `${environment.auth0_URI}/auth`
   }),
 
   walletInit: async () => {
@@ -26,6 +26,16 @@ const authHelp = {
 
   walletUser: null,
 
+  generatePubKey: async (mnemonic) => {
+    try {
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic);
+      const [pubKey] = await wallet.getAccounts();
+      return pubKey;
+    }catch (err){
+      return {address: 'not correct'};
+    }
+  },
+
   walletDectypt: () => {
     const data = localStorage.getItem('_buserlog');
     if (data) {
@@ -33,9 +43,18 @@ const authHelp = {
     }
   },
 
-  saveAccessTokenLS: (token) => {
-    let obj = authHelp.walletDectypt();
-    obj.accessToken = token;
+  saveAccessTokenLS: (token, pubKey, mnemonic) => {
+    let obj: any = authHelp.walletDectypt();
+    if (obj === undefined) {
+      obj = {};
+    }
+    if (token) {
+      obj.accessToken = token;
+    }
+    if (pubKey && mnemonic) {
+      obj.pubKey = pubKey;
+      obj.mnemonic = mnemonic;
+    }
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(obj), environment.secretKey);
     localStorage.setItem('_buserlog', bytes.toString());
   },

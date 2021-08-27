@@ -1,0 +1,21 @@
+<div class="block_spinner_box">
+  <div class="main-wrap">
+    <div *ngIf="modalStatus" class="form-style">
+      <p>Enter your seed phrase</p>
+      <input class="form-control" type="text" [(ngModel)]="seedPhrase">
+    </div>
+    <div *ngIf="modalStatus && isCorrectPhrase" class="errStyle">
+      <p>Seed phrase is not correct!</p>
+    </div>
+    <div *ngIf="!modalStatus">
+      <p>{{showSeedPhrase}}</p>
+    </div>
+    <div *ngIf="modalStatus" class="footer">
+      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Ok')">OK</button>
+      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Cancel')">Cancel</button>
+    </div>
+    <div *ngIf="!modalStatus" class="footer">
+      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Save')">OK</button>
+    </div>
+  </div>
+</div>
