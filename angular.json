@@ -35,7 +35,6 @@
             "assets": [
               "src/favicon.ico",
               "src/.htaccess",
-              "src/serviceworker",
               "src/files",
               {
                 "glob": "**/*",
@@ -125,7 +124,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/serviceworker",
               {
                 "glob": "**/*",
                 "input": "src/.well-known",
