@@ -16,6 +16,7 @@ import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { environment } from '../../../../environments/environment';
 import {GetService} from '../../../services/get.service';
+import authHelp from '../../../helpers/auth-help';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   postSub: Subscription;
   logoutSub: Subscription;
   environments = environment;
+  webAuth;
 
   constructor(
     private store: Store<AppState>,
@@ -89,6 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async ngOnInit() {
+    this.webAuth = authHelp.init;
     this.onDocumentClick = this.onDocumentClick.bind(this);
   }
 
@@ -142,7 +145,10 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async newlogOut() {
     this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-      // web3Obj.logOut(); !todo =========
+      this.webAuth.logout({
+        returnTo: `${environment.auth0_URI}/join`,
+        client_id: '49atoPMGb9TWoaDflncmvPQOCccRWPyf',
+      });
       localStorage.removeItem('_buserlog');
       this.store.dispatch(new UserActions.RemoveUser(0));
       this.nickName = undefined;
