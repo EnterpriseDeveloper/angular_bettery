@@ -474,7 +474,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         creator: address,
         pubId: answer.event_id,
         answers: answer.answerName,
-        reput: 1 // TODO get reput
+        reput: "1" // TODO get reput
       }
     };
     const fee = {

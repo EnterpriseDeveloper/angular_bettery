@@ -45,8 +45,6 @@ export class RegistrationComponent implements OnDestroy {
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
   ) {
-    web3Obj.init();
-
     this.webAuth = authHelp.init;
   }
 
