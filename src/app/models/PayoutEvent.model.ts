@@ -1,4 +1,4 @@
-import {PayoutParcticipantAnsw} from "./PayoutParcticipantAnsw.model";
+import {PayoutParcticipantAnsw} from './PayoutParcticipantAnsw.model';
 
 export interface PayoutEvent {
   allReferals: number;
@@ -6,6 +6,6 @@ export interface PayoutEvent {
   finishTime: number;
   parcipiantsAnswer: [PayoutParcticipantAnsw];
   question: string;
-  room: any[];
+  room: [{_id: number, color: string, name: string }];
   _id: number;
 }

@@ -3,10 +3,8 @@
     <div class="title_box">
       <div>
         <span class="title_name">my payouts </span>
-        <!--      <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET TOTAL,</span>-->
-        <!--      <span class="last24h_bet">{{payouts?.totalBet24.toFixed(2)}} BET <span>LAST 24H</span></span>-->
-        <span class="total_bet">{{payouts?.totalBet.toFixed(2)}} BET <span class="last24h_bet">TOTAL, </span> </span>
-        <span class="last24h_bet"><span class="last24h_bet_yellow">{{payouts?.totalBet24.toFixed(2)}} BET</span> <span> LAST 24H</span></span>
+        <span class="total_bet">{{checkIsNumberInteger(payouts?.totalBet)}} BET <span class="last24h_bet">TOTAL, </span> </span>
+        <span class="last24h_bet"><span class="last24h_bet_yellow">{{checkIsNumberInteger(payouts?.totalBet24)}} BET</span> <span> LAST 24H</span></span>
       </div>
 
     </div>
@@ -34,17 +32,16 @@
         <div *ngIf="payouts" style="background-color: #ffffff ">
           <div class="event_item " *ngFor="let payout of payouts?.data">
             <div class="finish_time ">
-            <span>{{payout?.finishTime * 1000 |date:'MMM d, y'}}
-              ,<br><span class="finish_time_lighter">{{payout.finishTime * 1000 |date:'h:mm a'}}</span></span>
+            <span>{{payout?.finishTime * 1000 |date:'MMM d, y'}},<br><span class="finish_time_lighter">{{payout.finishTime * 1000 |date:'h:mm a'}}</span></span>
 
             </div>
             <div class="event_question ">
-              <span >adasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadas</span>
+              <span >{{payout.question}}</span>
 
             </div>
             <div class="event_room ">
-              <div class="avengers_img"></div>
-              <div class="avengers-text"><span>Avengers </span></div>
+                <div class="avengers_img" [ngStyle]="{'background':payout.room[0].color}"></div>
+                <div class="avengers-text"><span>{{payout.room[0].name}} </span></div>
 
             </div>
             <div class="event_participant ">
@@ -55,7 +52,7 @@
             </div>
             <div class="event_payout ">
 
-              <span>32 BET</span>
+              <span>{{checkRefLevel(payout)}} BET</span>
 
             </div>
 

@@ -192,7 +192,7 @@
 
 .finish_time_lighter
   font-style: normal
-  font-weight: bold
+  font-weight: normal!important
   font-size: 14px
   line-height: 19px
   color: #5C5C5C!important
@@ -216,26 +216,28 @@
 
 .event_room
   min-width: 20%
+  display: flex
   border-bottom: 0.5px solid #E8E8E8
   border-right: 0.5px solid #E8E8E8
-  display: flex
   flex: 1
   align-items: center
   padding: 0 16px
   box-sizing: unset
+  word-wrap: break-word
   span
+
 
     font-style: normal
     font-weight: bold
     font-size: 16px
     line-height: 22px
-    text-align: center
+    text-align: left
     color: #0B1511
 
 .event_participant
   border-bottom: 0.5px solid #E8E8E8
   border-right: 0.5px solid #E8E8E8
-
+  word-break: break-word
   display: flex
   flex: 1
   align-items: center
@@ -261,6 +263,7 @@
   flex: 1
   align-items: center
   min-width: 67px
+  word-break: break-word
   span
     font-style: normal
     font-weight: bold
@@ -280,11 +283,13 @@
 
 
 .avengers_img
-  background-image: url("../../../../assets/mobileJoinPage/avengers.png")
-  width: 24px
+  min-width: 24px
   height: 24px
+  border: 1px solid #FFFFFF
+  border-radius: 50%
   background-size: contain
   background-repeat: no-repeat
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12)
 
 .avengers-text
   font-style: normal
@@ -292,9 +297,9 @@
   font-size: 16px
   line-height: 22px
   color: #0B1511
-  height: 24px
-  margin-bottom: 7px
+  max-width: 87%
   margin-left: 11px
+  display: block!important
 
 .pagination
   display: flex

@@ -3,6 +3,8 @@ import {PostService} from '../../../services/post.service';
 import {Payouts} from '../../../models/Payouts.model';
 import {Subscription} from 'rxjs';
 import {PayoutEvent} from '../../../models/PayoutEvent.model';
+import {GetService} from '../../../services/get.service';
+import {ReferralsUsersModel} from '../../../models/ReferralsUsers.model';
 
 @Component({
   selector: 'app-my-payouts',
@@ -16,9 +18,11 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
   pagesArr = [];
   pagesToShow: [];
   @Input() userData;
+  getSub: Subscription;
+  payoutLevels = {lvl1: [], lvl2: [], lvl3: []};
 
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private getService: GetService) {
   }
 
   ngOnInit(): void {
@@ -33,14 +37,33 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
         to
       }).subscribe((value: Payouts) => {
         this.payouts = value;
-        // value.data.forEach(value => {
-        //   for (let i = 0 ; i<5;i++){
-        //     this.payouts.data.push(value);
-        //   }
-        // })
         this.pagesArr = [];
         this.calcPages();
-        console.log(this.payouts);
+      }, error => {
+        console.log('from ref list', error);
+      });
+      this.getSub = this.getService.get('user/ref_info').subscribe((value: ReferralsUsersModel) => {
+        this.payoutLevels = {lvl1: [], lvl2: [], lvl3: []};
+        if (value.usersInvited) {
+          value.usersInvited.forEach(value => {
+            this.payoutLevels.lvl1.push(value._id);
+
+            if (value.invited) {
+              value.invited.forEach(value1 => {
+                this.payoutLevels.lvl2.push(value1._id);
+
+                if (value1.invited) {
+                  value1.invited.forEach(value2 => {
+                    this.payoutLevels.lvl3.push(value2._id);
+                  });
+                }
+              });
+            }
+
+          });
+        }
+      }, error => {
+        console.log('from get ref info payouts', error);
       });
     }
   }
@@ -65,10 +88,12 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   goToPage(i) {
-    if (i <= 1){
+    if (i <= 1) {
       i = 1;
     }
-    if (i <= this.pagesArr.length){
+    this.currentPage = i;
+
+    if (i <= this.pagesArr.length) {
 
       this.getPayouts((i * 5) - 5, i * 5);
     }
@@ -79,32 +104,28 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
   allPages() {
     if (this.payouts) {
       return Math.ceil(this.payouts.eventsAmount / 5);
-      //  return  10;
     }
-    console.log(this.pagesToShow);
   }
 
-  calcPages(i= 1 ) {
-    this.pagesToShow = [] ;
+  calcPages(i = 1) {
+    this.pagesToShow = [];
 
     if (this.payouts) {
       for (let i = 1; i <= this.allPages(); i++) {
         this.pagesArr.push(i);
       }
-      // for (let i = 1; i <= 10; i++ ){
-      //   this.pagesArr.push(i);
-      // }
+
       if (this.pagesArr.length < 5) {
-        console.log(this.currentPage);
         this.pagesToShow = this.pagesArr as [];
-        console.log(this.pagesToShow, 'pagestoshow');
         return;
       }
+
       if (i <= 1) {
         this.currentPage = 1;
         this.pagesToShow = this.pagesArr as [];
         return;
       }
+
       if (i >= this.pagesArr.length) {
         this.currentPage = this.pagesArr.length;
         this.pagesToShow = [...this.pagesArr.slice(i - 4, i)] as [];
@@ -115,22 +136,59 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
       if (this.pagesArr.length > 5 && this.currentPage !== 1 && this.currentPage !== this.pagesArr.length) {
         this.pagesToShow = [...this.pagesArr.slice(i - 2, i + 2)] as [];
       }
+
       if (this.currentPage === this.pagesArr.length - 3) {
         this.pagesToShow = [...this.pagesArr.slice(i - 4, i)] as [];
       }
-      console.log(this.pagesToShow, 'pagestoshow');
-      if (this.pagesArr.length > 5 ) {
-        this.pagesToShow = this.pagesArr.slice(0, 4) as [];
 
+      if (this.pagesArr.length > 5) {
+        this.pagesToShow = this.pagesArr.slice(0, 4) as [];
         return this.pagesToShow;
       }
     }
 
   }
 
+  checkIsNumberInteger(str) {
+    return str.toString().includes('.') ? str.toFixed(2) : str;
+  }
+
+  checkRefLevel(payout: PayoutEvent) {
+    let sum = 0;
+    if (payout.parcipiantsAnswer) {
+      payout.parcipiantsAnswer.forEach((value) => {
+
+        if (this.payoutLevels.lvl1.includes(value.from._id)) {
+          if (value.refAmount1) {
+
+            sum += +value?.refAmount1;
+          }
+        }
+
+        if (this.payoutLevels.lvl2.includes(value.from._id)) {
+          if (value.refAmount2) {
+            sum += +value?.refAmount2;
+          }
+
+        }
+
+        if (this.payoutLevels.lvl3.includes(value.from._id)) {
+          if (value.refAmount3) {
+            sum += +value?.refAmount3;
+          }
+        }
+      });
+    }
+    return this.checkIsNumberInteger(sum);
+  }
+
   ngOnDestroy() {
     if (this.payoutsSub) {
       this.payoutsSub.unsubscribe();
+    }
+
+    if (this.getSub) {
+      this.getSub.unsubscribe();
     }
   }
 }
