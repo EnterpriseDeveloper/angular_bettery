@@ -9,6 +9,7 @@ import * as UserActions from '../../../actions/user.actions';
 import {Subscription} from 'rxjs';
 import {RegistrationComponent} from '../registration/registration.component';
 import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   registerSub$: Subscription;
   linkAccount$: Subscription;
   authResultGlobal: any;
-  seedPhrase: string;
+  seedPhrase: object;
   walletFromDB;
   modalStatus: boolean;
   modalOpen: boolean;
@@ -122,7 +123,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                   this.modalOpen = true;
                   this.modalStatus = false;
                   this.spinner = false;
-                  this.seedPhrase = mnemonic;
+                  this.seedPhrase = { mnemonic, wallet };
                 }
               }, error => {
                 console.log(error.message);
@@ -161,6 +162,13 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.modalOpen = false;
       this.spinner = true;
 
+      const setMemoData = {
+        mnemonic: $event.seedPh.mnemonic,
+        pubKey: {
+          address: $event.seedPh.wallet
+        }
+      };
+      authHelp.setMemo(setMemoData);
       this.sendUserToStore(this.dataRegist);
       authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null);  //? save accessToken to LocalStorage from autoLogin
     }
@@ -178,6 +186,11 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal).subscribe((data: any) => {
 
           if (data && data.walletVerif === 'success') {
+            const setMemoData = {
+              mnemonic: $event.seedPh,
+              pubKey: pubKeyActual
+            };
+            authHelp.setMemo(setMemoData);
             this.sendUserToStore(data);
             authHelp.saveAccessTokenLS(data.accessToken, null, null);
             this.spinner = true;
@@ -201,7 +214,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     if ($event.btn === 'Cancel') {
-      this.goBack();
+      this.webAuth.logout({
+        returnTo: `${environment.auth0_URI}/join`,
+        client_id: '49atoPMGb9TWoaDflncmvPQOCccRWPyf',
+      });
     }
   }
 

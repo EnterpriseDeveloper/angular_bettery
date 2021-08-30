@@ -7,7 +7,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class SeedPhraseModalComponent implements OnInit {
   @Input() modalStatus: boolean;
-  @Input() showSeedPhrase: string;
+  @Input() showSeedPhrase: { mnemonic: string, wallet: string };
   @Input() isCorrectPhrase: boolean;
   seedPhrase: string;
   @Output() okEmmit = new EventEmitter<object>();
@@ -19,6 +19,6 @@ export class SeedPhraseModalComponent implements OnInit {
   }
 
   modalBtnAction(text: string) {
-    text === 'Ok' ? this.okEmmit.emit({ btn: text, seedPh: this.seedPhrase}) : this.okEmmit.emit({ btn: text});
+    text === 'Ok' ? this.okEmmit.emit({ btn: text, seedPh: this.seedPhrase}) : this.okEmmit.emit({ btn: text, seedPh: this.showSeedPhrase});
   }
 }

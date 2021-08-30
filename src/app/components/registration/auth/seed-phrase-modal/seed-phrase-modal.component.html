@@ -8,7 +8,7 @@
       <p>Seed phrase is not correct!</p>
     </div>
     <div *ngIf="!modalStatus">
-      <p>{{showSeedPhrase}}</p>
+      <p>{{showSeedPhrase.mnemonic}}</p>
     </div>
     <div *ngIf="modalStatus" class="footer">
       <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Ok')">OK</button>
