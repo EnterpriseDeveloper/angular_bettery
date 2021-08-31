@@ -1,36 +1,31 @@
-import TorusSdk from "@toruslabs/torus-direct-web-sdk";
 import Web3 from "web3";
 import { environment } from '../../environments/environment';
-import * as CryptoJS from 'crypto-js';
 
 const web3Obj = {
-  init: async () => {
-    web3Obj.torusdirectsdk = await init();
-  },
-  login: async (selectedVerifier) => {
-    let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
-    try {
-      let conf: any = verifierMap(x)
-      let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
+  // login: async (selectedVerifier) => {
+  //   let x = selectedVerifier == "google" ? "google-oauth2" : selectedVerifier;
+  //   try {
+  //     let conf: any = verifierMap(x)
+  //     let loginDetails = await web3Obj.torusdirectsdk.triggerLogin(conf);
 
-      web3Obj.web3 = await web3Init(loginDetails.privateKey, environment.maticUrl);
-      web3Obj.torus = await web3Init(loginDetails.privateKey, environment.etherUrl);
+  //     web3Obj.web3 = await web3Init(loginDetails.privateKey, environment.maticUrl);
+  //     web3Obj.torus = await web3Init(loginDetails.privateKey, environment.etherUrl);
 
-      web3Obj.loginDetails = loginDetails;
+  //     web3Obj.loginDetails = loginDetails;
 
-      // add to local storage
-      let data = {
-        privateKey: loginDetails.privateKey,
-        publicAddress: loginDetails.publicAddress,
-        accessToken: loginDetails.userInfo.accessToken
-      }
-      const bytes = CryptoJS.AES.encrypt(JSON.stringify(data), environment.secretKey)
-      localStorage.setItem('_buserlog', bytes.toString());
-      return null;
-    } catch (error) {
-      return error;
-    }
-  },
+  //     // add to local storage
+  //     let data = {
+  //       privateKey: loginDetails.privateKey,
+  //       publicAddress: loginDetails.publicAddress,
+  //       accessToken: loginDetails.userInfo.accessToken
+  //     }
+  //     const bytes = CryptoJS.AES.encrypt(JSON.stringify(data), environment.secretKey)
+  //     localStorage.setItem('_buserlog', bytes.toString());
+  //     return null;
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // },
   torusdirectsdk: null,
   torus: null, // main ehter
   web3: null, // polygon
@@ -64,19 +59,6 @@ const web3Init = async (privateKey, provider) => {
   const prKey = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
   await web3.eth.accounts.wallet.add(prKey);
   return web3;
-}
-
-const init = async () => {
-  let torusNetwork: any = environment.torusNetwork;
-  let torSdk = new TorusSdk({
-    baseUrl: `${location.origin}/serviceworker`,
-    enableLogging: true,
-    redirectPathName: getRedirect(),
-    network: torusNetwork
-  });
-
-  await torSdk.init();
-  return torSdk
 }
 
 const getRedirect = () => {

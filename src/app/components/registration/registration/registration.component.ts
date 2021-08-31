@@ -45,8 +45,6 @@ export class RegistrationComponent implements OnDestroy {
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
   ) {
-    web3Obj.init();
-
     this.webAuth = authHelp.init;
   }
 
@@ -73,36 +71,6 @@ export class RegistrationComponent implements OnDestroy {
     }
   }
 
-  // async loginWithTorus(selectedVerifier) {
-  //   if (this.linkUser) {
-  //     if (!this.linVerification(selectedVerifier)) {
-  //       this.spinner = true;
-  //       let {data, err} = await web3Obj.linkUser(selectedVerifier); // ! ????? check
-  //       if (!err) {
-  //         await this.linkAccount(data);
-  //       } else {
-  //         this.logOut(err);
-  //       }
-  //     }
-  //   } else {
-  //     this.spinner = true;
-  //     let login = await web3Obj.login(selectedVerifier);
-  //     if (login == null) {
-  //       this.setTorusInfoToDB();
-  //     } else {
-  //       this.logOut(login);
-  //     }
-  //   }
-  // }
-
-  // async logOut(x) {
-  //   if (JSON.stringify(x).search('user closed popup') != -1) {
-  //     this.closedWindow.next();
-  //   }
-  //   this.spinner = false;
-  //   this.closeModal();
-  //   await web3Obj.logOut();
-  // }
 
   async linkAccount(data) {
     let post = {
@@ -122,64 +90,11 @@ export class RegistrationComponent implements OnDestroy {
     return this.linkedAccouns.includes(z);
   }
 
-  // async setTorusInfoToDB() {
-  //   let userInfo = web3Obj.loginDetails;
-  //   if (userInfo != null) {
-  //     console.log(userInfo);
-  //
-  //     this.localStoreUser(userInfo.userInfo);
-  //
-  //     let refId = sessionStorage.getItem('bettery_ref');
-  //
-  //     let data: Object = {
-  //       _id: null,
-  //       wallet: userInfo.publicAddress,
-  //       nickName: userInfo.userInfo.name,
-  //       email: userInfo.userInfo.email,
-  //       avatar: userInfo.userInfo.profileImage,
-  //       verifier: userInfo.userInfo.typeOfLogin,
-  //       verifierId: userInfo.userInfo.verifierId,
-  //       refId: refId == null ? 'undefined' : refId,
-  //       accessToken: userInfo.userInfo.accessToken,
-  //     };
-  //
-  //     this.torusRegistSub = this.http.post('user/torus_regist', data)
-  //       .subscribe(
-  //         (x: User) => {
-  //           this.store.dispatch(new UserActions.AddUser({
-  //             _id: x._id,
-  //             email: x.email,
-  //             nickName: x.nickName,
-  //             wallet: x.wallet,
-  //             avatar: x.avatar,
-  //             verifier: x.verifier,
-  //             sessionToken: x.sessionToken,
-  //             verifierId: x.verifierId,
-  //             accessToken: x.accessToken
-  //           }));
-  //           this.spinner = false;
-  //           this.alreadyRegister = undefined;
-  //           this.submitted = false;
-  //           this.activeModal.dismiss('Cross click');
-  //         }, async (err) => {
-  //           if (err.status == 302) {
-  //             this.alreadyRegister = err.error;
-  //             this.spinner = false;
-  //           } else {
-  //             this.activeModal.dismiss('Cross click');
-  //             this.spinner = false;
-  //             console.log(err);
-  //           }
-  //         });
-  //   }
-  // }
-
   goBack() {
     this.alreadyRegister = undefined;
   }
 
   alreadyRegistCloseModal() {
-    // web3Obj.logOut();
     localStorage.removeItem('_buserlog');
     this.closeModal();
   }
