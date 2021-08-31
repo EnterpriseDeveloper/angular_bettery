@@ -148,7 +148,7 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  checkIsNumberInteger(str) {
+  checkIsNumberInteger(str = 0) {
     return str.toString().includes('.') ? str.toFixed(2) : str;
   }
 
