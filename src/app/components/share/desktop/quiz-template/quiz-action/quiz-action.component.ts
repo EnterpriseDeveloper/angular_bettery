@@ -91,7 +91,8 @@ export class QuizActionComponent implements OnInit{
         } else {
           let data: any = {
             amount: this.form.controls.amount.value,
-            answer: this.answerNumber
+            answer: this.answerNumber,
+            answerName: this.answerName
           }
           this.isDisableBet = true;
           this.betEvent.next(data);
