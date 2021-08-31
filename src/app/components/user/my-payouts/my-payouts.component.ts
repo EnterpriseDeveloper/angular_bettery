@@ -83,7 +83,6 @@ export class MyPayoutsComponent implements OnInit, OnDestroy, OnChanges {
         this.getPayouts();
       }
       this.getPayouts();
-
     }
   }
 

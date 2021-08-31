@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="pagination">
+    <div class="pagination" *ngIf="payouts.data.length">
       <div class="arrow_left" (click)="goToPage(currentPage - 1)"></div>
 
       <div style="display: flex">
@@ -72,9 +72,6 @@
              (click)="goToPage(page)"
         >{{page}}
         </div>
-
-        <!--        <span *ngIf="payouts.eventsAmount>4">..</span>-->
-        <!--        <span *ngIf="payouts.eventsAmount>4 ">{{allPages()}}</span>-->
         <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">..</span>
         <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">{{allPages()}}</span>
         <div (click)="goToPage(allPages())" class="last">Last</div>
