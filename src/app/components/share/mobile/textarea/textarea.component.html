@@ -39,7 +39,7 @@
         formControlName="{{controlName}}"
         rows="1"
         id="Question"
-        (input)="textareaGrow()"
+        (input)="textareaGrow(); limitError(controlName, null)"
         placeholder="{{controlName == 'question' ? 'Enter topic...' : nickName + '`s rooms' }}"
         [ngClass]=" controlName == 'question' ? { 'is_invalid': submitted && f.question.errors} : { 'is_invalid': submitted && f.roomName.errors}"
         style="font-size: 14px"
@@ -72,7 +72,7 @@
           formControlName="name"
           rows="1"
           id="Question{{i}}"
-          (input)="textareaGrowAnswer()"
+          (input)="textareaGrowAnswer();limitError(controlName, null)"
           placeholder="Outcome {{i+1}}"
           [ngClass]="{ 'is_invalid': submitted && answer.controls.name.errors
                 || submitted && checkingEqual(answer.controls.name.value, '')
@@ -111,7 +111,7 @@
           formControlName="{{controlName}}"
           rows="1"
           id="private"
-          (input)="textareaGrowPrivate()"
+          (input)="textareaGrowPrivate();limitError(controlName, null)"
           placeholder="{{title}}"
           [ngClass]="titleWhatToWin ? { 'is_invalid': submitted && f.winner.errors || submitted && f.winner.value.length > limit} : { 'is_invalid': submitted && f.losers.errors || submitted && f.losers.value.length > limit}"
           style="font-size: 16px; border: none"

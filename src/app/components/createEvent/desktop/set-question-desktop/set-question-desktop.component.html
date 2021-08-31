@@ -14,7 +14,6 @@
       <div *ngIf="submitted && f.question.errors">
         <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
           question</small>
-        <small *ngIf="f.question.errors.maxlength" class="form-text quize_validation_error">Too long!<br>Make sure you don't exceed the character limits for Topic.</small>
       </div>
     </div>
 
@@ -52,6 +51,8 @@
         <div *ngIf="submitted && answer.controls.name.errors">
           <small style="padding-bottom: 10px" *ngIf="answer.controls.name.errors.required"
                  class="form-text quize_validation_error">Please enter the question</small>
+
+
         </div>
         <div>
           <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value, '')"
@@ -77,6 +78,7 @@
       <input type="text" formControlName="details" class="answer adapting" id="detalis"
              placeholder="If result can be checked on the Internet, give source...">
     </div>
+
     <div class="buttonBox" [ngStyle]="styleButtonBox()">
       <button type="button" class="cancel" (click)="activeModal.dismiss('Cross click')">Cancel</button>
       <button type="button" class="next" (click)="onSubmit()">Next</button>

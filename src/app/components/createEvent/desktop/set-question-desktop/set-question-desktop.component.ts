@@ -110,7 +110,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.f)
     this.submitted = true;
     if (this.questionForm.invalid || this.checkingEqual(null, 'check') || this.validSizeImg) {
       return;
