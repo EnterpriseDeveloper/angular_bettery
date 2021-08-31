@@ -1,7 +1,9 @@
 <div class="container_profile">
   <div class="background"></div>
-    <div  class="adaptive_container" >
-      <my-profile class="my_profile" [userData]="userData"></my-profile>
-      <my-referrals class="my_referrals" [userData]="userData"></my-referrals>
+  <div class="adaptive_container">
+    <my-profile class="my_profile" [userData]="userData"></my-profile>
+    <my-referrals class="my_referrals" [userData]="userData"></my-referrals>
   </div>
+  <app-my-payouts class="my_payouts" [userData]="userData"></app-my-payouts>
+
 </div>

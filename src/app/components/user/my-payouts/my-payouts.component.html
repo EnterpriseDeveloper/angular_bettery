@@ -1,0 +1,83 @@
+<div class="payouts_container" *ngIf="userData != undefined && payouts.data.length">
+  <div class="wrapper ">
+    <div class="title_box">
+      <div>
+        <span class="title_name">my payouts </span>
+        <span class="total_bet">{{checkIsNumberInteger(payouts?.totalBet)}} BET <span class="last24h_bet">TOTAL, </span> </span>
+        <span class="last24h_bet"><span class="last24h_bet_yellow">{{checkIsNumberInteger(payouts?.totalBet24)}} BET</span> <span> LAST 24H</span></span>
+      </div>
+
+    </div>
+    <div class="events_table ">
+      <div>
+        <div class="table_header ">
+          <div class="date_title ">
+            <span>Date</span>
+          </div>
+          <div class="event_title ">
+            <span>Event</span>
+          </div>
+          <div class="room_title ">
+            <span>Room</span>
+          </div>
+          <div class="participant_title ">
+            <span>Participant</span>
+          </div>
+          <div class="payout_title ">
+            <span>Payout</span>
+          </div>
+        </div>
+
+
+        <div *ngIf="payouts" style="background-color: #ffffff ">
+          <div class="event_item " *ngFor="let payout of payouts?.data">
+            <div class="finish_time ">
+            <span>{{payout?.finishTime * 1000 |date:'MMM d, y'}},<br><span class="finish_time_lighter">{{payout.finishTime * 1000 |date:'h:mm a'}}</span></span>
+
+            </div>
+            <div class="event_question ">
+              <span >{{payout.question}}</span>
+
+            </div>
+            <div class="event_room ">
+                <div class="avengers_img" [ngStyle]="{'background':payout.room[0].color}"></div>
+                <div class="avengers-text"><span>{{payout.room[0].name}} </span></div>
+
+            </div>
+            <div class="event_participant ">
+
+              <span class="total_participant">{{payout?.allReferals}}<span
+                class="my_invited_parts">({{myReferralsCalculate(payout)}})</span></span>
+
+            </div>
+            <div class="event_payout ">
+
+              <span>{{checkRefLevel(payout)}} BET</span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination" *ngIf="payouts.data.length">
+      <div class="arrow_left" (click)="goToPage(currentPage - 1)"></div>
+
+      <div style="display: flex">
+        <div (click)="goToPage(1)" class="first">First</div>
+
+        <div *ngFor="let page of pagesToShow" class="page"
+             [ngClass]="page===currentPage && 'page_bold'"
+             (click)="goToPage(page)"
+        >{{page}}
+        </div>
+        <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">..</span>
+        <span *ngIf="pagesArr.length>4 && currentPage<=pagesArr.length - 3">{{allPages()}}</span>
+        <div (click)="goToPage(allPages())" class="last">Last</div>
+      </div>
+      <div class="arrow_right" (click)="goToPage(currentPage + 1)"></div>
+
+    </div>
+  </div>
+</div>

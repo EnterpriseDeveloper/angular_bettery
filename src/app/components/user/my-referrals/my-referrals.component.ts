@@ -10,10 +10,10 @@ import {ClipboardService} from 'ngx-clipboard';
   templateUrl: './my-referrals.component.html',
   styleUrls: ['./my-referrals.component.sass']
 })
-export class MyReferralsComponent implements OnInit, OnChanges, OnDestroy {
+export class MyReferralsComponent implements OnInit , OnChanges, OnDestroy {
   @Input() userData;
-  refData: ReferralsUsersModel;
-  invitedUsers: InvitedUser[];
+  @Input()refData: ReferralsUsersModel;
+  @Input()invitedUsers: InvitedUser[];
   refDataSub: Subscription;
   copyLinkFlag: boolean;
 
@@ -30,8 +30,11 @@ export class MyReferralsComponent implements OnInit, OnChanges, OnDestroy {
           this.refData = undefined;
           this.invitedUsers = undefined;
           this.getRefData();
+
         }
         this.getRefData();
+
+
     }
   }
 
