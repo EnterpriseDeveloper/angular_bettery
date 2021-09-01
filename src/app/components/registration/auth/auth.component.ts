@@ -210,6 +210,8 @@ export class AuthComponent implements OnInit, OnDestroy {
             console.log(error);
           }
         });
+      }else{
+        this.isCorrectPhrase = true;
       }
     }
 

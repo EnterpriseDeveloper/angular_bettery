@@ -11,14 +11,36 @@ export class SeedPhraseModalComponent implements OnInit {
   @Input() isCorrectPhrase: boolean;
   seedPhrase: string;
   @Output() okEmmit = new EventEmitter<object>();
+  seedPhraseArr: string[];
 
   constructor() {
   }
 
   ngOnInit(): void {
+    if (this.showSeedPhrase.mnemonic) {
+      this.splitSeedPhrase(this.showSeedPhrase.mnemonic);
+    }
+  }
+
+  log() {
+    console.log(this.seedPhrase);
   }
 
   modalBtnAction(text: string) {
-    text === 'Ok' ? this.okEmmit.emit({ btn: text, seedPh: this.seedPhrase}) : this.okEmmit.emit({ btn: text, seedPh: this.showSeedPhrase});
+    if (this.seedPhrase) {
+      if (text === 'Ok') {
+        this.okEmmit.emit({btn: text, seedPh: this.seedPhrase});
+      }
+    } else {
+      if (text !== 'Ok') {
+
+        this.okEmmit.emit({btn: text, seedPh: this.showSeedPhrase});
+      }
+    }
+  }
+
+  splitSeedPhrase(str: string) {
+    this.seedPhraseArr = str.split(' ');
+    console.log(this.seedPhraseArr);
   }
 }
