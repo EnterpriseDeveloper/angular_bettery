@@ -569,14 +569,14 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  imageHeight() {
-    if (this.question && this.heightBlock > 260) {
-      return {
-        'border-bottom-left-radius': "0",
-        'border-top-left-radius' : "0"
-      };
-    }
-  }
+  // imageHeight() {
+  //   if (this.question && this.heightBlock > 260) {
+  //     return {
+  //       'border-bottom-left-radius': "0",
+  //       'border-top-left-radius' : "0"
+  //     };
+  //   }
+  // }
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {
