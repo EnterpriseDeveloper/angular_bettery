@@ -78,9 +78,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   ngAfterViewInit() {
+  setTimeout(() => {
     if (this.question) {
       this.heightBlock = this.div.nativeElement.clientHeight;
     }
+  });
   }
 
   ngOnInit() {
@@ -560,7 +562,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (this.question) {
       return {
         'background': color,
-        'max-height': this.heightBlock + 'px'
+        // 'max-height': this.heightBlock + 'px'
       };
     } else {
       return;
@@ -568,15 +570,13 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   imageHeight() {
-    if (this.question) {
+    if (this.question && this.heightBlock > 260) {
       return {
-        'height': this.heightBlock + 'px'
+        'border-bottom-left-radius': "0",
+        'border-top-left-radius' : "0"
       };
-    } else {
-      return;
     }
   }
-
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {

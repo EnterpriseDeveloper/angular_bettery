@@ -3,16 +3,16 @@
     <div class="copyLink-img"></div>
   </div>
   <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
-  <div class="row ml-0" style="margin-right: -30px; min-height: 212px">
+  <div class="row ml-0" style="margin-right: -30px; min-height: 212px; flex-wrap: nowrap;">
 
-    <div class="col-3 imageBox" style="padding: 0" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)">
+    <div class="imageBox" style="padding: 0; align-items: center" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)">
       <div *ngIf="question.thumImage === 'undefined'" class="unloadedImgBlock">
         <div  class="unloadedImgContent">
           <span class="unloadedImgQuestion">{{question?.question}}</span>
         </div>
       </div>
     </div>
-    <div class="col-3 imageBox imgFix" *ngIf="question.thumImage !== 'undefined'">
+    <div class="imageBox imgFix" *ngIf="question.thumImage !== 'undefined'">
       <img class="event_img" src="{{question.thumImage}}" [ngStyle]="imageHeight()"/>
     </div>
 
