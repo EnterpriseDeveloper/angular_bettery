@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="imageBox imgFix" *ngIf="question.thumImage !== 'undefined'">
-      <img class="event_img" src="{{question.thumImage}}" [ngStyle]="imageHeight()"/>
+      <img class="event_img" src="{{question.thumImage}}"/>
     </div>
 
     <div class="body_card" [ngStyle]="roomCardBottom()" id="{{question.id}}">
