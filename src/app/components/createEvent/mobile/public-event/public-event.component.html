@@ -1,96 +1,99 @@
-<div class="box bg-img-public" *ngIf="!created">
+<div class="header_margin">
+  <div class="box bg-img-public" *ngIf="!created">
     <p class="comfirm">CONFIRM EVENT</p>
 
     <div class="quizBox">
-        <p class="quizName">{{formData.question}}</p>
+      <p class="quizName">{{formData.question}}</p>
     </div>
 
     <div class="label">
-        <div class="CommentYellow"></div>
-        <p>possible outcomes</p>
+      <div class="CommentYellow"></div>
+      <p>possible outcomes</p>
     </div>
     <div *ngFor="let answer of formData.answers">
-        <div class="answerBox">
-            <p class="answer">{{answer.name}}</p>
-        </div>
+      <div class="answerBox">
+        <p class="answer">{{answer.name}}</p>
+      </div>
     </div>
     <div *ngIf="formData?.resolutionDetalis != ''">
-        <div class="label" style="padding-top: 16px;">
-            <div class="LightYellow"></div>
-            <p class="mt-1">HOW TO VERIFY</p>
-        </div>
-        <div class="answerBox">
-            <p class="answer">{{formData?.resolutionDetalis}}</p>
-        </div>
+      <div class="label" style="padding-top: 16px;">
+        <div class="LightYellow"></div>
+        <p class="mt-1">HOW TO VERIFY</p>
+      </div>
+      <div class="answerBox">
+        <p class="answer">{{formData?.resolutionDetalis}}</p>
+      </div>
     </div>
     <div class="label" style="padding-top: 16px;">
-        <div class="BetWith"></div>
-        <p class="labelNamePos">BET WITH</p>
+      <div class="BetWith"></div>
+      <p class="labelNamePos">BET WITH</p>
     </div>
     <div class="answerBox">
-        <p class="answer">{{betWith()}}</p>
+      <p class="answer">{{betWith()}}</p>
     </div>
 
     <div class="timeBox">
-        <div class="timeBoxOne">
-            <div class="label">
-                <div class="ClockYellow"></div>
-                <p class="labelNamePos">betting time</p>
-            </div>
-            <div class="answerBox">
-                <p class="answer">{{timeToBet()}}</p>
-            </div>
+      <div class="timeBoxOne">
+        <div class="label">
+          <div class="ClockYellow"></div>
+          <p class="labelNamePos">betting time</p>
         </div>
-        <div class="timeBoxTwo">
-            <div class="label">
-                <div class="ExpertsYellow"></div>
-                <p class="labelNamePos">NO. of EXPERTS</p>
-            </div>
-            <div class="answerBox">
-                <p class="answer">{{expertsName()}}</p>
-            </div>
+        <div class="answerBox">
+          <p class="answer">{{timeToBet()}}</p>
         </div>
+      </div>
+      <div class="timeBoxTwo">
+        <div class="label">
+          <div class="ExpertsYellow"></div>
+          <p class="labelNamePos">NO. of EXPERTS</p>
+        </div>
+        <div class="answerBox">
+          <p class="answer">{{expertsName()}}</p>
+        </div>
+      </div>
     </div>
 
     <div class="label">
-        <div class="BoxYellow"></div>
-        <p class="labelNamePos">ROOM</p>
+      <div class="BoxYellow"></div>
+      <p class="labelNamePos">ROOM</p>
     </div>
     <div class="answerBox">
-        <p class="answer">{{formData.roomName}}</p>
+      <p class="answer">{{formData.roomName}}</p>
     </div>
     <div *ngIf="pastTime"class="pastTime_err_text">You chose past time</div>
 
     <p class="info mt-3">The event ends after all Experts validate.</p>
 
     <div class="buttonBox">
-        <button type="button" class="cancel" (click)="cancel()">BACK</button>
-        <button type="button" class="next" (click)="createEvent()">CREATE</button>
-    </div>
-</div>
-
-<div *ngIf="created" class="box">
-  <p class="title">EVENT IS NOW LIVE</p>
-  <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
-  <div class="aboutBox">
-    <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
-    <a class="link" href="#">www.bettery.io/public_event/{{quizData?._id}}</a>
-    <div class="imgBox" (click)="copyToClickBoard()">
-      <div class="listImg" style="margin-right: 8px"></div>
-      <p class="copyToClick">Copy to clipboard</p>
-      <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
+      <button type="button" class="cancel" (click)="cancel()">BACK</button>
+      <button type="button" class="next" (click)="createEvent()">CREATE</button>
     </div>
   </div>
-  <ul class="listBox">
-    <li class="list" style="padding-bottom: 20px;">Anyone can join as a Player, or become a single Expert after Players bet to validate the result.
-    </li>
-    <li class="list">Players need to join in 8 hours, otherwise the event will be cancelled. Players can’t be Expert.</li>
-  </ul>
-  <a class="linkYellow mb-3" (click)="modalAboutExpert()">How do I manage my event?</a>
 
-  <div class="joinBox">
-    <a class="joinButton" routerLink="/public_event/{{quizData?._id}}">JOIN EVENT</a>
+  <div *ngIf="created" class="box">
+    <p class="title">EVENT IS NOW LIVE</p>
+    <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
+    <div class="aboutBox">
+      <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
+      <a class="link" href="#">www.bettery.io/public_event/{{quizData?._id}}</a>
+      <div class="imgBox" (click)="copyToClickBoard()">
+        <div class="listImg" style="margin-right: 8px"></div>
+        <p class="copyToClick">Copy to clipboard</p>
+        <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
+      </div>
+    </div>
+    <ul class="listBox">
+      <li class="list" style="padding-bottom: 20px;">Anyone can join as a Player, or become a single Expert after Players bet to validate the result.
+      </li>
+      <li class="list">Players need to join in 8 hours, otherwise the event will be cancelled. Players can’t be Expert.</li>
+    </ul>
+    <a class="linkYellow mb-3" (click)="modalAboutExpert()">How do I manage my event?</a>
+
+    <div class="joinBox">
+      <a class="joinButton" routerLink="/public_event/{{quizData?._id}}">JOIN EVENT</a>
+    </div>
   </div>
-</div>
 
-<app-spinner-loading *ngIf="spinnerLoading"></app-spinner-loading>
+  <app-spinner-loading *ngIf="spinnerLoading"></app-spinner-loading>
+
+</div>

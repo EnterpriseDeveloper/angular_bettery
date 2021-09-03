@@ -1,98 +1,101 @@
-<div class="box bg-img-private" *ngIf="!created">
-  <p class="comfirm">CONFIRM EVENT</p>
+<div class="header_margin">
+  <div class="box bg-img-private" *ngIf="!created">
+    <p class="comfirm">CONFIRM EVENT</p>
 
-  <div class="quizBox">
-    <p class="quizName">{{formData?.question}}</p>
-  </div>
+    <div class="quizBox">
+      <p class="quizName">{{formData?.question}}</p>
+    </div>
 
-  <div class="label">
-    <div class="otcomeYellow"></div>
-    <p>possible outcomes</p>
-  </div>
-  <div *ngFor="let answer of formData?.answers">
+    <div class="label">
+      <div class="otcomeYellow"></div>
+      <p>possible outcomes</p>
+    </div>
+    <div *ngFor="let answer of formData?.answers">
+      <div class="answerBox">
+        <p class="answer">{{answer.name}}</p>
+      </div>
+    </div>
+    <div *ngIf="formData?.resolutionDetalis != ''">
+      <div class="label" style="padding-top: 16px;">
+        <div class="LightYellow"></div>
+        <p class="mt-1">HOW TO VERIFY</p>
+      </div>
+      <div class="answerBox">
+        <p class="answer">{{formData?.resolutionDetalis}}</p>
+      </div>
+    </div>
+
+    <div class="label">
+      <div class="cupYellow"></div>
+      <p>What to win or lose</p>
+    </div>
+    <div class="answerBox tipBox">
+      <p class="answer tipWidth">{{formData?.winner}}</p>
+      <p class="tipText">Winners</p>
+    </div>
+    <div class="answerBox tipBox">
+      <p class="answer tipWidth">{{formData?.losers}}</p>
+      <p class="tipText">Losers</p>
+    </div>
+
+    <div class="label">
+      <div class="ClockYellow"></div>
+      <p>BETTING TIME</p>
+    </div>
     <div class="answerBox">
-      <p class="answer">{{answer.name}}</p>
+      <p class="answer">{{formData?.privateEndTime.name}}</p>
     </div>
-  </div>
-  <div *ngIf="formData?.resolutionDetalis != ''">
-    <div class="label" style="padding-top: 16px;">
-      <div class="LightYellow"></div>
-      <p class="mt-1">HOW TO VERIFY</p>
+
+
+    <div class="label">
+      <div class="BoxYellow"></div>
+      <p>ROOM</p>
     </div>
     <div class="answerBox">
-      <p class="answer">{{formData?.resolutionDetalis}}</p>
+      <p class="answer">{{formData?.roomName}}</p>
+    </div>
+
+    <div class="label">
+      <div class="HandYellow"></div>
+      <p>REWARD for EXPERT</p>
+    </div>
+    <div class="answerBox">
+      <p class="answer">Eternal gratitude for honesty</p>
+    </div>
+    <div *ngIf="pastTime"class="pastTime_err_text">You chose past time</div>
+
+    <p class="info mt-4">The event needs one Expert to validate after
+      betting time, then it will end.</p>
+
+    <div class="buttonBox">
+      <button type="button" class="cancel" (click)="cancel()">BACK</button>
+      <button type="button" class="next" (click)="createEvent()">CREATE</button>
+    </div>
+  </div>
+  <div *ngIf="created" class="box">
+    <p class="title">EVENT IS NOW LIVE</p>
+    <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
+    <div class="aboutBox">
+      <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
+      <a class="link" href="#">www.bettery.io/private_event/{{eventData?._id}}</a>
+      <div class="imgBox" (click)="copyToClickBoard()">
+        <div class="listImg" style="margin-right: 8px"></div>
+        <p class="copyToClick">Copy to clipboard</p>
+        <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
+      </div>
+    </div>
+    <ul class="listBox">
+      <li class="list" style="padding-bottom: 20px;">Anyone can join as a Player, or become a single Expert after Players bet to validate the result.
+      </li>
+      <li class="list">Players need to join in 8 hours, otherwise the event will be cancelled. Players can’t be Expert.</li>
+    </ul>
+    <a class="linkYellow" (click)="modalAboutExpert()">How do I manage my event?</a>
+
+    <div class="joinBox">
+      <a class="joinButton" routerLink="/private_event/{{eventData?._id}}">JOIN EVENT</a>
     </div>
   </div>
 
-  <div class="label">
-    <div class="cupYellow"></div>
-    <p>What to win or lose</p>
-  </div>
-  <div class="answerBox tipBox">
-    <p class="answer tipWidth">{{formData?.winner}}</p>
-    <p class="tipText">Winners</p>
-  </div>
-  <div class="answerBox tipBox">
-    <p class="answer tipWidth">{{formData?.losers}}</p>
-    <p class="tipText">Losers</p>
-  </div>
+  <app-spinner-loading *ngIf="spinnerLoading"></app-spinner-loading>
 
-  <div class="label">
-    <div class="ClockYellow"></div>
-    <p>BETTING TIME</p>
-  </div>
-  <div class="answerBox">
-    <p class="answer">{{formData?.privateEndTime.name}}</p>
-  </div>
-
-
-  <div class="label">
-    <div class="BoxYellow"></div>
-    <p>ROOM</p>
-  </div>
-  <div class="answerBox">
-    <p class="answer">{{formData?.roomName}}</p>
-  </div>
-
-  <div class="label">
-    <div class="HandYellow"></div>
-    <p>REWARD for EXPERT</p>
-  </div>
-  <div class="answerBox">
-    <p class="answer">Eternal gratitude for honesty</p>
-  </div>
-  <div *ngIf="pastTime"class="pastTime_err_text">You chose past time</div>
-
-  <p class="info mt-4">The event needs one Expert to validate after
-    betting time, then it will end.</p>
-
-  <div class="buttonBox">
-    <button type="button" class="cancel" (click)="cancel()">BACK</button>
-    <button type="button" class="next" (click)="createEvent()">CREATE</button>
-  </div>
 </div>
-<div *ngIf="created" class="box">
-  <p class="title">EVENT IS NOW LIVE</p>
-  <p class="titleTwo">Betting ends in <b>{{day}}:{{hour}}:{{minutes}}:{{seconds}}</b></p>
-  <div class="aboutBox">
-    <p class="byLink">ANYONE CAN JOIN BY THIS LINK:</p>
-    <a class="link" href="#">www.bettery.io/private_event/{{eventData?._id}}</a>
-    <div class="imgBox" (click)="copyToClickBoard()">
-      <div class="listImg" style="margin-right: 8px"></div>
-      <p class="copyToClick">Copy to clipboard</p>
-      <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
-    </div>
-  </div>
-  <ul class="listBox">
-    <li class="list" style="padding-bottom: 20px;">Anyone can join as a Player, or become a single Expert after Players bet to validate the result.
-    </li>
-    <li class="list">Players need to join in 8 hours, otherwise the event will be cancelled. Players can’t be Expert.</li>
-  </ul>
-  <a class="linkYellow" (click)="modalAboutExpert()">How do I manage my event?</a>
-
-  <div class="joinBox">
-    <a class="joinButton" routerLink="/private_event/{{eventData?._id}}">JOIN EVENT</a>
-  </div>
-</div>
-
-<app-spinner-loading *ngIf="spinnerLoading"></app-spinner-loading>
