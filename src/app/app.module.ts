@@ -39,6 +39,7 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
 import {ViewportScroller} from '@angular/common';
 import { filter } from 'rxjs/operators';
 import {RegistrationModule} from './components/registration/registration.module';
+import {reputationReducer} from './reducers/reputation.reducer';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './files/locale/', '.json');
@@ -70,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     StoreModule.forRoot({
       user: userReducer,
       coins: coinsReducer,
-      createEvent: createEventReducer
+      createEvent: createEventReducer,
+      reputation: reputationReducer
     }),
     NgbModule,
     FormsModule,

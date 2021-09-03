@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef } from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef, Input} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
+import * as ReputationAction from '../../../actions/reputation.action';
 import * as UserActions from '../../../actions/user.actions';
 import { ClipboardService } from 'ngx-clipboard';
 
@@ -16,6 +17,7 @@ import { SwapBetComponent } from '../swap-bet/swap-bet.component';
 import { environment } from '../../../../environments/environment';
 import {GetService} from '../../../services/get.service';
 import authHelp from '../../../helpers/auth-help';
+import {PostService} from '../../../services/post.service';
 
 
 @Component({
@@ -29,7 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   nickName: string = undefined;
   web3: Web3 | undefined = null;
   coinInfo: Coins = null;
-  amountSpinner: boolean = true;
+  amountSpinner = true;
   userWallet: string = undefined;
   userId: number;
   userSub: Subscription;
@@ -39,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   avatar: string;
   verifier: string = undefined;
   openNavBar = false;
-  display: boolean = false;
+  display = false;
   saveUserLocStorage = [];
   logoutBox: boolean;
   copyLinkFlag: boolean;
@@ -47,13 +49,15 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   logoutSub: Subscription;
   environments = environment;
   webAuth;
+  getRepUserDataSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
-    private getService: GetService
+    private getService: GetService,
+    private postService: PostService
   ) {
 
     this.detectPath();
@@ -66,6 +70,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.avatar = x[0].avatar;
         this.userId = x[0]._id;
         this.updateBalance();
+        this.updateReputation(x[0]._id);
+        console.log(this.userId);
       }
     });
 
@@ -74,14 +80,16 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.coinInfo = x[0];
       }
     });
+    this.log()
   }
 
   ngDoCheck() {
     this.detectPath();
   }
 
+
   detectPath() {
-    let href = window.location.pathname;
+    const href = window.location.pathname;
     if (href == '/' || href == '/tokensale' || href == '/.well-known/pki-validation/fileauth.txt') {
       this.display = false;
     } else {
@@ -106,8 +114,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      // TODO check bty on main chain 
-      MainBTY: "0",
+      // TODO check bty on main chain
+      MainBTY: '0',
       BTY: e.bty,
       BET: e.bet
     }));
@@ -116,7 +124,25 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
       console.log(error);
     });
   }
+  async updateReputation(id){
+    this.getRepUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x: any) => {
+      console.log(x, 'reputation fro, repur');
+      this.store.dispatch( new ReputationAction.UpdateReputation({
+           advisorRep: x.advisorReputPoins === null ? 0 : x.advisorReputPoins,
+           hostRep: x.hostReputPoins === null ? 0 : x.hostReputPoins,
+           expertRep: x.expertReputPoins === null ? 0 : x.expertReputPoins,
+           playerRep: x.playerReputPoins === null ? 0 : x.playerReputPoins,
+         }));
+      // TODO get reputation
+      // this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
+      // this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
+      // this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;
+      // this.playerRep = this.addionalData.playerReputPoins === null ? 0 : this.addionalData.playerReputPoins;
 
+    }, (err) => {
+      console.log('from get additional data', err);
+    });
+  }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
@@ -129,7 +155,11 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
       this.logoutBox = false;
     }
   }
-
+  log(){
+    this.store.subscribe(value => {
+      console.log(value);
+    });
+  }
   async newlogOut() {
     this.logoutSub = this.getService.get('user/logout').subscribe(() => {
       this.webAuth.logout({
@@ -168,8 +198,8 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   copyRefLink() {
     this.copyLinkFlag = true;
-    let href = window.location.hostname;
-    let path = href == 'localhost' ? 'http://localhost:4200' : href;
+    const href = window.location.hostname;
+    const path = href == 'localhost' ? 'http://localhost:4200' : href;
     this._clipboardService.copy(`${path}/ref/${this.userId}`);
     setTimeout(() => {
       this.copyLinkFlag = false;
@@ -226,6 +256,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
     if (this.postSub) {
       this.postSub.unsubscribe();
+    }
+    if (this.getRepUserDataSub){
+      this.getRepUserDataSub.unsubscribe();
     }
   }
 }

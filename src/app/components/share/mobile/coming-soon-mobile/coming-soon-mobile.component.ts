@@ -43,7 +43,7 @@ export class ComingSoonMobileComponent implements  OnChanges {
       return {
         img: 'pro_img',
         about_title: 'Pro events,',
-        about_text: ' hosted by Influencers and Businesses, will let you earn massively - if you meet the Reputation level for them that is ;-)',
+        about_text: ' hosted by Influencers and Businesses, will let you earn massively - if you meet the ReputationModel level for them that is ;-)',
       };
     }
 

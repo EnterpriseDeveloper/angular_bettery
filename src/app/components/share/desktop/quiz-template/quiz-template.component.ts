@@ -23,6 +23,7 @@ import { RegistrationComponent } from '../../../registration/registration/regist
 import { ClipboardService } from 'ngx-clipboard';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { connectToSign } from '../../../../contract/cosmosInit';
+import {ReputationModel} from '../../../../models/Reputation.model';
 
 @Component({
   selector: 'quiz-template',
@@ -60,6 +61,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   betDisable = false;
   windowWidth: number;
   form: FormGroup;
+  reputation: ReputationModel;
+  reputationSub: Subscription;
+
 
   constructor(
     private postService: PostService,
@@ -69,6 +73,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     private formBuilder: FormBuilder,
   ) {
     this.windowWidth = document.documentElement.clientWidth;
+    this.reputationSub = this.store.select('reputation').subscribe((x: ReputationModel) => {
+      if (x) {
+        this.reputation = x;
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -474,7 +483,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         creator: address,
         pubId: answer.event_id,
         answers: answer.answerName,
-        reput: "1" // TODO get reput
+        reput: this.reputation.expertRep // TODO get reput
       }
     };
     const fee = {
@@ -510,7 +519,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
-      reputation: 1, // TODO get reputation
+      reputation: this.reputation.expertRep, // TODO get reputation
       transactionHash: "0x"+transactionHash
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
@@ -782,6 +791,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (this.updateSub) {
       this.updateSub.unsubscribe();
+    }
+    if (this.reputationSub){
+      this.reputationSub.unsubscribe();
     }
   }
 

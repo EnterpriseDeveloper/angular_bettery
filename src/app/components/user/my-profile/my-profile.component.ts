@@ -53,15 +53,11 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     }
   }
 
+
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
+      console.log(x,'reputation ');
       this.addionalData = x;
-      // TODO get reputation
-      this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
-      this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
-      this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;
-      this.playerRep = this.addionalData.playerReputPoins === null ? 0 : this.addionalData.playerReputPoins;
-
       if (this.addionalData.publicEmail == null) {
         this.letsUpdatePublicEmail(true);
       } else {
