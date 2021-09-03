@@ -1,21 +1,46 @@
 <div class="block_spinner_box">
   <div class="main-wrap">
-    <div *ngIf="modalStatus" class="form-style">
-      <p>Enter your seed phrase</p>
-      <input class="form-control" type="text" [(ngModel)]="seedPhrase">
+    <div class="container">
+      <div *ngIf="!showSeedPhrase" class="form-style">
+        <p [ngClass]="!seedPhrase && 'back_opacity' ">Enter your seed phrase</p>
+        <textarea class="phrase_input"
+                  [ngStyle]="(!showSeedPhrase && isCorrectPhrase) && {'border': '1px solid #EC0100'}" type="text"
+                  [(ngModel)]="seedPhrase"></textarea>
+      </div>
+      <div *ngIf="!showSeedPhrase" class="close_cross_block">
+        <div class="close_cross" *ngIf="!showSeedPhrase" (click)="modalBtnAction('Cancel')"></div>
+      </div>
+      <div *ngIf="!showSeedPhrase && isCorrectPhrase" class="errStyle">
+        <div class="warning_icon"></div>
+        <p>Incorrect or invalid passphrase</p>
+      </div>
+      <div *ngIf="showSeedPhrase">
+        <div>
+          <div class="form-style">
+            <p>
+              YOUR PASSPHRASE
+            </p>
+          </div>
+          <div class="about_phrase_info">
+            <p>This 24-word passphrase is the only way to access your wallet funds. Save and never share it with anyone!</p>
+
+          </div>
+
+          <div class="word_list">
+            <div class="word_item" *ngFor="let word of seedPhraseArr">
+              <p>{{word}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!showSeedPhrase" class="footer">
+        <div class="btn_1_0p" [ngClass]="!seedPhrase && 'back_opacity'" (click)="modalBtnAction('Ok')"><span>CONTINUE TO BETTERY</span>
+        </div>
+      </div>
+      <div *ngIf="showSeedPhrase" class="footer">
+        <div  class="confirm_safe" (click)="modalBtnAction('Save')">I’ve saved my passphrase in a secure place</div>
+      </div>
     </div>
-    <div *ngIf="modalStatus && isCorrectPhrase" class="errStyle">
-      <p>Seed phrase is not correct!</p>
-    </div>
-    <div *ngIf="!modalStatus">
-      <p>{{showSeedPhrase}}</p>
-    </div>
-    <div *ngIf="modalStatus" class="footer">
-      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Ok')">OK</button>
-      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Cancel')">Cancel</button>
-    </div>
-    <div *ngIf="!modalStatus" class="footer">
-      <button type="button" class="btn btn-outline-dark btn-style" (click)="modalBtnAction('Save')">OK</button>
-    </div>
+
   </div>
 </div>
