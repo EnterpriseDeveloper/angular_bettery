@@ -69,9 +69,6 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
       this.formValid = true;
       return;
     }
-    // const index = this.data.answers.findIndex((el => {
-    //   return el === answerForm.value.answer;
-    // }));
     this.sendToDemon(answerForm.value.answer);
   }
 
@@ -89,13 +86,12 @@ export class PrivateExpertComponent implements OnInit, OnDestroy {
       amount: [],
       gas: '1000000',
     };
-
     try {
       const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
       if (transact.transactionHash && transact.code == 0) {
         this.sendToDb(transact.transactionHash, answer);
       } else {
-        this.errorMessage = String(transact);
+        this.errorMessage = transact.rawLog.split(';')[0];
       }
     } catch (err) {
       this.errorMessage = String(err.error);
