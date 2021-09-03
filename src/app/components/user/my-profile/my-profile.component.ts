@@ -56,6 +56,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
       this.addionalData = x;
+      // TODO get reputation
       this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
       this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
       this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;

@@ -107,7 +107,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      // TODO check bty on main chain
+      // TODO check bty on main chain 
       MainBTY: "0",
       BTY: e.bty,
       BET: e.bet
