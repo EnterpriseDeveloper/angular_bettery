@@ -22,25 +22,18 @@ export class SeedPhraseModalComponent implements OnInit {
     }
   }
 
-  log() {
-    console.log(this.seedPhrase);
-  }
-
   modalBtnAction(text: string) {
     if (this.seedPhrase) {
       if (text === 'Ok') {
         this.okEmmit.emit({btn: text, seedPh: this.seedPhrase});
       }
-    } else {
-      if (text !== 'Ok') {
-
+    }
+    if ( text !== 'Ok'){
         this.okEmmit.emit({btn: text, seedPh: this.showSeedPhrase});
-      }
     }
   }
 
   splitSeedPhrase(str: string) {
     this.seedPhraseArr = str.split(' ');
-    console.log(this.seedPhraseArr);
   }
 }
