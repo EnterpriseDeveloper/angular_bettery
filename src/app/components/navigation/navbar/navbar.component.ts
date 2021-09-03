@@ -8,7 +8,6 @@ import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import web3Obj from '../../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
 import { RegistrationComponent } from '../../registration/registration/registration.component';
@@ -131,18 +130,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  // async logOut() {
-  //   this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-  //     web3Obj.logOut();
-  //     this.store.dispatch(new UserActions.RemoveUser(0));
-  //     this.nickName = undefined;
-  //     this.openNavBar = false;
-  //     this.logoutBox = false;
-  //   }, err => {
-  //     console.log(err);
-  //   });
-  // }
-
   async newlogOut() {
     this.logoutSub = this.getService.get('user/logout').subscribe(() => {
       this.webAuth.logout({
@@ -177,10 +164,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
       }
       this.openNavBar = false;
     }
-  }
-
-  openWallet() {
-    web3Obj.torus.showWallet('home');
   }
 
   copyRefLink() {

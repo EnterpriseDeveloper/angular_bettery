@@ -20,23 +20,24 @@ export class SwapBetComponent {
   constructor(public activeModal: NgbActiveModal) { }
 
   async swipe(){
-    let contr = new Contract();
-    let web3 = new Web3();
-    if(Number(this.coinInfo.BET) > (this.inputValue)){
-      this.error = undefined;
-      this.spinner = true;
-      let amount = web3.utils.toWei(String(this.inputValue), 'ether');
-      let tx: any = await contr.swipeTokens(this.userWallet, amount) // switch "torus" if you will use another wallet
-      if(tx.transactionHash != undefined){
-        this.spinner = false;
-        this.activeModal.dismiss('Cross click');
-        this.updateBalance.next();
-      }else{
-        console.error(tx);
-      }
-    }else{
-      this.error = "Do not enought tokens"
-    }
-  }
+    // TODO swipe with cosmos
+  //   let contr = new Contract();
+  //   let web3 = new Web3();
+  //   if(Number(this.coinInfo.BET) > (this.inputValue)){
+  //     this.error = undefined;
+  //     this.spinner = true;
+  //     let amount = web3.utils.toWei(String(this.inputValue), 'ether');
+  //     let tx: any = await contr.swipeTokens(this.userWallet, amount) // switch "torus" if you will use another wallet
+  //     if(tx.transactionHash != undefined){
+  //       this.spinner = false;
+  //       this.activeModal.dismiss('Cross click');
+  //       this.updateBalance.next();
+  //     }else{
+  //       console.error(tx);
+  //     }
+  //   }else{
+  //     this.error = "Do not enought tokens"
+  //   }
+   }
 
 }

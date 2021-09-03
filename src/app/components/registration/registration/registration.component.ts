@@ -1,15 +1,11 @@
 import {Component, OnDestroy, Input, HostListener, Output, EventEmitter} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {User} from '../../../models/User.model';
 import {AppState} from '../../../app.state';
-import * as UserActions from '../../../actions/user.actions';
 import {PostService} from '../../../services/post.service';
 import Web3 from 'web3';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import web3Obj from '../../../helpers/torus';
 import {Subscription} from 'rxjs';
-import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
 import authHelp from '../../../helpers/auth-help';
 
 
@@ -104,19 +100,6 @@ export class RegistrationComponent implements OnDestroy {
     this.closedWindow.next();
     this.activeModal.dismiss('Cross click');
   }
-
-  // localStoreUser(userInfo): void { //! check
-  //   if (localStorage.getItem('userBettery') === undefined || localStorage.getItem('userBettery') == null) {
-  //     localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
-  //   }
-  //   const getItem = JSON.parse(localStorage.getItem('userBettery'));
-  //   if (getItem.length === 0 || !getItem.includes(userInfo.email)) {
-  //     const array = JSON.parse(localStorage.getItem('userBettery'));
-  //     array.push(userInfo.email);
-  //     localStorage.setItem('userBettery', JSON.stringify(array));
-  //     this.modalService.open(WelcomePageComponent, {centered: true});
-  //   }
-  // }
 
   ngOnDestroy() {
     if (this.torusRegistSub) {
