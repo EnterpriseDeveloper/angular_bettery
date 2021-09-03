@@ -7,7 +7,7 @@
                   [ngStyle]="(!showSeedPhrase && isCorrectPhrase) && {'border': '1px solid #EC0100'}" type="text"
                   [(ngModel)]="seedPhrase"></textarea>
       </div>
-      <div class="close_cross_block">
+      <div *ngIf="!showSeedPhrase" class="close_cross_block">
         <div class="close_cross" (click)="modalBtnAction('Cancel')"></div>
       </div>
       <div *ngIf="!showSeedPhrase && isCorrectPhrase" class="errStyle">
