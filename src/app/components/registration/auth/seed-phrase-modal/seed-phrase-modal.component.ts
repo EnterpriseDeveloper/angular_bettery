@@ -17,7 +17,7 @@ export class SeedPhraseModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.showSeedPhrase.mnemonic) {
+    if (this.showSeedPhrase?.mnemonic) {
       this.splitSeedPhrase(this.showSeedPhrase.mnemonic);
     }
   }
