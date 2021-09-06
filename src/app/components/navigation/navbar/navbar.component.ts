@@ -71,7 +71,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.userId = x[0]._id;
         this.updateBalance();
         this.updateReputation(x[0]._id);
-        console.log(this.userId);
       }
     });
 
@@ -80,7 +79,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.coinInfo = x[0];
       }
     });
-    this.log()
   }
 
   ngDoCheck() {
@@ -126,7 +124,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
   async updateReputation(id){
     this.getRepUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x: any) => {
-      console.log(x, 'reputation fro, repur');
       this.store.dispatch( new ReputationAction.UpdateReputation({
            advisorRep: x.advisorReputPoins === null ? 0 : x.advisorReputPoins,
            hostRep: x.hostReputPoins === null ? 0 : x.hostReputPoins,
@@ -154,11 +151,6 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     if (!this.eRef.nativeElement.contains(event.target)) {
       this.logoutBox = false;
     }
-  }
-  log(){
-    this.store.subscribe(value => {
-      console.log(value);
-    });
   }
   async newlogOut() {
     this.logoutSub = this.getService.get('user/logout').subscribe(() => {

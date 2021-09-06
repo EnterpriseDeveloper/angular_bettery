@@ -56,7 +56,6 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
 
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
-      console.log(x,'reputation ');
       this.addionalData = x;
       if (this.addionalData.publicEmail == null) {
         this.letsUpdatePublicEmail(true);

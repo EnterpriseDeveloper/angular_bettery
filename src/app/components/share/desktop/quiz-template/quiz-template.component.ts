@@ -476,7 +476,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
 
   async setToNetworkValidation(answer) {
-    let { memonic, address, client } = await connectToSign()
+    let { memonic, address, client } = await connectToSign();
     const msg = {
       typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents",
       value: {
