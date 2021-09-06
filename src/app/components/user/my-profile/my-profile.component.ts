@@ -9,6 +9,7 @@ import { AppState } from '../../../app.state';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
 import {GetService} from '../../../services/get.service';
+import {ReputationModel} from '../../../models/Reputation.model';
 
 @Component({
   selector: 'my-profile',
@@ -35,14 +36,22 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   expertRep: number = 0;
   playerRep: number = 0;
   advisorRep: number = 0;
-
+  reputationSub: Subscription;
   constructor(
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
     private getService: GetService
   ) {
+    this.reputationSub = this.store.select('reputation').subscribe((x: ReputationModel) => {
+      if (x) {
+        this.hostRep = x.hostRep;
+        this.expertRep = x.expertRep;
+        this.playerRep = x.playerRep;
+        this.advisorRep = x.advisorRep;
 
+      }
+    });
   }
 
   ngOnChanges(changes) {
@@ -50,6 +59,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
       let id = changes['userData'].currentValue._id;
       this.nameForm = changes['userData'].currentValue.nickName;
       this.getInfo(id);
+
     }
   }
 
@@ -185,6 +195,9 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     }
     if (this.updateEmailSub) {
       this.updateEmailSub.unsubscribe();
+    }
+    if (this.reputationSub){
+      this.reputationSub.unsubscribe();
     }
   }
 }

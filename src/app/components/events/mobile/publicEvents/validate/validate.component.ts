@@ -10,6 +10,7 @@ import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
 import { connectToSign } from '../../../../../contract/cosmosInit';
 import {ReputationModel} from '../../../../../models/Reputation.model';
 
+
 @Component({
   selector: 'validate',
   templateUrl: './validate.component.html',
@@ -133,9 +134,10 @@ export class ValidateComponent implements OnInit, OnDestroy {
         creator: address,
         pubId: this.eventData.id,
         answers: this.answerForm.value.answer,
-        reput: this.reputation.expertRep // TODO get reput
+        reput: this.reputation.expertRep
       }
     };
+    console.log(msg,'message');
     const fee = {
       amount: [],
       gas: '1000000',
@@ -160,7 +162,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     const data = {
       event_id: dataAnswer.id,
       answer: _whichAnswer,
-      reputation: this.reputation.expertRep, // TODO get reputation
+      reputation: this.reputation.expertRep,
       transactionHash: '0x' + transactionHash
     };
     this.postSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {

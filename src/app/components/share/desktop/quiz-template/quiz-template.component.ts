@@ -483,7 +483,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
         creator: address,
         pubId: answer.event_id,
         answers: answer.answerName,
-        reput: this.reputation.expertRep // TODO get reput
+        reput: this.reputation.expertRep
       }
     };
     const fee = {
@@ -491,7 +491,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       gas: "1000000",
     };
 
-    console.log(msg);
     try {
       let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
       console.log(transact)
@@ -519,7 +518,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
-      reputation: this.reputation.expertRep, // TODO get reputation
+      reputation: this.reputation.expertRep,
       transactionHash: "0x"+transactionHash
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {

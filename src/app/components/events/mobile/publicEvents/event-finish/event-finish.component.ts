@@ -72,7 +72,7 @@ export class EventFinishComponent implements OnInit, OnDestroy {
       this.winner = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer;
       this.status = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? 'YOU EARNED' : '';
       this.amount = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? this.letsCalcalteWinner('expert') : 'YOU WERE WRONG';
-      this.info = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? `Soon, users will get extra BET minted from events.` : 'You’ll lose Rep once ReputationModel system is added.';
+      this.info = this.eventData.validatorsAnswers[findValidator].answer == this.eventData.finalAnswer ? `Soon, users will get extra BET minted from events.` : 'You’ll lose Rep once Reputation system is added.';
     } else {
       if (this.eventData.parcipiantAnswers != undefined) {
         let findPlayer = this.eventData.parcipiantAnswers.findIndex((x) => {
