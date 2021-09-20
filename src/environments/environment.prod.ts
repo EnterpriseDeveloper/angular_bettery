@@ -4,7 +4,7 @@ export const environment = {
   defaultLocale: 'en',
   apiUrl: 'https://api.bettery.io',
   biconomy: "qhib4zfV0.2244c10d-a20e-4cdc-b8fd-3080905f7444",
-  maticUrl: "https://nd-166-193-145.p2pify.com/2f7e02c8a0c734ceacc688cd604521bc",
+  maticUrl: "https://nd-824-962-939.p2pify.com/4bb25b82152d41fa5ce04b919fd13786",
   maticId: 137,
   etherId: 1,
   torusNetwork: "mainnet",
