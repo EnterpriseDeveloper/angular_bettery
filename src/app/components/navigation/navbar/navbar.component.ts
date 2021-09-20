@@ -224,7 +224,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.updateBalance();
     const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
     modalRef.componentInstance.coinInfo = this.coinInfo;
-    modalRef.componentInstance.userWallet = this.userWallet;
+    modalRef.componentInstance.userId = this.userId;
     this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {
       this.updateBalance();
     });
