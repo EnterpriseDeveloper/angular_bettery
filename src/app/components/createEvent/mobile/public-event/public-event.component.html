@@ -9,9 +9,9 @@
         <div class="CommentYellow"></div>
         <p>possible outcomes</p>
     </div>
-    <div *ngFor="let answer of formData.answers">
+    <div *ngFor="let answer of getAnswers()">
         <div class="answerBox">
-            <p class="answer">{{answer.name}}</p>
+            <p class="answer">{{answer}}</p>
         </div>
     </div>
     <div *ngIf="formData?.resolutionDetalis != ''">

@@ -128,6 +128,13 @@ export class PublicEventDesktopComponent implements OnDestroy {
       })
   }
 
+  getAnswers(){
+    let answer = this.formData.answers.map((x) => {
+      return x.name
+    })
+    return answer.sort();
+  }
+
   async sendToDemon(id: number) {
     let { memonic, address, client } = await connectToSign()
 
@@ -137,9 +144,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
         creator: address,
         pubId: id,
         question: this.formData.question,
-        answers: this.formData.answers.map((x) => {
-          return x.name
-        }),
+        answers: this.getAnswers(),
         premAmount: "0", // TODO add for premium amount
         startTime: this.getStartTime(),
         endTime: Number(this.getEndTime()),
@@ -174,9 +179,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
       hashtags: [], // TODO
       premiumTokens: 0, // TODO amount of premium event
       premium: false, // TODO premium true or false
-      answers: this.formData.answers.map((x) => {
-        return x.name
-      }),
+      answers: this.getAnswers(),
       startTime: this.getStartTime(),
       endTime: Number(this.getEndTime()),
       validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
