@@ -38,6 +38,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   eventColor: string;
   previewUrlImg;
   validSizeImg = false;
+  isImgEditorOpened = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,7 +105,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   styleButtonBox() {
     if (this.answesQuantity >= 3) {
       return {
-        'position': 'relative'
+        position: 'relative'
       };
     }
   }
@@ -131,9 +132,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   formDataReset() {
     this.formData.roomName = '';
-    this.formData.whichRoom = "new";
-    this.formData.roomName = ''
-    this.formData.roomId = "";
+    this.formData.whichRoom = 'new';
+    this.formData.roomName = '';
+    this.formData.roomId = '';
     this.store.dispatch(formDataAction({ formData: this.formData }));
   }
   async loginWithTorus() {
@@ -155,12 +156,12 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   colorError(length, numYel, numMain) {
     if (length > numYel && length <= numMain) {
       return {
-        'color': '#7d7d7d'
+        color: '#7d7d7d'
       };
     }
     if (length > numMain) {
       return {
-        'color': '#FF3232'
+        color: '#FF3232'
       };
     }
   }
@@ -190,6 +191,10 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   colorEmmit(e) {
     this.eventColor = e;
     this.validSizeImg = false;
+  }
+  isImageEditorOpen(event: boolean){
+    console.log(event)
+    this.isImgEditorOpened = event;
   }
 
   ngOnDestroy() {

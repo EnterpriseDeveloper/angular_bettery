@@ -28,6 +28,8 @@ import {SearchBarMobileComponent} from './mobile/search-bar-mobile/search-bar-mo
 import {FilterTimelineComponent} from './desktop/filterTimeline/filterTimeline.component';
 import {FilterTimeLineMobileComponent} from './mobile/filter-time-line-mobile/filter-time-line-mobile.component';
 import {ComingSoonMobileComponent} from './mobile/coming-soon-mobile/coming-soon-mobile.component';
+import {TuiImageEditorModule} from 'tui-image-editor-angular';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -57,12 +59,14 @@ import {ComingSoonMobileComponent} from './mobile/coming-soon-mobile/coming-soon
     SearchBarMobileComponent,
     FilterTimelineComponent,
     FilterTimeLineMobileComponent,
-    ComingSoonMobileComponent
+    ComingSoonMobileComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgxPageScrollModule,
+    TuiImageEditorModule,
+    ImageCropperModule,
     RouterModule.forChild([
       {path: 'host', component: ComingSoonComponent},
       {path: 'my-events', component: ComingSoonComponent},
