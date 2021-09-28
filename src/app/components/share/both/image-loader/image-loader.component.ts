@@ -93,9 +93,7 @@ export class ImageLoaderComponent implements OnInit {
       return res.blob();
     }).then(blob => {
       console.log(this.file.type);
-      const file = (new File([blob], 'image', {type: 'image/png'}));
-
-      this.file = file;
+      this.file = (new File([blob], 'image', {type: 'image/png'}));
       this.readerInit(false);
 
       this.closeCropeWIndow = true;
