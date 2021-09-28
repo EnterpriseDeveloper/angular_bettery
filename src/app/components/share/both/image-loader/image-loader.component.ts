@@ -66,7 +66,8 @@ export class ImageLoaderComponent implements OnInit {
       const element = document.getElementsByClassName('tie-btn-draw')[0] as HTMLElement;
       console.log(element);
       element.click();
-    }, 100);
+      const input = document.getElementsByClassName('tie-draw-line-select-button')[0]as HTMLElement;
+    }, 300);
   }
 
   imageCroped(event) {
@@ -77,8 +78,7 @@ export class ImageLoaderComponent implements OnInit {
     fetch(this.croppedImage)
       .then(res => res.blob())
       .then(blob => {
-        const file = new File([blob], 'image', {type: 'image/png'});
-        this.file = file;
+        this.file = new File([blob], 'image', {type: 'image/png'});
         this.readerInit(false);
         this.closeCropeWIndow = true;
         this.isImgEditOpened.emit(false);
