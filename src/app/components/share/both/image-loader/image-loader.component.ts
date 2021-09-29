@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import GradientJSON from '../../../../../files/gradients.json';
 import {FormGroup} from '@angular/forms';
 import {TuiImageEditorComponent} from 'tui-image-editor-angular';
@@ -53,11 +53,12 @@ export class ImageLoaderComponent implements OnInit {
     }
   }
 
+
   openCustomize() {
     fetch(this.croppedImage)
       .then(res => res.blob())
       .then(blob => {
-        this.file = new File([blob], 'image', {type: 'image/png'});
+        this.file = new File([blob], 'image', {type: 'image/jpeg'});
         this.resize(this.file, true);
         this.closeCropeWIndow = true;
       });
@@ -76,6 +77,7 @@ export class ImageLoaderComponent implements OnInit {
     }, 500);
   }
 
+
   imageCroped(event) {
     this.croppedImage = event.base64;
   }
@@ -84,7 +86,7 @@ export class ImageLoaderComponent implements OnInit {
     fetch(this.croppedImage)
       .then(res => res.blob())
       .then(blob => {
-        this.file = new File([blob], 'image', {type: 'image/png'});
+        this.file = new File([blob], 'image', {type: 'image/jpeg'});
         this.resize(this.file, false);
         this.clearEventImg = 'undefined';
         this.closeCropeWIndow = true;
@@ -93,13 +95,13 @@ export class ImageLoaderComponent implements OnInit {
 
   }
 
-  click() {
+  submitEditedPhoto() {
     const canvas = document.getElementsByClassName('lower-canvas')[0] as HTMLCanvasElement;
     const dataUrl = canvas.toDataURL('image/jpeg');
     fetch(dataUrl).then(res => {
       return res.blob();
     }).then(blob => {
-      this.file = (new File([blob], 'image', {type: 'image/png'}));
+      this.file = (new File([blob], 'image', {type: 'image/jpeg'}));
       this.readerInit(false);
       this.closeCropeWIndow = true;
       this.customizeModalShow = false;
@@ -148,7 +150,7 @@ export class ImageLoaderComponent implements OnInit {
       fetch(resizedUrl).then(res => {
         return res.blob();
       }).then(blob => {
-        this.file = (new File([blob], 'image', {type: 'image/png'}));
+        this.file = (new File([blob], 'image', {type: 'image/jpeg'}));
         this.croppedImage = resizedUrl;
         isClearNeeded ? this.clearEventImg = resizedUrl : this.clearEventImg = 'undefined';
         this.readerInit(false);
