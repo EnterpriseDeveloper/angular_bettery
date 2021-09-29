@@ -18,7 +18,7 @@ export const environment = {
   secretKey: "791351803491091234",
   demon: "54.255.226.141",
   // auth0_URI: "https://matic-network.d2f172wsk4mtv2.amplifyapp.com"
-  auth0_URI: "http://localhost:4200"
+  auth0_URI: window.location.origin
 };
 
 /*
