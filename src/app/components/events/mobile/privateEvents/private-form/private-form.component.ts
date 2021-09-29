@@ -6,6 +6,7 @@ import {PostService} from '../../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {PrivEventMobile} from '../../../../../models/PrivEventMobile.model';
 import {User} from '../../../../../models/User.model';
+import { connectToSign } from '../../../../../contract/cosmosInit';
 
 
 @Component({
@@ -53,17 +54,46 @@ export class PrivateFormComponent implements OnInit, OnDestroy {
       this.formValid = true;
       return;
     }
-    const index = this.data.answers.findIndex((el => {
-      return el === answerForm.value.answer;
-    }));
-    this.sendToDb(index);
+    // const index = this.data.answers.findIndex((el => {
+    //   return el === answerForm.value.answer;
+    // }));
+    this.sendToDemon(answerForm.value.answer);
   }
 
-  sendToDb(answer) {
+  async sendToDemon(answer) {
+    const {memonic, address, client} = await connectToSign();
+    const msg = {
+      typeUrl: '/VoroshilovMax.bettery.privateevents.MsgCreatePartPrivEvents',
+      value: {
+        creator: address,
+        privId: this.data.id,
+        answer: answer
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+
+    try {
+      const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic)
+      if (transact.transactionHash && transact.code == 0) {
+        this.sendToDb(transact.transactionHash, answer);
+      } else {
+        this.errorMessage = String(transact);
+      }
+    } catch (err) {
+      this.errorMessage = err.toString();
+    }
+  }
+
+
+  sendToDb(transactionHash, answer) {
     this.spinnerLoading = true;
-    let data = {
+    const data = {
       eventId: this.data.id,
       answer: answer,
+      transactionHash: '0x' + transactionHash
     };
     this.postSub = this.postService.post('privateEvents/participate', data).subscribe(async () => {
       this.spinnerLoading = false;

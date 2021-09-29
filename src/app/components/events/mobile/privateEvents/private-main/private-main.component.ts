@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfoModalComponent } from '../../../../share/both/modals/info-modal/info-modal.component';
 import { User } from '../../../../../models/User.model';
 import { PrivEventMobile } from '../../../../../models/PrivEventMobile.model';
-import { RegistrationComponent } from '../../../../registration/registration.component';
+import { RegistrationComponent } from '../../../../registration/registration/registration.component';
 
 @Component({
   selector: 'app-private-main',

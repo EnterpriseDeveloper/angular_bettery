@@ -1,0 +1,186 @@
+.block_spinner_box
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  position: fixed
+  background: rgba(0, 0, 0, 0.15)
+  z-index: 1
+
+.container
+  height: 100%
+  padding: 0
+  position: relative
+
+.main-wrap
+  background: #fff
+
+  width: 38%
+  position: relative
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  display: flex
+  text-align: center
+  justify-content: center
+  flex-direction: column
+  border-radius: 8px
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1)
+
+.btn-style
+  padding: .375rem 5.75rem
+
+.form-style
+  margin: 24px 0 0 0
+  p
+    font-style: normal
+    font-weight: 800
+    font-size: 16px
+    line-height: 22px
+    text-align: center
+    color: #FFD300
+    text-transform: uppercase
+
+.close_cross_block
+  position: absolute
+  top: 10px
+  right: 10px
+
+.back_opacity
+  opacity: .5
+  cursor: default!important
+
+.phrase_input
+  width: -webkit-fill-available
+  min-height: 80px
+  margin: 16px
+  overflow: auto
+  outline: none
+  -webkit-box-shadow: none
+  -moz-box-shadow: none
+  box-shadow: none
+  resize: none
+  border: 1px solid #F2F2F2
+  box-sizing: border-box
+  border-radius: 4px
+  font-weight: 600
+  font-size: 12px
+  line-height: 16px
+  color: #0B1511
+
+.close_cross
+  background-image: url("../../../../../assets/modals/+.png")
+  width: 16px
+  height: 16px
+  background-repeat: no-repeat
+  background-size: contain
+  cursor: pointer
+
+.btn_1_0p
+  width: 278px
+  height: 48px
+  background: #FFD300
+  border-radius: 8px
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-bottom: 24px
+  cursor: pointer
+  span
+    font-style: normal
+    font-weight: 600
+    font-size: 18px
+    line-height: 25px
+
+.warning_icon
+  margin: 0 auto
+  background-image: url("../../../../../assets/modals/incorect_phrase.png")
+  width: 32px
+  height: 28px
+  background-repeat: no-repeat
+  background-size: contain
+
+.footer
+  display: flex
+  align-content: center
+  justify-content: space-around
+
+.errStyle
+  color: #EC0100
+  p
+    margin-top: 6px
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    text-align: center
+
+.about_phrase_info
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 18px
+  display: flex
+  align-items: center
+  justify-content: center
+  text-align: center
+  color: #6B6B6B
+  margin: 0 36px 0
+
+.word_item
+  background: #F9F9F9
+  border: 1px solid #F2F2F2
+  box-sizing: border-box
+  border-radius: 4px
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-bottom: 10px
+  margin-left: 11px
+  min-width: 95px
+  height: 34px
+  p
+    margin: 0
+    font-style: normal
+    font-weight: 600
+    font-size: 12px
+    line-height: 16px
+    display: flex
+    align-items: center
+    text-align: center
+    color: #54DD96
+
+.word_list
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+
+.confirm_safe
+  cursor: pointer
+  font-style: normal
+  font-weight: bold
+  font-size: 14px
+  line-height: 19px
+  display: flex
+  align-items: center
+  text-align: center
+  text-decoration-line: underline
+  color: #FFD300
+  margin-bottom: 20px
+
+@media (max-width: 1000px)
+  .main-wrap
+    width: 90%
+
+  .block_spinner_box
+    position: relative
+    margin-top: 83px
+    display: flex
+    justify-content: center
+
+    margin-bottom: 20px
+
+  .main-wrap
+   top: 0
+   left: 0
+   transform: none

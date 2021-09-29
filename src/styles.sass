@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~swiper/swiper"
+@import "~tui-image-editor-angular/src/theme"
 
 body
   margin: 0 !important
@@ -39,8 +40,8 @@ html
     width: 90%
 
 @media only screen and (max-width: 1366px)
-   body
-     background-color: #242421
+  body
+    background-color: #242421
 
 .grecaptcha-badge
   visibility: hidden !important
@@ -58,3 +59,142 @@ html
   .torus-alert--v2
     width: 95% !important
     right: 9px !important
+
+.overlay
+  outline: none !important
+
+
+
+
+
+
+
+
+
+
+// image editor styles
+
+
+
+tui-image-editor-menus-buttons-rotate,
+tui-image-editor-menus-buttons-crop,
+tui-image-editor-menus-buttons-filter,
+tui-image-editor-menus-buttons-load,
+tui-image-editor-menus-buttons-download,
+tui-image-editor-menus-buttons-mask,
+tui-image-editor-menus-buttons-flip
+  display: none !important
+
+.tui-image-editor-help-menu div.tui-image-editor-help-menu-item:last-child,
+.tui-image-editor-help-menu div.tui-image-editor-help-menu-item:nth-of-type(1)
+  display: none !important
+
+.tui-image-editor-overflowable-x div.tie-icon-add-button:nth-of-type(3),
+.free, .line, .tui-image-editor-partition
+  display: none !important
+
+.tui-image-editor-container .tie-icon-add-button, .tui-image-editor-container .tie-icon-add-button div.tui-image-editor-button:last-child,
+.tui-image-editor-container .tie-icon-add-button, .tui-image-editor-container .tie-icon-add-button div.tui-image-editor-button:nth-of-type(3),
+.tui-image-editor-container .tie-icon-add-button, .tui-image-editor-container .tie-icon-add-button div.tui-image-editor-button:nth-of-type(1),
+.tui-image-editor-container .tie-icon-add-button, .tui-image-editor-container .tie-icon-add-button div.tui-image-editor-button:nth-of-type(5)
+  display: none
+
+.color-picker
+  z-index: 11111111 !important
+
+.tui-image-editor-container .svg_ic-menu
+  stroke: #000 !important
+  fill: #000 !important
+
+.svg_ic-menu
+  stroke: #000 !important
+
+
+
+.tui-image-editor-container,
+.tui-image-editor-container > div:first-child,
+.tui-image-editor-container .tui-image-editor-help-menu .tui-image-editor-help-menu-item,
+.tui-image-editor-container .tui-image-editor-controls
+  background-color: #fff
+
+
+.tui-image-editor-container input[type=range]
+  background: #fff !important
+
+.tui-image-editor-container input[type=range]::-webkit-slider-runnable-track
+  background: #adadad !important
+  height: 5px
+
+.tui-image-editor-container input[type=range]::-webkit-slider-thumb
+  background: #424242 !important
+  border: none
+
+
+.tui-image-editor-container input[type=range]::-moz-range-track
+  background: #000 !important
+
+.tui-image-editor-container input[type=range]::-moz-range-track
+  background: #000 !important
+  height: 5px
+
+.tui-image-editor-container .tui-image-editor-overflowable-x div:last-child
+  order: -1
+
+  div
+    label
+      div
+        color: #8a8a8a
+
+.tie-draw-line-select-button
+  display: flex
+  justify-content: center
+
+
+
+.tui-image-editor-button:hover label
+  color: #000 !important
+
+
+.active
+  label
+    color: #000 !important
+
+
+.tie-color-fill, .tie-color-stroke, .tie-draw-color
+  label
+    div
+      color: #8a8a8a
+
+.lower-canvas, .upper-canvas
+  border-radius: 8px !important
+  max-height: 435px !important
+  min-height: 435px !important
+
+.tie-text-align-button
+  display: none!important
+
+.tui-image-editor-container .tui-image-editor-overflowable-x
+  overflow: unset
+
+
+@media (max-width: 992px)
+  .upper-canvas, .lower-canvas
+    width: 100%
+    min-height: 300px !important
+    max-height: 300px !important
+  .image-edit-item
+    height: 580px
+  .image-edit-back-button
+    justify-content: center
+    align-items: center
+    display: flex
+  .color-picker
+   bottom: 70px!important
+   top: unset!important
+   left: 20px!important
+
+
+@media (max-width: 320px)
+  .tui-image-editor-container .tui-image-editor-overflowable-x
+    overflow: unset
+    display: block!important

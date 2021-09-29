@@ -13,7 +13,6 @@ import { createEventReducer } from './reducers/newEvent.reducer';
 
 import { AppComponent } from './app.component';
 
-import { RegistrationComponent } from './components/registration/registration.component';
 
 import { PostService } from './services/post.service';
 import { GetService } from './services/get.service';
@@ -39,6 +38,8 @@ import { RoomModule } from './components/rooms/rooms.module';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import {ViewportScroller} from '@angular/common';
 import { filter } from 'rxjs/operators';
+import {RegistrationModule} from './components/registration/registration.module';
+import {reputationReducer} from './reducers/reputation.reducer';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './files/locale/', '.json');
@@ -47,7 +48,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent,
     HomeComponent,
     ErcCoinSaleComponent,
     NumericDirective,
@@ -56,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   ],
   imports: [
     SwiperModule,
+    RegistrationModule,
     ShareModule,
     UserModule,
     RecaptchaV3Module,
@@ -70,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     StoreModule.forRoot({
       user: userReducer,
       coins: coinsReducer,
-      createEvent: createEventReducer
+      createEvent: createEventReducer,
+      reputation: reputationReducer
     }),
     NgbModule,
     FormsModule,

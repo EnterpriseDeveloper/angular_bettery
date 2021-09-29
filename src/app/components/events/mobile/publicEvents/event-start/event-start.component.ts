@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfoModalComponent } from '../../../../share/both/modals/info-modal/info-modal.component';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 import {User} from '../../../../../models/User.model';
-import { RegistrationComponent } from '../../../../registration/registration.component';
+import { RegistrationComponent } from '../../../../registration/registration/registration.component';
 import {JustANoteModalComponent} from '../../../../share/mobile/just-note-modal/just-anote-modal.component';
 
 

@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizErrorsComponent} from '../quiz-errors/quiz-errors.component';
 import {Subscription} from 'rxjs';
 import {User} from '../../../../../models/User.model';
-import {RegistrationComponent} from '../../../../registration/registration.component';
+import {RegistrationComponent} from '../../../../registration/registration/registration.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 
@@ -24,6 +24,7 @@ export class QuizActionComponent implements OnInit{
   @Output() validateEvent = new EventEmitter<Array<any>>();
 
   answerNumber: number = null;
+  answerName: string = undefined;
   // amount: number = 0;
   torusSub: Subscription;
   storeUserSubscribe: Subscription;
@@ -58,8 +59,9 @@ export class QuizActionComponent implements OnInit{
     }
   }
 
-  async makeAnswer(i) {
+  async makeAnswer(i, name) {
     this.answerNumber = i;
+    this.answerName = name;
   }
 
   async participate() {
@@ -89,7 +91,8 @@ export class QuizActionComponent implements OnInit{
         } else {
           let data: any = {
             amount: this.form.controls.amount.value,
-            answer: this.answerNumber
+            answer: this.answerNumber,
+            answerName: this.answerName
           }
           this.isDisableBet = true;
           this.betEvent.next(data);
@@ -115,7 +118,8 @@ export class QuizActionComponent implements OnInit{
         modalRef.componentInstance.nameButton = 'fine';
       } else {
         let data: any = {
-          answer: this.answerNumber
+          answer: this.answerNumber,
+          answerName: this.answerName
         };
         this.isDisableValid = true;
         this.validateEvent.next(data);

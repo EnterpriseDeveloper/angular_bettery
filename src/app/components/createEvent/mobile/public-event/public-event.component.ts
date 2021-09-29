@@ -1,15 +1,17 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { ClipboardService } from 'ngx-clipboard'
-import { PostService } from '../../../../services/post.service'
-import { Subscription } from 'rxjs';
-import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorLimitModalComponent } from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
-import { User } from '../../../../models/User.model';
-import { Router } from "@angular/router";
-import { formDataAction } from "../../../../actions/newEvent.actions";
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {ClipboardService} from 'ngx-clipboard'
+import {PostService} from '../../../../services/post.service'
+import {GetService} from "../../../../services/get.service"
+import {Subscription} from 'rxjs';
+import {InfoModalComponent} from '../../../share/both/modals/info-modal/info-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ErrorLimitModalComponent} from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
+import {User} from '../../../../models/User.model';
+import {Router} from "@angular/router";
+import {formDataAction} from "../../../../actions/newEvent.actions";
+import {connectToSign} from '../../../../contract/cosmosInit';
 
 
 @Component({
@@ -30,6 +32,8 @@ export class PublicEventComponent implements OnDestroy {
   quizData: any;
   userSub: Subscription;
   postSub: Subscription;
+  deleteEventSub: Subscription;
+  createIDSub: Subscription;
   fromDataSubscribe: Subscription;
   spinnerLoading: boolean = false;
   pastTime: boolean;
@@ -39,6 +43,7 @@ export class PublicEventComponent implements OnDestroy {
     private store: Store<AppState>,
     private _clipboardService: ClipboardService,
     private PostService: PostService,
+    private GetService: GetService,
     private modalService: NgbModal,
     private router: Router
   ) {
@@ -129,15 +134,68 @@ export class PublicEventComponent implements OnDestroy {
       this.pastTime = false;
     }
     this.spinnerLoading = true;
+    this.createIDSub = this.GetService.get("publicEvents/create_event_id")
+    .subscribe((x: any) => {
+     this.sendToDemon(x.id)
+    }, (err) => {
+      console.log("create event id err: ", err)
+    })
+  }
+
+  getAnswers(){
+    let answer = this.formData.answers.map((x) => {
+      return x.name
+    })
+    return answer.sort();
+  }
+
+  async sendToDemon(id: number) {
+    let { memonic, address, client } = await connectToSign()
+
+    const msg = {
+      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateCreatePubEvents",
+      value: {
+        creator: address,
+        pubId: id,
+        question: this.formData.question,
+        answers: this.getAnswers(),
+        premAmount: "0", // TODO add for premium amount
+        startTime: this.getStartTime(),
+        endTime: Number(this.getEndTime()),
+        expertAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
+        advisor: ""
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+    try {
+      let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      if(transact.transactionHash && transact.code == 0){
+        this.sendToDb(transact.transactionHash, id)
+      }else{
+        // TODO check validation
+        this.deleteEventId(id)
+        console.log("transaction unsuccessful", transact)
+      }
+    } catch (err) {
+      this.deleteEventId(id)
+      console.log(err)
+    }
+  }
+
+
+  sendToDb(transactionHash: any, id: number) {
 
     this.quizData = {
+      _id: id,
+      host: this.host[0]._id,
       question: this.formData.question,
       hashtags: [], // TODO
-      amount: 0, // TODO amount on premium event
+      premiumTokens: 0, // TODO amount on premium event
       premium: false, // TODO premium true or false
-      answers: this.formData.answers.map((x) => {
-        return x.name
-      }),
+      answers: this.getAnswers(),
       startTime: this.getStartTime(),
       endTime: Number(this.getEndTime()),
       validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
@@ -150,12 +208,13 @@ export class PublicEventComponent implements OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
+      thumFinish: this.formData.thumFinish,
+      transactionHash: "0x"+transactionHash
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
       .subscribe(
         (x: any) => {
-          this.quizData._id = x.eventId;
           this.spinnerLoading = false;
           this.created = true;
           this.calculateDate();
@@ -170,6 +229,15 @@ export class PublicEventComponent implements OnDestroy {
           console.log("set qestion error");
           console.log(err);
         })
+  }
+
+  deleteEventId(id) {
+    this.deleteEventSub = this.PostService.post("publicEvents/delete_event_id", {id: id})
+    .subscribe((x)=>{
+      console.log(x);
+    },(err)=>{
+      console.log("err from delete event id", err)
+    })
   }
 
   formDataReset() {
@@ -223,6 +291,12 @@ export class PublicEventComponent implements OnDestroy {
     if (this.fromDataSubscribe) {
       this.fromDataSubscribe.unsubscribe();
     };
+    if(this.deleteEventSub){
+      this.deleteEventSub.unsubscribe();
+    }
+    if(this.createIDSub){
+      this.createIDSub.unsubscribe();
+    }
   }
 
 

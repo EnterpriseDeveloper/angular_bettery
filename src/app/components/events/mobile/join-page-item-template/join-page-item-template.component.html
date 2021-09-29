@@ -27,8 +27,10 @@
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
-
-      <img *ngIf="question.thumImage!=='undefined'" class="item-logo" [src]="question?.thumImage" alt=""
+      <div *ngIf="question.thumFinish!=='undefined'" class="show-final-image-block" (click)="toggleImage()" >
+        <div class="show-final-image"></div>
+      </div>
+      <img *ngIf="question.thumImage!=='undefined'" #eventImage class="item-logo" [src]="question?.thumImage" alt=""
            [class.grey_scaled_img]="(question.status=='finished' || question.status.includes('reverted'))">
 
       <div class="item-info" [ngClass]="question.detailOpened?'d_none ':'d_block '">

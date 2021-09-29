@@ -1,13 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import * as CryptoJS from 'crypto-js';
 import * as UserActions from './actions/user.actions';
-import { environment } from '../environments/environment';
-import { PostService } from "./services/post.service";
+import { PostService } from './services/post.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.state';
 import { User } from './models/User.model';
-import web3Obj from './helpers/torus';
+
+import authHelp from '../app/helpers/auth-help';
 
 declare global {
   interface Window {
@@ -29,18 +28,15 @@ export class AppComponent implements OnDestroy {
   constructor(
     private post: PostService,
     private store: Store<AppState>,
-
   ) {
-    this.detectUser();
+    this.newDetectUser();
   }
 
-  detectUser() {
-    let autoLogin = localStorage.getItem('_buserlog');
-    if (autoLogin != null) {
-      let userData: any = JSON.parse(CryptoJS.AES.decrypt(autoLogin, environment.secretKey).toString(CryptoJS.enc.Utf8));
-      let data = { wallet: userData.publicAddress, accessToken: userData.accessToken }
-      this.autoLoginSub = this.post.post("user/auto_login", data).subscribe(async (x: User) => {
-        await web3Obj.autoLogin(userData.privateKey, userData.publicAddress);
+  newDetectUser() {
+    const walletDectypt = authHelp.walletDectypt();
+    if (walletDectypt && walletDectypt.pubKey.address) {
+      const data = { wallet: walletDectypt.pubKey.address, accessToken: walletDectypt.accessToken };
+      this.autoLoginSub = this.post.post('user/auto_login', data).subscribe(async (x: User) => {
         this.addUser(
           x.email,
           x.nickName,
@@ -52,9 +48,11 @@ export class AppComponent implements OnDestroy {
           x.verifierId,
           x.accessToken
         );
+        authHelp.setMemo(walletDectypt)
       }, (err) => {
-        console.log("from auto login", err);
-      })
+        console.log('from auto login', err);
+      });
+
     }
   }
 

@@ -15,7 +15,7 @@
         <input [(ngModel)]="inputValue" placeholder="Enter Amount" class="withdraw-input" type="number">
         <div class="max max-deposit">Max</div>
       </div>
-      <div *ngIf="error">{{error}}</div> <!-- TODO ANDREY (style)-->
+      <div class="error_message" *ngIf="error">{{error}}</div> <!-- TODO ANDREY (style)-->
     </div>
 
     <div class="d-flex justify-content-center mt-2">

@@ -6,7 +6,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../app.state';
 import {Answer} from '../../../models/Answer.model';
 import {User} from '../../../models/User.model';
-import {RegistrationComponent} from '../../registration/registration.component';
+import {RegistrationComponent} from '../../registration/registration/registration.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Coins} from '../../../models/Coins.model';
 import {RoomDetails} from '../../../models/RoomDetails.model';

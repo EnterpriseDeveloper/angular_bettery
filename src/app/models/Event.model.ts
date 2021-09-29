@@ -43,6 +43,7 @@ export interface Event {
   validatorsAmount: number;
   thumColor: string;
   thumImage: string;
+  thumFinish: string;
   validatorsAnswers: ValidatorsAnswers[];
   usersAnswers: Answer;
 }

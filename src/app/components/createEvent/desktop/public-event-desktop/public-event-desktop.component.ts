@@ -1,15 +1,18 @@
-import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { ClipboardService } from 'ngx-clipboard';
-import { PostService } from '../../../../services/post.service';
-import { Subscription } from 'rxjs';
-import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorLimitModalComponent } from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
-import { User } from '../../../../models/User.model';
-import { Router } from '@angular/router';
+import {Component, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {ClipboardService} from 'ngx-clipboard';
+import {PostService} from '../../../../services/post.service';
+import {GetService} from '../../../../services/get.service';
+import {Subscription} from 'rxjs';
+import {InfoModalComponent} from '../../../share/both/modals/info-modal/info-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ErrorLimitModalComponent} from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
+import {User} from '../../../../models/User.model';
+import {Router} from '@angular/router';
 import {formDataAction} from '../../../../actions/newEvent.actions';
+import {connectToSign} from '../../../../contract/cosmosInit';
+import {log} from "util";
 
 
 @Component({
@@ -30,6 +33,8 @@ export class PublicEventDesktopComponent implements OnDestroy {
   quizData: any;
   userSub: Subscription;
   postSub: Subscription;
+  createIDSub: Subscription;
+  deleteEventSub: Subscription;
   spinnerLoading: boolean = false;
   pastTime: boolean;
 
@@ -37,6 +42,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
     private store: Store<AppState>,
     private _clipboardService: ClipboardService,
     private PostService: PostService,
+    private GetService: GetService,
     private modalService: NgbModal,
     private router: Router,
   ) {
@@ -54,7 +60,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
 
   timeToBet() {
     if (this.formData.exactTimeBool) {
-      return `${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear.toString().substr(2)}, ${this.formData.exactHour < 10 ? '0' + this.formData.exactHour : this.formData.exactHour} : ${this.formData.exactMinutes < 10 ? '0' + this.formData.exactMinutes : this.formData.exactMinutes }`;
+      return `${this.formData.exactDay} ${this.formData.exactMonth} ${this.formData.exactYear.toString().substr(2)}, ${this.formData.exactHour < 10 ? '0' + this.formData.exactHour : this.formData.exactHour} : ${this.formData.exactMinutes < 10 ? '0' + this.formData.exactMinutes : this.formData.exactMinutes}`;
     } else {
       return this.formData.publicEndTime.name;
     }
@@ -115,16 +121,66 @@ export class PublicEventDesktopComponent implements OnDestroy {
     }
 
     this.spinnerLoading = true;
+    this.createIDSub = this.GetService.get("publicEvents/create_event_id")
+      .subscribe((x: any) => {
+        this.sendToDemon(x.id)
+      }, (err) => {
+        console.log("create event id err: ", err)
+      })
+  }
 
+  getAnswers(){
+    let answer = this.formData.answers.map((x) => {
+      return x.name
+    })
+    return answer.sort();
+  }
+
+  async sendToDemon(id: number) {
+    let {memonic, address, client} = await connectToSign()
+
+    const msg = {
+      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateCreatePubEvents",
+      value: {
+        creator: address,
+        pubId: id,
+        question: this.formData.question,
+        answers: this.getAnswers(),
+        premAmount: "0", // TODO add for premium amount
+        startTime: this.getStartTime(),
+        endTime: Number(this.getEndTime()),
+        expertAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
+        advisor: ""
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+    try {
+      let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      if (transact.transactionHash && transact.code == 0) {
+        this.sendToDb(transact.transactionHash, id)
+      } else {
+        // TODO check validation
+        this.deleteEventId(id)
+        console.log("transaction unsuccessful", transact)
+      }
+    } catch (err) {
+      this.deleteEventId(id)
+      console.log(err)
+    }
+  }
+
+  sendToDb(transactionHash: any, id: number) {
     this.quizData = {
+      _id: id,
       host: this.host[0]._id,
       question: this.formData.question,
       hashtags: [], // TODO
-      amount: 0, // TODO amount of premium event
+      premiumTokens: 0, // TODO amount of premium event
       premium: false, // TODO premium true or false
-      answers: this.formData.answers.map((x) => {
-        return x.name
-      }),
+      answers: this.getAnswers(),
       startTime: this.getStartTime(),
       endTime: Number(this.getEndTime()),
       validatorsAmount: this.formData.expertsCountType == "company" ? 0 : this.formData.expertsCount,
@@ -136,30 +192,41 @@ export class PublicEventDesktopComponent implements OnDestroy {
       roomId: this.formData.roomId,
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
+      thumFinish: this.formData.thumFinish,
       thumColor: this.formData.thumColor,
+      transactionHash: "0x" + transactionHash
     }
 
     this.postSub = this.PostService.post("publicEvents/createEvent", this.quizData)
       .subscribe(
         (x: any) => {
-          this.quizData._id = x.id;
           this.spinnerLoading = false;
           this.created = true;
           this.calculateDate();
           this.modalService.dismissAll();
           this.formDataReset();
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
             this.router.navigate([`room/${x.roomId}`]));
 
         },
         (err) => {
           this.spinnerLoading = false;
           if (err.error == "Limit is reached") {
-            this.modalService.open(ErrorLimitModalComponent, { centered: true });
+            this.modalService.open(ErrorLimitModalComponent, {centered: true});
           }
+          this.deleteEventId(id)
           console.log("set qestion error");
           console.log(err);
         })
+  }
+
+  deleteEventId(id) {
+    this.deleteEventSub = this.PostService.post("publicEvents/delete_event_id", {id: id})
+      .subscribe((x) => {
+        console.log(x);
+      }, (err) => {
+        console.log("err from delete event id", err)
+      })
   }
 
   formDataReset() {
@@ -172,7 +239,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
     this.formData.thumColor = '';
     this.formData.imgOrColor = 'color';
 
-    this.store.dispatch(formDataAction({ formData: this.formData }));
+    this.store.dispatch(formDataAction({formData: this.formData}));
   }
 
   calculateDate() {
@@ -197,7 +264,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
   }
 
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';
@@ -209,6 +276,12 @@ export class PublicEventDesktopComponent implements OnDestroy {
     }
     if (this.postSub) {
       this.postSub.unsubscribe();
+    }
+    if (this.createIDSub) {
+      this.createIDSub.unsubscribe();
+    }
+    if (this.deleteEventSub) {
+      this.deleteEventSub.unsubscribe();
     }
   }
 

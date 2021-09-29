@@ -7,7 +7,7 @@ import {FormBuilder} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {By} from "@angular/platform-browser";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {RegistrationComponent} from "../../../registration/registration.component";
+import {RegistrationComponent} from "../../../registration/registration/registration.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
 import {of} from "rxjs";
