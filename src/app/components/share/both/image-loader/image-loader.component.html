@@ -1,5 +1,6 @@
 <div [formGroup]="form" style="margin: 0 16px" [ngStyle]="mobile && {'margin': '0'}">
-  <button type="button" (click)="loaderImgOpen($event)" class="add disSetting" style="justify-content: space-between; width: 100%">
+  <button type="button" (click)="loaderImgOpen($event)" class="add disSetting"
+          style="justify-content: space-between; width: 100%">
     <div class="disSetting">
       <div class="cloudImgWrap" [ngStyle]="mobile && {'background': '#3B3B3B'}">
         <div [ngClass]="mobile ? 'cloudImgYel' : 'cloudImg'"></div>
@@ -18,7 +19,10 @@
         <label> </label>
       </div>
       <div class="tab" [ngStyle]="mobile && {'background':'#2f2f2f'}">
-        <div class="word" [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'color' } : { 'tab_active': f.image.value == 'color' }">Color</div>
+        <div class="word"
+             [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'color' } : { 'tab_active': f.image.value == 'color' }">
+          Color
+        </div>
         <div class="gradientPicker" [ngStyle]="{'background': eventColor}">
           <div class="disColumn">
             <div class="reloadImg"></div>
@@ -35,7 +39,10 @@
       </div>
       <div class="tab" [ngStyle]="mobile && {'background':'#2f2f2f'}" [ngClass]="fileTooLarge && 'err-border'">
 
-        <div class="word" [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'image' } : { 'tab_active': f.image.value == 'image' }">Image</div>
+        <div class="word"
+             [ngClass]="mobile ?{ 'tab_active_mobile': f.image.value == 'image' } : { 'tab_active': f.image.value == 'image' }">
+          Image
+        </div>
         <div *ngIf="!previewUrlImg" class="gradientPicker">
           <label for="file" class="disColumn">
             <span *ngIf="!mobile" class="preLoadImg"></span>
@@ -44,7 +51,8 @@
           </label>
         </div>
         <input #fileInput type="file" id="file" accept=".png, .jpg" (change)="changeImgLoad($event)">
-        <div *ngIf="previewUrlImg" class="preview" [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}">
+        <div *ngIf="previewUrlImg" class="preview"
+             [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}">
           <label *ngIf="previewUrlImg" for="file" class="disColumn pre-info-img">
             <span *ngIf="!mobile" class="preLoadImg"></span>
             <span *ngIf="mobile" class="preLoadImgYell"></span>
@@ -59,8 +67,56 @@
       </div>
     </div>
   </div>
-  <div>
-    <small style="padding-bottom: 10px" *ngIf="fileTooLarge"
-           class="form-text quize_validation_error">Should be less than 5MB</small>
+  <div class="image-edit-window" *ngIf="file && !fileTooLarge && !closeCropeWIndow">
+    <div class="close_cross_image_editor" (click)="cancel()"></div>
+    <div class="image-edit-window-padding">
+      <div class="image-crop-title">CROP YOUR IMAGE SQUARE TYPE</div>
+      <div class="image-crop-item">
+        <image-cropper style="padding: 0!important;"
+                       [imageChangedEvent]="imageChangedEvent"
+                       [aspectRatio]="4 / 4"
+                       [maintainAspectRatio]="true"
+                       (imageCropped)="imageCroped($event)"
+        >
+
+
+        </image-cropper>
+      </div>
+      <div class="under-cropper-line"></div>
+      <div class="button-crop-submit" (click)="imageCropSubmit()">
+        <div>Done, Host Text Event</div>
+      </div>
+
+      <div class="button-crop-go-to-edit" (click)="openCustomize()">
+        <div>Paint & Host Photo Event</div>
+      </div>
+    </div>
   </div>
+  <div class="image-edit-window"  *ngIf="customizeModalShow">
+    <div class="image-edit-window-padding">
+      <div class="image-edit-title">PAINT YOUR PHOTO</div>
+      <div class="image-edit-item">
+        <tui-image-editor-svg-definitions></tui-image-editor-svg-definitions>
+        <tui-image-editor  [initialImage]="croppedImage"></tui-image-editor>
+      </div>
+      <div class="under-cropper-line"></div>
+      <div class="image-edit-buttons_block">
+        <div class="image-edit-back-button" (click)="cancel()">
+          <div>Back</div>
+        </div>
+        <div class="image-edit-host-button" (click)="submitEditedPhoto()">
+          <div>Host Photo Event</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <small style="padding-bottom: 10px" *ngIf="fileTooLarge"
+             class="form-text quize_validation_error">Should be less than 5MB</small>
+    </div>
+  </div>
+<!--  <div class="mobile-shadow">-->
+
+<!--  </div>-->
 </div>

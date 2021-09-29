@@ -1,80 +1,84 @@
-<div style="margin-top: 73px">
-  <events-template-new [whichEvent]="'setQuestion'"></events-template-new>
-  <form [formGroup]="questionForm">
-    <div class="box">
-      <app-textarea [status]="'single'"
-                    [isMobile]="true" [title]="'Set Topic'"
-                    [questionForm]="questionForm"
-                    [submitted]="submitted"
-                    [limit]="120" [limitEnd]="200"
-                    [controlName]="'question'"
-      ></app-textarea>
+  <div style="margin-top: 73px; position: relative">
+    <div [class.image-edit-shadow]="isImgEditorOpened"></div>
+<!--    <div class="image-edit-shadow"></div>-->
+    <events-template-new [whichEvent]="'setQuestion'"></events-template-new>
+    <form [formGroup]="questionForm">
+      <div class="box">
+        <app-textarea [status]="'single'"
+                      [isMobile]="true" [title]="'Set Topic'"
+                      [questionForm]="questionForm"
+                      [submitted]="submitted"
+                      [limit]="120" [limitEnd]="200"
+                      [controlName]="'question'"
+        ></app-textarea>
         <div *ngIf="submitted && f.question.errors">
           <small *ngIf="f.question.errors.required" class="form-text quize_validation_error">Please enter the
             question</small>
         </div>
 
-      <div class="box mx-0" style="margin-top:25px">
-        <label class="name">
-          <span class="text">SET OUTCOMES</span>
-        </label>
-        <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
-          <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit"
-               style="width: 100%; display: flex; justify-content: flex-end">
-            <div class="limitText"><span
-              [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}}
-              /</span> 60
+        <div class="box mx-0" style="margin-top:25px">
+          <label class="name">
+            <span class="text">SET OUTCOMES</span>
+          </label>
+          <div *ngFor="let answer of t.controls; let i = index" style="margin-bottom: 8px;">
+            <div *ngIf="limitError('answer', i) == 'answer' + i " class="showLimit"
+                 style="width: 100%; display: flex; justify-content: flex-end">
+              <div class="limitText"><span
+                [ngStyle]="colorError(f.answers.value[i].name.length, 55, 60)">{{f.answers.value[i].name.length}}
+                /</span> 60
+              </div>
             </div>
-          </div>
-          <div [formGroup]="answer" class="input-group inputBox">
-            <app-textarea style="width: 100%"
-                          [status]="'multi'"
-                          [isMobile]="true"
-                          [answer]="answer"
-                          [i]="i"
-                          [questionForm]="questionForm"
-                          [limit]="60"
-                          [limitEnd]="100"
-                          [answerForm]="answer" [submitted]="submitted"></app-textarea>
-            <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
-              <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
-                <div class="trashImg"></div>
-              </button>
+            <div [formGroup]="answer" class="input-group inputBox">
+              <app-textarea style="width: 100%"
+                            [status]="'multi'"
+                            [isMobile]="true"
+                            [answer]="answer"
+                            [i]="i"
+                            [questionForm]="questionForm"
+                            [limit]="60"
+                            [limitEnd]="100"
+                            [answerForm]="answer" [submitted]="submitted"></app-textarea>
+              <div *ngIf='answesQuantity >= 3' class="deleteButtonPos">
+                <button (click)="deleteAnswer(i)" class="deleteButton" type="button">
+                  <div class="trashImg"></div>
+                </button>
+              </div>
             </div>
-          </div>
-          <div *ngIf="submitted && answer.controls.name.errors">
-            <small style="padding-bottom: 10px" *ngIf="answer.controls.name.errors.required"
-                   class="form-text quize_validation_error">Please enter the question</small>
+            <div *ngIf="submitted && answer.controls.name.errors">
+              <small style="padding-bottom: 10px" *ngIf="answer.controls.name.errors.required"
+                     class="form-text quize_validation_error">Please enter the question</small>
+            </div>
+            <div>
+              <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value, '')"
+                     class="form-text quize_validation_error">Answers can't be equal</small>
+            </div>
           </div>
           <div>
-            <small style="padding-bottom: 10px" *ngIf="checkingEqual(answer.controls.name.value, '')"
-                   class="form-text quize_validation_error">Answers can't be equal</small>
+            <button *ngIf="t.length < 6" type="button" (click)="oneMoreAnswer()" class="add">
+              <div class="iconBox">
+                <div class="plus"></div>
+              </div>
+              <span class="addText">Add possible outcome</span>
+            </button>
           </div>
         </div>
-        <div>
-          <button *ngIf="t.length < 6" type="button" (click)="oneMoreAnswer()" class="add">
-            <div class="iconBox">
-              <div class="plus"></div>
-            </div>
-            <span class="addText">Add possible outcome</span>
-          </button>
+        <div class="border1"></div>
+        <app-image-loader [mobile]="true" [form] = questionForm [formData]="formData" [f] = f (imgEmmit)="imgEmmit($event)" (isImgEditOpened)="isImageEditorOpen($event)" (colorEmmit)="colorEmmit($event)"></app-image-loader>
+        <div class="border1"></div>
+        <div class="box mx-0">
+          <label for="detalis" class="name" style="margin-top: 24px">
+            <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
+          </label>
+          <input type="text" formControlName="details" class="answer adapting" id="detalis"
+                 placeholder="If result can be checked on the Internet, give source...">
         </div>
+        <div class="buttonBox" [ngStyle]="styleButtonBox()">
+          <button [routerLink]="'join'" type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
+          <button type="button" class="next" (click)="onSubmit()">NEXT</button>
+        </div>
+        <div class="privacy-text"><p routerLink="/privacy-policy">Privacy Policy</p></div>
       </div>
-      <div class="border1"></div>
-      <app-image-loader [mobile]="true" [form] = questionForm [formData]="formData" [f] = f (imgEmmit)="imgEmmit($event)" (colorEmmit)="colorEmmit($event)"></app-image-loader>
-      <div class="border1"></div>
-      <div class="box mx-0">
-        <label for="detalis" class="name" style="margin-top: 24px">
-          <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
-        </label>
-        <input type="text" formControlName="details" class="answer adapting" id="detalis"
-               placeholder="If result can be checked on the Internet, give source...">
-      </div>
-      <div class="buttonBox" [ngStyle]="styleButtonBox()">
-        <button [routerLink]="'join'" type="button" class="cancel" (click)="goBackToHome()">CANCEL</button>
-        <button type="button" class="next" (click)="onSubmit()">NEXT</button>
-      </div>
-      <div class="privacy-text"><p routerLink="/privacy-policy">Privacy Policy</p></div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+
+

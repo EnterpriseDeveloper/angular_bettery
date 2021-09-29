@@ -37,7 +37,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   isDuplicate: boolean;
   eventColor: string;
   previewUrlImg;
+  clearEventImage;
   validSizeImg = false;
+  isImgEditorOpened = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -116,11 +118,14 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     }
     if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
       this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumFinish = this.clearEventImage;
       this.formData.thumColor = 'undefined';
     }
     if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
       this.formData.thumColor = this.eventColor;
       this.formData.thumImage = 'undefined';
+      this.formData.thumFinish = 'undefined';
+
     }
     if (this.registered) {
       this.getData.next(this.questionForm.value);
@@ -131,9 +136,9 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
 
   formDataReset() {
     this.formData.roomName = '';
-    this.formData.whichRoom = "new";
-    this.formData.roomName = ''
-    this.formData.roomId = "";
+    this.formData.whichRoom = 'new';
+    this.formData.roomName = '';
+    this.formData.roomId = '';
     this.store.dispatch(formDataAction({ formData: this.formData }));
   }
   async loginWithTorus() {
@@ -182,14 +187,18 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   imgEmmit(e) {
-    const { img, valid } = e;
+    const { img, valid , clearImage} = e;
     this.previewUrlImg = img;
     this.validSizeImg = valid;
+    this.clearEventImage = clearImage;
   }
 
   colorEmmit(e) {
     this.eventColor = e;
     this.validSizeImg = false;
+  }
+  isImageEditorOpen(event: boolean){
+    this.isImgEditorOpened = event;
   }
 
   ngOnDestroy() {

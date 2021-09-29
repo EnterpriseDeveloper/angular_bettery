@@ -26,12 +26,13 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   eventFromLandingSubscr: Subscription;
   formDataSubscribe: Subscription;
-
   spinnerLoading: boolean;
   saveUserLocStorage = [];
   eventColor: string;
   previewUrlImg;
   validSizeImg = false;
+  isImgEditorOpened = false;
+  clearEventImage;
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
@@ -122,11 +123,13 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
     }
     if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
       this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumFinish = this.clearEventImage;
       this.formData.thumColor = 'undefined';
     }
     if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
       this.formData.thumColor = this.eventColor;
       this.formData.thumImage = 'undefined';
+      this.formData.thumFinish = 'undefined';
     }
     if (this.registered) {
       this.formData.question = this.questionForm.value.question;
@@ -148,6 +151,8 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   goBackToHome() {
     this.formData.question = '';
     this.formData.answers = [];
+    this.formData.thumImage = '';
+    this.formData.thumFinish = '';
     this.store.dispatch(formDataAction({formData: this.formData}));
     this.router.navigate(['/join']);
   }
@@ -201,13 +206,17 @@ export class SetQuestionTabComponent implements OnInit, OnDestroy {
   }
 
   imgEmmit($event: any) {
-    const { img, valid } = $event;
+    const { img, valid, clearImage } = $event;
     this.previewUrlImg = img;
     this.validSizeImg = valid;
+    this.clearEventImage = clearImage;
   }
 
   colorEmmit($event: any) {
     this.eventColor = $event;
     this.validSizeImg = false;
+  }
+  isImageEditorOpen(event: boolean){
+    this.isImgEditorOpened = event;
   }
 }

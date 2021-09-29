@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Subscription} from 'rxjs';
 import {Event} from '../../../../models/Event.model';
@@ -34,6 +34,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   myAnswers: Answer;
   @Input() coinInfo: Coins;
   @Input() fromComponent: string;
+  @ViewChild('eventImage') eventImage: ElementRef;
 
   @Output() callGetData = new EventEmitter();
   @Output() commentIdEmmit = new EventEmitter<number>();
@@ -44,7 +45,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   betDisable = false;
   windowWidth: number;
   form: FormGroup;
-
+  showClearImage = false;
 
   constructor(private router: Router) {
 
@@ -69,6 +70,12 @@ export class JoinPageItemTemplateComponent implements OnInit {
     } else if (!this.question.detailOpened) {
       this.isDetailOpened.emit({isOpened: false, index: this.index});
     }
+  }
+
+  toggleImage() {
+    this.showClearImage = !this.showClearImage;
+    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
+
   }
 
   colorForRoom(color) {
