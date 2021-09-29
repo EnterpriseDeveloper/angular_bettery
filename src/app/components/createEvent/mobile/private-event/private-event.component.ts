@@ -172,6 +172,7 @@ export class PrivateEventComponent implements OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
+      thumFinish: this.formData.thumFinish,
       transactionHash: '0x' + transactionHash
     };
     this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)

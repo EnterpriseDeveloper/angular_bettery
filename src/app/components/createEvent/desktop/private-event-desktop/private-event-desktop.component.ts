@@ -142,6 +142,7 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
+      thumFinish: this.formData.thumFinish,
       transactionHash: '0x' + transactionHash
     };
 

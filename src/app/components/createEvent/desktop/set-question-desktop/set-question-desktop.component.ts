@@ -37,6 +37,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   isDuplicate: boolean;
   eventColor: string;
   previewUrlImg;
+  clearEventImage;
   validSizeImg = false;
   isImgEditorOpened = false;
 
@@ -105,7 +106,7 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   styleButtonBox() {
     if (this.answesQuantity >= 3) {
       return {
-        position: 'relative'
+        'position': 'relative'
       };
     }
   }
@@ -117,11 +118,14 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     }
     if (this.f.image.value == 'image' && this.previewUrlImg != undefined) {
       this.formData.thumImage = this.previewUrlImg;
+      this.formData.thumFinish = this.clearEventImage;
       this.formData.thumColor = 'undefined';
     }
     if (this.f.image.value == 'color' || this.previewUrlImg == undefined) {
       this.formData.thumColor = this.eventColor;
       this.formData.thumImage = 'undefined';
+      this.formData.thumFinish = 'undefined';
+
     }
     if (this.registered) {
       this.getData.next(this.questionForm.value);
@@ -156,12 +160,12 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   colorError(length, numYel, numMain) {
     if (length > numYel && length <= numMain) {
       return {
-        color: '#7d7d7d'
+        'color': '#7d7d7d'
       };
     }
     if (length > numMain) {
       return {
-        color: '#FF3232'
+        'color': '#FF3232'
       };
     }
   }
@@ -183,9 +187,10 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
   }
 
   imgEmmit(e) {
-    const { img, valid } = e;
+    const { img, valid , clearImage} = e;
     this.previewUrlImg = img;
     this.validSizeImg = valid;
+    this.clearEventImage = clearImage;
   }
 
   colorEmmit(e) {
@@ -193,7 +198,6 @@ export class SetQuestionDesktopComponent implements OnInit, OnDestroy {
     this.validSizeImg = false;
   }
   isImageEditorOpen(event: boolean){
-    console.log(event)
     this.isImgEditorOpened = event;
   }
 

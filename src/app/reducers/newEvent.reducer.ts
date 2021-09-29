@@ -26,7 +26,8 @@ const init = {
   roomId: '',
   imgOrColor: 'color',
   thumImage: '',
-  thumColor: ''
+  thumColor: '',
+  thumFinish: ''
 };
 
 export const landingFeatureSelector = createFeatureSelector<LandingStateInterface>('event');

@@ -3,6 +3,7 @@ import GradientJSON from '../../../../../files/gradients.json';
 import {FormGroup} from '@angular/forms';
 import {TuiImageEditorComponent} from 'tui-image-editor-angular';
 
+
 @Component({
   selector: 'app-image-loader',
   templateUrl: './image-loader.component.html',
@@ -28,6 +29,7 @@ export class ImageLoaderComponent implements OnInit {
   croppedImage: any = '';
   closeCropeWIndow = false;
   customizeModalShow = false;
+  clearEventImg = '';
 
   constructor() {
   }
@@ -40,34 +42,38 @@ export class ImageLoaderComponent implements OnInit {
     if (this.formData.thumImage == 'undefined') {
       this.eventColor = this.formData.thumColor;
       this.previewUrlImg = undefined;
+      this.clearEventImg = undefined;
       this.loaderImg = true;
       this.colorEmmit.emit(this.eventColor);
     }
     if (this.formData.thumColor == 'undefined') {
       this.previewUrlImg = this.formData.thumImage;
       this.loaderImg = true;
-      this.imgEmmit.emit({img: this.previewUrlImg, valid: false});
+      this.imgEmmit.emit({img: this.previewUrlImg, valid: false, clearImage: this.formData.thumFinish});
     }
   }
 
   openCustomize() {
-    console.log(this.customizeModalShow)
     fetch(this.croppedImage)
       .then(res => res.blob())
       .then(blob => {
-        const file = new File([blob], 'image', {type: 'image/png'});
-        this.resize(file);
-        this.readerInit(false);
+        this.file = new File([blob], 'image', {type: 'image/png'});
+        this.resize(this.file, true);
         this.closeCropeWIndow = true;
       });
+
     this.customizeModalShow = true;
-    console.log(this.customizeModalShow)
     setTimeout(() => {
       const element = document.getElementsByClassName('tie-btn-draw')[0] as HTMLElement;
-      console.log(element);
       element.click();
-      const input = document.getElementsByClassName('tie-draw-line-select-button')[0]as HTMLElement;
-    }, 300);
+      setTimeout(() => {
+        const inputBlock = document.getElementsByClassName('tui-image-editor-my-3') as HTMLCollection;
+        const markerInput1 = inputBlock[1].children[1] as HTMLInputElement;
+        const markerInput2 = inputBlock[1].children[2] as HTMLInputElement;
+        markerInput1.max = '100';
+        markerInput2.max = '100';
+      }, 300);
+    }, 500);
   }
 
   imageCroped(event) {
@@ -79,7 +85,8 @@ export class ImageLoaderComponent implements OnInit {
       .then(res => res.blob())
       .then(blob => {
         this.file = new File([blob], 'image', {type: 'image/png'});
-        this.readerInit(false);
+        this.resize(this.file, false);
+        this.clearEventImg = 'undefined';
         this.closeCropeWIndow = true;
         this.isImgEditOpened.emit(false);
       });
@@ -87,29 +94,21 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   click() {
-    const dataUrl = this.editorComponent.imageEditor.toDataURL();
-    console.log(dataUrl);
+    const canvas = document.getElementsByClassName('lower-canvas')[0] as HTMLCanvasElement;
+    const dataUrl = canvas.toDataURL('image/jpeg');
     fetch(dataUrl).then(res => {
       return res.blob();
     }).then(blob => {
-      console.log(this.file.type);
       this.file = (new File([blob], 'image', {type: 'image/png'}));
       this.readerInit(false);
-
       this.closeCropeWIndow = true;
       this.customizeModalShow = false;
       this.isImgEditOpened.emit(false);
-
-
-      // const link = document.createElement('a');
-      // link.href = window.URL.createObjectURL(blob);
-      // link.target = '_blank';
-      // link.click();
     });
 
   }
 
-  resize(file) {
+  resize(file, isClearNeeded) {
 
     const url = URL.createObjectURL(file);
 
@@ -150,8 +149,8 @@ export class ImageLoaderComponent implements OnInit {
         return res.blob();
       }).then(blob => {
         this.file = (new File([blob], 'image', {type: 'image/png'}));
-
         this.croppedImage = resizedUrl;
+        isClearNeeded ? this.clearEventImg = resizedUrl : this.clearEventImg = 'undefined';
         this.readerInit(false);
       });
 
@@ -197,6 +196,10 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   changeImgLoad($event) {
+    if ( !$event.target.files.length){
+      this.isImgEditOpened.emit(false);
+      return;
+    }
     this.formData.imgOrColor = 'image';
     this.fileTooLarge = false;
     this.isImgEditOpened.emit(true);
@@ -220,7 +223,8 @@ export class ImageLoaderComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = e => {
       this.previewUrlImg = e.target.result;
-      this.imgEmmit.emit({img: this.previewUrlImg, valid});
+      this.imgEmmit.emit({img: this.previewUrlImg, valid, clearImage: this.clearEventImg});
+
     };
     if (this.file) {
       reader.readAsDataURL(this.file);

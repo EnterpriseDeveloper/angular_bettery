@@ -34,9 +34,8 @@ export class AppComponent implements OnDestroy {
 
   newDetectUser() {
     const walletDectypt = authHelp.walletDectypt();
-    console.log(walletDectypt)
-    if (walletDectypt && walletDectypt.publicAddress) {
-      const data = { wallet: walletDectypt.publicAddress, accessToken: walletDectypt.accessToken };
+    if (walletDectypt && walletDectypt.pubKey.address) {
+      const data = { wallet: walletDectypt.pubKey.address, accessToken: walletDectypt.accessToken };
       this.autoLoginSub = this.post.post('user/auto_login', data).subscribe(async (x: User) => {
         this.addUser(
           x.email,

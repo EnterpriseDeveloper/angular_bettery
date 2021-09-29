@@ -1,17 +1,17 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { ClipboardService } from 'ngx-clipboard'
-import { PostService } from '../../../../services/post.service'
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {ClipboardService} from 'ngx-clipboard'
+import {PostService} from '../../../../services/post.service'
 import {GetService} from "../../../../services/get.service"
-import { Subscription } from 'rxjs';
-import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorLimitModalComponent } from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
-import { User } from '../../../../models/User.model';
-import { Router } from "@angular/router";
-import { formDataAction } from "../../../../actions/newEvent.actions";
-import { connectToSign } from '../../../../contract/cosmosInit';
+import {Subscription} from 'rxjs';
+import {InfoModalComponent} from '../../../share/both/modals/info-modal/info-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ErrorLimitModalComponent} from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
+import {User} from '../../../../models/User.model';
+import {Router} from "@angular/router";
+import {formDataAction} from "../../../../actions/newEvent.actions";
+import {connectToSign} from '../../../../contract/cosmosInit';
 
 
 @Component({
@@ -181,7 +181,7 @@ export class PublicEventComponent implements OnDestroy {
   }
 
 
-  sendToDb(transactionHash: any, id: number) {  
+  sendToDb(transactionHash: any, id: number) {
 
     this.quizData = {
       _id: id,
@@ -205,6 +205,7 @@ export class PublicEventComponent implements OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
+      thumFinish: this.formData.thumFinish,
       transactionHash: "0x"+transactionHash
     }
 
