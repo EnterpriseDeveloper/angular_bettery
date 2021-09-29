@@ -1,7 +1,6 @@
-import {AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import GradientJSON from '../../../../../files/gradients.json';
 import {FormGroup} from '@angular/forms';
-import {TuiImageEditorComponent} from 'tui-image-editor-angular';
 
 
 @Component({
@@ -17,7 +16,6 @@ export class ImageLoaderComponent implements OnInit {
   @Input() formData;
   @Input() f;
   @Input() mobile;
-  @ViewChild(TuiImageEditorComponent) editorComponent: TuiImageEditorComponent;
   gradietnNumber = 0;
   eventColor: string;
   loaderImg: boolean;
@@ -64,9 +62,13 @@ export class ImageLoaderComponent implements OnInit {
       });
 
     this.customizeModalShow = true;
-    setTimeout(() => {
+    const foo = () => {
       const element = document.getElementsByClassName('tie-btn-draw')[0] as HTMLElement;
-      element.click();
+      if ( element ){
+        element.click();
+      }else {
+        foo();
+      }
       setTimeout(() => {
         const inputBlock = document.getElementsByClassName('tui-image-editor-my-3') as HTMLCollection;
         const markerInput1 = inputBlock[1].children[1] as HTMLInputElement;
@@ -74,7 +76,8 @@ export class ImageLoaderComponent implements OnInit {
         markerInput1.max = '100';
         markerInput2.max = '100';
       }, 300);
-    }, 500);
+    };
+    setTimeout(foo, 500);
   }
 
 
