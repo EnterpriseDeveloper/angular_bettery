@@ -69,13 +69,18 @@ export class ImageLoaderComponent implements OnInit {
       }else {
         foo();
       }
-      setTimeout(() => {
+      const bar = () => {
         const inputBlock = document.getElementsByClassName('tui-image-editor-my-3') as HTMLCollection;
-        const markerInput1 = inputBlock[1].children[1] as HTMLInputElement;
-        const markerInput2 = inputBlock[1].children[2] as HTMLInputElement;
-        markerInput1.max = '100';
-        markerInput2.max = '100';
-      }, 300);
+        if ( inputBlock.length){
+          const markerInput1 = inputBlock[1].children[1] as HTMLInputElement;
+          const markerInput2 = inputBlock[1].children[2] as HTMLInputElement;
+          markerInput1.max = '100';
+          markerInput2.max = '100';
+        }else {
+          setTimeout(bar, 300 );
+        }
+      };
+      setTimeout(bar, 300);
     };
     setTimeout(foo, 500);
   }
