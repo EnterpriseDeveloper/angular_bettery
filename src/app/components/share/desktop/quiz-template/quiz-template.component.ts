@@ -662,7 +662,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       };
     }
   }
-  
+
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {

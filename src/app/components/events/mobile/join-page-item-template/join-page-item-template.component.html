@@ -27,6 +27,9 @@
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
+      <div class="clickCopy" (click)="copyToClickBoard(question?.id)">
+        <div class="copyLink-img"></div>
+      </div>
       <div *ngIf="question.thumFinish!=='undefined'" class="show-final-image-block" (click)="toggleImage()" >
         <div class="show-final-image"></div>
       </div>

@@ -13,7 +13,7 @@
   </button>
   <div *ngIf="loaderImg" class="checkBoxPos" [ngStyle]="fileTooLarge && {'padding-bottom': '5px'}">
 
-    <div (click)="generateGradient()" (change)="changeColorFunc()" class="pretty p-default p-round inline ">
+    <div (click)="generateGradient()"  (change)="changeColorFunc()" class="pretty p-default p-round inline ">
       <input type="radio" value="color" formControlName="image">
       <div class="state checkPos" [ngClass]="mobile ? 'p-warning-o':'p-success-o'">
         <label> </label>

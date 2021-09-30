@@ -6,6 +6,7 @@ import {Answer} from '../../../../models/Answer.model';
 import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {ClipboardService} from "ngx-clipboard";
 
 
 @Component({
@@ -47,7 +48,9 @@ export class JoinPageItemTemplateComponent implements OnInit {
   form: FormGroup;
   showClearImage = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private _clipboardService: ClipboardService
+  ) {
 
   }
 
@@ -89,6 +92,15 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
+  copyToClickBoard(eventId) {
+    this.copyLinkFlag = true;
+    const href = window.location.hostname;
+    const path = href === 'localhost' ? 'http://localhost:4200' : href;
+    this._clipboardService.copy(`${path}/public_event/${eventId}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
+  }
   avgBet(q) {
     let amount = 0;
     if (q.parcipiantAnswers == undefined) {

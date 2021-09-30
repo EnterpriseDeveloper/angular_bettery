@@ -166,10 +166,12 @@ export class ImageLoaderComponent implements OnInit {
 
   cancel() {
     this.file = undefined;
+    this.previewUrlImg = '';
+    this.clearEventImg = 'undefined';
+    this.isImgEditOpened.emit(false);
+    this.imgEmmit.emit({img: undefined, valid: false, clearImage: this.clearEventImg});
     this.closeCropeWIndow = true;
     this.customizeModalShow = false;
-    this.previewUrlImg = '';
-    this.isImgEditOpened.emit(false);
   }
 
   loaderImgOpen(e) {
