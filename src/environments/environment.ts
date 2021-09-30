@@ -16,8 +16,7 @@ export const environment = {
   etherUrl: "https://goerli.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
   gasStationAPI: "https://gasstation-mumbai.matic.today",
   secretKey: "791351803491091234",
-  demon: "54.255.226.141",
-  // auth0_URI: "https://matic-network.d2f172wsk4mtv2.amplifyapp.com"
+  demon: "https://demon_test.bettery.io",
   auth0_URI: window.location.origin
 };
 
