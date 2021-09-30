@@ -83,7 +83,7 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
         creator: address,
         privId: id,
         question: this.formData.question,
-        answers: this.formData.answers.map(x => x.name),
+        answers: this.getAnswers(),
         winner: this.formData.winner,
         loser: this.formData.loser,
         startTime: this.getStartTime(),
@@ -112,6 +112,12 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
     }
 
   }
+  getAnswers(){
+    const answer = this.formData.answers.map((x) => {
+      return x.name;
+    });
+    return answer.sort();
+  }
 
   deleteEventId(id) {
     this.deleteEventSub = this.postService.post('privateEvents/delete_event_id', {id}).subscribe((x: any) => {
@@ -127,9 +133,7 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
     this.eventData = {
       _id: id,
       prodDev: environment.production,
-      answers: this.formData.answers.map((x) => {
-        return x.name;
-      }),
+      answers: this.getAnswers(),
       question: this.formData.question,
       startTime: this.getStartTime(),
       endTime: this.getEndTime(),

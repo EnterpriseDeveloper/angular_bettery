@@ -98,7 +98,12 @@ export class PrivateEventComponent implements OnDestroy {
       console.log('create private event id err', err.message);
     });
   }
-
+  getAnswers(){
+    const answer = this.formData.answers.map((x) => {
+      return x.name;
+    });
+    return answer.sort();
+  }
   async sendToDemon(id: number) {
     const {memonic, address, client} = await connectToSign();
 
@@ -108,7 +113,7 @@ export class PrivateEventComponent implements OnDestroy {
         creator: address,
         privId: id,
         question: this.formData.question,
-        answers: this.formData.answers.map(x => x.name),
+        answers: this.getAnswers(),
         winner: this.formData.winner,
         loser: this.formData.loser,
         startTime: this.getStartTime(),
@@ -157,9 +162,7 @@ export class PrivateEventComponent implements OnDestroy {
     this.eventData = {
       _id: id,
       prodDev: environment.production,
-      answers: this.formData.answers.map((x) => {
-        return x.name;
-      }),
+      answers: this.getAnswers(),
       question: this.formData.question,
       startTime: this.getStartTime(),
       endTime: this.getEndTime(),

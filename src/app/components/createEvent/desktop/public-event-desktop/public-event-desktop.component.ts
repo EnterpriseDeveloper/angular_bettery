@@ -130,9 +130,9 @@ export class PublicEventDesktopComponent implements OnDestroy {
   }
 
   getAnswers(){
-    let answer = this.formData.answers.map((x) => {
-      return x.name
-    })
+    const answer = this.formData.answers.map((x) => {
+      return x.name;
+    });
     return answer.sort();
   }
 
