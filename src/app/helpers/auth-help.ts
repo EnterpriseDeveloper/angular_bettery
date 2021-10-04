@@ -65,7 +65,6 @@ const authHelp = {
   saveAccessTokenLS: (token, pubKey, mnemonic, sub) => {
     let index;
     let obj: any = authHelp.walletDectypt();
-    console.log(obj);
 
     if (!obj) {
       obj = {
@@ -91,7 +90,6 @@ const authHelp = {
         mnemonic: mnemonic
       })
     }
-    // CHECK
     if (token && !pubKey && !mnemonic) {
       obj.users[index].accessToken = token;
       obj.login = sub;

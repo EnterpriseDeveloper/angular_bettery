@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,6 @@ import * as UserActions from '../../../actions/user.actions';
 import { Subscription } from 'rxjs';
 import { RegistrationComponent } from '../registration/registration.component';
 import { WelcomePageComponent } from '../../share/both/modals/welcome-page/welcome-page.component';
-import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -84,7 +83,6 @@ export class AuthComponent implements OnInit, OnDestroy {
         return console.log(err);
       }
       this.sub = userInfo.idTokenPayload.sub;
-      console.log(this.sub)
       const pubKeyFromLS = authHelp.walletDectypt();
       if (pubKeyFromLS) {
         let userData = pubKeyFromLS.users.find((x) => { return x.sub == this.sub })
@@ -93,7 +91,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
       if (userInfo) {
-        console.log(userInfo, 'userInfo');
         this.localStoreUser(userInfo);
 
         const dataForSend = {
@@ -151,7 +148,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
               this.sendUserToStore(data);
               authHelp.saveAccessTokenLS(data.accessToken, null, null, this.sub);
-              
+
               const walletDectypt = authHelp.walletDectypt();
               let userData = walletDectypt.users.find((x) => { return x.sub == walletDectypt.login })
 
@@ -199,7 +196,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       }
       if (this.walletFromDB === pubKeyActual.address) {
         this.isCorrectPhrase = false;
-        //  authHelp.saveAccessTokenLS(null, pubKeyActual, $event.seedPh, this.sub);
         this.authResultGlobal.pubKeyActual = pubKeyActual.address;
         this.loginSub$ = this.postService.post('user/auth0_login', this.authResultGlobal).subscribe((data: any) => {
 
