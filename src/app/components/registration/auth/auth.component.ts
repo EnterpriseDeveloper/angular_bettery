@@ -31,6 +31,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   dataRegist: any;
   saveUserLocStorage = [];
   isCorrectPhrase: boolean;
+  isRegistration = false;
 
   constructor(
     private router: Router,
@@ -123,7 +124,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                   this.modalOpen = true;
                   this.modalStatus = false;
                   this.spinner = false;
-                  this.seedPhrase = { mnemonic, wallet };
+                  this.seedPhrase = {mnemonic, wallet};
                 }
               }, error => {
                 console.log(error.message);
@@ -210,7 +211,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             console.log(error);
           }
         });
-      }else{
+      } else {
         this.isCorrectPhrase = true;
       }
     }
@@ -243,11 +244,19 @@ export class AuthComponent implements OnInit, OnDestroy {
       localStorage.setItem('userBettery', JSON.stringify(this.saveUserLocStorage));
     }
     const getItem = JSON.parse(localStorage.getItem('userBettery'));
+
     if (getItem.length === 0 || !getItem.includes(userInfo.idTokenPayload.email)) {
       const array = JSON.parse(localStorage.getItem('userBettery'));
       array.push(userInfo.idTokenPayload.email);
+
       localStorage.setItem('userBettery', JSON.stringify(array));
-      this.modalService.open(WelcomePageComponent, {centered: true});
+
+      const myModal = this.modalService.open(WelcomePageComponent, {centered: true});
+      this.isRegistration = true;
+      myModal.result.then((() => {
+      }), () => {
+        this.isRegistration = false;
+      });
     }
   }
 
