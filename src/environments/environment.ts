@@ -17,7 +17,8 @@ export const environment = {
   gasStationAPI: "https://gasstation-mumbai.matic.today",
   secretKey: "791351803491091234",
   demon: "https://demon_test.bettery.io",
-  auth0_URI: window.location.origin
+  auth0_URI: window.location.origin,
+  clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf"
 };
 
 /*

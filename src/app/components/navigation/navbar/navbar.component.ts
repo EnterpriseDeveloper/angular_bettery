@@ -1,23 +1,23 @@
-import {Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef, Input} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../app.state';
-import {Coins} from '../../../models/Coins.model';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.state';
+import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as ReputationAction from '../../../actions/reputation.action';
 import * as UserActions from '../../../actions/user.actions';
-import {ClipboardService} from 'ngx-clipboard';
+import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Subscription} from 'rxjs';
-import {User} from '../../../models/User.model';
-import {RegistrationComponent} from '../../registration/registration/registration.component';
-import {ChainTransferComponent} from '../chainTransfer/chainTransfer.component';
-import {SwapBetComponent} from '../swap-bet/swap-bet.component';
-import {environment} from '../../../../environments/environment';
-import {GetService} from '../../../services/get.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { User } from '../../../models/User.model';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
+import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component';
+import { SwapBetComponent } from '../swap-bet/swap-bet.component';
+import { environment } from '../../../../environments/environment';
+import { GetService } from '../../../services/get.service';
 import authHelp from '../../../helpers/auth-help';
-import {PostService} from '../../../services/post.service';
+import { PostService } from '../../../services/post.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ import {PostService} from '../../../services/post.service';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
-  @ViewChild('insideElement', {static: false}) insideElement;
+  @ViewChild('insideElement', { static: false }) insideElement;
 
   nickName: string = undefined;
   web3: Web3 | undefined = null;
@@ -124,7 +124,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async updateReputation(id) {
-    this.getRepUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x: any) => {
+    this.getRepUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x: any) => {
 
       this.store.dispatch(new ReputationAction.UpdateReputation({
         advisorRep: x.advisorReputPoins === null ? 0 : x.advisorReputPoins,
@@ -138,7 +138,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     this.updateBalance();
   }
 
@@ -150,23 +150,18 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async newlogOut() {
-    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-      this.webAuth.logout({
-        returnTo: `${environment.auth0_URI}/join`,
-        client_id: '49atoPMGb9TWoaDflncmvPQOCccRWPyf',
-      });
-      localStorage.removeItem('_buserlog');
-      this.store.dispatch(new UserActions.RemoveUser(0));
-      this.nickName = undefined;
-      this.openNavBar = false;
-      this.logoutBox = false;
-    }, err => {
-      console.log(err);
-    });
+    //   this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+    this.store.dispatch(new UserActions.RemoveUser(0));
+    this.nickName = undefined;
+    this.openNavBar = false;
+    this.logoutBox = false;
+    //  }, err => {
+    //    console.log(err);
+    //  });
   }
 
   async loginWithTorus() {
-    const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
+    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
     modalRef.componentInstance.openSpinner = true;
   }
 
@@ -196,7 +191,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openModal(contentModal) {
-    this.modalService.open(contentModal, {size: 'sm', centered: true});
+    this.modalService.open(contentModal, { size: 'sm', centered: true });
     this.openNavBar = false;
   }
 
@@ -210,7 +205,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   openDeposit(str: string) {
     this.updateBalance();
-    const modalRef = this.modalService.open(ChainTransferComponent, {centered: true});
+    const modalRef = this.modalService.open(ChainTransferComponent, { centered: true });
     modalRef.componentInstance.status = str;
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.wallet = this.userWallet;
@@ -222,7 +217,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   openSwapBetToBTY() {
     this.updateBalance();
-    const modalRef = this.modalService.open(SwapBetComponent, {centered: true});
+    const modalRef = this.modalService.open(SwapBetComponent, { centered: true });
     modalRef.componentInstance.coinInfo = this.coinInfo;
     modalRef.componentInstance.userId = this.userId;
     this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {

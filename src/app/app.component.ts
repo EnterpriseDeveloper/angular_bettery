@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as UserActions from './actions/user.actions';
 import { PostService } from './services/post.service';
 import { Subscription } from 'rxjs';
@@ -22,37 +22,47 @@ window.web3 = window.web3 || {};
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   autoLoginSub: Subscription;
 
   constructor(
     private post: PostService,
     private store: Store<AppState>,
   ) {
-    this.newDetectUser();
   }
+
+  ngOnInit() {
+    if (window.location.hash.length == 0) {
+      this.newDetectUser();
+    }
+  }
+
 
   newDetectUser() {
     const walletDectypt = authHelp.walletDectypt();
-    if (walletDectypt && walletDectypt.pubKey.address) {
-      const data = { wallet: walletDectypt.pubKey.address, accessToken: walletDectypt.accessToken };
-      this.autoLoginSub = this.post.post('user/auto_login', data).subscribe(async (x: User) => {
-        this.addUser(
-          x.email,
-          x.nickName,
-          x.wallet,
-          x.avatar,
-          x._id,
-          x.verifier,
-          x.sessionToken,
-          x.verifierId,
-          x.accessToken
-        );
-        authHelp.setMemo(walletDectypt)
-      }, (err) => {
-        console.log('from auto login', err);
-      });
-
+    console.log(walletDectypt);
+    if (walletDectypt) {
+      let userData = walletDectypt.users.find((x) => { return x.sub == walletDectypt.login })
+      console.log(userData)
+      if (userData) {
+        const data = { wallet: userData.pubKey.address, accessToken: userData.accessToken };
+        this.autoLoginSub = this.post.post('user/auto_login', data).subscribe(async (x: User) => {
+          this.addUser(
+            x.email,
+            x.nickName,
+            x.wallet,
+            x.avatar,
+            x._id,
+            x.verifier,
+            x.sessionToken,
+            x.verifierId,
+            x.accessToken
+          );
+          authHelp.setMemo(userData)
+        }, (err) => {
+          console.log('from auto login', err);
+        });
+      }
     }
   }
 
