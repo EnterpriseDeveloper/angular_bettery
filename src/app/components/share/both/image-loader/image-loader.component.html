@@ -50,7 +50,7 @@
             <span class="TabToChange" [ngStyle]="mobile ? {'color': '#ffffff'} : {'color': '#7d7d7d'}">Upload</span>
           </label>
         </div>
-        <input #fileInput type="file" id="file" accept=".png, .jpg" (change)="changeImgLoad($event)">
+        <input #fileInput type="file" id="file" accept=".png, .jpg" (click)="clearFileValue($event)" (change)="changeImgLoad($event)">
         <div *ngIf="previewUrlImg" class="preview"
              [ngStyle]="{'background': 'url(' + previewUrlImg + ')center center no-repeat'}">
           <label *ngIf="previewUrlImg" for="file" class="disColumn pre-info-img">

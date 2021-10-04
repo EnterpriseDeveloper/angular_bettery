@@ -55,6 +55,7 @@ export class PublicEventDesktopComponent implements OnDestroy {
   }
 
   cancel() {
+    console.log(this.formData)
     this.goBack.next();
   }
 

@@ -64,20 +64,20 @@ export class ImageLoaderComponent implements OnInit {
     this.customizeModalShow = true;
     const foo = () => {
       const element = document.getElementsByClassName('tie-btn-draw')[0] as HTMLElement;
-      if ( element ){
+      if (element) {
         element.click();
-      }else {
+      } else {
         foo();
       }
       const bar = () => {
         const inputBlock = document.getElementsByClassName('tui-image-editor-my-3') as HTMLCollection;
-        if ( inputBlock.length){
+        if (inputBlock.length) {
           const markerInput1 = inputBlock[1].children[1] as HTMLInputElement;
           const markerInput2 = inputBlock[1].children[2] as HTMLInputElement;
           markerInput1.max = '100';
           markerInput2.max = '100';
-        }else {
-          setTimeout(bar, 300 );
+        } else {
+          setTimeout(bar, 300);
         }
       };
       setTimeout(bar, 300);
@@ -187,6 +187,10 @@ export class ImageLoaderComponent implements OnInit {
     this.loaderImg = !this.loaderImg;
   }
 
+  clearFileValue(e) {
+    e.target.value =  '' ;
+  }
+
   generateGradient() {
     if (this.f.image.value == 'color') {
       this.gradietnNumber == Number(Object.keys(GradientJSON).length) - 1 ? this.gradietnNumber = 0 : this.gradietnNumber++;
@@ -208,7 +212,7 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   changeImgLoad($event) {
-    if ( !$event.target.files.length){
+    if (!$event.target.files.length) {
       this.isImgEditOpened.emit(false);
       return;
     }
