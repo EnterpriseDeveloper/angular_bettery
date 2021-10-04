@@ -13,5 +13,6 @@ export const environment = {
   gasStationAPI: "https://gasstation-mainnet.matic.network",
   secretKey: "791351803491091234",
   demon: "TODO", // TODO 
-  auth0_URI: "https://www.bettery.io"
+  auth0_URI: "https://www.bettery.io",
+  clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf"
 };

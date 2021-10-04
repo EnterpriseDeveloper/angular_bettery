@@ -91,7 +91,6 @@ export class RegistrationComponent implements OnDestroy {
   }
 
   alreadyRegistCloseModal() {
-    localStorage.removeItem('_buserlog');
     this.closeModal();
   }
 
