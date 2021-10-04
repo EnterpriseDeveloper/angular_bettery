@@ -71,9 +71,9 @@ const authHelp = {
         login: sub,
         users: [{
           sub: sub,
-          accessToken: null,
-          pubKey: null,
-          mnemonic: null
+          accessToken: token,
+          pubKey: pubKey,
+          mnemonic: mnemonic
         }]
       };
       index = 0;
