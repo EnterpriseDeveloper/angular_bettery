@@ -9,6 +9,7 @@ import * as UserActions from '../../../actions/user.actions';
 import { Subscription } from 'rxjs';
 import { RegistrationComponent } from '../registration/registration.component';
 import { WelcomePageComponent } from '../../share/both/modals/welcome-page/welcome-page.component';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -225,6 +226,13 @@ export class AuthComponent implements OnInit, OnDestroy {
       } else {
         this.isCorrectPhrase = true;
       }
+    }
+
+    if ($event.btn === 'Cancel') {
+      this.webAuth.logout({
+        client_id: environment.clientId,
+        returnTo: `${environment.auth0_URI}/join#logout`
+      });
     }
   }
 

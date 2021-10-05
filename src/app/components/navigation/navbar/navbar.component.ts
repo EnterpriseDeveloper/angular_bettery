@@ -150,14 +150,14 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async newlogOut() {
-    //   this.logoutSub = this.getService.get('user/logout').subscribe(() => {
+    this.webAuth.logout({
+      returnTo: `${environment.auth0_URI}/join#logout`,
+      client_id: environment.clientId,
+    });
     this.store.dispatch(new UserActions.RemoveUser(0));
     this.nickName = undefined;
     this.openNavBar = false;
     this.logoutBox = false;
-    //  }, err => {
-    //    console.log(err);
-    //  });
   }
 
   async loginWithTorus() {
