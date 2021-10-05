@@ -93,6 +93,7 @@ const authHelp = {
     if (token && !pubKey && !mnemonic) {
       obj.users[index].accessToken = token;
       obj.login = sub;
+      
     }
 
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(obj), environment.secretKey);
