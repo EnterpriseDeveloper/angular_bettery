@@ -84,12 +84,12 @@ export class AuthComponent implements OnInit, OnDestroy {
         return console.log(err);
       }
       this.sub = userInfo.idTokenPayload.sub;
+      localStorage.setItem('isLogout','false')
       const pubKeyFromLS = authHelp.walletDectypt();
       if (pubKeyFromLS) {
         let userData = pubKeyFromLS.users.find((x) => { return x.sub == this.sub })
         if (userData) pubKey = userData.pubKey.address;
       }
-
 
       if (userInfo) {
         this.localStoreUser(userInfo);
@@ -145,8 +145,6 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.spinner = false;
             }
             if (data.walletVerif === 'success') {
-              console.log('success');
-
               this.sendUserToStore(data);
               authHelp.saveAccessTokenLS(data.accessToken, null, null, this.sub);
 
@@ -160,6 +158,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 }
               };
               authHelp.setMemo(setMemoData);
+              localStorage.setItem('isLogout','false')
             }
           }
         }, (error) => {
@@ -187,6 +186,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       authHelp.setMemo(setMemoData);
       this.sendUserToStore(this.dataRegist);
       authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null, this.sub);  //? save accessToken to LocalStorage from autoLogin
+      localStorage.setItem('isLogout','false')
     }
 
     if ($event.btn === 'Ok') {
@@ -208,6 +208,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             authHelp.setMemo(setMemoData);
             this.sendUserToStore(data);
             authHelp.saveAccessTokenLS(data.accessToken, pubKeyActual, $event.seedPh, this.sub);
+            localStorage.setItem('isLogout','false')
             this.spinner = true;
             this.modalOpen = false;
             this.goBack();
@@ -233,6 +234,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         client_id: environment.clientId,
         returnTo: `${environment.auth0_URI}/join#logout`
       });
+      localStorage.setItem('isLogout', 'true');
     }
   }
 
