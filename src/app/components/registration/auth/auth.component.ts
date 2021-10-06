@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PostService } from '../../../services/post.service';
-import { Store } from '@ngrx/store';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppState } from '../../../app.state';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {PostService} from '../../../services/post.service';
+import {Store} from '@ngrx/store';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppState} from '../../../app.state';
 import authHelp from '../../../helpers/auth-help';
 import * as UserActions from '../../../actions/user.actions';
-import { Subscription } from 'rxjs';
-import { RegistrationComponent } from '../registration/registration.component';
-import { WelcomePageComponent } from '../../share/both/modals/welcome-page/welcome-page.component';
-import { environment } from '../../../../environments/environment';
+import {Subscription} from 'rxjs';
+import {RegistrationComponent} from '../registration/registration.component';
+import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -32,6 +32,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   saveUserLocStorage = [];
   isCorrectPhrase: boolean;
   sub = undefined;
+  isRegistration = false;
 
   constructor(
     private router: Router,
@@ -52,7 +53,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   auth0RegistrationWithLink() {
     sessionStorage.removeItem('linkUser');
-    this.webAuth.parseHash({ hash: window.location.hash }, (err, authResult) => {
+    this.webAuth.parseHash({hash: window.location.hash}, (err, authResult) => {
       if (err) {
         return console.log(err);
       }
@@ -79,15 +80,17 @@ export class AuthComponent implements OnInit, OnDestroy {
     let wallet;
     let pubKey;
     let mnemonic;
-    this.webAuth.parseHash({ hash: window.location.hash }, (err, userInfo) => {
+    this.webAuth.parseHash({hash: window.location.hash}, (err, userInfo) => {
       if (err) {
         return console.log(err);
       }
       this.sub = userInfo.idTokenPayload.sub;
-      localStorage.setItem('isLogout','false')
+      localStorage.setItem('isLogout', 'false')
       const pubKeyFromLS = authHelp.walletDectypt();
       if (pubKeyFromLS) {
-        let userData = pubKeyFromLS.users.find((x) => { return x.sub == this.sub })
+        let userData = pubKeyFromLS.users.find((x) => {
+          return x.sub == this.sub
+        })
         if (userData) pubKey = userData.pubKey.address;
       }
 
@@ -128,7 +131,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 this.modalOpen = true;
                 this.modalStatus = false;
                 this.spinner = false;
-                this.seedPhrase = { mnemonic, wallet };
+                this.seedPhrase = {mnemonic, wallet};
               }
             }, error => {
               console.log(error.message);
@@ -149,7 +152,9 @@ export class AuthComponent implements OnInit, OnDestroy {
               authHelp.saveAccessTokenLS(data.accessToken, null, null, this.sub);
 
               const walletDectypt = authHelp.walletDectypt();
-              let userData = walletDectypt.users.find((x) => { return x.sub == walletDectypt.login })
+              let userData = walletDectypt.users.find((x) => {
+                return x.sub == walletDectypt.login
+              })
 
               const setMemoData = {
                 mnemonic: userData.mnemonic,
@@ -158,7 +163,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 }
               };
               authHelp.setMemo(setMemoData);
-              localStorage.setItem('isLogout','false')
+              localStorage.setItem('isLogout', 'false')
             }
           }
         }, (error) => {
@@ -186,7 +191,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       authHelp.setMemo(setMemoData);
       this.sendUserToStore(this.dataRegist);
       authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null, this.sub);  //? save accessToken to LocalStorage from autoLogin
-      localStorage.setItem('isLogout','false')
+      localStorage.setItem('isLogout', 'false')
     }
 
     if ($event.btn === 'Ok') {
@@ -208,7 +213,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             authHelp.setMemo(setMemoData);
             this.sendUserToStore(data);
             authHelp.saveAccessTokenLS(data.accessToken, pubKeyActual, $event.seedPh, this.sub);
-            localStorage.setItem('isLogout','false')
+            localStorage.setItem('isLogout', 'false')
             this.spinner = true;
             this.modalOpen = false;
             this.goBack();
@@ -218,7 +223,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         }, (error) => {
           if (error.status == 302) {
             this.goBack();
-            const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+            const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
             modalRef.componentInstance.alreadyRegister = error.error;
           } else {
             console.log(error);
@@ -232,9 +237,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     if ($event.btn === 'Cancel') {
       this.webAuth.logout({
         client_id: environment.clientId,
-        returnTo: `${environment.auth0_URI}/join#logout`
+        returnTo: `${environment.auth0_URI}/join`
       });
       localStorage.setItem('isLogout', 'true');
+
     }
   }
 
@@ -262,7 +268,13 @@ export class AuthComponent implements OnInit, OnDestroy {
       const array = JSON.parse(localStorage.getItem('userBettery'));
       array.push(userInfo.idTokenPayload.email);
       localStorage.setItem('userBettery', JSON.stringify(array));
-      this.modalService.open(WelcomePageComponent, { centered: true });
+      const myModal = this.modalService.open(WelcomePageComponent, {centered: true});
+      this.isRegistration = true;
+      myModal.result.then((() => {
+        }),
+        () => {
+          this.isRegistration = false;
+        });
     }
   }
 

@@ -8,7 +8,7 @@
                   [(ngModel)]="seedPhrase"></textarea>
       </div>
       <div *ngIf="!showSeedPhrase" class="close_cross_block">
-        <div class="close_cross" *ngIf="!showSeedPhrase" (click)="modalBtnAction('Cancel')"></div>
+        <div class="close_cross" #cancelButton *ngIf="!showSeedPhrase" (click)="modalBtnAction('Cancel')"></div>
       </div>
       <div *ngIf="!showSeedPhrase && isCorrectPhrase" class="errStyle">
         <div class="warning_icon"></div>

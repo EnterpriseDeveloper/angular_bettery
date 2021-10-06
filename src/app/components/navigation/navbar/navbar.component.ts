@@ -151,7 +151,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
 
   async newlogOut() {
     this.webAuth.logout({
-      returnTo: `${environment.auth0_URI}/join#logout`,
+      returnTo: `${environment.auth0_URI}/join`,
       client_id: environment.clientId,
     });
     localStorage.setItem('isLogout','true')
