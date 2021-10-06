@@ -12,7 +12,7 @@ export const environment = {
   etherUrl: "https://mainnet.infura.io/v3/d0c12cca9146439bbd961712ea1cab45",
   gasStationAPI: "https://gasstation-mainnet.matic.network",
   secretKey: "791351803491091234",
-  demon: "TODO", // TODO 
+  demon: "https://demon.bettery.io/",
   auth0_URI: "https://www.bettery.io",
   clientId: "49atoPMGb9TWoaDflncmvPQOCccRWPyf"
 };
