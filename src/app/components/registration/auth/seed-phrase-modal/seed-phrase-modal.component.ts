@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'app-seed-phrase-modal',
@@ -16,6 +16,14 @@ export class SeedPhraseModalComponent implements OnInit {
   constructor() {
   }
 
+  @ViewChild('cancelButton') cancelButton: ElementRef;
+
+  @HostListener('window:keyup.escape') onKeydownHandler() {
+    if ( !this.showSeedPhrase){
+      this.modalBtnAction('Cancel');
+    }
+  }
+
   ngOnInit(): void {
     if (this.showSeedPhrase?.mnemonic) {
       this.splitSeedPhrase(this.showSeedPhrase.mnemonic);
@@ -28,8 +36,8 @@ export class SeedPhraseModalComponent implements OnInit {
         this.okEmmit.emit({btn: text, seedPh: this.seedPhrase});
       }
     }
-    if ( text !== 'Ok'){
-        this.okEmmit.emit({btn: text, seedPh: this.showSeedPhrase});
+    if (text !== 'Ok') {
+      this.okEmmit.emit({btn: text, seedPh: this.showSeedPhrase});
     }
   }
 

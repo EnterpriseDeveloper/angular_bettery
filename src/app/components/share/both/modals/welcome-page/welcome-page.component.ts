@@ -34,9 +34,6 @@ export class WelcomePageComponent implements OnDestroy {
 
   }
 
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    this.activeModal.close();
-  }
 
   ngOnDestroy() {
     if (this.postSub) {

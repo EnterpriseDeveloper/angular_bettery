@@ -56,9 +56,15 @@ const authHelp = {
   },
 
   walletDectypt: () => {
-    const data = localStorage.getItem('_buserlog');
-    if (data) {
-      return JSON.parse(CryptoJS.AES.decrypt(data, environment.secretKey).toString(CryptoJS.enc.Utf8));
+    const isLogout = localStorage.getItem('isLogout')
+
+    if ( isLogout !== 'true' ){
+
+      const data = localStorage.getItem('_buserlog');
+      if (data) {
+        return JSON.parse(CryptoJS.AES.decrypt(data, environment.secretKey).toString(CryptoJS.enc.Utf8));
+
+      }
     }
   },
 
@@ -93,7 +99,7 @@ const authHelp = {
     if (token && !pubKey && !mnemonic) {
       obj.users[index].accessToken = token;
       obj.login = sub;
-      
+
     }
 
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(obj), environment.secretKey);
