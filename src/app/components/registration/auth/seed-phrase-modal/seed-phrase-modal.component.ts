@@ -16,8 +16,6 @@ export class SeedPhraseModalComponent implements OnInit {
   constructor() {
   }
 
-  @ViewChild('cancelButton') cancelButton: ElementRef;
-
   @HostListener('window:keyup.escape') onKeydownHandler() {
     if ( !this.showSeedPhrase){
       this.modalBtnAction('Cancel');
