@@ -1,4 +1,4 @@
-<div>
+<div >
   <form [formGroup]="questionForm">
     <div class="box">
 
@@ -68,18 +68,18 @@
     </div>
     <div class="border"></div>
 
-    <app-image-loader [form] = questionForm [formData]="formData" [f] = f (imgEmmit)="imgEmmit($event)" (colorEmmit)="colorEmmit($event)"></app-image-loader>
+    <app-image-loader [form]=questionForm [formData]="formData" [f]=f (imgEmmit)="imgEmmit($event)"
+                      (isImgEditOpened)="isImageEditorOpen($event)" (colorEmmit)="colorEmmit($event)"></app-image-loader>
 
     <div class="border"></div>
-    <div class="box">
+    <div *ngIf="!isImgEditorOpened" class="box">
       <label for="detalis" class="name" style="margin-top: 24px">
         <span class="text mb-2">how to verify <span class="optional">(optional)</span></span>
       </label>
       <input type="text" formControlName="details" class="answer adapting" id="detalis"
              placeholder="If result can be checked on the Internet, give source...">
     </div>
-
-    <div class="buttonBox" [ngStyle]="styleButtonBox()">
+    <div *ngIf="!isImgEditorOpened" class="buttonBox" [ngStyle]="styleButtonBox()">
       <button type="button" class="cancel" (click)="activeModal.dismiss('Cross click')">Cancel</button>
       <button type="button" class="next" (click)="onSubmit()">Next</button>
     </div>

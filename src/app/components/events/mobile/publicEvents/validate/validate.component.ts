@@ -2,11 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../app.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClipboardService } from 'ngx-clipboard'
+import { ClipboardService } from 'ngx-clipboard';
 import { PostService } from '../../../../../services/post.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../../../../models/User.model';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
+import { connectToSign } from '../../../../../contract/cosmosInit';
+import {ReputationModel} from '../../../../../models/Reputation.model';
+
 
 @Component({
   selector: 'validate',
@@ -18,17 +21,19 @@ export class ValidateComponent implements OnInit, OnDestroy {
   @Output() goBack = new EventEmitter();
   @Output() goViewStatus = new EventEmitter<number>();
   timeIsValid: boolean;
-  submitted: boolean = false;
-  spinnerLoading: boolean = false;
+  submitted = false;
+  spinnerLoading = false;
 
   answerForm: FormGroup;
   errorMessage: string;
   userData: User;
+  reputation: ReputationModel;
   hour: number | string;
   minutes: number | string;
   seconds: number | string;
   userSub: Subscription;
   postSub: Subscription;
+  reputationSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -36,9 +41,14 @@ export class ValidateComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private _clipboardService: ClipboardService
   ) {
-    this.userSub = this.store.select("user").subscribe((x: User[]) => {
+    this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
-        this.userData = x[0]
+        this.userData = x[0];
+      }
+    });
+    this.reputationSub = this.store.select('reputation').subscribe((x: ReputationModel) => {
+      if (x) {
+        this.reputation = x;
       }
     });
   }
@@ -46,8 +56,8 @@ export class ValidateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.checkTimeIsValid();
     this.answerForm = this.formBuilder.group({
-      answer: ["", Validators.required],
-    })
+      answer: ['', Validators.required],
+    });
   }
 
   get f() {
@@ -55,34 +65,34 @@ export class ValidateComponent implements OnInit, OnDestroy {
   }
 
   playersAmount() {
-    return this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length
+    return this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length;
   }
 
   checkTimeIsValid() {
-    let time = Number((Date.now() / 1000).toFixed(0))
+    const time = Number((Date.now() / 1000).toFixed(0));
     this.timeIsValid = this.eventData.endTime - time > 0;
     if (this.timeIsValid) {
-      this.calculateDate()
+      this.calculateDate();
     }
   }
 
   calculateDate() {
-    let startDate = new Date();
-    let endTime = new Date(this.eventData.endTime * 1000);
-    var diffMs = (endTime.getTime() - startDate.getTime());
-    let hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
-    let minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
-    let second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
+    const startDate = new Date();
+    const endTime = new Date(this.eventData.endTime * 1000);
+    const diffMs = (endTime.getTime() - startDate.getTime());
+    const hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
+    const minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
+    const second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
 
-    this.hour = Number(hour) > 9 ? hour : "0" + hour;
-    this.minutes = Number(minutes) > 9 ? minutes : "0" + minutes;
+    this.hour = Number(hour) > 9 ? hour : '0' + hour;
+    this.minutes = Number(minutes) > 9 ? minutes : '0' + minutes;
     if (second === 60) {
-      this.seconds = "00"
+      this.seconds = '00';
     } else {
-      this.seconds = second > 9 ? second : "0" + second;
+      this.seconds = second > 9 ? second : '0' + second;
     }
     setTimeout(() => {
-      this.calculateDate()
+      this.calculateDate();
     }, 1000);
   }
 
@@ -91,19 +101,19 @@ export class ValidateComponent implements OnInit, OnDestroy {
   }
 
   copyToClickBoard() {
-    let href = window.location.hostname
-    let path = href == "localhost" ? 'http://localhost:4200' : href
-    this._clipboardService.copy(`${path}/public_event/${this.eventData.id}`)
+    const href = window.location.hostname;
+    const path = href == 'localhost' ? 'http://localhost:4200' : href;
+    this._clipboardService.copy(`${path}/public_event/${this.eventData.id}`);
   }
 
   remainderExperts() {
-    let expertDone = this.eventData.validatorsAnswers == undefined ? 0 : this.eventData.validatorsAnswers.length
-    let epxertIn = this.eventData.validatorsAmount == 0 ? this.expertAmount() : this.eventData.validatorsAmount
+    const expertDone = this.eventData.validatorsAnswers == undefined ? 0 : this.eventData.validatorsAnswers.length;
+    const epxertIn = this.eventData.validatorsAmount == 0 ? this.expertAmount() : this.eventData.validatorsAmount;
     return epxertIn - expertDone;
   }
 
   expertAmount() {
-    let part = this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length;
+    const part = this.eventData.parcipiantAnswers == undefined ? 0 : this.eventData.parcipiantAnswers.length;
     if (part < 11) {
       return 3;
     } else {
@@ -111,21 +121,50 @@ export class ValidateComponent implements OnInit, OnDestroy {
     }
   }
 
-  validate() {
+  async validate() {
     this.submitted = true;
     if (this.answerForm.invalid) {
-      return
+      return;
     }
-    this.setToDBValidation(this.eventData)
+    const { memonic, address, client } = await connectToSign();
+
+    const msg = {
+      typeUrl: '/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents',
+      value: {
+        creator: address,
+        pubId: this.eventData.id,
+        answers: this.answerForm.value.answer,
+        reput: this.reputation.expertRep
+      }
+    };
+    console.log(msg,'message');
+    const fee = {
+      amount: [],
+      gas: '1000000',
+    };
+    try {
+      const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      if (transact.transactionHash && transact.code == 0){
+        this.setToDBValidation(this.eventData, transact.transactionHash);
+      }else{
+        this.spinnerLoading = false;
+        this.errorMessage = String(transact);
+      }
+    } catch (err) {
+      this.spinnerLoading = false;
+      this.errorMessage = String(err.error);
+    }
   }
 
-  setToDBValidation(dataAnswer) {
+  setToDBValidation(dataAnswer, transactionHash) {
     this.spinnerLoading = true;
-    var _whichAnswer = this.eventData.answers.findIndex((o) => { return o == this.answerForm.value.answer; });
-    let data = {
+    const _whichAnswer = this.eventData.answers.findIndex((o) => o == this.answerForm.value.answer);
+    const data = {
       event_id: dataAnswer.id,
       answer: _whichAnswer,
-    }
+      reputation: this.reputation.expertRep,
+      transactionHash: '0x' + transactionHash
+    };
     this.postSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.errorMessage = undefined;
       this.spinnerLoading = false;
@@ -134,8 +173,8 @@ export class ValidateComponent implements OnInit, OnDestroy {
       (err) => {
         this.spinnerLoading = false;
         this.errorMessage = String(err.error);
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   viewStatus() {
@@ -149,6 +188,9 @@ export class ValidateComponent implements OnInit, OnDestroy {
     }
     if (this.postSub) {
       this.postSub.unsubscribe();
+    }
+    if (this.reputationSub){
+      this.reputationSub.unsubscribe();
     }
   }
 

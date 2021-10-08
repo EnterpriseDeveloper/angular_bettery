@@ -12,6 +12,7 @@ import {ErrorLimitModalComponent} from '../../../share/both/modals/error-limit-m
 import {environment} from '../../../../../environments/environment';
 import {User} from '../../../../models/User.model';
 import {formDataAction} from '../../../../actions/newEvent.actions';
+import {connectToSign} from '../../../../contract/cosmosInit';
 
 @Component({
   selector: 'private-event-modile',
@@ -32,6 +33,7 @@ export class PrivateEventComponent implements OnDestroy {
   userSub: Subscription;
   fromDataSubscribe: Subscription;
   createSub: Subscription;
+  deleteEventSub: Subscription;
   spinnerLoading: boolean = false;
   pastTime: boolean;
   copyLinkFlag: boolean;
@@ -70,13 +72,13 @@ export class PrivateEventComponent implements OnDestroy {
     }, 500);
   }
 
-  generateID() {
-    let data = {
-      id: this.host[0]._id,
-      prodDev: environment.production
-    };
-    return this.postService.post('privateEvents/createId', data);
-  }
+  // generateID() {
+  //   let data = {
+  //     id: this.host[0]._id,
+  //     prodDev: environment.production
+  //   };
+  //   return this.postService.post('privateEvents/createId', data);
+  // }
 
   getStartTime() {
     return Number((Date.now() / 1000).toFixed(0));
@@ -87,6 +89,69 @@ export class PrivateEventComponent implements OnDestroy {
   }
 
   createEvent() {
+    this.spinnerLoading = true;
+
+    this.createSub = this.getSevice.get('privateEvents/create_event_id').subscribe((x: any) => {
+      console.log('send To Demon');
+      this.sendToDemon(x.id);
+    }, (err) => {
+      console.log('create private event id err', err.message);
+    });
+  }
+  getAnswers(){
+    const answer = this.formData.answers.map((x) => {
+      return x.name;
+    });
+    return answer.sort();
+  }
+  async sendToDemon(id: number) {
+    const {memonic, address, client} = await connectToSign();
+
+    const msg = {
+      typeUrl: '/VoroshilovMax.bettery.privateevents.MsgCreateCreatePrivEvents', //!check correctly
+      value: {
+        creator: address,
+        privId: id,
+        question: this.formData.question,
+        answers: this.getAnswers(),
+        winner: this.formData.winner,
+        loser: this.formData.loser,
+        startTime: this.getStartTime(),
+        endTime: this.getEndTime(),
+        finished: false
+      }
+    };
+
+    const fee = {
+      amount: [],
+      gas: '1000000',
+    };
+
+    try {
+      const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+
+      if (transact.transactionHash && transact.code == 0) {
+        this.sendToDb(transact.transactionHash, id);
+      } else {
+        this.deleteEventId(id);
+        console.log('transaction unsuccessful', transact);
+      }
+    } catch (err) {
+      this.deleteEventId(id);
+      console.log(err);
+    }
+
+  }
+
+  deleteEventId(id) {
+    this.deleteEventSub = this.postService.post('privateEvents/delete_event_id', {id}).subscribe((x: any) => {
+      console.log(x);
+    }, err => {
+      console.log('err from delete event id', err);
+    });
+  }
+
+  sendToDb(transactionHash: any, id: number) {
     if (Number(this.getEndTime()) <= Number((Date.now() / 1000).toFixed(0))) {
       this.pastTime = true;
       return;
@@ -95,10 +160,9 @@ export class PrivateEventComponent implements OnDestroy {
     }
     this.spinnerLoading = true;
     this.eventData = {
+      _id: id,
       prodDev: environment.production,
-      answers: this.formData.answers.map((x) => {
-        return x.name;
-      }),
+      answers: this.getAnswers(),
       question: this.formData.question,
       startTime: this.getStartTime(),
       endTime: this.getEndTime(),
@@ -111,6 +175,8 @@ export class PrivateEventComponent implements OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
+      thumFinish: this.formData.thumFinish,
+      transactionHash: '0x' + transactionHash
     };
     this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)
       .subscribe(

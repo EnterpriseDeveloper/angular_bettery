@@ -3,14 +3,13 @@ import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
 import { PostService } from '../../../services/post.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../registration/registration.component';
-import Web3 from 'web3';
-import maticInit from '../../../contract/maticInit';
-import { environment } from '../../../../environments/environment';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
+import {GetService} from '../../../services/get.service';
+import {ReputationModel} from '../../../models/Reputation.model';
 
 @Component({
   selector: 'my-profile',
@@ -37,13 +36,22 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   expertRep: number = 0;
   playerRep: number = 0;
   advisorRep: number = 0;
-
+  reputationSub: Subscription;
   constructor(
     private store: Store<AppState>,
     private postService: PostService,
     private modalService: NgbModal,
+    private getService: GetService
   ) {
+    this.reputationSub = this.store.select('reputation').subscribe((x: ReputationModel) => {
+      if (x) {
+        this.hostRep = x.hostRep;
+        this.expertRep = x.expertRep;
+        this.playerRep = x.playerRep;
+        this.advisorRep = x.advisorRep;
 
+      }
+    });
   }
 
   ngOnChanges(changes) {
@@ -51,17 +59,14 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
       let id = changes['userData'].currentValue._id;
       this.nameForm = changes['userData'].currentValue.nickName;
       this.getInfo(id);
+
     }
   }
+
 
   getInfo(id) {
     this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
       this.addionalData = x;
-      this.advisorRep = this.addionalData.advisorReputPoins === null ? 0 : this.addionalData.advisorReputPoins;
-      this.hostRep = this.addionalData.hostReputPoins === null ? 0 : this.addionalData.hostReputPoins;
-      this.expertRep = this.addionalData.expertReputPoins === null ? 0 : this.addionalData.expertReputPoins;
-      this.playerRep = this.addionalData.playerReputPoins === null ? 0 : this.addionalData.playerReputPoins;
-
       if (this.addionalData.publicEmail == null) {
         this.letsUpdatePublicEmail(true);
       } else {
@@ -94,38 +99,14 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   }
 
   async updateBalance() {
-    let web3 = new Web3();
-
-    let matic = new maticInit(this.userData.verifier);
-    let BTYToken = await matic.getBTYTokenBalance();
-    let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = '0';
-
-    if (!environment.production) {
-      // TODO
-      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
-    }
-
-    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
-    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
-    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
+    this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
     this.store.dispatch(new CoinsActios.UpdateCoins({
-      MainBTY: MainBTYBalance,
-      BTY: BTYBalance,
-      BET: BETBalance
+      // TODO check bty on main chain
+      MainBTY: "0",
+      BTY: e.bty,
+      BET: e.bet
     }));
-    this.sendBalanceToDB(BTYBalance, BETBalance);
-  }
-
-  sendBalanceToDB(bty, bet): void {
-    const data = {
-      bty: bty,
-      bet: bet,
-      id: this.userData._id
-    };
-
-    this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
     }, error => {
       console.log(error);
     });
@@ -214,6 +195,9 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     }
     if (this.updateEmailSub) {
       this.updateEmailSub.unsubscribe();
+    }
+    if (this.reputationSub){
+      this.reputationSub.unsubscribe();
     }
   }
 }

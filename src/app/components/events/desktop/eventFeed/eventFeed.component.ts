@@ -6,7 +6,7 @@ import { User } from '../../../../models/User.model';
 import { PostService } from '../../../../services/post.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import { RegistrationComponent } from '../../../registration/registration/registration.component';
 import { EventsTemplatesDesktopComponent } from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import { Coins } from '../../../../models/Coins.model';
 import { EventModel } from '../../../../models/Event.model';
@@ -131,7 +131,7 @@ export class EventFeedComponent implements OnDestroy {
       this.spinner = false;
       this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
 
-    }, (err) => {
+      }, (err) => {
       this.spinner = false;
       console.log(err);
     });

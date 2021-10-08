@@ -1,4 +1,4 @@
-<div *ngIf="!spinner">
+<div *ngIf="!spinner && alreadyRegister == undefined">
   <div *ngIf="!openSpinner">
     <div style="padding: 0 40px; border: none">
       <div>
@@ -36,25 +36,25 @@
   <div style="padding: 0 24px">
     <div class="container">
       <div class="row">
-        <div [ngClass]='{disabled: linVerification("google")}' (click)="loginWithTorus('google')"
+        <div [ngClass]='{disabled: linVerification("google")}' (click)="loginWithAuth0('google-oauth2')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-google card w-100">
             <div class="google-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithTorus('facebook')"
+        <div [ngClass]='{disabled: linVerification("facebook")}' (click)="loginWithAuth0('facebook')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-facebook card w-100">
             <div class="facebook-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithTorus('Redit')"
+        <div [ngClass]='{disabled: linVerification("Redit")}' (click)="loginWithAuth0('Redit')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-Redit card w-100">
             <div class="Redit-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithTorus('discord')"
+        <div [ngClass]='{disabled: linVerification("discord")}' (click)="loginWithAuth0('discord')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-discord card w-100">
             <div class="discord-img"></div>
@@ -65,7 +65,7 @@
 
     <div class="container">
       <div class="row">
-        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithTorus('twitch')"
+        <div [ngClass]='{disabled: linVerification("twitch")}' (click)="loginWithAuth0('twitch')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitch card w-100">
             <div class="twitch-img"></div>
@@ -77,13 +77,13 @@
           </div>
           <div class="comingSoonModal">Coming Soon</div>
         </div>
-        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithTorus('linkedin')"
+        <div [ngClass]='{disabled: linVerification("linkedin")}' (click)="loginWithAuth0('linkedin')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-linkedin card w-100">
             <div class="linkedin-img"></div>
           </div>
         </div>
-        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithTorus('twitter')"
+        <div [ngClass]='{disabled: linVerification("twitter")}' (click)="loginWithAuth0('twitter')"
           class="col-6 col-lg-3 wrapCard">
           <div class="bg-twitter card w-100">
             <div class="twitter-img"></div>
@@ -99,7 +99,7 @@
     </div>
 
     <div style="padding: 10px 24px">
-      <button (click)="loginWithTorus('email')" class="btn-with-email" type="submit">
+      <button (click)="loginWithAuth0('email')" class="btn-with-email" type="submit">
         CONTINUE with email
       </button>
     </div>
@@ -141,7 +141,7 @@
     using one of these platforms:</div>
   <div class="already_regist_icon_box">
     <div class="wrapCard icon_width" *ngFor="let link of alreadyRegister.linkedAccounts">
-      <div class="bg-{{link}} card w-100" (click)="loginWithTorus(link)">
+      <div class="bg-{{link}} card w-100" (click)="loginWithAuth0(link == 'google' ? 'google-oauth2' : link)">
         <div class="{{link}}-img"></div>
       </div>
     </div>

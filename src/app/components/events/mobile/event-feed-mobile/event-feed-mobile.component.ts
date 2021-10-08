@@ -6,7 +6,7 @@ import {User} from '../../../../models/User.model';
 import {PostService} from '../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RegistrationComponent} from '../../../registration/registration.component';
+import {RegistrationComponent} from '../../../registration/registration/registration.component';
 import {Coins} from '../../../../models/Coins.model';
 import {EventModel} from '../../../../models/Event.model';
 

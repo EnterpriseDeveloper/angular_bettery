@@ -1,7 +1,7 @@
 <div class="details_container">
     <div class="answer_box">
         <div class="each_answer" *ngFor="let answer of question.answers; let i = index"
-            [ngStyle]="this.getBackground(i)" (click)="this.makeAnswer(i)">
+            [ngStyle]="this.getBackground(i)" (click)="this.makeAnswer(i, answer)">
             <input class="checkbox_answer" [ngClass]="!joinPlayer && 'checkbox_answerValidate'" id="{{question.id}}{{i}}" value="{{i}}" type="radio"
                 name="answer">
             <label for="{{question.id}}{{i}}" class="label" [ngStyle]="{'color': answerNumber == i ? '#FFFFFF' : '#0B1511' }">{{answer}}</label>

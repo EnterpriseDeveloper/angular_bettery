@@ -1,24 +1,23 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, DoCheck, ElementRef, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { Coins } from '../../../models/Coins.model';
 import * as CoinsActios from '../../../actions/coins.actions';
+import * as ReputationAction from '../../../actions/reputation.action';
 import * as UserActions from '../../../actions/user.actions';
-import maticInit from "../../../contract/maticInit";
 import { ClipboardService } from 'ngx-clipboard';
 
 import Web3 from 'web3';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import web3Obj from '../../../helpers/torus';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/User.model';
-import { RegistrationComponent } from '../../registration/registration.component';
+import { RegistrationComponent } from '../../registration/registration/registration.component';
 import { ChainTransferComponent } from '../chainTransfer/chainTransfer.component';
 import { SwapBetComponent } from '../swap-bet/swap-bet.component';
-import { PostService } from '../../../services/post.service';
 import { environment } from '../../../../environments/environment';
-import biconomyInit from '../../../contract/biconomy';
-import {GetService} from '../../../services/get.service';
+import { GetService } from '../../../services/get.service';
+import authHelp from '../../../helpers/auth-help';
+import { PostService } from '../../../services/post.service';
 
 
 @Component({
@@ -32,7 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   nickName: string = undefined;
   web3: Web3 | undefined = null;
   coinInfo: Coins = null;
-  amountSpinner: boolean = true;
+  amountSpinner = true;
   userWallet: string = undefined;
   userId: number;
   userSub: Subscription;
@@ -42,21 +41,23 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   avatar: string;
   verifier: string = undefined;
   openNavBar = false;
-  display: boolean = false;
+  display = false;
   saveUserLocStorage = [];
   logoutBox: boolean;
   copyLinkFlag: boolean;
   postSub: Subscription;
   logoutSub: Subscription;
   environments = environment;
+  webAuth;
+  getRepUserDataSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
     private modalService: NgbModal,
     private eRef: ElementRef,
     private _clipboardService: ClipboardService,
-    private postService: PostService,
-    private getService: GetService
+    private getService: GetService,
+    private postService: PostService
   ) {
 
     this.detectPath();
@@ -69,6 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
         this.avatar = x[0].avatar;
         this.userId = x[0]._id;
         this.updateBalance();
+        this.updateReputation(x[0]._id);
       }
     });
 
@@ -83,8 +85,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.detectPath();
   }
 
+
   detectPath() {
-    let href = window.location.pathname;
+    const href = window.location.pathname;
     if (href == '/' || href == '/tokensale' || href == '/.well-known/pki-validation/fileauth.txt') {
       this.display = false;
     } else {
@@ -93,6 +96,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async ngOnInit() {
+    this.webAuth = authHelp.init;
     this.onDocumentClick = this.onDocumentClick.bind(this);
   }
 
@@ -105,42 +109,31 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   async updateBalance() {
-    let web3 = new Web3();
-    if (!window.biconomy) {
-      await biconomyInit();
-    }
-    let matic = new maticInit(this.verifier);
-    let BTYToken = await matic.getBTYTokenBalance();
-    let BETToken = await matic.getBETTokenBalance();
-    let MainBETToken = "0";
+    this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
-    if (!environment.production) {
-      // TODO
-      MainBETToken = await matic.getBTYTokenOnMainChainBalance();
-    }
-
-    let BTYBalance = web3.utils.fromWei(BTYToken, 'ether');
-    let BETBalance = web3.utils.fromWei(BETToken, 'ether');
-    let MainBTYBalance = web3.utils.fromWei(MainBETToken, 'ether');
-
-    this.store.dispatch(new CoinsActios.UpdateCoins({
-      MainBTY: MainBTYBalance,
-      BTY: BTYBalance,
-      BET: BETBalance
-    }));
-    this.amountSpinner = false;
-    this.sendBalanceToDB(BTYBalance, BETBalance);
-  }
-
-  sendBalanceToDB(bty, bet): void {
-    const data = {
-      bty: bty,
-      bet: bet,
-    };
-
-    this.postSub = this.postService.post('users/updateBalance', data).subscribe(async (e) => {
+      this.store.dispatch(new CoinsActios.UpdateCoins({
+        // TODO check bty on main chain
+        MainBTY: '0',
+        BTY: e.bty,
+        BET: e.bet
+      }));
+      this.amountSpinner = false;
     }, error => {
       console.log(error);
+    });
+  }
+
+  async updateReputation(id) {
+    this.getRepUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x: any) => {
+
+      this.store.dispatch(new ReputationAction.UpdateReputation({
+        advisorRep: x.advisorReputPoins === null ? 0 : x.advisorReputPoins,
+        hostRep: x.hostReputPoins === null ? 0 : x.hostReputPoins,
+        expertRep: x.expertReputPoins === null ? 0 : x.expertReputPoins,
+        playerRep: x.playerReputPoins === null ? 0 : x.playerReputPoins,
+      }));
+    }, (err) => {
+      console.log('from get additional data', err);
     });
   }
 
@@ -156,16 +149,16 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  async logOut() {
-    this.logoutSub = this.getService.get('user/logout').subscribe(() => {
-      web3Obj.logOut();
-      this.store.dispatch(new UserActions.RemoveUser(0));
-      this.nickName = undefined;
-      this.openNavBar = false;
-      this.logoutBox = false;
-    }, err => {
-      console.log(err);
+  async newlogOut() {
+    this.webAuth.logout({
+      returnTo: `${environment.auth0_URI}/join`,
+      client_id: environment.clientId,
     });
+    localStorage.setItem('isLogout','true')
+    this.store.dispatch(new UserActions.RemoveUser(0));
+    this.nickName = undefined;
+    this.openNavBar = false;
+    this.logoutBox = false;
   }
 
   async loginWithTorus() {
@@ -188,14 +181,10 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
   }
 
-  openWallet() {
-    web3Obj.torus.showWallet('home');
-  }
-
   copyRefLink() {
     this.copyLinkFlag = true;
-    let href = window.location.hostname;
-    let path = href == 'localhost' ? 'http://localhost:4200' : href;
+    const href = window.location.hostname;
+    const path = href == 'localhost' ? 'http://localhost:4200' : href;
     this._clipboardService.copy(`${path}/ref/${this.userId}`);
     setTimeout(() => {
       this.copyLinkFlag = false;
@@ -231,7 +220,7 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     this.updateBalance();
     const modalRef = this.modalService.open(SwapBetComponent, { centered: true });
     modalRef.componentInstance.coinInfo = this.coinInfo;
-    modalRef.componentInstance.userWallet = this.userWallet;
+    modalRef.componentInstance.userId = this.userId;
     this.swipeSub = modalRef.componentInstance.updateBalance.subscribe(() => {
       this.updateBalance();
     });
@@ -252,6 +241,9 @@ export class NavbarComponent implements OnInit, OnDestroy, DoCheck {
     }
     if (this.postSub) {
       this.postSub.unsubscribe();
+    }
+    if (this.getRepUserDataSub) {
+      this.getRepUserDataSub.unsubscribe();
     }
   }
 }

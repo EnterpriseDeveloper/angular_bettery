@@ -1,13 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
-import * as CryptoJS from 'crypto-js';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as UserActions from './actions/user.actions';
-import { environment } from '../environments/environment';
-import { PostService } from "./services/post.service";
+import { PostService } from './services/post.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.state';
 import { User } from './models/User.model';
-import web3Obj from './helpers/torus';
+
+import authHelp from '../app/helpers/auth-help';
 
 declare global {
   interface Window {
@@ -23,38 +22,45 @@ window.web3 = window.web3 || {};
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   autoLoginSub: Subscription;
 
   constructor(
     private post: PostService,
     private store: Store<AppState>,
-
   ) {
-    this.detectUser();
   }
 
-  detectUser() {
-    let autoLogin = localStorage.getItem('_buserlog');
-    if (autoLogin != null) {
-      let userData: any = JSON.parse(CryptoJS.AES.decrypt(autoLogin, environment.secretKey).toString(CryptoJS.enc.Utf8));
-      let data = { wallet: userData.publicAddress, accessToken: userData.accessToken }
-      this.autoLoginSub = this.post.post("user/auto_login", data).subscribe(async (x: User) => {
-        await web3Obj.autoLogin(userData.privateKey, userData.publicAddress);
-        this.addUser(
-          x.email,
-          x.nickName,
-          x.wallet,
-          x.avatar,
-          x._id,
-          x.verifier,
-          x.sessionToken,
-          x.verifierId,
-          x.accessToken
-        );
-      }, (err) => {
-        console.log("from auto login", err);
-      })
+  ngOnInit() {
+    if (window.location.hash.length == 0) {
+      this.newDetectUser();
+    }
+  }
+
+
+  newDetectUser() {
+    const walletDectypt = authHelp.walletDectypt();
+    if (walletDectypt) {
+      let userData = walletDectypt.users.find((x) => { return x.sub == walletDectypt.login });
+      if (userData) {
+        const data = { wallet: userData.pubKey.address, accessToken: userData.accessToken };
+        this.autoLoginSub = this.post.post('user/auto_login', data).subscribe(async (x: User) => {
+          this.addUser(
+            x.email,
+            x.nickName,
+            x.wallet,
+            x.avatar,
+            x._id,
+            x.verifier,
+            x.sessionToken,
+            x.verifierId,
+            x.accessToken
+          );
+          authHelp.setMemo(userData)
+        }, (err) => {
+          console.log('from auto login', err);
+        });
+      }
     }
   }
 

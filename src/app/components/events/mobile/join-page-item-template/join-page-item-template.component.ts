@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Subscription} from 'rxjs';
 import {Event} from '../../../../models/Event.model';
@@ -6,6 +6,7 @@ import {Answer} from '../../../../models/Answer.model';
 import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {ClipboardService} from "ngx-clipboard";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   myAnswers: Answer;
   @Input() coinInfo: Coins;
   @Input() fromComponent: string;
+  @ViewChild('eventImage') eventImage: ElementRef;
 
   @Output() callGetData = new EventEmitter();
   @Output() commentIdEmmit = new EventEmitter<number>();
@@ -44,9 +46,11 @@ export class JoinPageItemTemplateComponent implements OnInit {
   betDisable = false;
   windowWidth: number;
   form: FormGroup;
+  showClearImage = false;
 
-
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private _clipboardService: ClipboardService
+  ) {
 
   }
 
@@ -71,6 +75,12 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
+  toggleImage() {
+    this.showClearImage = !this.showClearImage;
+    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
+
+  }
+
   colorForRoom(color) {
     if (this.question) {
       return {
@@ -82,6 +92,15 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
+  copyToClickBoard(eventId) {
+    this.copyLinkFlag = true;
+    const href = window.location.hostname;
+    const path = href === 'localhost' ? 'http://localhost:4200' : href;
+    this._clipboardService.copy(`${path}/public_event/${eventId}`);
+    setTimeout(() => {
+      this.copyLinkFlag = false;
+    }, 500);
+  }
   avgBet(q) {
     let amount = 0;
     if (q.parcipiantAnswers == undefined) {

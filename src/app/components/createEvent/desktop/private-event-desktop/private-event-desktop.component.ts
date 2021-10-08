@@ -5,11 +5,13 @@ import { AppState } from '../../../../app.state';
 import { ClipboardService } from 'ngx-clipboard'
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component'
+import { InfoModalComponent } from '../../../share/both/modals/info-modal/info-modal.component';
 import { ErrorLimitModalComponent } from '../../../share/both/modals/error-limit-modal/error-limit-modal.component';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/User.model';
 import {formDataAction} from '../../../../actions/newEvent.actions';
+import {GetService} from '../../../../services/get.service';
+import {connectToSign} from '../../../../contract/cosmosInit';
 
 @Component({
   selector: 'private-event-desktop',
@@ -19,7 +21,7 @@ import {formDataAction} from '../../../../actions/newEvent.actions';
 export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
   @Input() formData;
   @Output() goBack = new EventEmitter();
-  spinner: boolean = false;
+  spinner = false;
   host: User[];
   created = false;
   eventData: any;
@@ -29,15 +31,17 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
   seconds: number | string;
   userSub: Subscription;
   createSub: Subscription;
-  spinnerLoading: boolean = false;
+  spinnerLoading = false;
+  deleteEventSub: Subscription;
 
   constructor(
     private postService: PostService,
+    private getService: GetService,
     private store: Store<AppState>,
     private _clipboardService: ClipboardService,
     private modalService: NgbModal
   ) {
-    this.userSub = this.store.select("user").subscribe((x: User[]) => {
+    this.userSub = this.store.select('user').subscribe((x: User[]) => {
       if (x.length != 0) {
         this.host = x;
       }
@@ -62,11 +66,74 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
   createEvent() {
     this.spinnerLoading = true;
 
+    this.createSub = this.getService.get('privateEvents/create_event_id').subscribe((x: any) => {
+      console.log('send To Demon');
+      this.sendToDemon(x.id);
+    }, (err) => {
+      console.log('create private event id err', err.message);
+    });
+  }
+
+  async sendToDemon(id: number) {
+    const {memonic, address, client} = await connectToSign();
+
+    const msg = {
+      typeUrl: '/VoroshilovMax.bettery.privateevents.MsgCreateCreatePrivEvents', //!check correctly
+      value: {
+        creator: address,
+        privId: id,
+        question: this.formData.question,
+        answers: this.getAnswers(),
+        winner: this.formData.winner,
+        loser: this.formData.loser,
+        startTime: this.getStartTime(),
+        endTime: this.getEndTime(),
+        finished: false
+      }
+    };
+
+    const fee = {
+      amount: [],
+      gas: '1000000',
+    };
+
+    try {
+      const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+
+      if (transact.transactionHash && transact.code == 0) {
+        this.sendToDb(transact.transactionHash, id);
+      } else {
+        this.deleteEventId(id);
+        console.log('transaction unsuccessful', transact);
+      }
+    } catch (err) {
+      this.deleteEventId(id);
+      console.log(err);
+    }
+
+  }
+  getAnswers(){
+    const answer = this.formData.answers.map((x) => {
+      return x.name;
+    });
+    return answer.sort();
+  }
+
+  deleteEventId(id) {
+    this.deleteEventSub = this.postService.post('privateEvents/delete_event_id', {id}).subscribe((x: any) => {
+      console.log(x);
+    }, err => {
+      console.log('err from delete event id', err);
+    });
+  }
+
+  sendToDb(transactionHash: any, id: number) { //!check =====
+    this.spinnerLoading = true;
+
     this.eventData = {
+      _id: id,
       prodDev: environment.production,
-      answers: this.formData.answers.map((x) => {
-        return x.name
-      }),
+      answers: this.getAnswers(),
       question: this.formData.question,
       startTime: this.getStartTime(),
       endTime: this.getEndTime(),
@@ -79,9 +146,11 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
       resolutionDetalis: this.formData.resolutionDetalis,
       thumImage: this.formData.thumImage,
       thumColor: this.formData.thumColor,
-    }
+      thumFinish: this.formData.thumFinish,
+      transactionHash: '0x' + transactionHash
+    };
 
-    this.createSub = this.postService.post("privateEvents/createEvent", this.eventData)
+    this.createSub = this.postService.post('privateEvents/createEvent', this.eventData)
       .subscribe(
         () => {
           this.spinnerLoading = false;
@@ -92,13 +161,13 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
           this.formDataReset();
         },
         (err) => {
-          console.log("set qestion error");
+          console.log('set qestion error');
           console.log(err);
-          if (err.error == "Limit is reached") {
-            this.modalService.open(ErrorLimitModalComponent, { centered: true });
+          if (err.error == 'Limit is reached') {
+            this.modalService.open(ErrorLimitModalComponent, {centered: true});
             this.spinnerLoading = false;
           }
-        })
+        });
   }
 
   formDataReset() {
@@ -115,32 +184,32 @@ export class PrivateEventDesktopComponent implements OnInit, OnDestroy {
   }
 
   calculateDate() {
-    let startDate = new Date();
-    let endTime = new Date(this.eventData.endTime * 1000);
-    var diffMs = (endTime.getTime() - startDate.getTime());
+    const startDate = new Date();
+    const endTime = new Date(this.eventData.endTime * 1000);
+    const diffMs = (endTime.getTime() - startDate.getTime());
     this.day = Math.floor(Math.abs(diffMs / 86400000));
-    let hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
-    let minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
-    let second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
+    const hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
+    const minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
+    const second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
 
-    this.hour = Number(hour) > 9 ? hour : "0" + hour;
-    this.minutes = Number(minutes) > 9 ? minutes : "0" + minutes;
+    this.hour = Number(hour) > 9 ? hour : '0' + hour;
+    this.minutes = Number(minutes) > 9 ? minutes : '0' + minutes;
     if (second === 60) {
-      this.seconds = "00"
+      this.seconds = '00';
     } else {
-      this.seconds = second > 9 ? second : "0" + second;
+      this.seconds = second > 9 ? second : '0' + second;
 
     }
 
 
     setTimeout(() => {
-      this.calculateDate()
+      this.calculateDate();
     }, 1000);
   }
 
   // TO DO
   modalAboutExpert() {
-    const modalRef = this.modalService.open(InfoModalComponent, { centered: true });
+    const modalRef = this.modalService.open(InfoModalComponent, {centered: true});
     modalRef.componentInstance.name = '- Actually, no need to! Bettery is smart and secure enough to take care of your event. You can join to bet as a Player or become an Expert to validate the result after Players. Enjoy!';
     modalRef.componentInstance.boldName = 'How to manage your event';
     modalRef.componentInstance.link = 'Learn more about how Bettery works';

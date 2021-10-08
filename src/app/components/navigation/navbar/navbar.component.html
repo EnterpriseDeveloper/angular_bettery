@@ -43,12 +43,12 @@
         <div *ngIf="logoutBox" class="logoutBox">
           <ul>
             <li class="profile" routerLink="/profile" (click)="toggleLogout(false)">My profile</li>
-            <li class="refLink refImg" (click)="copyRefLink()">Referral Link <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div></li>
-            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openDeposit('deposit')">Deposit BTY</li> <!-- TODO remove from prod when it will be done-->
-            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openDeposit('withdraw')">Withdraw BTY</li> <!-- TODO remove from prod when it will be done-->
-            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openSwapBetToBTY()">Swap BET to BTY</li> <!-- TODO remove from prod when it will be done-->
-            <li class="profile disabledItem no-wrap">My Torus Wallet</li>
-            <li class="Logout" (click)="logOut()">Logout</li>
+            <li class="refLink refImg no-wrap" (click)="copyRefLink()">Referral Link <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div></li>
+<!--            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openDeposit('deposit')">Deposit BTY</li> &lt;!&ndash; TODO remove from prod when it will be done&ndash;&gt;-->
+<!--            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openDeposit('withdraw')">Withdraw BTY</li> &lt;!&ndash; TODO remove from prod when it will be done&ndash;&gt;-->
+<!--            <li *ngIf="!environments.production" class="profile no-wrap" (click)="openSwapBetToBTY()">Swap BET to BTY</li> &lt;!&ndash; TODO remove from prod when it will be done&ndash;&gt;-->
+<!--            <li class="profile disabledItem no-wrap">My Torus Wallet</li>-->
+            <li class="Logout" (click)="newlogOut()">Logout</li>
           </ul>
         </div>
       </li>
@@ -98,11 +98,11 @@
       </div>
       <div class="arrow"></div>
       <div class="navBox">
-        <button class="navLink" (click)="openWallet()">My Wallet</button>
+        <button class="navLink">My Wallet</button>
       </div>
       <div class="arrow"></div>
       <div class="navBox">
-        <button class="navLink" (click)="logOut()">Log out</button>
+        <button class="navLink" (click)="newlogOut()">Log out</button>
       </div>
     </div>
 

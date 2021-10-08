@@ -1,0 +1,7 @@
+<app-spinner-loading *ngIf="spinner" [desktop]="true"></app-spinner-loading>
+
+<app-seed-phrase-modal *ngIf="!spinner && modalOpen && !isRegistration" [modalStatus]="modalStatus" [showSeedPhrase]="seedPhrase"
+                       [isCorrectPhrase]="isCorrectPhrase" (okEmmit)="emmitFromModal($event)"></app-seed-phrase-modal>
+
+
+

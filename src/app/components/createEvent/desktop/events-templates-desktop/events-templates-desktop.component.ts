@@ -29,7 +29,8 @@ const init = {
   roomId: "",
   imgOrColor: "",
   thumImage: "",
-  thumColor: ""
+  thumColor: "",
+  thumFinish: ''
 };
 
 @Component({
@@ -75,7 +76,8 @@ export class EventsTemplatesDesktopComponent implements OnInit, OnDestroy {
           roomId: '',
           imgOrColor: 'color',
           thumImage: '',
-          thumColor: ''
+          thumColor: '',
+          thumFinish: ''
         };
         this.whichEvent = "setQuestion"
       }

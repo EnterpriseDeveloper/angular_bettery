@@ -10,10 +10,10 @@
       <div class="CommentYellow"></div>
       <p>possible outcomes</p>
     </div>
-    <div *ngFor="let answer of formData.answers">
-      <div class="answerBox">
-        <p class="answer">{{answer.name}}</p>
-      </div>
+    <div *ngFor="let answer of getAnswers()">
+        <div class="answerBox">
+            <p class="answer">{{answer}}</p>
+        </div>
     </div>
     <div *ngIf="formData?.resolutionDetalis != ''">
       <div class="label" style="padding-top: 16px;">

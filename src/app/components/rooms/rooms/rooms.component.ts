@@ -6,7 +6,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../app.state';
 import {formDataAction} from '../../../actions/newEvent.actions';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RegistrationComponent} from '../../registration/registration.component';
+import {RegistrationComponent} from '../../registration/registration/registration.component';
 import {EventsTemplatesDesktopComponent} from '../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import {RoomModel} from '../../../models/Room.model';
 import {User} from '../../../models/User.model';

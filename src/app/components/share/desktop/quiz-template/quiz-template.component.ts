@@ -10,7 +10,6 @@ import {
 import { User } from '../../../../models/User.model';
 import { Answer } from '../../../../models/Answer.model';
 import Web3 from 'web3';
-import Contract from '../../../../contract/contract';
 import * as UserActions from '../../../../actions/user.actions';
 import { PostService } from '../../../../services/post.service';
 import { Store } from '@ngrx/store';
@@ -20,9 +19,11 @@ import { QuizErrorsComponent } from './quiz-errors/quiz-errors.component';
 import { Subscription } from 'rxjs';
 import { Event } from '../../../../models/Event.model';
 import { Coins } from '../../../../models/Coins.model';
-import { RegistrationComponent } from '../../../registration/registration.component';
+import { RegistrationComponent } from '../../../registration/registration/registration.component';
 import { ClipboardService } from 'ngx-clipboard';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { connectToSign } from '../../../../contract/cosmosInit';
+import { ReputationModel } from '../../../../models/Reputation.model';
 
 @Component({
   selector: 'quiz-template',
@@ -54,12 +55,16 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   @Output() callGetData = new EventEmitter();
   @Output() commentIdEmmit = new EventEmitter<number>();
   @ViewChild('div') div: ElementRef;
+  @ViewChild('eventImage') eventImage: ElementRef;
   heightBlock: number;
   disable: number = null;
   validDisable = false;
   betDisable = false;
   windowWidth: number;
   form: FormGroup;
+  reputation: ReputationModel;
+  reputationSub: Subscription;
+  showClearImage = false;
 
   constructor(
     private postService: PostService,
@@ -69,6 +74,11 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     private formBuilder: FormBuilder,
   ) {
     this.windowWidth = document.documentElement.clientWidth;
+    this.reputationSub = this.store.select('reputation').subscribe((x: ReputationModel) => {
+      if (x) {
+        this.reputation = x;
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -78,11 +88,16 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   ngAfterViewInit() {
-  setTimeout(() => {
-    if (this.question) {
-      this.heightBlock = this.div.nativeElement.clientHeight;
-    }
-  });
+    setTimeout(() => {
+      if (this.question) {
+        this.heightBlock = this.div.nativeElement.clientHeight;
+      }
+    });
+  }
+
+  toggleImage() {
+    this.showClearImage = !this.showClearImage;
+    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
   }
 
   ngOnInit() {
@@ -190,15 +205,17 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
           amount: this.question.usersAnswers.amount,
           betAmount: null,
           mintedToken: null,
-          payToken: null
+          payToken: null,
+          answerName: null
         };
       }
     }
   }
 
-  makeAnswer(i) {
+  makeAnswer(i, answer) {
     this.letsRegistration();
     this.myAnswers.answer = i;
+    this.myAnswers.answerName = answer
   }
 
   avgBet(q) {
@@ -367,11 +384,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   async setToNetwork(answer) {
-    if (!this.coinInfo) {
-      setTimeout(() => {
-        this.setToNetwork(answer)
-      }, 1000)
-    } else if (Number(this.coinInfo.BET) < Number(answer.amount)) {
+    if (Number(this.coinInfo.BET) < Number(answer.amount)) {
       let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
       modalRef.componentInstance.errType = 'error';
       modalRef.componentInstance.title = 'Insufficient BET';
@@ -381,19 +394,57 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       this.disable = null;
     } else {
       let web3 = new Web3();
-      let contract = new Contract();
       var _money = web3.utils.toWei(String(answer.amount), 'ether');
-      await contract.approveBETToken(this.allUserData.wallet, _money);
+      let { memonic, address, client } = await connectToSign()
 
-      this.setToDB(answer);
+      const msg = {
+        typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents",
+        value: {
+          creator: address,
+          pubId: answer.event_id,
+          answers: answer.answerName,
+          amount: _money
+        }
+      };
+      const fee = {
+        amount: [],
+        gas: "1000000",
+      };
+      try {
+        let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+        if (transact.transactionHash && transact.code == 0) {
+          this.setToDB(transact.transactionHash, answer);
+        } else {
+          let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+          modalRef.componentInstance.errType = 'error';
+          modalRef.componentInstance.title = 'Unknown Error';
+          modalRef.componentInstance.customMessage = String(transact);
+          modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+          modalRef.componentInstance.nameButton = 'report error';
+          this.disable = null;
+        }
+      } catch (err) {
+        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+        modalRef.componentInstance.errType = 'error';
+        modalRef.componentInstance.title = 'Unknown Error';
+        modalRef.componentInstance.customMessage = String(err.error);
+        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+        modalRef.componentInstance.nameButton = 'report error';
+        this.disable = null;
+      }
     }
   }
 
-  setToDB(answer) {
+  setToDB(transactionHash, answer) {
+    this.myAnswers.answered = true;
+    this.myAnswers.from = "participant"
+    this.myAnswers.betAmount = answer.amount
+
     let data = {
       event_id: answer.event_id,
       answerIndex: answer.answer,
-      amount: Number(answer.amount)
+      amount: Number(answer.amount),
+      transactionHash: "0x" + transactionHash
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
       this.updateUser();
@@ -437,13 +488,54 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
 
   async setToNetworkValidation(answer) {
-    this.setToDBValidation(answer);
+    let { memonic, address, client } = await connectToSign();
+    const msg = {
+      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents",
+      value: {
+        creator: address,
+        pubId: answer.event_id,
+        answers: answer.answerName,
+        reput: this.reputation.expertRep
+      }
+    };
+    const fee = {
+      amount: [],
+      gas: "1000000",
+    };
+
+    try {
+      let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
+      console.log(transact)
+      if (transact.transactionHash && transact.code == 0) {
+        this.setToDBValidation(transact.transactionHash, answer);
+        console.log(11111)
+      } else {
+        let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+        modalRef.componentInstance.errType = 'error';
+        modalRef.componentInstance.title = 'Unknown Error';
+        modalRef.componentInstance.customMessage = JSON.stringify(transact);
+        modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+        modalRef.componentInstance.nameButton = 'report error';
+      }
+    } catch (err) {
+      let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
+      modalRef.componentInstance.errType = 'error';
+      modalRef.componentInstance.title = 'Unknown Error';
+      modalRef.componentInstance.customMessage = String(err.error);
+      modalRef.componentInstance.description = 'Report this unknown error to get 1 BET token!';
+      modalRef.componentInstance.nameButton = 'report error';
+    }
   }
 
-  setToDBValidation(answer) {
+  setToDBValidation(transactionHash, answer) {
+    this.myAnswers.answered = true;
+    this.myAnswers.from = "validator"
+    
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
+      reputation: this.reputation.expertRep,
+      transactionHash: "0x" + transactionHash
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
       this.updateUser();
@@ -452,6 +544,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     },
       (err) => {
         console.log(err);
+        // TODO change error handler
         if (err.error.includes('not valid time')) {
           if (this.timeValidating(this.question)) {
             let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
@@ -569,14 +662,15 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  // imageHeight() {
-  //   if (this.question && this.heightBlock > 260) {
-  //     return {
-  //       'border-bottom-left-radius': "0",
-  //       'border-top-left-radius' : "0"
-  //     };
-  //   }
-  // }
+  imageHeight() {
+    if (this.question && this.heightBlock > 260) {
+      return {
+        'border-bottom-left-radius': "0",
+        'border-top-left-radius': "0"
+      };
+    }
+  }
+
   statusReverted(data) {
     let x = data.status.replace('reverted:', '');
     if (x.search('not enough experts') != -1) {
@@ -711,6 +805,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
     if (this.updateSub) {
       this.updateSub.unsubscribe();
+    }
+    if (this.reputationSub) {
+      this.reputationSub.unsubscribe();
     }
   }
 

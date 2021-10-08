@@ -1,97 +1,100 @@
-<events-template-new [whichEvent]="createRoom"></events-template-new>
-<div class="box">
-  <form *ngIf="allRooms?.length > 0" [formGroup]="createRoomForm">
-    <div class="checkBoxPos">
-      <div class="pretty p-default p-round inline">
-        <input type="radio" value="exist" formControlName="createNewRoom">
-        <div class="state p-warning-o checkPos">
-          <label> </label>
+<div style="margin-top: 73px">
+  <events-template-new [whichEvent]="createRoom"></events-template-new>
+  <div class="box">
+    <form *ngIf="allRooms?.length > 0" [formGroup]="createRoomForm">
+      <div class="checkBoxPos">
+        <div class="pretty p-default p-round inline">
+          <input type="radio" value="exist" formControlName="createNewRoom">
+          <div class="state p-warning-o checkPos">
+            <label> </label>
+          </div>
+          <div class="tab" [ngClass]="{ 'tab_active': r.createNewRoom.value == 'exist' }">Existing room</div>
         </div>
-        <div class="tab" [ngClass]="{ 'tab_active': r.createNewRoom.value == 'exist' }">Existing room</div>
-      </div>
 
-      <div class="pretty p-default p-round inline">
-        <input type="radio" value="new" formControlName="createNewRoom" checked>
-        <div class="state p-warning-o checkPos">
-          <label> </label>
+        <div class="pretty p-default p-round inline">
+          <input type="radio" value="new" formControlName="createNewRoom" checked>
+          <div class="state p-warning-o checkPos">
+            <label> </label>
+          </div>
+          <div class="tab" [ngClass]="{ 'tab_active': r.createNewRoom.value == 'new' }">New room</div>
         </div>
-        <div class="tab" [ngClass]="{ 'tab_active': r.createNewRoom.value == 'new' }">New room</div>
-      </div>
-    </div>
-  </form>
-  <div class="borderLine"></div>
-
-  <div *ngIf="r.createNewRoom.value == 'exist'">
-    <form [formGroup]="existRoom">
-      <div class="lableBox">
-        <p class="name">CHOOSE ROOM</p>
-      </div>
-      <select [ngClass]="{ 'is_invalid': submitted && e.roomId.errors }"
-        formControlName="roomId" class="btn" name="roomId" id="roomId">
-        <option *ngFor="let room of allRooms;" value="{{room.id}}">{{room.name}}</option>
-      </select>
-      <div *ngIf="submitted && e.roomId.errors">
-        <small *ngIf="e.roomId.errors.required" class="form-text quize_validation_error">Choose room is
-          required</small>
-      </div>
-      <div class="buttonBox buttonBox_1">
-        <button type="button" class="cancel" (click)="cancel()">BACK</button>
-        <button type="button" class="next" (click)="chooseRoom()">NEXT</button>
       </div>
     </form>
-  </div>
-  <div *ngIf="r.createNewRoom.value == 'new'">
-    <form [formGroup]="roomForm">
-      <div class="form-group position-relative" style="padding-top: 24px">
-        <div style="position: relative">
-          <app-textarea style="width: 100%"
-                        [status]="'single'"
-                        [isMobile]="true"
-                        [questionForm]="roomForm"
-                        [limit]="32"
-                        [limitEnd]="60"
-                        [submitted]="submitted"
-                        [title]="'ROOM NAME AND COLOR'"
-                        [controlName]="'roomName'"
-                        (gradientEmmit)="generateGradient()"
-                        [nickName] = nickName
-          ></app-textarea>
+    <div class="borderLine"></div>
+
+    <div *ngIf="r.createNewRoom.value == 'exist'">
+      <form [formGroup]="existRoom">
+        <div class="lableBox">
+          <p class="name">CHOOSE ROOM</p>
         </div>
-        <div *ngIf="submitted && f.roomName.errors">
-          <small *ngIf="f.roomName.errors.required" class="form-text quize_validation_error">Room name is
+        <select [ngClass]="{ 'is_invalid': submitted && e.roomId.errors }"
+                formControlName="roomId" class="btn" name="roomId" id="roomId">
+          <option *ngFor="let room of allRooms;" value="{{room.id}}">{{room.name}}</option>
+        </select>
+        <div *ngIf="submitted && e.roomId.errors">
+          <small *ngIf="e.roomId.errors.required" class="form-text quize_validation_error">Choose room is
             required</small>
         </div>
-
-      </div>
-      <div *ngIf="roomError">
-        <small class="form-text quize_validation_error">Room with this name already exist</small>
-      </div>
-      <div>
-        <p class="name paddingName">WHO IS THIS ROOM FOR?
-          <span class="learMore" (click)="modalAboutExpert()">Learn more</span>
-        </p>
-        <div class="checkBoxPos tabPos2">
-          <div class="pretty p-default p-round inline">
-            <input formControlName="eventType" type="radio" value="private" checked>
-            <div class="state p-warning-o checkPos">
-              <label> </label>
-            </div>
-            <div class="tab" [ngClass]="{ 'tab_active': f.eventType.value == 'private' }">Friends</div>
+        <div class="buttonBox buttonBox_1">
+          <button type="button" class="cancel" (click)="cancel()">BACK</button>
+          <button type="button" class="next" (click)="chooseRoom()">NEXT</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="r.createNewRoom.value == 'new'">
+      <form [formGroup]="roomForm">
+        <div class="form-group position-relative" style="padding-top: 24px">
+          <div style="position: relative">
+            <app-textarea style="width: 100%"
+                          [status]="'single'"
+                          [isMobile]="true"
+                          [questionForm]="roomForm"
+                          [limit]="32"
+                          [limitEnd]="60"
+                          [submitted]="submitted"
+                          [title]="'ROOM NAME AND COLOR'"
+                          [controlName]="'roomName'"
+                          (gradientEmmit)="generateGradient()"
+                          [nickName] = nickName
+            ></app-textarea>
+          </div>
+          <div *ngIf="submitted && f.roomName.errors">
+            <small *ngIf="f.roomName.errors.required" class="form-text quize_validation_error">Room name is
+              required</small>
           </div>
 
-          <div class="pretty p-default p-round inline">
-            <input formControlName="eventType" type="radio" value="public">
-            <div class="state p-warning-o checkPos">
-              <label> </label>
+        </div>
+        <div *ngIf="roomError">
+          <small class="form-text quize_validation_error">Room with this name already exist</small>
+        </div>
+        <div>
+          <p class="name paddingName">WHO IS THIS ROOM FOR?
+            <span class="learMore" (click)="modalAboutExpert()">Learn more</span>
+          </p>
+          <div class="checkBoxPos tabPos2">
+            <div class="pretty p-default p-round inline">
+              <input formControlName="eventType" type="radio" value="private" checked>
+              <div class="state p-warning-o checkPos">
+                <label> </label>
+              </div>
+              <div class="tab" [ngClass]="{ 'tab_active': f.eventType.value == 'private' }">Friends</div>
             </div>
-            <div class="tab" [ngClass]="{ 'tab_active': f.eventType.value == 'public' }">Social Media</div>
+
+            <div class="pretty p-default p-round inline">
+              <input formControlName="eventType" type="radio" value="public">
+              <div class="state p-warning-o checkPos">
+                <label> </label>
+              </div>
+              <div class="tab" [ngClass]="{ 'tab_active': f.eventType.value == 'public' }">Social Media</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="buttonBox buttonBox_1">
-        <button type="button" class="cancel" (click)="cancel()">BACK</button>
-        <button type="button" class="next" (click)="createRoom()">NEXT</button>
-      </div>
-    </form>
+        <div class="buttonBox buttonBox_1">
+          <button type="button" class="cancel" (click)="cancel()">BACK</button>
+          <button type="button" class="next" (click)="createRoom()">NEXT</button>
+        </div>
+      </form>
+    </div>
   </div>
+
 </div>
