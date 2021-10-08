@@ -65,6 +65,12 @@ export class LandingFormComponent implements OnInit, OnDestroy {
         this.sendEmail($event);
       });
   }
+  removePlaceHolder($event){
+    $event.target.placeholder = '';
+  }
+  addPlaceHolder($event, holder: string){
+    $event.target.placeholder = holder;
+  }
 
   ngOnDestroy() {
     if (this.recaptcaSub) {

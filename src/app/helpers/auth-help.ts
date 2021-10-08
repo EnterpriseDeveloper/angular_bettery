@@ -37,7 +37,6 @@ const authHelp = {
       sub
     })
 
-    console.log(data);
     const bytes = CryptoJS.AES.encrypt(JSON.stringify(data), environment.secretKey);
     localStorage.setItem('_buserlog', bytes.toString());
     authHelp.walletUser = { mnemonic, pubKey: pubKey.address };
