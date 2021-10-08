@@ -131,7 +131,7 @@ export class EventFeedComponent implements OnDestroy {
       this.spinner = false;
       this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
 
-    }, (err) => {
+      }, (err) => {
       this.spinner = false;
       console.log(err);
     });

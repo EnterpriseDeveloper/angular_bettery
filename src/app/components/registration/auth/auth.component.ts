@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PostService } from '../../../services/post.service';
-import { Store } from '@ngrx/store';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppState } from '../../../app.state';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {PostService} from '../../../services/post.service';
+import {Store} from '@ngrx/store';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppState} from '../../../app.state';
 import authHelp from '../../../helpers/auth-help';
 import * as UserActions from '../../../actions/user.actions';
-import { Subscription } from 'rxjs';
-import { RegistrationComponent } from '../registration/registration.component';
-import { WelcomePageComponent } from '../../share/both/modals/welcome-page/welcome-page.component';
-import { environment } from '../../../../environments/environment';
+import {Subscription} from 'rxjs';
+import {RegistrationComponent} from '../registration/registration.component';
+import {WelcomePageComponent} from '../../share/both/modals/welcome-page/welcome-page.component';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -38,7 +38,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     private router: Router,
     private postService: PostService,
     private modalService: NgbModal,
-    private store: Store<AppState>) {
+    private store: Store<AppState>)
+  {
     this.webAuth = authHelp.init;
     if (sessionStorage.getItem('linkUser') === 'linkUser') {
       this.auth0RegistrationWithLink();
@@ -53,7 +54,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   auth0RegistrationWithLink() {
     sessionStorage.removeItem('linkUser');
-    this.webAuth.parseHash({ hash: window.location.hash }, (err, authResult) => {
+    this.webAuth.parseHash({hash: window.location.hash}, (err, authResult) => {
       if (err) {
         return console.log(err);
       }
@@ -69,7 +70,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       verifierId: data
     };
     this.linkAccount$ = this.postService.post('user/link_account', post).subscribe((x) => {
-      //? this.linkedDone.next([{status: 'done'}]);  update balance check
+      // ? this.linkedDone.next([{status: 'done'}]);  update balance check
       this.goBack();
     }, (err) => {
       console.log(err);
@@ -80,16 +81,20 @@ export class AuthComponent implements OnInit, OnDestroy {
     let wallet;
     let pubKey;
     let mnemonic;
-    this.webAuth.parseHash({ hash: window.location.hash }, (err, userInfo) => {
+    this.webAuth.parseHash({hash: window.location.hash}, (err, userInfo) => {
       if (err) {
         return console.log(err);
       }
       this.sub = userInfo.idTokenPayload.sub;
-      localStorage.setItem('isLogout', 'false')
+      localStorage.setItem('isLogout', 'false');
       const pubKeyFromLS = authHelp.walletDectypt();
       if (pubKeyFromLS) {
-        let userData = pubKeyFromLS.users.find((x) => { return x.sub == this.sub })
-        if (userData) pubKey = userData.pubKey.address;
+        const userData = pubKeyFromLS.users.find((x) => {
+          return x.sub == this.sub;
+        });
+        if (userData) {
+          pubKey = userData.pubKey.address;
+        }
       }
 
 
@@ -100,14 +105,14 @@ export class AuthComponent implements OnInit, OnDestroy {
           email: userInfo.idTokenPayload.email,
           nickname: userInfo.idTokenPayload.nickname,
           verifierId: this.sub,
-          pubKey: pubKey,
+          pubKey,
           accessToken: userInfo.accessToken
         };
         this.authResultGlobal = dataForSend;
         this.loginSub$ = this.postService.post('user/auth0_login', dataForSend).subscribe(async (data: any) => {
           if (!data) {
             // == NEW USER ==
-            await authHelp.walletInit(this.sub)
+            await authHelp.walletInit(this.sub);
             wallet = authHelp.walletUser.pubKey;
             mnemonic = authHelp.walletUser.mnemonic;
 
@@ -130,7 +135,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 this.modalOpen = true;
                 this.modalStatus = false;
                 this.spinner = false;
-                this.seedPhrase = { mnemonic, wallet };
+                this.seedPhrase = {mnemonic, wallet};
               }
             }, error => {
               console.log(error.message);
@@ -151,7 +156,9 @@ export class AuthComponent implements OnInit, OnDestroy {
               authHelp.saveAccessTokenLS(data.accessToken, null, null, this.sub);
 
               const walletDectypt = authHelp.walletDectypt();
-              let userData = walletDectypt.users.find((x) => { return x.sub == walletDectypt.login })
+              const userData = walletDectypt.users.find((x) => {
+                return x.sub == walletDectypt.login;
+              });
 
               const setMemoData = {
                 mnemonic: userData.mnemonic,
@@ -160,7 +167,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 }
               };
               authHelp.setMemo(setMemoData);
-              localStorage.setItem('isLogout', 'false')
+              localStorage.setItem('isLogout', 'false');
             }
           }
         }, (error) => {
@@ -187,8 +194,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       };
       authHelp.setMemo(setMemoData);
       this.sendUserToStore(this.dataRegist);
-      authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null, this.sub);  //? save accessToken to LocalStorage from autoLogin
-      localStorage.setItem('isLogout', 'false')
+      authHelp.saveAccessTokenLS(this.dataRegist.accessToken, null, null, this.sub);  // ? save accessToken to LocalStorage from autoLogin
+      localStorage.setItem('isLogout', 'false');
     }
 
     if ($event.btn === 'Ok') {
@@ -210,7 +217,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             authHelp.setMemo(setMemoData);
             this.sendUserToStore(data);
             authHelp.saveAccessTokenLS(data.accessToken, pubKeyActual, $event.seedPh, this.sub);
-            localStorage.setItem('isLogout', 'false')
+            localStorage.setItem('isLogout', 'false');
             this.spinner = true;
             this.modalOpen = false;
             this.goBack();
@@ -218,9 +225,9 @@ export class AuthComponent implements OnInit, OnDestroy {
             console.error('error from "user/auth0_login"');
           }
         }, (error) => {
-          if (error.status == 302) {
+          if (error.status === 302) {
             this.goBack();
-            const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+            const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
             modalRef.componentInstance.alreadyRegister = error.error;
           } else {
             console.log(error);
@@ -291,4 +298,5 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.linkAccount$.unsubscribe();
     }
   }
+
 }

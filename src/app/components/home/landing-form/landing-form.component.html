@@ -13,7 +13,7 @@
               <label for="firstName">{{'FORM.FIRST_NAME' | translate}}</label>
               <input type="text" formControlName="firstName" name="firstName" class="form-control"
                      [ngClass]="submitted && f.firstName.errors && 'validator'"
-                     id="firstName" placeholder="{{'FORM.FIRST_NAME' | translate}}">
+                     id="firstName" placeholder="{{'FORM.NAME' | translate}}">
               <div *ngIf="submitted && f.firstName.errors">
                 <small *ngIf="f.firstName.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
               </div>
@@ -31,7 +31,7 @@
           <div class="form-group">
             <label for="firm">{{'FORM.FIRM' | translate}}</label>
             <input type="text" formControlName="firm" name="firm" class="form-control"
-                   [ngClass]="submitted && f.firm.errors && 'validator'" id="firm" placeholder="Phone Number">
+                   [ngClass]="submitted && f.firm.errors && 'validator'" id="firm" placeholder="Social Media Channel">
             <div *ngIf="submitted && f.firm.errors">
               <small *ngIf="f.firm.errors.required" class="valid_text quize_validation_error">{{'FORM.VALIDATOR' | translate}}</small>
             </div>

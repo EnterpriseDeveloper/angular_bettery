@@ -85,26 +85,26 @@
     "TEXT_1": "All our development activities - past, present, and future - are always available to the public in our detailed ",
     "TEXT_2": " product roadmap",
     "TEXT_3": ".",
-    "DATE_1": "Q3 - 2021",
-    "DATE_2": "Q4 - 2021",
-    "DATE_3": "Q1 - 2022",
-    "DATE_4": "Q2 - 2022",
-    "ROADMAP_UP_TEXT-1": "Public Prototype",
-    "ROADMAP_UP_TEXT-2": "Tokenomics",
+    "DATE_1": "Q4 - 2021",
+    "DATE_2": "Q1 - 2022",
+    "DATE_3": "Q2 - 2022",
+    "DATE_4": "Q3/Q4 - 2022",
+    "ROADMAP_UP_TEXT-1": "Web App & Tokenomics",
+    "ROADMAP_UP_TEXT-2": "Mobile Application",
     "ROADMAP_UP_TEXT-3": "  Social Media Integration",
-    "ROADMAP_UP_TEXT-4": "Business Revenue",
-    "ROADMAP_TEXT-1": "Mobile Web App.",
-    "ROADMAP_TEXT-1.1": "Referral Program.",
+    "ROADMAP_UP_TEXT-4": "Knowledge Marketplace",
+    "ROADMAP_TEXT-1": "Web App.",
+    "ROADMAP_TEXT-1.1": "Token Economics.",
     "ROADMAP_TEXT-1.2": "BTY Token Sale.",
-    "ROADMAP_TEXT-2": "Premium & Pro Events.",
-    "ROADMAP_TEXT-2.1": "Live Streaming Content.",
+    "ROADMAP_TEXT-2": "Mobile Application.",
+    "ROADMAP_TEXT-2.1": "Premium & Pro Events.",
     "ROADMAP_TEXT-2.2": "BET - BTY Swap.",
     "ROADMAP_TEXT-3": "Advisor & Moderator.",
     "ROADMAP_TEXT-3.1": "Appealing in Events.",
-    "ROADMAP_TEXT-3.2": "Smart Contracts Audit.",
-    "ROADMAP_TEXT-4": "Mobile Application.",
+    "ROADMAP_TEXT-3.2": "Bettery NFTs.",
+    "ROADMAP_TEXT-4": "BET Farming.",
     "ROADMAP_TEXT-4.1": "Fiat in Pro Events.",
-    "ROADMAP_TEXT-4.2": "Revenue Generation."
+    "ROADMAP_TEXT-4.2": "Circles of Friends."
   },
   "TEAM": {
 
@@ -113,12 +113,6 @@
     "STATUS_7": "Strategic Advisor",
     "EXPERTISE": "Experience:",
     "PASSION": "Passion:",
-    "ALAN": {
-      "NAME": "Alan",
-      "STATUS": "Strategic Advisor",
-      "EXPERTISE": " Applying strategic mind to guide aspiring teams in delivering innovative and market-demanded Blockchain products.",
-      "PASSION": "Entrepreneurship"
-    },
     "FEDOR": {
       "NAME": "Fedor",
       "STATUS": "Product Owner, Founder",
@@ -127,14 +121,14 @@
     },
     "SIM": {
       "NAME": "Sim",
-      "STATUS": "Business Analyst, Founding Team",
+      "STATUS": "Business Analyst",
       "EXPERTISE": "Know what users want based on his previous experience running a mining farm and moderating Facebook content.",
       "PASSION": "Countrysides, Yachts. "
     },
     "MAXIM": {
       "NAME": "Maxim",
-      "STATUS": "Development Lead, Founding Team",
-      "EXPERTISE": "Give life to ideas and designs mapped out on graphics editors and Powerpoint slides with the power of coding.",
+      "STATUS": "Development Lead & Co-Founder",
+      "EXPERTISE": "Fuel the life force of Bettery platform through his deep knowledge of the innerworkings of blockchain infrastructures.",
       "PASSION": "Blockchain Programming."
     },
     "SHANE": {
@@ -149,17 +143,41 @@
       "EXPERTISE": "Transform rough wireframe sketches into vivid, intuitive interfaces and designs you’ll never grow tired of using.",
       "PASSION": "Technology, Sports, Gaming."
     },
+    "ANDREY": {
+      "NAME": "Andrey",
+      "STATUS": "Full-stack Developer",
+      "EXPERTISE": "Give life to ideas and designs mapped out on graphics editors and Powerpoint slides with the power of coding.",
+      "PASSION": "Blockchain Programming"
+    },
+    "JOIN_US_NOW": {
+      "NAME": "Join Us Now",
+      "STATUS": "Bettery Team",
+      "TEXT": "We’re looking for skilled enthusiasts to help us realize our vision to bring value to people’s opinion shaped by their unique life experiences through social betting."
+    },
     "KEN": {
-      "NAME": "Ken",
+      "NAME": "Ken Graham",
       "STATUS": "Legal Advisor",
       "EXPERTISE": " Evolving regulations of blockchain and cryptocurrency, turning risky into riskless and bring forth its value to the public.",
       "PASSION": "World Affairs, Video Games"
+    },
+    "ALLAN":  {
+      "NAME": "Allan Ta",
+      "STATUS": "Strategic Advisor / Roseon Finance",
+      "EXPERTISE": "Applying strategic mind to guide aspiring teams in delivering innovative and market-demanded Blockchain products.",
+      "PASSION": "Entrepreneurship"
+    },
+    "GHEEHOE":  {
+      "NAME": "GheeHoe Cheng",
+      "STATUS": "Strategic Advisor / Perspectiv Ventures",
+      "EXPERTISE": "Investing in early-stage startups in green, health, and blockchain economy via strategic ecosystem building blocks. ",
+      "PASSION": "Entrepreneurship"
     }
   },
   "FORM": {
     "TITLE": "Are you an Influencer?",
     "TEXT": "We’ll show you how to boost engagement with your followers with every piece of your content, hands-on based right on what matters to you.",
     "FIRST_NAME": "How we may call you?",
+    "NAME": "Name",
     "LAST_NAME": "Last Name",
     "EMAIL": "Email",
     "PHONE_NUMBER": "Best way to contact you (Telegram, Whatsapp, etc.)",
