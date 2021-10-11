@@ -1,4 +1,4 @@
-import {Component, HostListener, OnChanges, OnDestroy} from '@angular/core';
+import {Component, HostListener, OnDestroy} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../app.state';
 import {Answer} from '../../../../models/Answer.model';
@@ -9,8 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RegistrationComponent} from '../../../registration/registration/registration.component';
 import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import {Coins} from '../../../../models/Coins.model';
-import {EventModel, Event, ParcipiantAnswers, ValidatorsAnswers} from '../../../../models/Event.model';
-import {filter} from "rxjs/operators";
+import {EventModel} from '../../../../models/Event.model';
 
 @Component({
   selector: 'eventFeed',
@@ -47,7 +46,7 @@ export class EventFeedComponent implements OnDestroy {
   queryPath = 'publicEvents/get_all';
 
   timelineActive: boolean;
-  showEnd = true;
+  showEnd = false;
   filterMode = false;
   finishLoading = false;
   isMobile: boolean;
@@ -94,7 +93,6 @@ export class EventFeedComponent implements OnDestroy {
     }
 
     if (path === 'publicEvents/get_all') {
-      if(this.userData){
         data = {
           from: from,
           to: to,
@@ -102,16 +100,6 @@ export class EventFeedComponent implements OnDestroy {
           sort: sort,
           finished: this.showEnd
         };
-      }else {
-        data = {
-          from: from,
-          to: to,
-          search: param,
-          sort: sort,
-          finished: false
-        };
-      }
-
     }
 
     if (path === 'user/event_activites') {
@@ -123,37 +111,7 @@ export class EventFeedComponent implements OnDestroy {
         finished: this.showEnd
       };
     }
-    this.postSubsctibe = this.postService.post(path, data).pipe(filter((value: EventModel) => {
-      if(this.userData){
-        value.events.forEach(( event: Event) => {
-          if (event.host.id === this.userData._id) {
-            return true;
-          }
-
-          if (event.parcipiantAnswers.length) {
-            event.parcipiantAnswers.forEach((parcipiant: ParcipiantAnswers) => {
-              if (parcipiant.userId === this.userData._id) {
-                return true;
-              }
-            });
-          }
-
-          if (event.validatorsAnswers.length) {
-            event.validatorsAnswers.forEach((validator: ValidatorsAnswers) => {
-              if (validator.userId === this.userData._id) {
-                return true;
-              }
-            });
-          }
-        });
-        return true;
-      }else {
-        return true;
-      }
-
-    }))
-      .subscribe((x: EventModel) => {
-        console.log(x)
+    this.postSubsctibe = this.postService.post(path, data).subscribe((x: EventModel) => {
         if (this.pureData === undefined || this.pureData.events.length === 0) {
           this.commentList = x.events[this.currentComment];
         }
