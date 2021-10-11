@@ -1,15 +1,16 @@
-import { Component, HostListener, OnChanges, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
-import { Answer } from '../../../../models/Answer.model';
-import { User } from '../../../../models/User.model';
-import { PostService } from '../../../../services/post.service';
-import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../../registration/registration/registration.component';
-import { EventsTemplatesDesktopComponent } from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
-import { Coins } from '../../../../models/Coins.model';
-import { EventModel } from '../../../../models/Event.model';
+import {Component, HostListener, OnChanges, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../app.state';
+import {Answer} from '../../../../models/Answer.model';
+import {User} from '../../../../models/User.model';
+import {PostService} from '../../../../services/post.service';
+import {Subscription} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RegistrationComponent} from '../../../registration/registration/registration.component';
+import {EventsTemplatesDesktopComponent} from '../../../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
+import {Coins} from '../../../../models/Coins.model';
+import {EventModel, Event, ParcipiantAnswers, ValidatorsAnswers} from '../../../../models/Event.model';
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'eventFeed',
@@ -46,7 +47,7 @@ export class EventFeedComponent implements OnDestroy {
   queryPath = 'publicEvents/get_all';
 
   timelineActive: boolean;
-  showEnd = false;
+  showEnd = true;
   filterMode = false;
   finishLoading = false;
   isMobile: boolean;
@@ -93,13 +94,24 @@ export class EventFeedComponent implements OnDestroy {
     }
 
     if (path === 'publicEvents/get_all') {
-      data = {
-        from: from,
-        to: to,
-        search: param,
-        sort: sort,
-        finished: this.showEnd
-      };
+      if(this.userData){
+        data = {
+          from: from,
+          to: to,
+          search: param,
+          sort: sort,
+          finished: this.showEnd
+        };
+      }else {
+        data = {
+          from: from,
+          to: to,
+          search: param,
+          sort: sort,
+          finished: false
+        };
+      }
+
     }
 
     if (path === 'user/event_activites') {
@@ -111,30 +123,60 @@ export class EventFeedComponent implements OnDestroy {
         finished: this.showEnd
       };
     }
-    this.postSubsctibe = this.postService.post(path, data).subscribe((x: EventModel) => {
-      if (this.pureData === undefined || this.pureData.events.length === 0) {
-        this.commentList = x.events[this.currentComment];
+    this.postSubsctibe = this.postService.post(path, data).pipe(filter((value: EventModel) => {
+      if(this.userData){
+        value.events.forEach(( event: Event) => {
+          if (event.host.id === this.userData._id) {
+            return true;
+          }
+
+          if (event.parcipiantAnswers.length) {
+            event.parcipiantAnswers.forEach((parcipiant: ParcipiantAnswers) => {
+              if (parcipiant.userId === this.userData._id) {
+                return true;
+              }
+            });
+          }
+
+          if (event.validatorsAnswers.length) {
+            event.validatorsAnswers.forEach((validator: ValidatorsAnswers) => {
+              if (validator.userId === this.userData._id) {
+                return true;
+              }
+            });
+          }
+        });
+        return true;
+      }else {
+        return true;
       }
-      if (this.commentResetFlag) {
-        this.commentList = x.events[this.currentComment];
-        this.commentResetFlag = false;
-      }
-      this.pureData = x;
-      if (from == 0) {
-        this.newQuestions = this.pureData.events;
-      } else {
-        this.pureData.events.forEach(el => this.newQuestions.push(el));
-      }
-      if (this.timelineActive) {
-        this.timelineActive = false;
-      }
-      this.spinner = false;
-      this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
+
+    }))
+      .subscribe((x: EventModel) => {
+        console.log(x)
+        if (this.pureData === undefined || this.pureData.events.length === 0) {
+          this.commentList = x.events[this.currentComment];
+        }
+        if (this.commentResetFlag) {
+          this.commentList = x.events[this.currentComment];
+          this.commentResetFlag = false;
+        }
+        this.pureData = x;
+        if (from == 0) {
+          this.newQuestions = this.pureData.events;
+        } else {
+          this.pureData.events.forEach(el => this.newQuestions.push(el));
+        }
+        if (this.timelineActive) {
+          this.timelineActive = false;
+        }
+        this.spinner = false;
+        this.finishLoading = this.newQuestions.length == this.pureData.amount ? true : false;
 
       }, (err) => {
-      this.spinner = false;
-      console.log(err);
-    });
+        this.spinner = false;
+        console.log(err);
+      });
   }
 
   commentById($event) {
@@ -158,9 +200,9 @@ export class EventFeedComponent implements OnDestroy {
 
   commentTopPosition() {
     if (document.documentElement.scrollTop < 278) {
-      return { 'top': (278 - this.scrollTop) + 'px' };
+      return {'top': (278 - this.scrollTop) + 'px'};
     } else {
-      return { 'top': 0 };
+      return {'top': 0};
     }
   }
 
@@ -231,7 +273,7 @@ export class EventFeedComponent implements OnDestroy {
 
     if (this.activeBtn === 'following') {
       if (!this.userData) {
-        this.modalService.open(RegistrationComponent, { centered: true });
+        this.modalService.open(RegistrationComponent, {centered: true});
       } else {
         this.queryPath = 'user/event_activites';
         this.getData(this.queryPath, 0, 5, this.searchWord, '');
@@ -256,7 +298,7 @@ export class EventFeedComponent implements OnDestroy {
   }
 
   openCreateEventModal() {
-    this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
+    this.modalService.open(EventsTemplatesDesktopComponent, {centered: true});
   }
 
   mobileCheck() {

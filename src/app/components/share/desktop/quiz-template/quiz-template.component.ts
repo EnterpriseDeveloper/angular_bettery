@@ -65,6 +65,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   reputation: ReputationModel;
   reputationSub: Subscription;
   showClearImage = false;
+  showCopyIcon = false;
 
   constructor(
     private postService: PostService,
@@ -530,7 +531,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   setToDBValidation(transactionHash, answer) {
     this.myAnswers.answered = true;
     this.myAnswers.from = "validator"
-    
+
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
@@ -832,6 +833,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       this.myAnswers.amount = Number(value);
     }
+  }
+  toggleShowCopyIcon(toShow: boolean){
+    this.showCopyIcon = toShow;
   }
 
 }
