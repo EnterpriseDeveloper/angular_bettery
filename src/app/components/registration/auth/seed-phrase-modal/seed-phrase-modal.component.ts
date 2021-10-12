@@ -13,8 +13,6 @@ export class SeedPhraseModalComponent implements OnInit {
   seedPhrase: string;
   @Output() okEmmit = new EventEmitter<object>();
   seedPhraseArr: string[];
-  testArr = ['item', 'bottom', 'mask', 'stove', 'enlist', 'shiver', 'deal', 'raise', 'excuse', 'club', 'arctic', 'gain', 'hard', 'sponsor', 'snake', 'fold', 'seed',
-    'grace', 'wagon', 'slam', 'clean', 'cycle', 'swing', 'gossip',];
   showCopiedMessage = false;
 
   constructor(private _clipboardService: ClipboardService) {
