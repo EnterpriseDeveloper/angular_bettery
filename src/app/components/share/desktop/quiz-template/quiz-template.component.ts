@@ -509,7 +509,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       console.log(transact)
       if (transact.transactionHash && transact.code == 0) {
         this.setToDBValidation(transact.transactionHash, answer);
-        console.log(11111)
       } else {
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
