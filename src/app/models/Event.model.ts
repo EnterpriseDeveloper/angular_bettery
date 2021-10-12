@@ -47,7 +47,7 @@ export interface Event {
   validatorsAnswers: ValidatorsAnswers[];
   usersAnswers: Answer;
 }
-interface ValidatorsAnswers {
+export interface ValidatorsAnswers {
   answer: number;
   avatar: string;
   date: number;
@@ -57,7 +57,7 @@ interface ValidatorsAnswers {
   mintedToken: number | undefined;
   premiumToken: number | undefined;
 }
-interface ParcipiantAnswers {
+export interface ParcipiantAnswers {
   amount: number;
   answer: number;
   avatar: string;

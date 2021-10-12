@@ -216,27 +216,33 @@ export class ImageLoaderComponent implements OnInit {
       this.isImgEditOpened.emit(false);
       return;
     }
+    this.file = $event.target.files[0];
+
+    if (this.file && !this.file.type.match('image')) {
+      return;
+    }
+
+    if (this.file && this.file.size > 5249880) {
+      this.fileTooLarge = true;
+      this.readerInit(this.fileTooLarge);
+      return;
+    }
+
     this.formData.imgOrColor = 'image';
     this.fileTooLarge = false;
     this.isImgEditOpened.emit(true);
     this.closeCropeWIndow = false;
     this.imageChangedEvent = $event;
 
-    this.file = $event.target.files[0];
 
-    if (this.file && !this.file.type.match('image')) {
-      return;
-    }
-    if (this.file && this.file.size > 5249880) {
-      this.fileTooLarge = true;
-      this.readerInit(this.fileTooLarge);
-      return;
-    }
     this.readerInit(this.fileTooLarge);
   }
 
   readerInit(valid: boolean): void {
     const reader = new FileReader();
+    if ( valid ){
+      return;
+    }
     reader.onload = e => {
       this.previewUrlImg = e.target.result;
       this.imgEmmit.emit({img: this.previewUrlImg, valid, clearImage: this.clearEventImg});

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef} from '@angular/core';
+import {ClipboardService} from "ngx-clipboard";
 
 @Component({
   selector: 'app-seed-phrase-modal',
@@ -12,12 +13,15 @@ export class SeedPhraseModalComponent implements OnInit {
   seedPhrase: string;
   @Output() okEmmit = new EventEmitter<object>();
   seedPhraseArr: string[];
+  testArr = ['item', 'bottom', 'mask', 'stove', 'enlist', 'shiver', 'deal', 'raise', 'excuse', 'club', 'arctic', 'gain', 'hard', 'sponsor', 'snake', 'fold', 'seed',
+    'grace', 'wagon', 'slam', 'clean', 'cycle', 'swing', 'gossip',];
+  showCopiedMessage = false;
 
-  constructor() {
+  constructor(private _clipboardService: ClipboardService) {
   }
 
   @HostListener('window:keyup.escape') onKeydownHandler() {
-    if ( !this.showSeedPhrase){
+    if (!this.showSeedPhrase) {
       this.modalBtnAction('Cancel');
     }
   }
@@ -41,5 +45,18 @@ export class SeedPhraseModalComponent implements OnInit {
 
   splitSeedPhrase(str: string) {
     this.seedPhraseArr = str.split(' ');
+  }
+
+  copyToClipBoard() {
+   if ( this.showSeedPhrase?.mnemonic ){
+     this._clipboardService.copy(this.showSeedPhrase.mnemonic);
+     this.showCopyMessage();
+   }
+  }
+  showCopyMessage(){
+    this.showCopiedMessage = true;
+    setTimeout(() => {
+      this.showCopiedMessage = false;
+    }, 500 );
   }
 }

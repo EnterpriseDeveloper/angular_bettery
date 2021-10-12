@@ -133,18 +133,32 @@
   color: #6B6B6B
   margin: 0 36px 0
 
+.copy-url
+  text-decoration: underline
+  cursor: pointer
+  position: relative
+
+.seed-copied
+  position: absolute
+  bottom: 23px
+  width: 67px
+  height: 10px
+  right: -20px
+  font-size: 8px
+
+.word_number
+  font-style: normal
+  font-weight: bold
+  font-size: 13px
+  line-height: 16px
+  color: #6A6A6A
+
 .word_item
-  background: #F9F9F9
-  border: 1px solid #F2F2F2
-  box-sizing: border-box
-  border-radius: 4px
   display: flex
-  justify-content: center
-  align-items: center
-  margin-bottom: 10px
-  margin-left: 11px
   min-width: 95px
   height: 34px
+  align-items: center
+
   p
     margin: 0
     font-style: normal
@@ -173,6 +187,20 @@
   text-decoration-line: underline
   color: #FFD300
   margin-bottom: 20px
+
+.yellow-polygon
+  background: url("../../../../../assets/share/seed-phrase-polygon.png")
+  width: 24px
+  height: 24px
+  margin-right: 8px
+
+.no-select
+  -webkit-touch-callout: none /* iOS Safari */
+  -webkit-user-select: none /* Safari */
+  -khtml-user-select: none /* Konqueror HTML */
+  -moz-user-select: none /* Old versions of Firefox */
+  -ms-user-select: none /* Internet Explorer/Edge */
+   user-select: none
 
 @media (max-width: 1000px)
   .main-wrap

@@ -65,6 +65,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   reputation: ReputationModel;
   reputationSub: Subscription;
   showClearImage = false;
+  showCopyIcon = false;
 
   constructor(
     private postService: PostService,
@@ -508,7 +509,6 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       console.log(transact)
       if (transact.transactionHash && transact.code == 0) {
         this.setToDBValidation(transact.transactionHash, answer);
-        console.log(11111)
       } else {
         let modalRef = this.modalService.open(QuizErrorsComponent, { centered: true });
         modalRef.componentInstance.errType = 'error';
@@ -530,7 +530,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   setToDBValidation(transactionHash, answer) {
     this.myAnswers.answered = true;
     this.myAnswers.from = "validator"
-    
+
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
@@ -832,6 +832,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       }
       this.myAnswers.amount = Number(value);
     }
+  }
+  toggleShowCopyIcon(toShow: boolean){
+    this.showCopyIcon = toShow;
   }
 
 }
