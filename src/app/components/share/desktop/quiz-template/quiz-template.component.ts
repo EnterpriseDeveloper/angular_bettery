@@ -1,11 +1,15 @@
 import {
+  AfterViewInit,
   Component,
-  OnInit,
-  Input,
+  ElementRef,
   EventEmitter,
-  Output,
+  HostListener,
+  Input,
   OnChanges,
-  OnDestroy, ViewChild, ElementRef, AfterViewInit, HostListener
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
 import {User} from '../../../../models/User.model';
 import {Answer} from '../../../../models/Answer.model';
@@ -787,7 +791,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  copyToClickBoard(eventId) {
+  copyToClickBoard($event , eventId) {
+    $event.stopPropagation();
     this.copyLinkFlag = true;
     const href = window.location.hostname;
     const path = href === 'localhost' ? 'http://localhost:4200' : href;
@@ -840,7 +845,9 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   open() {
-    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, windowClass: 'modal-content-zoom'});
+    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, size: 'xl',windowClass: 'modal-content-zoom', backdrop: true});
     modal.componentInstance.imageSrc = this.question.thumImage;
+    const modalBackground = document.getElementsByClassName('modal-content')[0];
+    modalBackground.className = 'background-modal-none';
   }
 }

@@ -6,7 +6,7 @@
 
     <div class=" imageBox imgFix " (mouseenter)="toggleShowCopyIcon(true)" (mouseleave)="toggleShowCopyIcon(false)" style="padding: 0; align-items: center; height: 227px" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)">
       <div *ngIf="question.thumImage === 'undefined'" class="unloadedImgBlock">
-        <div class="clickCopy" *ngIf="showCopyIcon" (click)="copyToClickBoard(question?.id)">
+        <div class="clickCopy" *ngIf="showCopyIcon" (click)="copyToClickBoard( $event , question?.id)">
           <div class="copyLink-img"></div>
         </div>
         <div  class="unloadedImgContent">
@@ -16,7 +16,7 @@
     </div>
     <div class=" imageBox imgFix"  (click)="open()"
          (mouseenter)="toggleShowCopyIcon(true)" (mouseleave)="toggleShowCopyIcon(false)" *ngIf="question.thumImage !== 'undefined'">
-      <div class="clickCopy" *ngIf="showCopyIcon" (click)="copyToClickBoard(question?.id)">
+      <div class="clickCopy" *ngIf="showCopyIcon" (click)="copyToClickBoard($event ,question?.id)">
         <div class="copyLink-img"></div>
       </div>
       <div *ngIf="question.thumFinish!=='undefined'" class="show-final-image-block" (click)="toggleImage()">

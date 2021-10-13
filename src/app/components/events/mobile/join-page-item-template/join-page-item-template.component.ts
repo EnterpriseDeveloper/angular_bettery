@@ -7,6 +7,8 @@ import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ClipboardService} from "ngx-clipboard";
+import {ImageOpenViewComponent} from "../../../share/desktop/image-open-view/image-open-view.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -49,7 +51,8 @@ export class JoinPageItemTemplateComponent implements OnInit {
   showClearImage = false;
 
   constructor(private router: Router,
-              private _clipboardService: ClipboardService
+              private _clipboardService: ClipboardService,
+              private modalService: NgbModal
   ) {
 
   }
@@ -92,7 +95,8 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
-  copyToClickBoard(eventId) {
+  copyToClickBoard($event, eventId) {
+    $event.preventDefault();
     this.copyLinkFlag = true;
     const href = window.location.hostname;
     const path = href === 'localhost' ? 'http://localhost:4200' : href;
@@ -181,5 +185,9 @@ export class JoinPageItemTemplateComponent implements OnInit {
       this.showDetailWindow = false;
       return 'item_open_arrow_white';
     }
+  }
+  open() {
+    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, windowClass: 'modal-content-zoom', backdrop: true});
+    modal.componentInstance.imageSrc = this.question.thumImage;
   }
 }
