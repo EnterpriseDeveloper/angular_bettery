@@ -846,7 +846,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   open() {
-    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, size: 'xl',windowClass: 'modal-content-zoom', backdrop: true});
+    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, size: 'xl', windowClass: 'modal-content-zoom', backdrop: true});
     modal.componentInstance.imageSrc = this.question.thumImage;
     const modalBackground = document.getElementsByClassName('modal-content')[0];
     modalBackground.className = 'background-modal-none';
