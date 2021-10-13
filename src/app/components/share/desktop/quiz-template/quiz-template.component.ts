@@ -101,7 +101,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     });
   }
 
-  toggleImage() {
+  toggleImage($event) {
+    $event.preventDefault();
     this.showClearImage = !this.showClearImage;
     this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
   }

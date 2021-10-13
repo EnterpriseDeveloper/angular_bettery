@@ -19,7 +19,7 @@
       <div class="clickCopy" *ngIf="showCopyIcon" (click)="copyToClickBoard($event ,question?.id)">
         <div class="copyLink-img"></div>
       </div>
-      <div *ngIf="question.thumFinish!=='undefined'" class="show-final-image-block" (click)="toggleImage()">
+      <div *ngIf="question.thumFinish!=='undefined'" class="show-final-image-block" (click)="toggleImage($event)">
         <div class="show-final-image"></div>
       </div>
       <img class="event_img" #eventImage src="{{question.thumImage}}" [ngStyle]="imageHeight()" />
