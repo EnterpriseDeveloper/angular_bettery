@@ -30,6 +30,7 @@ import {FilterTimeLineMobileComponent} from './mobile/filter-time-line-mobile/fi
 import {ComingSoonMobileComponent} from './mobile/coming-soon-mobile/coming-soon-mobile.component';
 import {TuiImageEditorModule} from 'tui-image-editor-angular';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import { ImageOpenViewComponent } from './desktop/image-open-view/image-open-view.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import {ImageCropperModule} from 'ngx-image-cropper';
     FilterTimelineComponent,
     FilterTimeLineMobileComponent,
     ComingSoonMobileComponent,
+    ImageOpenViewComponent,
   ],
   imports: [
     CommonModule,
