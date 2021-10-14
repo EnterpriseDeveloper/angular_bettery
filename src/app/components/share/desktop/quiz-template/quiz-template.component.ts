@@ -71,6 +71,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   reputationSub: Subscription;
   showClearImage = false;
   showCopyIcon = false;
+  showClearIcon = false;
 
   constructor(
     private postService: PostService,
@@ -102,7 +103,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   toggleImage($event) {
-    $event.preventDefault();
+    $event.stopPropagation();
     this.showClearImage = !this.showClearImage;
     this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
   }
@@ -849,8 +850,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  toggleShowCopyIcon(toShow: boolean) {
+  toggleShowIcon(toShow: boolean) {
     this.showCopyIcon = toShow;
+    this.showClearIcon = toShow;
+
   }
 
   open() {
