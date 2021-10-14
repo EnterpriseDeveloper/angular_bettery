@@ -33,16 +33,16 @@
 
     <a  *ngIf="question.status=='finished' && question.usersAnswers.answer==question.finalAnswer"
        class="d_flex_j_content">
-      <div *ngIf="question.host.id==userData._id" style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value"> {{question.host.payHostAmount.toFixed(2)+ ' BET ' }}</span></div>
+      <div *ngIf="question.host.id==userData._id" style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value"> {{checkFractionalNumb(question.host.payHostAmount, question.host.mintedHostAmount, '+') }}</span></div>
 
-      <div><span class="white_text">  You won</span><span > {{ question.usersAnswers?.payToken+question.usersAnswers?.mintedToken + ' BET'}}</span></div>
+      <div><span class="white_text">  You won</span><span > {{ checkFractionalNumb(question.usersAnswers?.payToken,question.usersAnswers?.mintedToken, '+')  + ' BET'}}</span></div>
     </a>
 
     <a  *ngIf="question.status=='finished' && question.usersAnswers.answer!==question.finalAnswer"
        class="d_flex_j_content">
-      <div *ngIf="question.host.id==userData._id" style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value"> {{question.host.payHostAmount.toFixed(2)+ ' BET ' }}</span></div>
+      <div *ngIf="question.host.id==userData._id" style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value"> {{checkFractionalNumb(question.host.payHostAmount, question.host.mintedHostAmount, '+') }}</span></div>
 
-      <div><span class="white_text">You lost</span><span style="color:#C10000;"> {{question.usersAnswers.betAmount + ' BET'}}</span></div>
+      <div><span class="white_text">You lost</span><span style="color:#C10000;"> {{getLost(question)}}</span></div>
     </a>
   </div>
 
@@ -65,7 +65,7 @@
     <a
        *ngIf="question.status=='finished' && question.finalAnswer==question.usersAnswers.answer"
        class="d_flex_j_content">
-      <div style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value_validator"> {{question.host.payHostAmount.toFixed(2)+ ' BET ' }}</span></div>
+      <div style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value_validator"> {{checkFractionalNumb(question.host.payHostAmount, question.host.mintedHostAmount, '+') }}</span></div>
 
     </a>
 

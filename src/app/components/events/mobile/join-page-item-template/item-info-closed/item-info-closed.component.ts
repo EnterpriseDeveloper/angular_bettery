@@ -43,5 +43,36 @@ export class ItemInfoClosedComponent implements OnInit {
     return `${d.getDate()}/${Number(d.getMonth()) + 1}/${d.getFullYear()}`;
   }
 
+  getLost(data) {
+    if (this.userData != undefined && data) {
+      const findParc = data.parcipiantAnswers.filter((x) => {
+        return x.userId == this.userData._id;
+      });
+      return this.checkFractionalNumb(findParc[0].amount, findParc[0].mintedToken, '-');
+    }
+  }
+
+  checkFractionalNumb(num1, num2, action) {
+    if (action === '+') {
+      const sum = Number(num1) + Number(num2);
+      let value: string =  sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
+
+      if ( value.includes('0.00')){
+        value = '<' + ' 0.01';
+        return value;
+      }else {
+        return value;
+      }
+    }
+
+    if (action === '-') {
+      const difference = Number(num1) - Number(num2);
+      return difference.toString().includes('.') ? difference.toFixed(2) : difference;
+    }
+    if (action === '/') {
+      const avg = Number(num1) / Number(num2);
+      return avg.toString().includes('.') ? avg.toFixed(2) : avg;
+    }
+  }
 
 }

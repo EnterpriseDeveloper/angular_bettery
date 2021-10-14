@@ -300,15 +300,23 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   checkFractionalNumb(num1, num2, action) {
     if (action === '+') {
       const sum = Number(num1) + Number(num2);
-      return sum.toString().includes('.') ? sum.toFixed(2) : sum;
+      let value: string =  sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
+
+      if ( value.includes('0.00')){
+        value = '<' + ' 0.01';
+        return value;
+      }else {
+        return value;
+      }
     }
+
     if (action === '-') {
       const difference = Number(num1) - Number(num2);
-      return difference.toString().includes('.') ? difference.toFixed(1) : difference;
+      return difference.toString().includes('.') ? difference.toFixed(2) : difference;
     }
     if (action === '/') {
       const avg = Number(num1) / Number(num2);
-      return avg.toString().includes('.') ? avg.toFixed(1) : avg;
+      return avg.toString().includes('.') ? avg.toFixed(2) : avg;
     }
   }
 
