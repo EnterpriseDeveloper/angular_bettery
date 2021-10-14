@@ -1,0 +1,31 @@
+<div class="container">
+    <div>
+      <div>
+        <div class="form-style">
+          <p>
+            WALLET SET UP
+          </p>
+        </div>
+        <div class="about_phrase_info">
+          <p>Save (<span class="copy-url" (click)="copyToClipBoard()"> <span class="seed-copied"
+                                                                             *ngIf="showCopiedMessage">SEED COPIED!</span>copy</span>)
+            this passphrase. It's the only way to access your BET and BTY tokens using another device.</p>
+
+        </div>
+
+        <div class="word_list" draggable="false">
+          <div class="word_item" draggable="false" *ngFor="let word of seedPhraseArr let i = index">
+            <div class="yellow-polygon no-select" style="display: flex; justify-content: center; align-items: center" draggable="false">
+              <span class="word_number">{{i + 1}}</span>
+            </div>
+            <p>{{word}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="confirm_safe" (click)="closeModal()">I’ve saved my passphrase in a secure place</div>
+    </div>
+  </div>
+

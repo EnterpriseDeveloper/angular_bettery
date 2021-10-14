@@ -145,7 +145,14 @@ export class EventFinishComponent implements OnInit, OnDestroy {
   checkFractionalNumb(num1, num2, action) {
     if (action === '+') {
       const sum = Number(num1) + Number(num2);
-      return sum.toString().includes('.') ? sum.toFixed(2) : sum;
+      let value: string =  sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
+
+      if ( value.includes('0.00')){
+        value = '<' + ' 0.01';
+        return value;
+      }else {
+        return value;
+      }
     }
     if (action === '-') {
       const difference = Number(num1) - Number(num2);

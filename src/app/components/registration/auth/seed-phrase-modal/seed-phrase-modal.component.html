@@ -1,10 +1,10 @@
-<div class="block_spinner_box">
-  <div class="main-wrap">
+<div class="block_spinner_box" (click)="modalBtnAction('Cancel')">
+  <div class="main-wrap modal-content-zoom" (click)="$event.stopPropagation();">
     <div class="container">
 
       <div *ngIf="!showSeedPhrase" class="form-style">
-        <p [ngClass]="!seedPhrase && 'back_opacity' ">Enter your seed phrase</p>
-        <textarea class="phrase_input"
+        <p style="opacity: 1">Enter your seed phrase</p>
+        <textarea class="phrase_input" #inputSeed (focusin)="onInputFocus(true)" (focusout)="onInputFocus(false)"
                   [ngStyle]="(!showSeedPhrase && isCorrectPhrase) && {'border': '1px solid #EC0100'}" type="text"
                   [(ngModel)]="seedPhrase"></textarea>
       </div>

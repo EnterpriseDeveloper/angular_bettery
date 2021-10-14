@@ -7,6 +7,8 @@ import {Coins} from '../../../../models/Coins.model';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ClipboardService} from "ngx-clipboard";
+import {ImageOpenViewComponent} from "../../../share/desktop/image-open-view/image-open-view.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -49,7 +51,8 @@ export class JoinPageItemTemplateComponent implements OnInit {
   showClearImage = false;
 
   constructor(private router: Router,
-              private _clipboardService: ClipboardService
+              private _clipboardService: ClipboardService,
+              private modalService: NgbModal
   ) {
 
   }
@@ -75,7 +78,8 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
-  toggleImage() {
+  toggleImage($event) {
+    $event.preventDefault();
     this.showClearImage = !this.showClearImage;
     this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
 
@@ -92,7 +96,8 @@ export class JoinPageItemTemplateComponent implements OnInit {
     }
   }
 
-  copyToClickBoard(eventId) {
+  copyToClickBoard($event, eventId) {
+    $event.preventDefault();
     this.copyLinkFlag = true;
     const href = window.location.hostname;
     const path = href === 'localhost' ? 'http://localhost:4200' : href;
@@ -116,8 +121,16 @@ export class JoinPageItemTemplateComponent implements OnInit {
   checkFractionalNumb(num1, num2, action) {
     if (action === '+') {
       const sum = Number(num1) + Number(num2);
-      return sum.toString().includes('.') ? sum.toFixed(2) : sum;
+      let value: string =  sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
+
+      if ( value.includes('0.00')){
+        value = '<' + ' 0.01';
+        return value;
+      }else {
+        return value;
+      }
     }
+
     if (action === '-') {
       const difference = Number(num1) - Number(num2);
       return difference.toString().includes('.') ? difference.toFixed(1) : difference;
@@ -181,5 +194,9 @@ export class JoinPageItemTemplateComponent implements OnInit {
       this.showDetailWindow = false;
       return 'item_open_arrow_white';
     }
+  }
+  open() {
+    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, windowClass: 'modal-content-zoom', backdrop: true});
+    modal.componentInstance.imageSrc = this.question.thumImage;
   }
 }

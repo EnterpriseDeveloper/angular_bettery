@@ -1,4 +1,14 @@
-import {Component, Input, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {ClipboardService} from "ngx-clipboard";
 
 @Component({
@@ -6,7 +16,7 @@ import {ClipboardService} from "ngx-clipboard";
   templateUrl: './seed-phrase-modal.component.html',
   styleUrls: ['./seed-phrase-modal.component.sass']
 })
-export class SeedPhraseModalComponent implements OnInit {
+export class SeedPhraseModalComponent implements OnInit , AfterViewInit{
   @Input() modalStatus: boolean;
   @Input() showSeedPhrase: { mnemonic: string, wallet: string };
   @Input() isCorrectPhrase: boolean;
@@ -14,6 +24,7 @@ export class SeedPhraseModalComponent implements OnInit {
   @Output() okEmmit = new EventEmitter<object>();
   seedPhraseArr: string[];
   showCopiedMessage = false;
+  @ViewChild('inputSeed') inputEl: ElementRef;
 
   constructor(private _clipboardService: ClipboardService) {
   }
@@ -29,7 +40,18 @@ export class SeedPhraseModalComponent implements OnInit {
       this.splitSeedPhrase(this.showSeedPhrase.mnemonic);
     }
   }
+  ngAfterViewInit() {
+    this.inputEl.nativeElement.focus();
+  }
 
+  onInputFocus(focus: boolean){
+    if ( focus){
+
+      this.inputEl.nativeElement.style.border = '1px solid #bcbcbc';
+    }else {
+      this.inputEl.nativeElement.style.border = '1px solid #f2f2f2';
+    }
+  }
   modalBtnAction(text: string) {
     if (this.seedPhrase) {
       if (text === 'Ok') {

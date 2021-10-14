@@ -1,15 +1,17 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { User } from '../../../models/User.model';
-import { PostService } from '../../../services/post.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegistrationComponent } from '../../registration/registration/registration.component';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {User} from '../../../models/User.model';
+import {PostService} from '../../../services/post.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RegistrationComponent} from '../../registration/registration/registration.component';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../app.state';
 import * as CoinsActios from '../../../actions/coins.actions';
 import * as UserActions from '../../../actions/user.actions';
 import {GetService} from '../../../services/get.service';
 import {ReputationModel} from '../../../models/Reputation.model';
+import authHelp from "../../../helpers/auth-help";
+import {ProfileSeedModalComponent} from "../../share/both/modals/profile-seed-modal/profile-seed-modal.component";
 
 @Component({
   selector: 'my-profile',
@@ -37,6 +39,8 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   playerRep: number = 0;
   advisorRep: number = 0;
   reputationSub: Subscription;
+  userSub: Subscription;
+
   constructor(
     private store: Store<AppState>,
     private postService: PostService,
@@ -63,9 +67,22 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     }
   }
 
+  showMnemonic() {
+    const walletDectypt = authHelp.walletDectypt();
+    if (walletDectypt) {
+
+      const userData = walletDectypt.users.find((x) => {
+        return x.sub == walletDectypt.login;
+      });
+      if (userData) {
+        const seedModal = this.modalService.open(ProfileSeedModalComponent, {centered: true, backdrop: true});
+        seedModal.componentInstance.seedPhrase = userData.mnemonic;
+      }
+    }
+  }
 
   getInfo(id) {
-    this.getAddUserDataSub = this.postService.post('user/get_additional_info', { id }).subscribe((x) => {
+    this.getAddUserDataSub = this.postService.post('user/get_additional_info', {id}).subscribe((x) => {
       this.addionalData = x;
       if (this.addionalData.publicEmail == null) {
         this.letsUpdatePublicEmail(true);
@@ -88,7 +105,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   }
 
   linkAccount() {
-    const modalRef = this.modalService.open(RegistrationComponent, { centered: true });
+    const modalRef = this.modalService.open(RegistrationComponent, {centered: true});
     modalRef.componentInstance.openSpinner = true;
     modalRef.componentInstance.linkUser = true;
     modalRef.componentInstance.linkedAccouns = this.addionalData.linkedAccounts;
@@ -101,12 +118,12 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
   async updateBalance() {
     this.postSub = this.getService.get('users/getBalance').subscribe(async (e: any) => {
 
-    this.store.dispatch(new CoinsActios.UpdateCoins({
-      // TODO check bty on main chain
-      MainBTY: "0",
-      BTY: e.bty,
-      BET: e.bet
-    }));
+      this.store.dispatch(new CoinsActios.UpdateCoins({
+        // TODO check bty on main chain
+        MainBTY: "0",
+        BTY: e.bty,
+        BET: e.bet
+      }));
     }, error => {
       console.log(error);
     });
@@ -196,7 +213,7 @@ export class MyProfileComponent implements OnChanges, OnDestroy {
     if (this.updateEmailSub) {
       this.updateEmailSub.unsubscribe();
     }
-    if (this.reputationSub){
+    if (this.reputationSub) {
       this.reputationSub.unsubscribe();
     }
   }

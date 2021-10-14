@@ -55,7 +55,7 @@ const authHelp = {
   },
 
   walletDectypt: () => {
-    const isLogout = localStorage.getItem('isLogout')
+    const isLogout = localStorage.getItem('isLogout');
 
     if ( isLogout !== 'true' ){
 
