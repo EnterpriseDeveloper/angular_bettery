@@ -177,11 +177,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getEventFromServer() {
     const email = {
-      // email: 'voroshilovmax90@gmail.com'
-      email: 'hello@bettery.io'
+      email: 'voroshilovmax90@gmail.com'
     };
     this.eventSub = this.postService.post('bettery_event', email)
       .subscribe((x: any) => {
+        console.log(x)
         this.shuffleArray(x);
         this.eventData = x.slice(0, 3);
       }, (err) => {
