@@ -31,6 +31,7 @@ import {ComingSoonMobileComponent} from './mobile/coming-soon-mobile/coming-soon
 import {TuiImageEditorModule} from 'tui-image-editor-angular';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { ImageOpenViewComponent } from './desktop/image-open-view/image-open-view.component';
+import { ProfileSeedModalComponent } from './both/modals/profile-seed-modal/profile-seed-modal.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { ImageOpenViewComponent } from './desktop/image-open-view/image-open-vie
     FilterTimeLineMobileComponent,
     ComingSoonMobileComponent,
     ImageOpenViewComponent,
+    ProfileSeedModalComponent,
   ],
   imports: [
     CommonModule,
