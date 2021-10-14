@@ -65,7 +65,7 @@
     <a
        *ngIf="question.status=='finished' && question.finalAnswer==question.usersAnswers.answer"
        class="d_flex_j_content">
-      <div style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value_validator"> {{checkFractionalNumb(question.host.payHostAmount, question.host.mintedHostAmount, '+') }}</span></div>
+      <div style="margin-right: 15px"><span class="white_text">You earn</span><span class="earned_value_validator"> {{checkFractionalNumb(question.usersAnswers.mintedToken, question.usersAnswers.payToken, '+') }}</span></div>
 
     </a>
 
