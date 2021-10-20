@@ -1,3 +1,9 @@
+.banner
+  position: fixed
+  height: 56px
+  width: 100%
+  z-index: 2
+
 .main_wrapper
   width: 100%
   min-height: 100%
@@ -20,7 +26,7 @@ p, h1, h2, h3
 .videoContent
   margin-top: 25px
   border: 2px #FDD92A solid
-  border-radius: 10px  
+  border-radius: 10px
 
 nav
   display: flex
@@ -42,7 +48,7 @@ nav
   top: -200px
 
 .nav-show
-  top: 0
+  top: 56px
   background-color: #fdd92a
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5)
 
@@ -196,6 +202,7 @@ header
   display: flex
   //padding: 200px 0 42px 70px
   padding: 200px 0 100px 70px
+  margin-top: 56px
 
 .title
   margin-bottom: 21px
@@ -1478,6 +1485,7 @@ footer
   .title
     padding-right: 0
   header
+    margin-top: 76px
     margin-bottom: 10px
   .third-text
     padding-right: 0
@@ -1485,6 +1493,10 @@ footer
     padding-left: 15px
   .w-90
     width: 100%
+  .banner
+      height: 76px
+  .nav-show
+      top: 76px
 
 @media(max-width: 991px)
   .dropText
