@@ -28,7 +28,7 @@ import {ClipboardService} from 'ngx-clipboard';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {connectToSign} from '../../../../contract/cosmosInit';
 import {ReputationModel} from '../../../../models/Reputation.model';
-import {ImageOpenViewComponent} from "../image-open-view/image-open-view.component";
+import {ImageOpenViewComponent} from '../image-open-view/image-open-view.component';
 
 @Component({
   selector: 'quiz-template',
@@ -105,7 +105,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   toggleImage($event) {
     $event.stopPropagation();
     this.showClearImage = !this.showClearImage;
-    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
+    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumImage : this.eventImage.nativeElement.src = this.question.thumFinish;
   }
 
   ngOnInit() {
@@ -223,7 +223,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   makeAnswer(i, answer) {
     this.letsRegistration();
     this.myAnswers.answer = i;
-    this.myAnswers.answerName = answer
+    this.myAnswers.answerName = answer;
   }
 
   avgBet(q) {
@@ -301,12 +301,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   checkFractionalNumb(num1, num2, action) {
     if (action === '+') {
       const sum = Number(num1) + Number(num2);
-      let value: string =  sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
+      let value: string = sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
 
-      if ( value.includes('0.00')){
+      if (value.includes('0.00')) {
         value = '<' + ' 0.01';
         return value;
-      }else {
+      } else {
         return value;
       }
     }
@@ -411,10 +411,10 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     } else {
       let web3 = new Web3();
       var _money = web3.utils.toWei(String(answer.amount), 'ether');
-      let {memonic, address, client} = await connectToSign()
+      let {memonic, address, client} = await connectToSign();
 
       const msg = {
-        typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents",
+        typeUrl: '/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents',
         value: {
           creator: address,
           pubId: answer.event_id,
@@ -424,7 +424,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       };
       const fee = {
         amount: [],
-        gas: "1000000",
+        gas: '1000000',
       };
       try {
         let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
@@ -453,14 +453,14 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   setToDB(transactionHash, answer) {
     this.myAnswers.answered = true;
-    this.myAnswers.from = "participant"
-    this.myAnswers.betAmount = answer.amount
+    this.myAnswers.from = 'participant';
+    this.myAnswers.betAmount = answer.amount;
 
     let data = {
       event_id: answer.event_id,
       answerIndex: answer.answer,
       amount: Number(answer.amount),
-      transactionHash: "0x" + transactionHash
+      transactionHash: '0x' + transactionHash
     };
     this.answerSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
         this.updateUser();
@@ -506,7 +506,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   async setToNetworkValidation(answer) {
     let {memonic, address, client} = await connectToSign();
     const msg = {
-      typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents",
+      typeUrl: '/VoroshilovMax.bettery.publicevents.MsgCreateValidPubEvents',
       value: {
         creator: address,
         pubId: answer.event_id,
@@ -516,12 +516,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     };
     const fee = {
       amount: [],
-      gas: "1000000",
+      gas: '1000000',
     };
 
     try {
       let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
-      console.log(transact)
+      console.log(transact);
       if (transact.transactionHash && transact.code == 0) {
         this.setToDBValidation(transact.transactionHash, answer);
       } else {
@@ -544,13 +544,13 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   setToDBValidation(transactionHash, answer) {
     this.myAnswers.answered = true;
-    this.myAnswers.from = "validator"
+    this.myAnswers.from = 'validator';
 
     let data = {
       event_id: answer.event_id,
       answer: answer.answer,
       reputation: this.reputation.expertRep,
-      transactionHash: "0x" + transactionHash
+      transactionHash: '0x' + transactionHash
     };
     this.validSub = this.postService.post('publicEvents/validate', data).subscribe(async () => {
         this.updateUser();
@@ -680,8 +680,8 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   imageHeight() {
     if (this.question && this.heightBlock > 260) {
       return {
-        'border-bottom-left-radius': "0",
-        'border-top-left-radius': "0"
+        'border-bottom-left-radius': '0',
+        'border-top-left-radius': '0'
       };
     }
   }
@@ -801,7 +801,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  copyToClickBoard($event , eventId) {
+  copyToClickBoard($event, eventId) {
     $event.stopPropagation();
     this.copyLinkFlag = true;
     const href = window.location.hostname;
@@ -857,7 +857,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
   }
 
   open() {
-    const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, size: 'xl', windowClass: 'modal-content-zoom', backdrop: true});
+    const modal = this.modalService.open(ImageOpenViewComponent, {
+      centered: true,
+      size: 'xl',
+      windowClass: 'modal-content-zoom',
+      backdrop: true
+    });
     modal.componentInstance.imageSrc = this.question.thumImage;
     const modalBackground = document.getElementsByClassName('modal-content')[0];
     modalBackground.className = 'background-modal-none';
