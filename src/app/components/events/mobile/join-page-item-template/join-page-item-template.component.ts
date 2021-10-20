@@ -81,7 +81,7 @@ export class JoinPageItemTemplateComponent implements OnInit {
   toggleImage($event) {
     $event.preventDefault();
     this.showClearImage = !this.showClearImage;
-    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumFinish : this.eventImage.nativeElement.src = this.question.thumImage;
+    this.showClearImage ? this.eventImage.nativeElement.src = this.question.thumImage : this.eventImage.nativeElement.src = this.question.thumFinish;
 
   }
 
