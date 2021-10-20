@@ -96,6 +96,10 @@ export class AppComponent implements OnDestroy, OnInit {
       return {
         'background': '#242521'
       };
+    }else if (href === '/'){
+      return {
+        'padding-top': 0
+      };
     } else {
       return;
     }

@@ -40,6 +40,7 @@ import {ViewportScroller} from '@angular/common';
 import { filter } from 'rxjs/operators';
 import {RegistrationModule} from './components/registration/registration.module';
 import {reputationReducer} from './reducers/reputation.reducer';
+import { LandingBannerComponent } from './components/home/landing-banner/landing-banner.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './files/locale/', '.json');
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     ErcCoinSaleComponent,
     NumericDirective,
     LandingFormComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    LandingBannerComponent
   ],
   imports: [
     SwiperModule,

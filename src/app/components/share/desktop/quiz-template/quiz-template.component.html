@@ -22,7 +22,7 @@
       <div *ngIf="question.thumFinish!=='undefined' && showClearIcon" class="show-final-image-block" (click)="toggleImage($event)">
         <div class="show-final-image" ></div>
       </div>
-      <img class="event_img" #eventImage src="{{question.thumImage}}" [ngStyle]="imageHeight()" />
+      <img class="event_img" #eventImage src="{{question.thumFinish == 'undefined' ? question.thumImage : question.thumFinish}}" [ngStyle]="imageHeight()" />
     </div>
 
     <div class="body_card" [ngStyle]="roomCardBottom()" id="{{question.id}}">
