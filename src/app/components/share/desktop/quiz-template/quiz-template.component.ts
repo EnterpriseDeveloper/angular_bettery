@@ -863,7 +863,7 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
       windowClass: 'modal-content-zoom',
       backdrop: true
     });
-    modal.componentInstance.imageSrc = this.question.thumImage;
+    modal.componentInstance.imageSrc = this.eventImage.nativeElement.src;
     const modalBackground = document.getElementsByClassName('modal-content')[0];
     modalBackground.className = 'background-modal-none';
   }

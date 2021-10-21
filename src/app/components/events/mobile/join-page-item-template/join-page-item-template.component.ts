@@ -197,6 +197,6 @@ export class JoinPageItemTemplateComponent implements OnInit {
   }
   open() {
     const modal = this.modalService.open(ImageOpenViewComponent, {centered: true, windowClass: 'modal-content-zoom', backdrop: true});
-    modal.componentInstance.imageSrc = this.question.thumImage;
+    modal.componentInstance.imageSrc = this.eventImage.nativeElement.src;
   }
 }
