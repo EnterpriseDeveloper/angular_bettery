@@ -68,6 +68,7 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
         this.getUserRooms();
       }
     });
+    this.generateGradient();
   }
 
   getUserRooms() {
@@ -102,7 +103,7 @@ export class CreateRoomDesktopComponent implements OnInit, OnDestroy {
 
 
   generateGradient() {
-    this.gradietnNumber == Number(Object.keys(GradientJSON).length) - 1 ? this.gradietnNumber = 0 : this.gradietnNumber++;
+    this.gradietnNumber = Math.floor(Math.random() * (Object.keys(GradientJSON).length - 1));
     this.roomForm.controls.roomColor.setValue(GradientJSON[this.gradietnNumber]);
   }
 
