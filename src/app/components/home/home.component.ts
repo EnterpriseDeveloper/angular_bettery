@@ -131,10 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.fromData.question = this.newCreateEvent;
     if (this.fromData.question) {
-      this.store.dispatch(formDataAction({ formData: this.fromData }));
-    } else {
-      this.fromData.question = this.typedCreateEvent;
-      this.store.dispatch(formDataAction({ formData: this.fromData }));
+      this.store.dispatch(formDataAction({formData: this.fromData}));
     }
   }
 

@@ -49,6 +49,7 @@ export class ImageLoaderComponent implements OnInit {
       this.loaderImg = true;
       this.imgEmmit.emit({img: this.previewUrlImg, valid: false, clearImage: this.formData.thumFinish});
     }
+    this.generateGradient(true);
   }
 
 
@@ -188,14 +189,20 @@ export class ImageLoaderComponent implements OnInit {
   }
 
   clearFileValue(e) {
-    e.target.value =  '' ;
+    e.target.value = '';
   }
 
-  generateGradient() {
-    if (this.f.image.value == 'color') {
-      this.gradietnNumber == Number(Object.keys(GradientJSON).length) - 1 ? this.gradietnNumber = 0 : this.gradietnNumber++;
+  generateGradient(params: boolean) {
+    if (params) {
+      this.gradietnNumber = Math.floor(Math.random() * (Object.keys(GradientJSON).length - 1));
       this.eventColor = GradientJSON[this.gradietnNumber];
       this.colorEmmit.emit(this.eventColor);
+    } else {
+      if (this.f.image.value == 'color') {
+        this.gradietnNumber == Number(Object.keys(GradientJSON).length) - 1 ? this.gradietnNumber = 0 : this.gradietnNumber++;
+        this.eventColor = GradientJSON[this.gradietnNumber];
+        this.colorEmmit.emit(this.eventColor);
+      }
     }
   }
 
@@ -240,7 +247,7 @@ export class ImageLoaderComponent implements OnInit {
 
   readerInit(valid: boolean): void {
     const reader = new FileReader();
-    if ( valid ){
+    if (valid) {
       return;
     }
     reader.onload = e => {
