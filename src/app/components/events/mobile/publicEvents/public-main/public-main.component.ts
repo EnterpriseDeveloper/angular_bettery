@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
@@ -18,11 +18,14 @@ export class PublicMainComponent implements OnInit, OnDestroy {
   // TODO
   eventFinish: boolean = false;
   isReverted: boolean;
+  isMobile: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService
-  ) { }
+    private postService: PostService,
+    private router: Router,
+  ) {
+  }
 
   ngOnInit(): void {
     this.routeSub = this.route.params
@@ -34,6 +37,20 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         this.getDataFromServer(data);
       });
   }
+  mobileCheck(url) {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)) {
+      this.isMobile = true;
+    }else{
+      this.router.navigate([`room/${url}`]);
+    }
+  }
+
 
   getDataFromServer(data) {
     this.postSub = this.postService.post('publicEvents/get_by_id', data)
@@ -47,6 +64,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         }
 
         this.eventData = x;
+        this.mobileCheck(this.eventData.room.id)
         this.errorPage = false;
       }, (err) => {
         console.log(err);
