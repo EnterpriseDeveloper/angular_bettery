@@ -92,7 +92,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   detectPath() {
     const href = window.location.pathname;
-    if (href === '/create-event' || href.includes('/private_event') || href.includes('/public_event')) {
+    if (href === '/create-event' || href.includes('/private_event') || (href.includes('/public_event') && this.mobileCheck())) {
       return {
         'background': '#242521'
       };
@@ -103,6 +103,16 @@ export class AppComponent implements OnDestroy, OnInit {
     } else {
       return;
     }
+  }
+
+  mobileCheck() {
+    return !!(navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i));
   }
 
   ngOnDestroy() {

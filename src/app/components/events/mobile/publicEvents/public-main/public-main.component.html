@@ -1,9 +1,13 @@
-<event-start *ngIf="!errorPage && !eventFinish && !isReverted" [eventData]="eventData" (interacDone)="interacDone($event)"></event-start>
-<event-finish *ngIf="eventFinish && !isReverted" [eventData]="eventData" ></event-finish>
-<app-reverted-public *ngIf="isReverted" [eventData]="eventData"></app-reverted-public>
-<div *ngIf="errorPage" class="box">
-    <div class="errorImg"></div>
-    <p class="eventNotFound">Event not found!</p>
-    <p class="eventNotFoundInfo">Sorry. The event you are looking for does not exist. Please join other events or create your own.</p>
-    <a href="#" class="becomeHost">HOST AN EVENT</a>
+<div>
+  <div *ngIf="isMobile">
+    <event-start *ngIf="!errorPage && !eventFinish && !isReverted" [eventData]="eventData" (interacDone)="interacDone($event)"></event-start>
+    <event-finish *ngIf="eventFinish && !isReverted" [eventData]="eventData" ></event-finish>
+    <app-reverted-public *ngIf="isReverted" [eventData]="eventData"></app-reverted-public>
+    <div *ngIf="errorPage" class="box">
+      <div class="errorImg"></div>
+      <p class="eventNotFound">Event not found!</p>
+      <p class="eventNotFoundInfo">Sorry. The event you are looking for does not exist. Please join other events or create your own.</p>
+      <a href="#" class="becomeHost">HOST AN EVENT</a>
+    </div>
+  </div>
 </div>
