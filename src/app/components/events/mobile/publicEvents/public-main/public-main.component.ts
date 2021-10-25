@@ -70,10 +70,23 @@ export class PublicMainComponent implements OnInit, OnDestroy {
 
         if (this.eventData) {
           if (this.eventData.question) {
-            this.metaService.updateTag({property: 'og:title', content: this.eventData.question});
-            this.metaService.updateTag({name: 'twitter:title', content: this.eventData.question});
+
+            if (this.metaService.getTag("property='og:title'")) {
+              this.metaService.updateTag({property: 'og:title', content: this.eventData.question});
+            } else {
+              this.metaService.addTag({property: 'og:title', content: this.eventData.question});
+
+            }
+
+            if (this.metaService.getTag("name='twitter:title'")) {
+              this.metaService.updateTag({name: 'twitter:title', content: this.eventData.question});
+            } else {
+              this.metaService.addTag({property: 'og:title', content: this.eventData.question});
+
+            }
           }
-          if (this.eventData.thumImage.includes('undefined')){
+
+          if (this.eventData.thumImage.includes('undefined')) {
             this.metaService.removeTag("property='og:image'");
             this.metaService.removeTag("name='twitter:image'");
           } else {
