@@ -1,9 +1,14 @@
 <div>
     <p class="welcome">WELCOME, PLAYER!</p>
     <div>
-        <div class="questionBox">
-            <p class="question">{{eventData.question}}</p>
+      <div class="quizBoxTwo-on-event-page">
+        <div class="gradientBox-on-event-page" [ngStyle]="imgForEvent(eventData)">
+          <div class="eventBox-on-event-page">
+            <p class="eventName">{{eventData?.question}}</p>
+          </div>
         </div>
+        <!--        <p class="quizText">{{eventData.question}}</p>-->
+      </div>
         <form [formGroup]="answerForm">
             <div *ngFor="let answer of eventData.answers">
                 <div class="pretty p-default p-round inline checkBackGround">

@@ -25,7 +25,6 @@ export class PublicMainComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private postService: PostService,
     private router: Router,
-    private metaService: Meta
   ) {
   }
 

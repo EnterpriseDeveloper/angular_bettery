@@ -14,10 +14,12 @@ import {ReputationModel} from '../../../../../models/Reputation.model';
 @Component({
   selector: 'validate',
   templateUrl: './validate.component.html',
-  styleUrls: ['./validate.component.sass']
+  styleUrls: ['./validate.component.sass',
+    '../event-start/event-start.component.sass']
 })
 export class ValidateComponent implements OnInit, OnDestroy {
   @Input() eventData: PubEventMobile;
+  @Input() inputForm : FormGroup;
   @Output() goBack = new EventEmitter();
   @Output() goViewStatus = new EventEmitter<number>();
   timeIsValid: boolean;
@@ -59,6 +61,9 @@ export class ValidateComponent implements OnInit, OnDestroy {
     this.answerForm = this.formBuilder.group({
       answer: ['', Validators.required],
     });
+    if (this.inputForm.valid && this.inputForm.controls.answer.value) {
+      this.answerForm = this.inputForm;
+    }
   }
 
   get f() {
@@ -183,6 +188,13 @@ export class ValidateComponent implements OnInit, OnDestroy {
     this.goViewStatus.next(this.eventData.id);
   }
 
+  imgForEvent(data) {
+    if (data && data.thumColor == 'undefined') {
+      return {'background': 'url(' + data?.thumImage + ')center center no-repeat'}
+    } else {
+      return {'background': data?.thumColor};
+    }
+  }
 
   ngOnDestroy() {
     if (this.userSub) {

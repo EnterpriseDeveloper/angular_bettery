@@ -1,57 +1,66 @@
 <div *ngIf="timeIsValid">
-    <p class="info_text" style="margin-bottom: 3px;">First-come first-rewarded.</p>
-    <p class="info_text">Come back to validate after betting ends in</p>
-    <p class="time">{{day}}:{{hour}}:{{minutes}}:{{seconds}}</p>
+  <p class="info_text" style="margin-bottom: 3px;">First-come first-rewarded.</p>
+  <p class="info_text">Come back to validate after betting ends in</p>
+  <p class="time">{{day}}:{{hour}}:{{minutes}}:{{seconds}}</p>
 
-    <div class="questionBox">
-        <p class="question">{{eventData.question}}</p>
+  <div class="questionBox">
+    <p class="question">{{eventData.question}}</p>
+  </div>
+  <div *ngFor="let answer of eventData.answers">
+    <div class="answerBoxCreated">
+      <p class="answerCreated">{{answer}}</p>
     </div>
-    <div *ngFor="let answer of eventData.answers">
-        <div class="answerBoxCreated">
-            <p class="answerCreated">{{answer}}</p>
-        </div>
-    </div>
-    <div class="answerBoxResolution" *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
-        <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
-    </div>
-    <p class="playersAmount"><b>{{playersAmount()}} Players</b> placed their bet so far.</p>
+  </div>
+  <div class="answerBoxResolution"
+       *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+    <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
+  </div>
+  <p class="playersAmount"><b>{{playersAmount()}} Players</b> placed their bet so far.</p>
 
-    <a (click)="viewStatus()" class="exploreBettery">VIEW EVENT STATUS</a>
+  <a (click)="viewStatus()" class="exploreBettery">VIEW EVENT STATUS</a>
 </div>
 <div *ngIf="!timeIsValid">
-    <div>
-        <p class="validateEvent">VALIDATE EVENT</p>
-        <p class="validateInfo">Only {{remainderExperts()}} more to go!</p>
+  <div>
+    <p class="validateEvent">VALIDATE EVENT</p>
+    <p class="validateInfo">Only {{remainderExperts()}} more to go!</p>
 
-        <form [formGroup]="answerForm">
-            <div class="questionBoxValidae">
-                <p class="question">{{eventData.question}}</p>
-            </div>
-            <div *ngFor="let answer of eventData.answers">
-                <div class="pretty p-default p-round inline checkBackGround">
-                    <input type="radio" value={{answer}} formControlName="answer">
-                    <div class="state p-warning-o checkPos">
-                        <label> </label>
-                    </div>
-                    <p class="label">{{answer}}</p>
-                </div>
-            </div>
-            <div *ngIf="submitted && f.answer.errors">
-                <small *ngIf="f.answer.errors.required" class="form-text quize_validation_error">Answer is
-                    required</small>
-            </div>
-        </form>
-        <div class="resolutionBox" *ngIf="eventData?.resolutionDetalis != 'undefined' || eventData?.resolutionDetalis.length != 0">
-            <p class="resolution">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
+    <form [formGroup]="answerForm">
+      <div class="quizBoxTwo-on-event-page">
+        <div class="gradientBox-on-event-page" [ngStyle]="imgForEvent(eventData)">
+          <div class="eventBox-on-event-page">
+            <p class="eventName">{{eventData?.question}}</p>
+          </div>
         </div>
-        <div *ngIf="errorMessage">
-            <div class="errorImg"></div>
-            <p class="errMsg">{{errorMessage}}</p>
+        <!--        <p class="quizText">{{eventData.question}}</p>-->
+      </div>
+      <div style="margin-top: 16px">
+        <div *ngFor="let answer of eventData.answers">
+          <div class="pretty p-default p-round inline checkBackGround">
+            <input type="radio" [value]="answer" formControlName="answer">
+            <div class="state white checkPos">
+              <label> </label>
+            </div>
+            <p class="label">{{answer}}</p>
+          </div>
         </div>
-        <div class="buttonBox">
-            <button type="button" class="cancel" (click)="cancel()">BACK</button>
-            <button type="button" class="nextPlayer" (click)="validate()">CONFIRM</button>
-        </div>
+      </div>
+      <div *ngIf="submitted && f.answer.errors">
+        <small *ngIf="f.answer.errors.required" class="form-text quize_validation_error">Answer is
+          required</small>
+      </div>
+    </form>
+    <div class="resolutionBox"
+         *ngIf="eventData?.resolutionDetalis != 'undefined' || eventData?.resolutionDetalis.length != 0">
+      <p class="resolution">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
     </div>
+    <div *ngIf="errorMessage">
+      <div class="errorImg"></div>
+      <p class="errMsg">{{errorMessage}}</p>
+    </div>
+    <div class="buttonBox">
+      <button type="button" class="cancel" (click)="cancel()">BACK</button>
+      <button type="button" class="nextPlayer" (click)="validate()">CONFIRM</button>
+    </div>
+  </div>
 </div>
 <app-spinner-loading *ngIf="spinnerLoading"></app-spinner-loading>

@@ -9,12 +9,15 @@ import { InfoModalComponent } from '../../../../share/both/modals/info-modal/inf
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 import {User} from '../../../../../models/User.model';
 import { RegistrationComponent } from '../../../../registration/registration/registration.component';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
   selector: 'event-start',
   templateUrl: './event-start.component.html',
-  styleUrls: ['./event-start.component.sass']
+  styleUrls: ['./event-start.component.sass',
+    '../validate/validate.component.sass'
+  ]
 })
 export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   @Input('eventData') eventData: PubEventMobile;
@@ -40,17 +43,22 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   postSub: Subscription;
   themeChat = 'dark';
   copyLinkFlag: boolean;
+  answerForm: FormGroup;
 
 
   constructor(
     private http: PostService,
     private store: Store<AppState>,
     private _clipboardService: ClipboardService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
   ) {
   }
 
   ngOnInit(): void {
+    this.answerForm = this.formBuilder.group({
+      answer: ['', Validators.required],
+    });
   }
 
   getUsers() {
@@ -177,14 +185,16 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
 
 
   joinAsPlayer() {
-    this.info = true;
-    this.joinedAs = "player"
+    // this.info = true;
+    this.joinedAs = "player";
+    this.agree();
 
   }
 
   joinAsExpert() {
-    this.info = true;
-    this.joinedAs = "expert"
+    // this.info = true;
+    this.joinedAs = "expert";
+    this.agree();
   }
 
   showEvent() {
@@ -208,8 +218,9 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   goToInfo(from) {
-    this.info = true;
-    this.joinedAs = from
+    // this.info = true;
+    this.goBack();
+    // this.joinedAs = from
     this.goToAction = false;
   }
 
