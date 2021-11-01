@@ -304,5 +304,17 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
       return {'background': data?.thumColor};
     }
   }
+  checkFractionalNumb(num1, num2, action) {
+    if (action === '+') {
+      const sum = Number(num1) + Number(num2);
+      let value: string = sum.toString().includes('.') ? sum.toFixed(2) : sum.toString();
 
+      if (value.includes('0.00')) {
+        value = '<' + ' 0.01';
+        return value;
+      } else {
+        return value;
+      }
+    }
+  }
 }

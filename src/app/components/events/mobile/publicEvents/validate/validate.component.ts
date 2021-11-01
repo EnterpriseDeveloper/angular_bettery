@@ -28,6 +28,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
   errorMessage: string;
   userData: User;
   reputation: ReputationModel;
+  day: number | string;
   hour: number | string;
   minutes: number | string;
   seconds: number | string;
@@ -80,6 +81,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     const startDate = new Date();
     const endTime = new Date(this.eventData.endTime * 1000);
     const diffMs = (endTime.getTime() - startDate.getTime());
+    this.day = Math.floor(Math.abs(diffMs / 86400000));
     const hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
     const minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
     const second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
