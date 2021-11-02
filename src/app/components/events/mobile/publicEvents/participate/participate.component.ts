@@ -1,25 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../app.state';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClipboardService } from 'ngx-clipboard'
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../../app.state';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ClipboardService} from 'ngx-clipboard'
 import Web3 from "web3"
-import { PostService } from '../../../../../services/post.service';
+import {PostService} from '../../../../../services/post.service';
 import * as CoinsActios from '../../../../../actions/coins.actions';
-import { Subscription } from 'rxjs';
-import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
-import { User } from '../../../../../models/User.model';
-import { Coins } from '../../../../../models/Coins.model';
-import { connectToSign } from '../../../../../contract/cosmosInit';
+import {Subscription} from 'rxjs';
+import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
+import {User} from '../../../../../models/User.model';
+import {Coins} from '../../../../../models/Coins.model';
+import {connectToSign} from '../../../../../contract/cosmosInit';
 import {GetService} from "../../../../../services/get.service"
 
 @Component({
   selector: 'participate',
   templateUrl: './participate.component.html',
-  styleUrls: ['./participate.component.sass']
+  styleUrls: ['./participate.component.sass',
+  '../event-start/event-start.component.sass'
+  ]
 })
 export class ParticipateComponent implements OnInit, OnDestroy {
   @Input() eventData: PubEventMobile;
+  @Input() inputForm: FormGroup;
   @Output() goBack = new EventEmitter();
   @Output() goViewStatus = new EventEmitter<number>();
   userData: User;
@@ -32,7 +35,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   coinsSub: Subscription;
   postSub: Subscription;
-  balanceSub: Subscription
+  balanceSub: Subscription;
 
   constructor(
     private store: Store<AppState>,
@@ -58,10 +61,19 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     this.answerForm = this.formBuilder.group({
       answer: ["", Validators.required],
       amount: ["", [Validators.required, Validators.min(this.coinType == 'BET' ? 0.01 : 0.01)]]
-    })
+    });
+
+    if (this.inputForm.valid && this.inputForm.controls.answer.value) {
+      this.answerForm.setValue({
+        ...this.answerForm.value,
+        answer: this.inputForm.controls.answer.value
+      });
+    }
   }
 
-  get f() { return this.answerForm.controls; }
+  get f() {
+    return this.answerForm.controls;
+  }
 
   copyToClickBoard() {
     let href = window.location.hostname
@@ -88,7 +100,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       this.spinnerLoading = true;
       let web3 = new Web3();
       var _money = web3.utils.toWei(String(this.answerForm.value.amount), 'ether')
-      let { memonic, address, client } = await connectToSign()
+      let {memonic, address, client} = await connectToSign()
 
       const msg = {
         typeUrl: "/VoroshilovMax.bettery.publicevents.MsgCreatePartPubEvents",
@@ -105,9 +117,9 @@ export class ParticipateComponent implements OnInit, OnDestroy {
       };
       try {
         let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
-        if(transact.transactionHash && transact.code == 0){
+        if (transact.transactionHash && transact.code == 0) {
           this.setToDB(transact.transactionHash, this.eventData);
-        }else{
+        } else {
           this.spinnerLoading = false
           this.errorMessage = String(transact)
         }
@@ -120,19 +132,21 @@ export class ParticipateComponent implements OnInit, OnDestroy {
 
 
   setToDB(transactionHash, dataAnswer) {
-    var _whichAnswer = dataAnswer.answers.findIndex((o) => { return o == this.answerForm.value.answer; });
+    var _whichAnswer = dataAnswer.answers.findIndex((o) => {
+      return o == this.answerForm.value.answer;
+    });
     let data = {
       event_id: dataAnswer.id,
       answerIndex: _whichAnswer,
       amount: Number(this.answerForm.value.amount),
-      transactionHash: "0x"+transactionHash
+      transactionHash: "0x" + transactionHash
     }
     this.postSub = this.postService.post('publicEvents/participate', data).subscribe(async () => {
-      await this.updateBalance();
-      this.errorMessage = undefined;
-      this.spinnerLoading = false
-      this.goViewStatus.next(this.eventData.id);
-    },
+        await this.updateBalance();
+        this.errorMessage = undefined;
+        this.spinnerLoading = false
+        this.goViewStatus.next(this.eventData.id);
+      },
       (err) => {
         this.spinnerLoading = false
         this.errorMessage = String(err.error)
@@ -143,12 +157,12 @@ export class ParticipateComponent implements OnInit, OnDestroy {
   async updateBalance() {
     this.balanceSub = this.GetService.get('users/getBalance').subscribe(async (e: any) => {
 
-    this.store.dispatch(new CoinsActios.UpdateCoins({
-      // TODO check bty on main chain
-      MainBTY: "0",
-      BTY: e.bty,
-      BET: e.bet
-    }));
+      this.store.dispatch(new CoinsActios.UpdateCoins({
+        // TODO check bty on main chain
+        MainBTY: "0",
+        BTY: e.bty,
+        BET: e.bet
+      }));
     }, error => {
       console.log(error);
     });
@@ -175,6 +189,14 @@ export class ParticipateComponent implements OnInit, OnDestroy {
 
   }
 
+  imgForEvent(data) {
+    if (data && data.thumColor == 'undefined') {
+      return {'background': 'url(' + data?.thumImage + ')center center no-repeat'}
+    } else {
+      return {'background': data?.thumColor};
+    }
+  }
+
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -185,7 +207,7 @@ export class ParticipateComponent implements OnInit, OnDestroy {
     if (this.postSub) {
       this.postSub.unsubscribe();
     }
-    if(this.balanceSub){
+    if (this.balanceSub) {
       this.balanceSub.unsubscribe();
     }
   }

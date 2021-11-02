@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
+import {Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-public-main',
@@ -37,6 +38,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         this.getDataFromServer(data);
       });
   }
+
   mobileCheck(url) {
     if (navigator.userAgent.match(/Android/i)
       || navigator.userAgent.match(/webOS/i)
@@ -46,7 +48,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
       || navigator.userAgent.match(/BlackBerry/i)
       || navigator.userAgent.match(/Windows Phone/i)) {
       this.isMobile = true;
-    }else{
+    } else {
       this.router.navigate([`room/${url}`]);
     }
   }
@@ -64,7 +66,10 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         }
 
         this.eventData = x;
-        this.mobileCheck(this.eventData.room.id)
+
+
+
+        this.mobileCheck(this.eventData.room.id);
         this.errorPage = false;
       }, (err) => {
         console.log(err);

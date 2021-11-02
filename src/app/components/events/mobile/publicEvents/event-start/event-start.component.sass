@@ -48,25 +48,41 @@
     min-height: 289.5px
     border-radius: 16px
     background-size: cover !important
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+.gradientBox-on-event-page
+  display: flex
+  align-items: flex-end
+  min-height: calc(100vw - 36px)
+  border-radius: 16px
+  background-size: cover !important
 
 .eventName
     font-family: 'Open Sans', sans-serif
     font-style: normal
     font-weight: bold
-    font-size: 32px
-    line-height: 44px
+    font-size: 18px
+    line-height: 25px
     display: flex
     align-items: center
     text-align: center
-    color: #FFFFFF
+    color: #FFD300
     margin: auto
-    min-height: 193px
+    min-height: 20vw
     justify-content: center
 
 .eventBox
     background: rgba(0, 0, 0, 0.6)
     border-radius: 16px
     min-height: 193px
+
+.eventBox-on-event-page
+    background: rgba(0, 0, 0, 0.6)
+    border-radius: 0 0 16px 16px
+    min-height: 20vw
+    width: 100%
 
 .arrow
     margin-top: 33px
@@ -120,6 +136,7 @@
     border: 0px
     justify-content: center
     margin-top: 24px
+
 .privacy-text
   font-weight: 600
   font-size: 14px
@@ -297,6 +314,11 @@
 .quizBoxTwo
     background: #0B1511
     border: 1px solid #0B1511
+    box-sizing: border-box
+    border-radius: 8px
+    margin-bottom: 8px
+
+.quizBoxTwo-on-event-page
     box-sizing: border-box
     border-radius: 8px
     margin-bottom: 8px

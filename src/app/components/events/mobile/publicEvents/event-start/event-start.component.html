@@ -9,18 +9,18 @@
       <div class="avatarBox">
         <img class="avatar" src={{eventData?.host.avatat}} referrerpolicy="no-referrer">
       </div>
-      <div class="eventBox">
+      <div class="eventBox-on-event-page">
         <p class="eventName">{{eventData?.question}}</p>
       </div>
     </div>
-    <div class="arrow"></div>
-    <div class="info">How to participate?</div>
-    <div class="tutorials-place">
-      <div>
-        <p class="mb-0" style="font-size: 22px">Gif Tutorials</p>
-        <p class="mb-0">(coming soon)</p>
-      </div>
-    </div>
+    <!--    <div class="arrow"></div>-->
+    <!--    <div class="info">How to participate?</div>-->
+    <!--    <div class="tutorials-place">-->
+    <!--      <div>-->
+    <!--        <p class="mb-0" style="font-size: 22px">Gif Tutorials</p>-->
+    <!--        <p class="mb-0">(coming soon)</p>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <button class="join" (click)="join()">JOIN</button>
     <div class="privacy-text"><p routerLink="/privacy-policy">Privacy Policy</p></div>
   </div>
@@ -48,26 +48,47 @@
         <p class="only">Only {{remainderExperts()}} more experts to go</p>
       </div>
 
-      <div class="quizBoxTwo">
-        <p class="quizText">{{eventData.question}}</p>
+      <div class="quizBoxTwo-on-event-page">
+        <div class="gradientBox-on-event-page" [ngStyle]="imgForEvent(eventData)">
+          <div class="eventBox-on-event-page">
+            <p class="eventName">{{eventData?.question}}</p>
+          </div>
+        </div>
+        <!--        <p class="quizText">{{eventData.question}}</p>-->
       </div>
 
-      <div *ngFor="let answer of eventData.answers; index as i">
-        <div class="answerBoxCreated">
-          <p class="answerCreated">{{answer}}</p>
-          <div *ngIf="participatedAnswer.length != 0 && participatedAnswer[0].answer == i"
-               class="participatedAnswer">
-            <p class="partAmount">{{participatedAnswer[0].amount}} {{coinType}}</p>
-            <img class="avatarHost partPostAvatar" src={{userData.avatar}} referrerpolicy="no-referrer">
-          </div>
-          <div *ngIf="validatedAnswer.length != 0 && validatedAnswer[0].answer == i"
-               class="participatedAnswer">
-            <img class="avatarHost partPostAvatar" src={{userData.avatar}} referrerpolicy="no-referrer">
+      <div *ngIf="participatedAnswer.length != 0 || validatedAnswer.length != 0">
+        <div *ngFor="let answer of eventData.answers; index as i" >
+
+          <div class="answerBoxCreated">
+            <p class="answerCreated">{{answer}}</p>
+            <div *ngIf="participatedAnswer.length != 0 && participatedAnswer[0].answer == i"
+                 class="participatedAnswer">
+              <p class="partAmount">{{participatedAnswer[0].amount}} {{coinType}}</p>
+              <img class="avatarHost partPostAvatar" src={{userData.avatar}} referrerpolicy="no-referrer">
+            </div>
+            <div *ngIf="validatedAnswer.length != 0 && validatedAnswer[0].answer == i"
+                 class="participatedAnswer">
+              <img class="avatarHost partPostAvatar" src={{userData.avatar}} referrerpolicy="no-referrer">
+            </div>
           </div>
         </div>
       </div>
+      <form [formGroup]="answerForm" *ngIf="!(participatedAnswer.length != 0 || validatedAnswer.length != 0)">
 
-      <div class="answerBoxResolution" *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+        <div *ngFor="let answer of eventData.answers">
+          <div class="pretty p-default p-round inline checkBackGround">
+            <input type="radio" value={{answer}} formControlName="answer">
+            <div class="state white checkPos">
+              <label> </label>
+            </div>
+            <p class="label">{{answer}}</p>
+          </div>
+        </div>
+      </form>
+
+      <div class="answerBoxResolution"
+           *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
         <p class="resolutionText">How to verify: {{eventData?.resolutionDetalis}}</p>
       </div>
 
@@ -83,7 +104,7 @@
         </div>
         <div class="infoLabelPos">
           <p class="infoLabel">{{poolName()}} pool:</p>
-          <p class="name">{{currentPool}} {{coinType}}</p>
+          <p class="name">{{checkFractionalNumb(currentPool, 0, '+')}} {{coinType}}</p>
         </div>
         <div class="infoLabelPos">
           <p class="infoLabel">PLAYERS joined:</p>
@@ -131,8 +152,11 @@
         <div *ngIf="!validation">
           <button class="buttonBecome buttonColorPlayer" (click)="joinAsPlayer()">JOIN AS PLAYER</button>
           <a class="linkInfo colorLinkPlayer" (click)="modalAboutPlayers()">What is a Player?</a>
-          <button *ngIf="userData?._id != eventData?.host.id" class="buttonBecome buttonColorExpert" (click)="joinAsExpert()">BECOME AN EXPERT</button>
-          <a *ngIf="userData?._id != eventData?.host.id" class="linkInfo colorLinkExpert" (click)="modalAboutExpert()">What is an Expert?</a>
+          <button *ngIf="userData?._id != eventData?.host.id" class="buttonBecome buttonColorExpert"
+                  (click)="joinAsExpert()">BECOME AN EXPERT
+          </button>
+          <a *ngIf="userData?._id != eventData?.host.id" class="linkInfo colorLinkExpert" (click)="modalAboutExpert()">What
+            is an Expert?</a>
         </div>
         <div *ngIf="validation && userData?._id != eventData?.host.id">
           <button class="buttonBecome buttonColorExpert" (click)="joinAsExpert()">JOIN AS EXPERT</button>
@@ -141,14 +165,15 @@
       </div>
 
       <div class="arrow"></div>
-      <app-comment class="deep-comment" [mobile]="true" [theme]=themeChat [userData]=userData [id]=eventData.id></app-comment>
+      <app-comment class="deep-comment" [mobile]="true" [theme]=themeChat [userData]=userData
+                   [id]=eventData.id></app-comment>
     </div>
 
     <info *ngIf="showInfo()" [eventData]="eventData" [joinedAs]="joinedAs" (goBack)="goBack()" (agree)="agree()">
     </info>
-    <participate *ngIf="showParticipate()" [eventData]="eventData" (goBack)="goToInfo('player')"
+    <participate *ngIf="showParticipate()" [eventData]="eventData" [inputForm]="answerForm" (goBack)="goToInfo('player')"
                  (goViewStatus)="interactionDone($event)"></participate>
-    <validate *ngIf="showValidate()" [eventData]="eventData" (goBack)="goToInfo('expert')"
+    <validate *ngIf="showValidate()" [eventData]="eventData" [inputForm]="answerForm" (goBack)="goToInfo('expert')"
               (goViewStatus)="interactionDone($event)"></validate>
   </div>
 </div>

@@ -14,10 +14,12 @@ import {ReputationModel} from '../../../../../models/Reputation.model';
 @Component({
   selector: 'validate',
   templateUrl: './validate.component.html',
-  styleUrls: ['./validate.component.sass']
+  styleUrls: ['./validate.component.sass',
+    '../event-start/event-start.component.sass']
 })
 export class ValidateComponent implements OnInit, OnDestroy {
   @Input() eventData: PubEventMobile;
+  @Input() inputForm : FormGroup;
   @Output() goBack = new EventEmitter();
   @Output() goViewStatus = new EventEmitter<number>();
   timeIsValid: boolean;
@@ -28,6 +30,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
   errorMessage: string;
   userData: User;
   reputation: ReputationModel;
+  day: number | string;
   hour: number | string;
   minutes: number | string;
   seconds: number | string;
@@ -58,6 +61,9 @@ export class ValidateComponent implements OnInit, OnDestroy {
     this.answerForm = this.formBuilder.group({
       answer: ['', Validators.required],
     });
+    if (this.inputForm.valid && this.inputForm.controls.answer.value) {
+      this.answerForm = this.inputForm;
+    }
   }
 
   get f() {
@@ -80,6 +86,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     const startDate = new Date();
     const endTime = new Date(this.eventData.endTime * 1000);
     const diffMs = (endTime.getTime() - startDate.getTime());
+    this.day = Math.floor(Math.abs(diffMs / 86400000));
     const hour = Math.floor(Math.abs((diffMs % 86400000) / 3600000));
     const minutes = Math.floor(Math.abs(((diffMs % 86400000) % 3600000) / 60000));
     const second = Math.round(Math.abs((((diffMs % 86400000) % 3600000) % 60000) / 1000));
@@ -181,6 +188,13 @@ export class ValidateComponent implements OnInit, OnDestroy {
     this.goViewStatus.next(this.eventData.id);
   }
 
+  imgForEvent(data) {
+    if (data && data.thumColor == 'undefined') {
+      return {'background': 'url(' + data?.thumImage + ')center center no-repeat'}
+    } else {
+      return {'background': data?.thumColor};
+    }
+  }
 
   ngOnDestroy() {
     if (this.userSub) {

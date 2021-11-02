@@ -2,8 +2,8 @@
   <app-landing-banner class="banner"></app-landing-banner>
   <div class="images">
     <nav [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-      [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
-      class="container-fluid">
+         [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' : 'background-color: #fdd92a' "
+         class="container-fluid">
       <div class="max-width_1920 container-fluid row d-flex align-items-center ">
         <div class="col-3 col-lg-2 logo"></div>
         <div class="d-flex align-items-center col-lg-9  pl-pr-0">
@@ -65,7 +65,6 @@
             <option *ngFor="let language of languages" [value]="language.id">{{ language.title }}</option>
           </select>
         </div> -->
-        <div routerLink="./join" class="launch-app"></div>
       </div>
     </nav>
     <div class="main bg-main">
@@ -74,8 +73,8 @@
 
 
         <div [class]="scrollHideMenu ? 'nav-hide': 'nav-show' "
-          [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
-          class="mobile_nav container-fluid">
+             [style]="styleHideMenu ? 'background-color: transparent;box-shadow: none' :'background-color: #fdd92a' "
+             class="mobile_nav container-fluid">
           <div class="d-flex align-items-center justify-content-between row">
             <div class="logo col-4 my-2"></div>
 
@@ -89,7 +88,6 @@
                 <!--              <div class="mobile_img_path mr-3"><a href="https://t.me/bettery_io" target="_blank">-->
                 <!--                  <div class="pathYellow"></div>-->
                 <!--                </a></div>-->
-                <div routerLink="./join" class="launch-app_mobile"></div>
                 <div class="mr-2">
                   <select style="display: none" id="language" (change)="changeLocale()" [(ngModel)]="selectedLanguage">
                     <option *ngFor="let language of languages" [value]="language.id">{{ language.id }}</option>
@@ -163,8 +161,8 @@
 
                 <div>
                   <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang === 'vn'" [strings]="topQuestions"
-                    [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
-                    (preStringTyped)="renovationDefaultEvent()">
+                                [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                                (preStringTyped)="renovationDefaultEvent()">
                     <div class="pencil">
                       <div class="text">
                         <span class="typing a" (mouseenter)="showPopover()"></span>
@@ -180,8 +178,8 @@
                 </div>
 
                 <ngx-typed-js class="ngx-typed" *ngIf="!active && switchLang ==='en'" [strings]="topQuestions"
-                  [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
-                  (preStringTyped)="renovationDefaultEvent()">
+                              [typeSpeed]="60" [backSpeed]="20" [loop]="true" (stringTyped)="sendDefaultEvent($event)"
+                              (preStringTyped)="renovationDefaultEvent()">
                   <div class="pencil">
                     <div class="text">
                       <span class="typing" (mouseenter)="showPopover()" (mouseleave)="hidePopover()"></span>
@@ -197,21 +195,28 @@
                 </ngx-typed-js>
 
                 <input [(ngModel)]="newCreateEvent" *ngIf="active" autofocus class="headerInput" type="text"
-                  id="newEvent" name="newEvent" placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
+                       id="newEvent" name="newEvent" placeholder="{{'HEADER.TOP_PLACEHOLDER' | translate}}">
                 <div class="btn_title row">
                   <div class="col-lg-3 col-12 pr-0">
-                    <button *ngIf="isMobile" class="btn btn-success" routerLink="/create-event"
-                      (click)="sendEvent()">{{'HEADER.BUTTON_TEXT' | translate}}
+                    <button *ngIf="isMobile" class="btn btn-success"
+                            [routerLink]="newCreateEvent? '/create-event': '/join'"
+                            (click)="sendEvent()">
+                      <div class="bettery-button-image"></div>
+                      <div class="bettery-button-text">{{'HEADER.BUTTON_TEXT' | translate}}</div>
                     </button>
                     <button *ngIf="!isMobile" class="btn btn-success" (click)="sendEventDesktop()"
-                      routerLink="/join">{{'HEADER.BUTTON_TEXT' | translate}}
+                            routerLink="/join">
+                      <div class="bettery-button-image"></div>
+                      <div class="bettery-button-text">{{'HEADER.BUTTON_TEXT' | translate}}</div>
                     </button>
+
                   </div>
                   <div *ngIf="eventData && eventData?.length != 0" class="dropText col-lg-5 col-12 px-0">
                     <div (click)="dropDown()" style="display: inline-flex;">{{'HEADER.OR_JOIN.1' | translate}}
                       ({{eventData?.length}} {{'HEADER.OR_JOIN.2' | translate}})
                       <div class="ml-1" style="margin-top: 8px;"
-                        [ngClass]="{'toggleDown' : dropDownSwitch, 'toggleUp': !dropDownSwitch}" alt="triangle"></div>
+                           [ngClass]="{'toggleDown' : dropDownSwitch, 'toggleUp': !dropDownSwitch}"
+                           alt="triangle"></div>
                     </div>
                   </div>
                 </div>
@@ -222,7 +227,7 @@
                       <button *ngIf="isMobile" class="btn" routerLink="public_event/{{event?._id}}">{{'HEADER.JOIN' |
                         translate}}</button>
                       <button *ngIf="!isMobile" class="btn" (click)="getSaveId(event?._id)"
-                        routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
+                              routerLink="room/{{event?.room[0]._id}}">{{'HEADER.JOIN' | translate}}</button>
                     </li>
                   </ul>
                 </div>
@@ -290,9 +295,9 @@
                 </p>
               </div>
               <iframe class="videoContent" width="100%" height="360" src="https://www.youtube.com/embed/_OdHGPyGKoI"
-                title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+                      title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
             </div>
           </div>
         </section>
@@ -474,7 +479,7 @@
                 <div>
                   <button routerLink="/tokensale">{{'TOKEN_SALE.JOIN_TOKEN_SALE' | translate}}</button>
                   <a class="mt-1" href="https://docs.bettery.io/bettery/whitepaper/token-economics"
-                    target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
+                     target="_blank">{{'TOKEN_SALE.MORE_ON_BETTERY' | translate}} >></a>
                 </div>
               </div>
             </div>
@@ -508,8 +513,9 @@
               </div>
               <div class="px-lg-5">
                 <p>{{'ROADMAP.TEXT_1' | translate}}<a style="color: inherit; text-decoration: underline"
-                    href="https://trello.com/b/ttywM11r/bettery-roadmap" target="_blank">{{'ROADMAP.TEXT_2' |
-                    translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
+                                                      href="https://trello.com/b/ttywM11r/bettery-roadmap"
+                                                      target="_blank">{{'ROADMAP.TEXT_2' |
+                  translate}}</a>{{'ROADMAP.TEXT_3' | translate}}
                 </p>
               </div>
             </div>
@@ -698,8 +704,8 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/bushlanov/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar2"></div>
@@ -715,8 +721,8 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/phuocsim/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar3"></div>
@@ -731,9 +737,9 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/maksim-voroshilov-063652177/"
-                    target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                                                  target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar4"></div>
@@ -748,9 +754,9 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a
-                    href="https://www.linkedin.com/in/tr%C3%A2n-shane-th%C3%A1i-5bb089159/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  href="https://www.linkedin.com/in/tr%C3%A2n-shane-th%C3%A1i-5bb089159/" target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar5"></div>
@@ -765,9 +771,9 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/nguyen-nguyen-19ab28ba/"
-                    target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                                                  target="_blank">
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar8"></div>
@@ -782,8 +788,8 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/andrii-sokhryn/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_join_us"></div>
@@ -796,8 +802,8 @@
                     translate}}</p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/company/bettery-io/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_advisor_icon"></div>
@@ -816,8 +822,8 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/ken-g-06980381/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar7"></div>
@@ -834,8 +840,8 @@
 
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/allanta/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
               <div class="item_team mb-5 col-lg-3 col-9 col-sm-6">
                 <div class="img_team_avatar9"></div>
@@ -852,13 +858,12 @@
                   </p>
                 </div>
                 <div class="img_team_linkedin"><a href="https://www.linkedin.com/in/chenggh/" target="_blank">
-                    <div class="linkedin_img"></div>
-                  </a></div>
+                  <div class="linkedin_img"></div>
+                </a></div>
               </div>
             </div>
           </div>
         </section>
-
 
 
       </div>
@@ -946,8 +951,8 @@
             <form [formGroup]="form" (ngSubmit)="subscribe()">
               <div class="input-group mb-3 focus">
                 <input type="text" class="form-control" placeholder="{{'FOOTER.PLACE_HOLDER'  | translate}}"
-                  formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
-                  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                       formControlName="email" [ngClass]="submitted && f.email.errors && 'subscibeError'"
+                       aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                   <button [disabled]="subscribed" class="btn btn-outline-secondary" type="submit">
                     <span *ngIf="!afterSubType">{{'FOOTER.BUTTON_TEXT' | translate}}</span>

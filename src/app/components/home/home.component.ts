@@ -13,6 +13,7 @@ import { PostService } from '../../services/post.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventsTemplatesDesktopComponent } from '../createEvent/desktop/events-templates-desktop/events-templates-desktop.component';
 import { SessionStorageService } from '../rooms/sessionStorage-service/session-storage.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'home',
@@ -58,7 +59,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private postService: PostService,
     private formBuilder: FormBuilder,
-    private sessionStorage: SessionStorageService
+    private sessionStorage: SessionStorageService,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
@@ -107,7 +109,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('click', ['$event'])
   a($event) {
-
     if (this.triggerPopover) {
       this.triggerPopover = false;
     }
@@ -282,8 +283,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   sendEventDesktop() {
-    this.sendEvent();
-    this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
+    if (this.newCreateEvent){
+      this.sendEvent();
+      this.modalService.open(EventsTemplatesDesktopComponent, { centered: true });
+    }else {
+      this.router.navigate(['/join']);
+    }
   }
 
   mobileCheck() {
