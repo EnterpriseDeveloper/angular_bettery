@@ -70,7 +70,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         }
 
         this.eventData = x;
-        console.log(this.eventData)
+
 
         if (this.eventData.thumImage.includes('undefined')) {
           this.seoService.updateMetaTags({title: this.eventData.question});
