@@ -4,6 +4,7 @@ import {PostService} from '../../../../../services/post.service';
 import {Subscription} from 'rxjs';
 import {PubEventMobile} from '../../../../../models/PubEventMobile.model';
 import {Meta} from "@angular/platform-browser";
+import {SeoService} from "../../../../../services/seo.service";
 
 @Component({
   selector: 'app-public-main',
@@ -25,6 +26,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private postService: PostService,
     private router: Router,
+    private seoService: SeoService
   ) {
   }
 
@@ -36,7 +38,10 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         };
         this.eventId = Number(question.id);
         this.getDataFromServer(data);
+        console.log(this.eventData)
+        this.seoService.updateMetaTags({title: this.eventData.question, image: this.eventData.thumImage ? this.eventData.thumImage : ''});
       });
+
   }
 
   mobileCheck(url) {
