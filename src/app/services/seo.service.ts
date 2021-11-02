@@ -9,15 +9,16 @@ export class SeoService {
   constructor(private meta: Meta) {
   }
 
-  updateMetaTags(metaTags: { title: string,
-                                          image?: string })
+  updateMetaTags(metaTags: { title: string, image?: string })
   {
 
     this.meta.updateTag({property: 'og:title', content: metaTags?.title});
-    this.meta.updateTag({property: 'og:image', content: metaTags.image});
-
     this.meta.updateTag({name: 'twitter:title', content: metaTags.title});
-    this.meta.updateTag({name: 'twitter:image', content: metaTags.image});
+
+    if (metaTags.image) {
+      this.meta.updateTag({property: 'og:image', content: metaTags.image});
+      this.meta.updateTag({name: 'twitter:image', content: metaTags.image});
+    }
 
   }
 

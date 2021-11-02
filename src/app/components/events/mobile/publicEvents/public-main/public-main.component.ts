@@ -38,8 +38,7 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         };
         this.eventId = Number(question.id);
         this.getDataFromServer(data);
-        console.log(this.eventData)
-        this.seoService.updateMetaTags({title: this.eventData.question, image: this.eventData.thumImage ? this.eventData.thumImage : ''});
+
       });
 
   }
@@ -71,7 +70,13 @@ export class PublicMainComponent implements OnInit, OnDestroy {
         }
 
         this.eventData = x;
+        console.log(this.eventData)
 
+        if (this.eventData.thumImage.includes('undefined')) {
+          this.seoService.updateMetaTags({title: this.eventData.question});
+        } else {
+          this.seoService.updateMetaTags({title: this.eventData.question, image: this.eventData.thumImage});
+        }
 
 
         this.mobileCheck(this.eventData.room.id);
