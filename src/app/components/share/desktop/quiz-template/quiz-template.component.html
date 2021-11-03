@@ -135,6 +135,7 @@
               <div class="blockWin" [ngClass]="question?.host.id === userData?._id && 'wonHost'">
                 <p class="lost_text2">You lost</p>
                 <p class="lost_amount">{{getLost(question)}} BET</p>
+                <p *ngIf="question?.host.id === this.userData?._id && this.myAnswers.from !== 'validator'" style="text-align: center; font-weight: bold">As <span style="color: #34DDDD">Player</span></p>
               </div>
             </div>
             <div class="amount_box"

@@ -10,7 +10,7 @@
         <div class="statusContainer">
             <div *ngIf="host" class="statusBox hostBorder">
                 <p [ngClass]="{'hostStatus': host}" class="status">YOU EARNED</p>
-                <p [ngClass]="{'hostAmount': host}" class="amount" [ngStyle]="getAmountColor(status)">{{getHostWin()}} {{coinType}}
+                <p [ngClass]="{'hostAmount': host}" class="amount" >{{getHostWin()}} {{coinType}}
                 </p>
                 <p class="host">AS <span style="color: #FFD200">HOST</span></p>
             </div>
