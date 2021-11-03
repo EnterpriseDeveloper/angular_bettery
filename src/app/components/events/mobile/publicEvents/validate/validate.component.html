@@ -13,7 +13,7 @@
   </div>
   <div class="answerBoxResolution"
        *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
-    <p class="resolutionText">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
+    <div class="resolutionText"><div>How to verify:</div><div><b>{{makeShortenStr(eventData?.resolutionDetalis, 140)}}</b></div></div>
   </div>
   <p class="playersAmount"><b>{{playersAmount()}} Players</b> placed their bet so far.</p>
 
@@ -50,8 +50,8 @@
       </div>
     </form>
     <div class="resolutionBox"
-         *ngIf="eventData?.resolutionDetalis != 'undefined' || eventData?.resolutionDetalis.length != 0">
-      <p class="resolution">How to verify: <b>{{eventData?.resolutionDetalis}}</b></p>
+         *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
+      <div class="resolutionText"><div>How to verify:</div><div><b>{{makeShortenStr(eventData?.resolutionDetalis, 140)}}</b></div></div>
     </div>
     <div *ngIf="errorMessage">
       <div class="errorImg"></div>

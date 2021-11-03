@@ -81,6 +81,10 @@ export class ValidateComponent implements OnInit, OnDestroy {
       this.calculateDate();
     }
   }
+  makeShortenStr(str: string, howMuch: number): string {
+    return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
+  }
+
 
   calculateDate() {
     const startDate = new Date();
