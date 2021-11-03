@@ -123,16 +123,17 @@
               </div>
             </div>
             <div class="amount_box" [ngClass]="question?.host.id === userData?._id && 'earnedHost'" style="padding-right: 1px"
-              *ngIf="userData && question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer && this.myAnswers?.answer != undefined && this.myAnswers?.betAmount > 0">
+
+                 *ngIf="userData && question.finalAnswer !== null && this.myAnswers?.answer != question.finalAnswer  ">
               <div *ngIf="question?.host.id === this.userData?._id" class="blockWin blockWinHost">
                 <p class="winner_text">You earned</p>
                 <p class="winner_amount" [ngStyle]="getWinnerColor(question)">{{hostEarned(question)}}</p>
                 <p style="text-align: center">As <span style="color: #FFD300">Host</span></p>
               </div>
 
-              <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'"></div>
+              <div  class="hrHost" [ngClass]="question?.host.id === this.userData?._id && 'd-block'" *ngIf="myAnswers?.answered"></div>
 
-              <div class="blockWin" [ngClass]="question?.host.id === userData?._id && 'wonHost'">
+              <div class="blockWin" [ngClass]="question?.host.id === userData?._id && 'wonHost'" *ngIf="myAnswers?.answered">
                 <p class="lost_text2">You lost</p>
                 <p class="lost_amount">{{getLost(question)}} BET</p>
                 <p *ngIf="question?.host.id === this.userData?._id && this.myAnswers.from !== 'validator'" style="text-align: center; font-weight: bold">As <span style="color: #34DDDD">Player</span></p>

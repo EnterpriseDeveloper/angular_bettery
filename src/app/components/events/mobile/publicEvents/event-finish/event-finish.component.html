@@ -8,13 +8,13 @@
     </div>
     <div *ngIf="userData && info !== undefined">
         <div class="statusContainer">
-            <div *ngIf="host" class="statusBox hostBorder">
+            <div *ngIf="host" class="statusBox hostBorder" [ngClass]="role && 'hostBorder'">
                 <p [ngClass]="{'hostStatus': host}" class="status">YOU EARNED</p>
                 <p [ngClass]="{'hostAmount': host}" class="amount" >{{getHostWin()}} {{coinType}}
                 </p>
                 <p class="host">AS <span style="color: #FFD200">HOST</span></p>
             </div>
-            <div class="statusBox">
+            <div class="statusBox" *ngIf="role">
                 <p [ngClass]="{'hostStatus': host}" class="status">{{status}}</p>
                 <p [ngClass]="{'hostAmount': host}" class="amount" [ngStyle]="getAmountColor(status)">{{amount}} {{coinType}}</p>
                 <p *ngIf="host" class="host">AS <span [style]="roleColor()">{{role}}</span></p>
