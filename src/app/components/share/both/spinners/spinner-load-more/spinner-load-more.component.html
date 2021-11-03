@@ -17,12 +17,12 @@
         <div class="div12 all" [ngClass]="activated[3]"></div>
     </div>
     <div class="text">
-        <h4>The future is loading....</h4>
+        <h4>The future is loading...</h4>
     </div>
 </div>
 
 
-<div *ngIf="finishLoading" style="padding-bottom: 40px;">
+<div *ngIf="finishLoading" >
     <p class="createMore">No more Events right noW. Why not create one?</p>
     <div style="text-align: center;">
         <button class="createBut" (click)="openCreateEventModal()">
