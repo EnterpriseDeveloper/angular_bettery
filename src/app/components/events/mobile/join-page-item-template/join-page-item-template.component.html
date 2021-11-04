@@ -1,5 +1,5 @@
 <div class="event_container">
-
+  <div class="copied" [ngClass]="copyLinkFlag && 'showLink'">Link copied!</div>
   <div>
     <div class="item-logo">
       <div class="item-logo" *ngIf="question.thumImage === 'undefined'" [ngStyle]="colorForRoom(question.thumColor)"
