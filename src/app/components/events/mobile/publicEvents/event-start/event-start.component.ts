@@ -137,6 +137,10 @@ export class EventStartComponent implements OnInit, OnChanges, OnDestroy {
     this.letsJoin = true;
   }
 
+  makeShortenStr(str: string, howMuch: number): string {
+    return str.length > howMuch ? str.slice(0, howMuch) + '...' : str;
+  }
+
   calculatePool() {
     if (this.eventData.parcipiantAnswers) {
       this.eventData.parcipiantAnswers.forEach(x => {

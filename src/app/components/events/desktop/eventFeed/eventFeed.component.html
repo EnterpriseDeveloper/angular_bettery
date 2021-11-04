@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more>
+    <div style="padding-bottom: 30px ;position: relative"><spinner-load-more [finishLoading]="finishLoading" *ngIf="!spinner && activeBtn != 'pro' && pureData?.events.length != 0"></spinner-load-more></div>
 
     <a pageScroll href="#top"><div class="to_the_top" [ngClass]="scrollTop < 200 && 'dnone'"></div></a>
   </div>

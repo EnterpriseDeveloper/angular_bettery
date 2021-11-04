@@ -89,7 +89,7 @@
 
       <div class="answerBoxResolution"
            *ngIf="eventData?.resolutionDetalis != 'undefined' && eventData?.resolutionDetalis.length != 0">
-        <p class="resolutionText">How to verify: {{eventData?.resolutionDetalis}}</p>
+        <div class="resolutionText"><div>How to verify:</div><div><b>{{makeShortenStr(eventData?.resolutionDetalis, 140)}}</b></div></div>
       </div>
 
       <div class="arrow"></div>
