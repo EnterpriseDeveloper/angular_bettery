@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { PubEventMobile } from '../../../../../models/PubEventMobile.model';
 import { User } from '../../../../../models/User.model';
 import { Store } from '@ngrx/store';
@@ -20,7 +20,6 @@ export class RevertedPublicComponent implements OnDestroy {
 
   getUsers() {
     this.storeSub = this.store.select('user').subscribe((x: User[]) => {
-      console.log(x);
       if (x.length != 0) {
         this.userData = x[0];
       } else {
@@ -29,10 +28,11 @@ export class RevertedPublicComponent implements OnDestroy {
     });
   }
 
+
   statusReverted(data) {
     let x = data.status.replace("reverted:", " ")
     if (x.search("not enough experts") != -1) {
-      return x + " (" + data.validatorsAnswers.length + "/" + data.validatorsAmount + ")"
+      return x + " (" + (data.validatorsAnswers ? data.validatorsAnswers.length : 0) + "/" + data.validatorsAmount + ")"
     } else {
       return x;
     }
