@@ -168,7 +168,7 @@ export class PublicEventComponent implements OnDestroy {
     };
     const fee = {
       amount: [],
-      gas: "1000000",
+      gas: "10000000000000",
     };
     try {
       let transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
