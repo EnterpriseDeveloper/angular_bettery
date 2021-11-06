@@ -72,7 +72,7 @@ export class PrivateFormComponent implements OnInit, OnDestroy {
     };
     const fee = {
       amount: [],
-      gas: "1000000",
+      gas: "10000000000000",
     };
 
     try {

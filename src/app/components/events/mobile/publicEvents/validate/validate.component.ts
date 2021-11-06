@@ -151,7 +151,7 @@ export class ValidateComponent implements OnInit, OnDestroy {
     console.log(msg,'message');
     const fee = {
       amount: [],
-      gas: '1000000',
+      gas: '10000000000000',
     };
     try {
       const transact: any = await client.signAndBroadcast(address, [msg], fee, memonic);
