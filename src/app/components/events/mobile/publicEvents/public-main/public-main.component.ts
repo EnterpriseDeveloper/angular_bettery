@@ -71,11 +71,12 @@ export class PublicMainComponent implements OnInit, OnDestroy {
 
         this.eventData = x;
 
-
+        const metaDescription = this.eventData.answers.join(', ');
         if (this.eventData.thumImage.includes('undefined')) {
-          this.seoService.updateMetaTags({title: this.eventData.question});
+
+          this.seoService.updateMetaTags({title: this.eventData.question, description: metaDescription});
         } else {
-          this.seoService.updateMetaTags({title: this.eventData.question, image: this.eventData.thumImage});
+          this.seoService.updateMetaTags({title: this.eventData.question, description: metaDescription, image: this.eventData.thumImage});
         }
 
 
