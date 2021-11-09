@@ -806,7 +806,12 @@ export class QuizTemplateComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.copyLinkFlag = true;
     const href = window.location.hostname;
     const path = href === 'localhost' ? 'http://localhost:4200' : href;
-    this._clipboardService.copy(`${path}/public_event/${eventId}`);
+    if ( path.includes('localhost')){
+      this._clipboardService.copy(`${path}/public_event/${eventId}`);
+    }else {
+      this._clipboardService.copy(`https://${path}/public_event/${eventId}`);
+    }
+
     setTimeout(() => {
       this.copyLinkFlag = false;
     }, 500);

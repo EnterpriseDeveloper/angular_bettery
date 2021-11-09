@@ -121,7 +121,7 @@
     <div class="event_info_comments">
       <div class="event_info_comments_img"></div>
       <div class="event_info_comments_text" *ngIf="question.commentsAmount">
-        <a [routerLink]="'../public_event/'+question?.room?.id.toString()" target="_blank">
+        <a [routerLink]="'../public_event/'+question?.id.toString()" >
           <span>{{question?.commentsAmount}} Comments</span>
         </a></div>
       <div class="event_info_comments_text" *ngIf="!question.commentsAmount"><span>No comments yet.</span></div>
